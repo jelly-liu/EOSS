@@ -16,6 +16,9 @@
 .window .window-body-noheader {
   border-top-width: 1px;
 }
+.window .panel-body-nobottom {
+  border-bottom-width: 0;
+}
 .window .window-header .panel-icon,
 .window .window-header .panel-tool {
   top: 50%;
@@ -48,7 +51,6 @@
   filter: alpha(opacity=40);
   opacity: 0.40;
   font-size: 1px;
-  *zoom: 1;
   overflow: hidden;
 }
 .window,
@@ -84,4 +86,27 @@
 .window-proxy-mask,
 .window-mask {
   background: #ccc;
+}
+.window .panel-footer {
+  border: 1px solid #D4D4D4;
+  position: relative;
+  top: -1px;
+}
+.window-thinborder {
+  padding: 0;
+}
+.window-thinborder .window-header {
+  padding: 5px 5px 6px 5px;
+}
+.window-thinborder .window-body {
+  border-width: 0px;
+}
+.window-thinborder .window-header .panel-icon,
+.window-thinborder .window-header .panel-tool {
+  margin-top: -9px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.window-noborder {
+  border: 0;
 }

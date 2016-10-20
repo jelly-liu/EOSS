@@ -5,6 +5,7 @@
   -webkit-border-radius: 0px 0px 0px 0px;
   border-radius: 0px 0px 0px 0px;
   overflow: hidden;
+  position: relative;
 }
 .progressbar-text {
   text-align: center;

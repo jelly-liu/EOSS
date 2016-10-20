@@ -13,13 +13,6 @@
 	};
 </script>
 
-<!-- jquery ui -->
-<!-- 
-<link href="${BASE_PATH}/base/jquery/jquery-theme/redmond/jquery-ui.min.css" rel="stylesheet" />
-<script src="${BASE_PATH}/base/jquery/jquery-ui.custom.min.js" type="text/javascript"></script>
-<script src="${BASE_PATH}/base/jquery/jquery.ui.datepicker-zh-CN.js" type="text/javascript"></script>
- -->
-
 <!-- jquery easyui -->
 <link href="${BASE_PATH}/base/jquery/easyui/themes/bootstrap/easyui.css" rel="stylesheet" type="text/css" />
 <link href="${BASE_PATH}/base/jquery/easyui/themes/icon.css" rel="stylesheet" type="text/css" />
