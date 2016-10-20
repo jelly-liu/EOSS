@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
-<mapper namespace="">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="_EXT">
 	<!-- 非工具生成的单表的SQL都以下划线开头 -->
 	
-	<sql id="_Role_QueryRolePage_Body">
+	<sql id="Role_QueryRolePage_Body">
 		from role r
 		where 1 = 1
 		<if test="id != null and id != ''">and r.id = #{id}</if>
@@ -15,15 +15,15 @@
 			and r.create_datetime &lt;= CONCAT('${createTimeEnd}', ' 23:59:59')
 		</if>
 	</sql>
-	<select id="_Role_QueryRolePage_Count" parameterType="HashMap" resultType="Integer">
+	<select id="Role_QueryRolePage_Count" parameterType="HashMap" resultType="Integer">
 		select count(*)
-		<include refid="_Role_QueryRolePage_Body"/>
+		<include refid="Role_QueryRolePage_Body"/>
 	</select>
-	<select id="_Role_QueryRolePage" parameterType="HashMap" resultType="LinkedHashMap">
+	<select id="Role_QueryRolePage" parameterType="HashMap" resultType="LinkedHashMap">
 		select
 		id as "id",
 		name as "name",
 		create_datetime as "createDatetime"
-		<include refid="_Role_QueryRolePage_Body"/>
+		<include refid="Role_QueryRolePage_Body"/>
 	</select>
 </mapper>

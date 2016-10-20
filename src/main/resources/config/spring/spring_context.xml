@@ -41,16 +41,6 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:config/mybatis/mybatis_base.xml"></property>
 		<property name="mapperLocations" value="classpath*:com/jelly/eoss/model/**/*.Mapper.xml" />
-		<property name="plugins">
-			<list>
-				<bean class="com.jelly.eoss.mybatis.StatementHandlerInterceptor">
-					<property name="dialect">
-						<bean class="com.jelly.eoss.mybatis.dialect.MySQLDialect" />
-					</property>
-				</bean>
-				<bean class="com.jelly.eoss.mybatis.ResultSetHandlerInterceptor" />
-			</list>
-		</property>
 	</bean>
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />

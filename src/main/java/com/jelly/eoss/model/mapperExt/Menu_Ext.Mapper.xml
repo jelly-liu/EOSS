@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
-<mapper namespace="">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="_EXT">
 	<!-- 非工具生成的单表的SQL都以下划线开头 -->
 	
-	<select id="_Menu_QueryMenuTree" parameterType="HashMap" resultType="LinkedHashMap">
+	<select id="Menu_QueryMenuTree" parameterType="HashMap" resultType="LinkedHashMap">
 		select 
 		id as "id", 
 		pid as "pId", 
@@ -31,7 +31,7 @@
 	</select>
 	
 	<!-- 根据path查询某菜单下的所有子菜单(即子树，包括该菜单) -->
-	<select id="_Menu_QueryAllSubMenu" parameterType="Integer" resultType="LinkedHashMap">
+	<select id="Menu_QueryAllSubMenu" parameterType="Integer" resultType="LinkedHashMap">
 		SELECT m.id as "id"
 		FROM menu m
 		WHERE 1 = 1
@@ -39,7 +39,7 @@
 		AND m.path LIKE CONCAT((SELECT path FROM menu WHERE id = #{id}), '%')
 	</select>
 	
-	<sql id="_Menu_QueryMenuPage_Body">
+	<sql id="Menu_QueryMenuPage_Body">
 		FROM menu m
 		INNER JOIN menu m2 ON m.pid = m2.id
 		WHERE 1 = 1
@@ -56,7 +56,7 @@
 			and m.create_datetime &lt;= CONCAT('${createTimeEnd}', ' 23:59:59')
 		</if>
 	</sql>
-	<select id="_Menu_QueryMenuPage" parameterType="HashMap" resultType="LinkedHashMap">
+	<select id="Menu_QueryMenuPage" parameterType="HashMap" resultType="LinkedHashMap">
 		SELECT 
 		m.id AS "id", 
 		m.pid AS "pid", 
@@ -64,10 +64,10 @@
 		m.name AS "name", 
 		m.url AS "url", 
 		m.create_datetime AS "createDatetime"
-		<include refid="_Menu_QueryMenuPage_Body"/>
+		<include refid="Menu_QueryMenuPage_Body"/>
 	</select>
-	<select id="_Menu_QueryMenuPage_Count" parameterType="HashMap" resultType="Integer">
+	<select id="Menu_QueryMenuPage_Count" parameterType="HashMap" resultType="Integer">
 		select count(*)
-		<include refid="_Menu_QueryMenuPage_Body"/>
+		<include refid="Menu_QueryMenuPage_Body"/>
 	</select>
 </mapper>

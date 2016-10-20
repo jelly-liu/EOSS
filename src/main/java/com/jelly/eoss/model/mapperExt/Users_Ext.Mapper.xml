@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.apache.org/dtd/ibatis-3-mapper.dtd">
-<mapper namespace="">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="_EXT">
 	<!-- 非工具生成的单表的SQL都以下划线开头 -->
 	
-	<sql id="_User_QueryUser_Body">
+	<sql id="User_QueryUser_Body">
 		from users m
 		where 1 = 1
 		<if test="id != null and id != ''">and m.id = #{id}</if>
@@ -15,17 +15,17 @@
 			and m.create_datetime &lt;= CONCAT('${createTimeEnd}', ' 23:59:59')
 		</if>
 	</sql>
-	<select id="_User_QueryUser_Count" parameterType="HashMap" resultType="Integer">
+	<select id="User_QueryUser_Count" parameterType="HashMap" resultType="Integer">
 		select count(*)
-		<include refid="_User_QueryUser_Body"/>
+		<include refid="User_QueryUser_Body"/>
 	</select>
-	<select id="_User_QueryUser_Page" parameterType="HashMap" resultType="LinkedHashMap">
+	<select id="User_QueryUser_Page" parameterType="HashMap" resultType="LinkedHashMap">
 		select
 		id as "id",
 		username as "username",
 		password as "password",
 		salt as "salt",
 		create_datetime as "createDatetime"
-		<include refid="_User_QueryUser_Body"/>
+		<include refid="User_QueryUser_Body"/>
 	</select>
 </mapper>

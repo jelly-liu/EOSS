@@ -98,19 +98,19 @@ public class BaseService {
 	}
 	
 	public int jdQueryForInt(String sql){
-		return this.jdbcTemplate.queryForInt(sql);
+		return this.jdbcTemplate.queryForObject(sql, Integer.class);
 	}
 	
 	public int jdQueryForInt(String sql, Object... params){
-		return this.jdbcTemplate.queryForInt(sql, params);
+		return this.jdbcTemplate.queryForObject(sql, Integer.class, params);
 	}
 	
 	public long jdQueryForLong(String sql){
-		return this.jdbcTemplate.queryForLong(sql);
+		return this.jdbcTemplate.queryForObject(sql, Long.class);
 	}
 	
 	public long jdQueryForLong(String sql, Object... params){
-		return this.jdbcTemplate.queryForLong(sql, params);
+		return this.jdbcTemplate.queryForObject(sql, Long.class, params);
 	}
 	
 	public Map<String, Object> jdQueryForMap(String sql){

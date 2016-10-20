@@ -41,8 +41,8 @@ public class PermissionAction extends BaseAction{
 		param.put("leaf", "1");
 		RowBounds rb = new RowBounds((page -1) * Const.PAGE_SIZE, Const.PAGE_SIZE);
 		
-		Integer totalRow = this.baseService.mySelectOne("_Menu_QueryMenuPage_Count", param);
-		List<Map<String, Object>> dataList = this.baseService.getSqlSessionTemplate().selectList("_Menu_QueryMenuPage", param, rb);
+		Integer totalRow = this.baseService.mySelectOne("_EXT.Menu_QueryMenuPage_Count", param);
+		List<Map<String, Object>> dataList = this.baseService.getSqlSessionTemplate().selectList("_EXT.Menu_QueryMenuPage", param, rb);
 		
 		Pager pager = new Pager(page.intValue(), Const.PAGE_SIZE, totalRow.intValue());
 		pager.setData(dataList);

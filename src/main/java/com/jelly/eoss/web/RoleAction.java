@@ -36,7 +36,7 @@ public class RoleAction extends BaseAction{
 	
 	@RequestMapping(value = "/queryAllRoleAjax")
 	public void queryAllRoleAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List<Map<String, Object>> roleList = this.baseService.mySelectList("_Role_QueryRolePage");
+		List<Map<String, Object>> roleList = this.baseService.mySelectList("_EXT.Role_QueryRolePage");
 		for(Map<String, Object> m : roleList){
 			m.put("pId", "-1");
 			m.put("isParent", "false");
@@ -54,8 +54,8 @@ public class RoleAction extends BaseAction{
 		Map<String, String> param = this.getRequestMap(request);
 		RowBounds rb = new RowBounds((page -1) * Const.PAGE_SIZE, Const.PAGE_SIZE);
 		
-		Integer totalRow = this.baseService.mySelectOne("_Role_QueryRolePage_Count", param);
-		List<Map<String, Object>> dataList = this.baseService.getSqlSessionTemplate().selectList("_Role_QueryRolePage", param, rb);
+		Integer totalRow = this.baseService.mySelectOne("_EXT.Role_QueryRolePage_Count", param);
+		List<Map<String, Object>> dataList = this.baseService.getSqlSessionTemplate().selectList("_EXT.Role_QueryRolePage", param, rb);
 		
 		Pager pager = new Pager(page.intValue(), Const.PAGE_SIZE, totalRow.intValue());
 		pager.setData(dataList);

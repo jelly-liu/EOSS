@@ -94,8 +94,8 @@ public class MenuAction extends BaseAction{
 		param.put("leaf", "0");
 		RowBounds rb = new RowBounds((page -1) * Const.PAGE_SIZE, Const.PAGE_SIZE);
 		
-		Integer totalRow = this.baseService.mySelectOne("_Menu_QueryMenuPage_Count", param);
-		List<Map<String, Object>> dataList = this.baseService.getSqlSessionTemplate().selectList("_Menu_QueryMenuPage", param, rb);
+		Integer totalRow = this.baseService.mySelectOne("_EXT.Menu_QueryMenuPage_Count", param);
+		List<Map<String, Object>> dataList = this.baseService.getSqlSessionTemplate().selectList("_EXT.Menu_QueryMenuPage", param, rb);
 		
 		Pager pager = new Pager(page.intValue(), Const.PAGE_SIZE, totalRow.intValue());
 		pager.setData(dataList);
@@ -130,7 +130,7 @@ public class MenuAction extends BaseAction{
 //		Log.Debug("id:" + id);
 		//有子菜单，不能删除
 		String sql = "select count(*) total from menu where pid = ?";
-		int total = this.baseService.getJdbcTemplate().queryForInt(sql, id);
+		int total = this.baseService.getJdbcTemplate().queryForObject(sql, Integer.class, id);
 		if(total == 0){
 			this.baseService.getSqlSessionTemplate().delete(Menu.DeleteByPk, id);
 			response.getWriter().write("y");
@@ -144,7 +144,7 @@ public class MenuAction extends BaseAction{
 		String id = request.getParameter("id");
 		Menu mu = this.baseService.getSqlSessionTemplate().selectOne(Menu.SelectByPk, id);
 		
-		List<Map<String, Object>> subMenuList = this.baseService.getSqlSessionTemplate().selectList("_Menu_QueryAllSubMenu", id);
+		List<Map<String, Object>> subMenuList = this.baseService.getSqlSessionTemplate().selectList("_EXT.Menu_QueryAllSubMenu", id);
 		//将所有id值拼接成1,2,3,4,5,6的形式
 		StringBuilder sb = new StringBuilder();
 		sb.append(id + ",");

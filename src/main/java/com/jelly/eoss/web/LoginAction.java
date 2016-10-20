@@ -54,7 +54,7 @@ public class LoginAction extends BaseAction {
 			Map<String, String> pm = new HashMap<String, String>();
 			pm.put("username", username);
 			pm.put("password", Digest.GetMD5(password));
-			Users user = this.baseService.mySelectOne("_User_SelectUserByNameAndPwd", pm);
+			Users user = this.baseService.mySelectOne("_EXT.SelectUserByNameAndPwd", pm);
 			if(user == null){
 				this.responseSimpleJson(response, false, "用户名与密码不匹配");
 				return;
@@ -67,7 +67,7 @@ public class LoginAction extends BaseAction {
 			 * 1#2#5#16
 			 * 将重复的id过滤掉
 			 */
-			List<Map<String, Object>> list = this.baseService.mySelectList("_Login_QueryTreePathByUserId", user.getId());
+			List<Map<String, Object>> list = this.baseService.mySelectList("_EXT.Login_QueryTreePathByUserId", user.getId());
 			Set<String> treeIdSet = new HashSet<String>();
 			String[] ids = null;
 			for(Map<String, Object> m : list){

@@ -82,7 +82,7 @@ public class MenuService {
 	
 	//根据条件查询子菜单
 	public String queryMenuSub(Map<String, String> pm){
-		List<Map<String, Object>> list = this.baseDao.mySelectList("_Menu_QueryMenuTree", pm);
+		List<Map<String, Object>> list = this.baseDao.mySelectList("_EXT.Menu_QueryMenuTree", pm);
 		this.decorateZnode(list, pm);
 		
 //		jsonStr=[{"id":1,"name":"系统管理"},{"id":2,"name":"业务管理"}]
