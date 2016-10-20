@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="">
+	<!-- 非工具生成的单表的SQL都以下划线开头 -->
+	
+	<select id="_User_SelectUserByNameAndPwd" parameterType="HashMap" resultType="com.jelly.eoss.model.Users">
+		select
+		id as "id",
+		username as "username",
+		password as "password",
+		create_datetime as "createDatetime"
+		from users m
+		where m.username = #{username}
+		and m.password = #{password}
+	</select>
+	
+	<select id="_Login_QueryTreePathByUserId" parameterType="int" resultType="LinkedHashMap">
+		SELECT m.path AS "ids"
+		FROM users u
+		INNER JOIN users_role ur ON u.id = ur.users_id
+		INNER JOIN role_permission rp ON rp.role_id = ur.role_id
+		INNER JOIN menu m ON m.id = rp.permission_id
+		WHERE u.id = #{id}
+	</select>
+</mapper>

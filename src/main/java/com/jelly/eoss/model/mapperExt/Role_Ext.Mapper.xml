@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="">
+	<!-- 非工具生成的单表的SQL都以下划线开头 -->
+	
+	<sql id="_Role_QueryRolePage_Body">
+		from role r
+		where 1 = 1
+		<if test="id != null and id != ''">and r.id = #{id}</if>
+		<if test="name != null and name != ''">and instr(r.name, #{name}) > 0</if>
+		<if test="createTimeStart != null and createTimeStart != ''">
+			and r.create_datetime &gt;= CONCAT('${createTimeStart}', ' 00:00:00')
+		</if>
+		<if test="createTimeEnd != null and createTimeEnd != ''">
+			and r.create_datetime &lt;= CONCAT('${createTimeEnd}', ' 23:59:59')
+		</if>
+	</sql>
+	<select id="_Role_QueryRolePage_Count" parameterType="HashMap" resultType="Integer">
+		select count(*)
+		<include refid="_Role_QueryRolePage_Body"/>
+	</select>
+	<select id="_Role_QueryRolePage" parameterType="HashMap" resultType="LinkedHashMap">
+		select
+		id as "id",
+		name as "name",
+		create_datetime as "createDatetime"
+		<include refid="_Role_QueryRolePage_Body"/>
+	</select>
+</mapper>

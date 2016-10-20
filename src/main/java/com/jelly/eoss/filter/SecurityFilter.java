@@ -1,0 +1,73 @@
+package com.jelly.eoss.filter;
+
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+
+import com.jelly.eoss.util.Const;
+import com.jelly.eoss.util.Log;
+
+public class SecurityFilter implements Filter {
+	// 不登陆也可以访问的资源
+	private static Set<String> GreenUrlSet = new HashSet<String>();
+
+	public void init(FilterConfig arg0) throws ServletException {
+		GreenUrlSet.add(Const.BASE_PATH + "/");
+		GreenUrlSet.add(Const.BASE_PATH + "/index.jsp");
+		GreenUrlSet.add(Const.BASE_PATH + "/login.jsp");
+		GreenUrlSet.add(Const.BASE_PATH + "/icode.jpg");
+		GreenUrlSet.add(Const.BASE_PATH + "/info.jsp");
+		GreenUrlSet.add(Const.BASE_PATH + "/login/loginIn.ac");
+	}
+
+	public void doFilter(ServletRequest srequest, ServletResponse sresponse, FilterChain filterChain) throws IOException, ServletException {
+		HttpServletRequest request = (HttpServletRequest) srequest;
+
+		if (Const.ENABLE_SECURITY_FILTER) {
+			if (request.getSession().getAttribute(Const.LOGIN_SESSION_KEY) == null) {
+				// String url = request.getRequestURL().toString();
+				String uri = request.getRequestURI();
+				
+				//不处理js, css, ico
+				if (uri.endsWith(".js") 
+						|| uri.endsWith(".css") 
+						|| uri.endsWith(".jpg") 
+						|| uri.endsWith(".gif")
+						|| uri.endsWith(".ico")) {
+					Log.Debug("security filter, pass, " + request.getRequestURI());
+					filterChain.doFilter(srequest, sresponse);
+					return;
+				}
+
+				//不处理指定的action, jsp
+				if (GreenUrlSet.contains(uri)) {
+					Log.Debug("security filter, pass, " + request.getRequestURI());
+					filterChain.doFilter(srequest, sresponse);
+					return;
+				}
+
+				//跳转到登陆页面
+				Log.Debug("security filter, deney, " + request.getRequestURI());
+				String html = "<script type=\"text/javascript\">top.window.location.href=\"_BP_/login.jsp\"</script>";
+				html = html.replace("_BP_", Const.BASE_PATH);
+				sresponse.getWriter().write(html);
+			} else {
+				filterChain.doFilter(srequest, sresponse);
+			}
+		} else {
+			filterChain.doFilter(srequest, sresponse);
+		}
+	}
+
+	public void destroy() {
+
+	}
+}

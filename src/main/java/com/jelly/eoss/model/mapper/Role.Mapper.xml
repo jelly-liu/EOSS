@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:Collonn, Email:collonn@126.com, QQ:195358385 -->
+
+
+<mapper namespace="com.jelly.eoss.model.Role">
+	<!-- 生成Insert -->
+        	<insert id="Insert" useGeneratedKeys="true" keyProperty="ID" parameterType="com.jelly.eoss.model.Role">
+			insert into ROLE (
+				<trim suffixOverrides=",">
+                            <if test="id != null">
+							ID,
+                            </if>
+
+                            <if test="name != null and name != ''">
+							NAME,
+                            </if>
+
+                            <if test="createDatetime != null and createDatetime != ''">
+							CREATE_DATETIME,
+                            </if>
+
+				</trim>
+			) values (
+				<trim suffixOverrides=",">
+                            <if test="id != null">
+                                #{id},
+                            </if>
+                            <if test="name != null and name != ''">
+                                #{name},
+                            </if>
+                            <if test="createDatetime != null and createDatetime != ''">
+                                #{createDatetime},
+                            </if>
+				</trim>
+			)
+		</insert>
+
+	<!-- 生成Update -->
+    <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+	<update id="Update" parameterType="com.jelly.eoss.model.Role">
+		update ROLE set 
+		<trim suffixOverrides=",">
+                    <if test="id != null">
+                    	ID = #{id},
+                    </if>
+                    <if test="name != null and name != ''">
+                    	NAME = #{name},
+                    </if>
+                    <if test="createDatetime != null and createDatetime != ''">
+                    	CREATE_DATETIME = #{createDatetime},
+                    </if>
+		</trim>
+        where
+                <if test="id != null and id != ''">
+				ID = #{id}
+                </if>
+            
+	</update>
+
+    <!-- 生成UpdateWithNull -->
+    <!-- 注意调用该SQL前必须先根据主键查询出该记录所有列数据，再设置某列为null -->
+    <update id="UpdateWithNull" parameterType="com.jelly.eoss.model.Role">
+        update ROLE set
+        <trim suffixOverrides=",">
+			ID = #{id},
+			NAME = #{name},
+			CREATE_DATETIME = #{createDatetime},
+        </trim>
+        where
+		ID = #{id}
+			
+    </update>
+	
+	<!-- 根据表的主键生成Delete -->
+		<delete id="DeleteByPk" parameterType="java.io.Serializable">
+			
+			delete 
+			from ROLE 
+			where 
+				ID = #{id}
+				
+		</delete>
+	<!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误删除 -->
+	<delete id="DeleteByPojo" parameterType="com.jelly.eoss.model.Role">
+		<!-- 请注意，该表没有主键 -->
+		delete
+		from ROLE
+		where
+        <trim suffixOverrides="and">
+                <if test="id != null">
+					ID = #{id} and
+                </if>
+                <if test="name != null and name != ''">
+					NAME = #{name} and
+                </if>
+                <if test="createDatetime != null and createDatetime != ''">
+					CREATE_DATETIME = #{createDatetime} and
+                </if>
+		</trim>
+	</delete>
+
+	<!-- 生成Select通用表头 -->
+	<sql id="SelectColumns">
+		<trim suffixOverrides=",">
+				ID as "id",
+				NAME as "name",
+				CREATE_DATETIME as "createDatetime",
+		</trim>
+	</sql>
+	
+	<!-- 生成Select通用查询条件 -->
+	<sql id="SelectWheres">
+                <if test="id != null">
+                    and ID = #{id}
+                </if>
+                <if test="name != null and name != ''">
+                    and NAME = #{name}
+                </if>
+                <if test="createDatetime != null and createDatetime != ''">
+                    and CREATE_DATETIME = #{createDatetime}
+                </if>
+	</sql>
+	
+	<!-- 生成Select -->
+	<select id="Select" parameterType="com.jelly.eoss.model.Role" resultType="com.jelly.eoss.model.Role">
+		select
+		<include refid="SelectColumns"/>
+		from ROLE
+		where 1 = 1
+		<include refid="SelectWheres"/>
+	</select>
+
+    <!-- 生成SelectCount -->
+    <select id="SelectCount" parameterType="com.jelly.eoss.model.Role" resultType="Long">
+        select count(*) ct
+        from ROLE
+        <where>
+            <include refid="SelectWheres"/>
+        </where>
+    </select>
+
+    <!-- 根据表的主键生成SelectByPk，该表只有单列主键 -->
+	<select id="SelectByPk" parameterType="java.io.Serializable" resultType="com.jelly.eoss.model.Role">
+		select
+		<include refid="SelectColumns"/>
+		from ROLE
+		where
+				ID = #{id}
+			
+	</select>
+</mapper>

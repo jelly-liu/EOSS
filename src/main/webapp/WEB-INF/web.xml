@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+	<display-name>EOSS</display-name>
+
+	<!-- config spring param -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:config/spring/spring_*.xml</param-value>
+	</context-param>
+
+	<!-- config spring -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- config user define ServletContextListener -->
+	<listener>
+		<listener-class>com.jelly.eoss.listener.StartupApplicationContextListener</listener-class>
+	</listener>
+	
+	<!-- config encode, must be the first filter -->
+	<filter>
+		<filter-name>SpringCharacterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>SpringCharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- SecurityFilter filter -->
+	<filter>
+		<filter-name>SecurityFilter</filter-name>
+		<filter-class>com.jelly.eoss.filter.SecurityFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>SecurityFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- spring mvc -->
+	<servlet>
+		<servlet-name>spring3mvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+          <param-name>contextConfigLocation</param-name>
+          <param-value>classpath*:config/spring/spring-mvc.xml</param-value>
+        </init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>spring3mvc</servlet-name>
+		<url-pattern>*.ac</url-pattern>
+	</servlet-mapping>
+
+	<!-- config servlet here -->
+	<servlet>
+		<servlet-name>icodeServlet</servlet-name>
+		<servlet-class>com.jelly.eoss.servlet.ICodeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>icodeServlet</servlet-name>
+		<url-pattern>/icode.jpg</url-pattern>
+	</servlet-mapping>
+
+	<!-- session config -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<!-- config welcome-file-list -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+	<!-- config error page -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/404.jsp</location>
+	</error-page>
+	<!--<error-page>
+		<error-code>500</error-code>
+		<location>/500.jsp</location>
+	</error-page>-->
+
+	<!-- config taglib here -->
+
+	<!-- config resource-ref here, such as JNDI -->
+
+	<!-- config jsp-config here -->
+</web-app>
