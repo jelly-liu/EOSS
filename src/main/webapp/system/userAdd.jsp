@@ -31,6 +31,14 @@
 						<ul id="zTreeUL" class="ztree"></ul>
 					</td>
 				</tr>
+
+				<tr>
+					<td align="right">选择资源：</td>
+					<td>
+						<input type="hidden" id="resourcesIds" name="resourcesIds"/>
+						<ul id="zTreeULResource" class="ztree"></ul>
+					</td>
+				</tr>
 				<tr>
 					<td colspan="2" align="center">
 						<a id="submitBtn" href="###" class="easyui-linkbutton">提交</a>

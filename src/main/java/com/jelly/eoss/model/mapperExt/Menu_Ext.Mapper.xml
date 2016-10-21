@@ -8,8 +8,10 @@
 		id as "id", 
 		pid as "pId", 
 		name as "name", 
-		leaf as "leaf", 
-		url as "url", 
+		leaf as "leaf",
+		<if test="withoutUrl == null or withoutUrl == ''">
+			url as "url",
+		</if>
 		target as "target",
 		lev as "lev"
 		from menu m

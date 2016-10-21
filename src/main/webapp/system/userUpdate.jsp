@@ -39,9 +39,17 @@
 				<tr>
 					<td align="right">选择角色：</td>
 					<td>
-						<div id="zTreeNodeJson">${zTreeNodeJson}</div>
+						<div id="zTreeNodeJson"  style="display:none;">${zTreeNodeJson}</div>
 						<input type="hidden" id="roleIds" name="roleIds"/>
 						<ul id="zTreeUL" class="ztree"></ul>
+					</td>
+				</tr>
+				<tr>
+					<td align="right">选择资源：</td>
+					<td>
+						<div id="zTreeNodeJsonResource"  style="display:none;">${zTreeNodeJsonResource}</div>
+						<input type="hidden" id="resourceIds" name="resourceIds"/>
+						<ul id="zTreeULResource" class="ztree"></ul>
 					</td>
 				</tr>
 				<tr>

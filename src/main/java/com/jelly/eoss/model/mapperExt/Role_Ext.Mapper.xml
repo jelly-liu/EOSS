@@ -26,4 +26,10 @@
 		create_datetime as "createDatetime"
 		<include refid="Role_QueryRolePage_Body"/>
 	</select>
+
+	<select id="Role_QueryAllPermissionWithRole" parameterType="HashMap" resultType="LinkedHashMap">
+		SELECT p.id AS 'id', p.NAME AS 'name', rp.ROLE_ID AS 'roleId'
+		FROM permission p
+		LEFT JOIN role_permission rp ON p.ID = rp.PERMISSION_ID AND rp.ROLE_ID = #{id}
+	</select>
 </mapper>

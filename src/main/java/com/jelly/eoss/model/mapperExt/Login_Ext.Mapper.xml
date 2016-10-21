@@ -17,9 +17,8 @@
 	<select id="Login_QueryTreePathByUserId" parameterType="int" resultType="LinkedHashMap">
 		SELECT m.path AS "ids"
 		FROM users u
-		INNER JOIN users_role ur ON u.id = ur.users_id
-		INNER JOIN role_permission rp ON rp.role_id = ur.role_id
-		INNER JOIN menu m ON m.id = rp.permission_id
+		INNER JOIN users_menu um ON u.ID = um.USERS_ID
+		INNER JOIN menu m ON m.id =um.MENU_ID
 		WHERE u.id = #{id}
 	</select>
 </mapper>

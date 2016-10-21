@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="_EXT">
+	<!-- 非工具生成的单表的SQL都以下划线开头 -->
+	
+	<sql id="Rule_QueryRulePage_Body">
+		from Rule r
+		where 1 = 1
+		<if test="id != null and id != ''">and r.id = #{id}</if>
+		<if test="path != null and path != ''">and instr(r.path, #{path}) > 0</if>
+        <if test="rule != null and rule != ''">and instr(r.rule, #{rule}) > 0</if>
+	</sql>
+	<select id="Rule_QueryRulePage_Count" parameterType="HashMap" resultType="Integer">
+		select count(*)
+		<include refid="Rule_QueryRulePage_Body"/>
+	</select>
+	<select id="Rule_QueryRulePage" parameterType="HashMap" resultType="LinkedHashMap">
+		select
+		id as "id",
+		path as "path",
+		rule as "rule"
+		<include refid="Rule_QueryRulePage_Body"/>
+	</select>
+</mapper>

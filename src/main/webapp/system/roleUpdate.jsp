@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
 <html>
@@ -22,9 +23,17 @@
 				<tr>
 					<td align="right" width="100">选择权限：</td>
 					<td>
-						<div id="zTreeNodeJson" style="display:none;">${zTreeNodeJson}</div>
-						<input type="hidden" id="permissionIds" name="permissionIds"/>
-						<ul id="zTreeUL" class="ztree"></ul>
+						<input type="hidden" id="permissionIdsHide" name="permissionIds"/>
+						<c:forEach var="it" items="${permissionList}" varStatus="st">
+							<c:choose>
+								<c:when test="${it.roleId == null}">
+									<input type="checkbox" class="permission" name="permission" value="${it.id}"/>${it.name}
+								</c:when>
+								<c:otherwise>
+									<input type="checkbox" class="permission" name="permission" value="${it.id}" checked="checked"/>${it.name}
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
 					</td>
 				</tr>
 				<tr>

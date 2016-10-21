@@ -1,4 +1,6 @@
 <%@ page pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
 <html>
 	<head>
@@ -21,8 +23,10 @@
 				<tr>
 					<td align="right" width="100">选择权限：</td>
 					<td>
-						<input type="hidden" id="permissionIds" name="permissionIds"/>
-						<ul id="zTreeUL" class="ztree"></ul>
+                        <input type="hidden" id="permissionIdsHide" name="permissionIds"/>
+						<c:forEach var="it" items="${permissionList}" varStatus="st">
+							<input type="checkbox" class="permission" name="permission" value="${it.id}"/>${it.name}
+						</c:forEach>
 					</td>
 				</tr>
 				<tr>

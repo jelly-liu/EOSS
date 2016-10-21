@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jelly.eoss.model.Permission;
 import net.sf.json.JSONArray;
 
 import org.apache.ibatis.session.RowBounds;
@@ -65,6 +66,13 @@ public class RoleAction extends BaseAction{
 		return new ModelAndView("/system/roleList.jsp");
 	}
 
+	@RequestMapping(value = "/toAddRole")
+	public ModelAndView toAddRole(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		List<Permission> permissionList = this.baseService.mySelectList(Permission.Select);
+		request.setAttribute("permissionList", permissionList);
+		return new ModelAndView("/system/roleAdd.jsp");
+	}
+
 	@RequestMapping(value = "/addRole")
 	public ModelAndView addRole(HttpServletRequest request, HttpServletResponse response, Role role) throws Exception{
 		int id = ComUtil.QueryNextID("id", "role");
@@ -93,30 +101,12 @@ public class RoleAction extends BaseAction{
 	@RequestMapping(value = "/updateRolePrepare")
 	public ModelAndView updateRolePrepare(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = request.getParameter("id");
-		Role r = this.baseService.mySelectOne(Role.SelectByPk, id);
-		
-		//将该角色已有菜单用逗号连接成一个字符串，如1,2,3,4,5,6
-		String sql = "select permission_id as id from role_permission where role_id = ?";
-		List<Map<String, Object>> permissionIdsOldList = this.baseService.jdQueryForList(sql, id);
-		StringBuilder sb = new StringBuilder();
-		for(Map<String, Object> m : permissionIdsOldList){
-			sb.append(m.get("id").toString() + ",");
-		}
-		if(sb.length() > 0){
-			sb.deleteCharAt(sb.length() - 1);
-		}
-//		Log.Debug(sb.toString());
-		
-		//装饰zTreeNode
-		Map<String, String> pm = new HashMap<String, String>();
-		pm.put("onlyLeafCanCheck", "yes");
-		pm.put("openAll", "yes");
-		pm.put("checkedIds", sb.toString());
-		String zTreeNodeJson = this.menuService.queryMenuSub(pm);
-//		Log.Debug(zTreeNodeJson);
-		
-		request.setAttribute("role", r);
-		request.setAttribute("zTreeNodeJson", zTreeNodeJson);
+
+		Role role = this.baseService.mySelectOne(Role.SelectByPk, id);
+        List<Map<String, Object>> permissionList = this.baseService.mySelectList("_EXT.Role_QueryAllPermissionWithRole", role.getId());
+
+		request.setAttribute("role", role);
+        request.setAttribute("permissionList", permissionList);
 		return new ModelAndView("/system/roleUpdate.jsp");
 	}
 	

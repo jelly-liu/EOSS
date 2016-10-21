@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import com.jelly.eoss.util.Log;
+import org.apache.commons.lang3.StringUtils;
 
 public class Digest {
 	/*
@@ -13,6 +14,10 @@ public class Digest {
 	 * 得到32位MD5加密密码
 	 */
 	public static String GetMD5(String str) {
+		if(StringUtils.isEmpty(str)){
+			return null;
+		}
+
 		MessageDigest md = null;
 		try {
 			md = MessageDigest.getInstance("MD5");
