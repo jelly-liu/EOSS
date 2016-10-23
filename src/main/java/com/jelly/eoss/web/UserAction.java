@@ -25,7 +25,7 @@ import com.jelly.eoss.util.security.Digest;
 import com.jelly.eoss.model.Users;
 
 @Controller
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/system/user")
 public class UserAction extends BaseAction{
 	@Resource
 	private BaseService baseService;
@@ -48,7 +48,7 @@ public class UserAction extends BaseAction{
 		}
 	}
 	
-	@RequestMapping(value = "/queryUserPage")
+	@RequestMapping(value = "/toList")
 	public ModelAndView queryUserPage(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Integer page = ServletRequestUtils.getIntParameter(request, "page", 1);
 		
@@ -66,7 +66,12 @@ public class UserAction extends BaseAction{
 		return new ModelAndView("/system/userList.jsp");
 	}
 
-	@RequestMapping(value = "/addUser")
+	@RequestMapping(value = "/toAdd")
+	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response, Users user) throws Exception {
+		return new ModelAndView("/system/userAdd.jsp");
+	}
+
+		@RequestMapping(value = "/add")
 	public ModelAndView addUser(HttpServletRequest request, HttpServletResponse response, Users user) throws Exception{
 		String roleIds = request.getParameter("roleIds");
         String resourcesIds = request.getParameter("resourcesIds");
@@ -97,7 +102,7 @@ public class UserAction extends BaseAction{
 		return new ModelAndView("/system/userList.jsp");
 	}
 	
-	@RequestMapping(value = "/updateUserPrepare")
+	@RequestMapping(value = "/toUpdate")
 	public ModelAndView updateUserPrepare(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = request.getParameter("id");
 		
@@ -149,7 +154,7 @@ public class UserAction extends BaseAction{
 		return new ModelAndView("/system/userUpdate.jsp");
 	}
 	
-	@RequestMapping(value = "/updateUser")
+	@RequestMapping(value = "/update")
 	public ModelAndView updateUser(HttpServletRequest request, HttpServletResponse response, Users user) throws Exception{
 		//更新用户信息
 		Users u = this.baseService.mySelectOne(Users.SelectByPk, user.getId());
@@ -221,7 +226,7 @@ public class UserAction extends BaseAction{
 		}
 	}
 	
-	@RequestMapping(value = "/deleteUser")
+	@RequestMapping(value = "/delete")
 	public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
 		

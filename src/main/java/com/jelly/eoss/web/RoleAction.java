@@ -28,14 +28,14 @@ import com.jelly.eoss.util.Pager;
 import com.jelly.eoss.model.Role;
 
 @Controller
-@RequestMapping(value = "/role")
+@RequestMapping(value = "/system/role")
 public class RoleAction extends BaseAction{
 	@Resource
 	private BaseService baseService;
 	@Resource
 	private MenuService menuService;
 	
-	@RequestMapping(value = "/queryAllRoleAjax")
+	@RequestMapping(value = "/queryAllAjax")
 	public void queryAllRoleAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<Map<String, Object>> roleList = this.baseService.mySelectList("_EXT.Role_QueryRolePage");
 		for(Map<String, Object> m : roleList){
@@ -48,7 +48,7 @@ public class RoleAction extends BaseAction{
 		response.getWriter().write(jsonStr);
 	}
 	
-	@RequestMapping(value = "/queryRolePage")
+	@RequestMapping(value = "/toList")
 	public ModelAndView queryRolePage(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Integer page = ServletRequestUtils.getIntParameter(request, "page", 1);
 		
@@ -66,14 +66,14 @@ public class RoleAction extends BaseAction{
 		return new ModelAndView("/system/roleList.jsp");
 	}
 
-	@RequestMapping(value = "/toAddRole")
+	@RequestMapping(value = "/toAdd")
 	public ModelAndView toAddRole(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		List<Permission> permissionList = this.baseService.mySelectList(Permission.Select);
 		request.setAttribute("permissionList", permissionList);
 		return new ModelAndView("/system/roleAdd.jsp");
 	}
 
-	@RequestMapping(value = "/addRole")
+	@RequestMapping(value = "/add")
 	public ModelAndView addRole(HttpServletRequest request, HttpServletResponse response, Role role) throws Exception{
 		int id = ComUtil.QueryNextID("id", "role");
 		String permissionIdsStr = request.getParameter("permissionIds");
@@ -89,7 +89,7 @@ public class RoleAction extends BaseAction{
 		return new ModelAndView("/system/roleList.jsp");
 	}
 	
-	@RequestMapping(value = "/deleteRole")
+	@RequestMapping(value = "/delete")
 	public void deleteRole(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
 		this.baseService.jdDelete("delete from role where id = ?", id);
@@ -98,7 +98,7 @@ public class RoleAction extends BaseAction{
 		response.getWriter().write("y");
 	}
 	
-	@RequestMapping(value = "/updateRolePrepare")
+	@RequestMapping(value = "/toUpdate")
 	public ModelAndView updateRolePrepare(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = request.getParameter("id");
 

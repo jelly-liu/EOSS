@@ -26,7 +26,7 @@ import com.jelly.eoss.util.Pager;
 import com.jelly.eoss.model.Menu;
 
 @Controller
-@RequestMapping(value = "/menu")
+@RequestMapping(value = "/system/menu")
 public class MenuAction extends BaseAction{
 	@Resource
 	private BaseService baseService;
@@ -34,7 +34,7 @@ public class MenuAction extends BaseAction{
 	private MenuService menuService;
 	
 	//针对登录用户查询专用
-	@RequestMapping(value = "/queryMenuOfLoginUser")
+	@RequestMapping(value = "/queryByUser")
 	public void queryMenuOfLoginUser(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		try{
 			//该登录用户所拥有的所有菜单，key=menuId
@@ -52,7 +52,7 @@ public class MenuAction extends BaseAction{
 	}
 	
 	//针对登录用户查询专用
-	@RequestMapping(value = "/queryMenuTreeWestOfLoginUser")
+	@RequestMapping(value = "/queryTreeByUser")
 	public ModelAndView queryMenuTreeWestOfLoginUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//该登录用户所拥有的所有菜单，key=menuId
 		String idsOfLoginUserMenu = request.getSession().getAttribute(Const.LOGIN_MENU_TREE_IDS_KEY).toString();
@@ -68,7 +68,7 @@ public class MenuAction extends BaseAction{
 		return null;
 	}
 	
-	@RequestMapping(value = "/queryMenuSub")
+	@RequestMapping(value = "/querySub")
 	public ModelAndView queryMenuSub(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Map<String, String> pm = this.getRequestMap(request);
 		String jsonZTree = this.menuService.queryMenuSub(pm);
@@ -78,7 +78,7 @@ public class MenuAction extends BaseAction{
 		return new ModelAndView("/base/west.jsp");
 	}
 	
-	@RequestMapping(value = "/queryMenuSubAjax")
+	@RequestMapping(value = "/querySubAjax")
 	public void queryMenuSubAjax(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Map<String, String> pm = this.getRequestMap(request);
 		String jsonZTree = this.menuService.queryMenuSub(pm);
@@ -86,7 +86,7 @@ public class MenuAction extends BaseAction{
 		response.getWriter().write(jsonZTree);
 	}
 	
-	@RequestMapping(value = "/queryMenuPage")
+	@RequestMapping(value = "/toList")
 	public ModelAndView queryMenuPage(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Integer page = ServletRequestUtils.getIntParameter(request, "page", 1);
 		
@@ -104,8 +104,13 @@ public class MenuAction extends BaseAction{
 		this.resetAllRequestParams(request);
 		return new ModelAndView("/system/menuList.jsp");
 	}
+
+	@RequestMapping(value = "/toAdd")
+	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response, Menu menu) throws ServletException, IOException{
+		return new ModelAndView("/system/menuAdd.jsp");
+	}
 	
-	@RequestMapping(value = "/addMenu")
+	@RequestMapping(value = "/add")
 	public ModelAndView addMenu(HttpServletRequest request, HttpServletResponse response, Menu menu) throws ServletException, IOException{
 		int id = ComUtil.QueryNextID("id", "menu");
 		menu.setId(id);
@@ -114,10 +119,10 @@ public class MenuAction extends BaseAction{
 		menu.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
 		this.baseService.myInsert(Menu.Insert, menu);
 		
-		return new ModelAndView("/system/menuList.jsp");
+		return new ModelAndView("/system/menu/toList.ac");
 	}
 	
-	@RequestMapping(value = "/deleteMenu")
+	@RequestMapping(value = "/delete")
 	public void deleteMenu(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = ServletRequestUtils.getStringParameter(request, "id");
 		
@@ -139,7 +144,7 @@ public class MenuAction extends BaseAction{
 		}
 	}
 	
-	@RequestMapping(value = "/updateMenuPrepare")
+	@RequestMapping(value = "/toUpdate")
 	public ModelAndView updateMenuPrepare(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String id = request.getParameter("id");
 		Menu mu = this.baseService.getSqlSessionTemplate().selectOne(Menu.SelectByPk, id);
@@ -170,7 +175,7 @@ public class MenuAction extends BaseAction{
 		return new ModelAndView("/system/menuUpdate.jsp");
 	}
 	
-	@RequestMapping(value = "/updateMenu")
+	@RequestMapping(value = "/update")
 	public ModelAndView updateMenu(HttpServletRequest request, HttpServletResponse response, Menu menu) throws ServletException, IOException{
 		//如果是根菜单，则只能更新菜单名
 		if(menu.getId() == 1){

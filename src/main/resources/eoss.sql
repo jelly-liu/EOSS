@@ -1,8 +1,9 @@
 /*
 SQLyog 企业版 - MySQL GUI v8.14 
-MySQL - 5.6.24 : Database - eoss
-*********************************************************************
-*/
+MySQL - 5.7.16 : Database - eoss
+************************************************************************
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -35,7 +36,7 @@ CREATE TABLE `menu` (
 
 /*Data for the table `menu` */
 
-insert  into `menu`(`ID`,`PID`,`NAME`,`LEAF`,`PATH`,`LEV`,`URL`,`TARGET`,`CREATE_DATETIME`) values (1,-1,'菜单根目录',0,'--',0,NULL,NULL,'2012-12-15 18:08:07'),(2,1,'系统管理',0,'1#2',1,NULL,NULL,'2012-12-13 13:46:00'),(3,1,'业务管理',0,'1#3',1,NULL,NULL,'2012-12-13 13:53:10'),(4,2,'菜单管理',0,'1#2#4',2,NULL,NULL,'2012-12-13 16:00:02'),(5,2,'用户管理',0,'1#2#5',2,NULL,NULL,'2012-12-13 16:00:02'),(6,2,'角色管理',0,'1#2#6',2,NULL,NULL,'2012-12-13 16:00:02'),(7,4,'菜单添加',1,'1#2#4#7',3,'/system/menuAdd.jsp','centerFrame','2012-12-13 16:00:02'),(8,2,'权限管理',0,'1#2#8',2,NULL,NULL,'2012-12-16 13:59:33'),(9,4,'菜单查询',1,'1#2#4#9',3,'/menu/queryMenuPage.ac','centerFrame','2012-12-16 14:15:20'),(10,8,'权限添加',1,'1#2#8#10',3,'/system/permissionAdd.jsp','centerFrame','2012-12-20 14:58:29'),(13,8,'权限查询',1,'1#2#8#13',3,'/permission/queryPermissionPage.ac','centerFrame','2012-12-20 16:28:03'),(14,6,'角色添加',1,'1#2#6#14',3,'/role/toAddRole.ac','centerFrame','2012-12-22 12:36:14'),(15,6,'角色查询',1,'1#2#6#15',3,'/role/queryRolePage.ac','centerFrame','2012-12-22 14:29:28'),(16,5,'用户添加',1,'1#2#5#16',3,'/system/userAdd.jsp','centerFrame','2012-12-22 18:34:26'),(17,5,'用户查询',1,'1#2#5#17',3,'/user/queryUserPage.ac','centerFrame','2012-12-22 19:56:13'),(18,2,'资源管理',0,'1#2#18',2,NULL,NULL,'2016-10-21 11:43:59'),(19,18,'资源添加',1,'1#2#18#19',3,'/system/resourceAdd.jsp','centerFrame','2016-10-21 11:46:46'),(20,18,'资源查询',1,'1#2#18#20',3,'/resource/queryResourcePage.ac','centerFrame','2016-10-21 11:47:05'),(21,2,'规则管理',0,'1#2#21',2,NULL,NULL,'2016-10-21 17:01:21'),(22,21,'规则添加',1,'1#2#21#22',3,'/toRuleAdd','centerFrame','2016-10-21 17:02:39'),(23,21,'规则查询',1,'1#2#21#23',3,'/toRule','centerFrame','2016-10-21 17:03:02');
+insert  into `menu`(`ID`,`PID`,`NAME`,`LEAF`,`PATH`,`LEV`,`URL`,`TARGET`,`CREATE_DATETIME`) values (1,-1,'菜单根目录',0,'--',0,NULL,NULL,'2012-12-15 18:08:07'),(2,1,'系统管理',0,'1#2',1,NULL,NULL,'2012-12-13 13:46:00'),(3,1,'业务管理',0,'1#3',1,NULL,NULL,'2012-12-13 13:53:10'),(4,2,'菜单管理',0,'1#2#4',2,NULL,NULL,'2012-12-13 16:00:02'),(5,2,'用户管理',0,'1#2#5',2,NULL,NULL,'2012-12-13 16:00:02'),(6,2,'角色管理',0,'1#2#6',2,NULL,NULL,'2012-12-13 16:00:02'),(7,4,'菜单添加',1,'1#2#4#7',3,'/system/menu/toAdd.ac','centerFrame','2012-12-13 16:00:02'),(8,2,'权限管理',0,'1#2#8',2,NULL,NULL,'2012-12-16 13:59:33'),(9,4,'菜单查询',1,'1#2#4#9',3,'/system/menu/toList.ac','centerFrame','2012-12-16 14:15:20'),(10,8,'权限添加',1,'1#2#8#10',3,'/system/permission/toAdd.ac','centerFrame','2012-12-20 14:58:29'),(13,8,'权限查询',1,'1#2#8#13',3,'/system/permission/toList.ac','centerFrame','2012-12-20 16:28:03'),(14,6,'角色添加',1,'1#2#6#14',3,'/system/role/toAddRole.ac','centerFrame','2012-12-22 12:36:14'),(15,6,'角色查询',1,'1#2#6#15',3,'/system/role/toList.ac','centerFrame','2012-12-22 14:29:28'),(16,5,'用户添加',1,'1#2#5#16',3,'/system/user/toUserAdd.ac','centerFrame','2012-12-22 18:34:26'),(17,5,'用户查询',1,'1#2#5#17',3,'/system/user/toList.ac','centerFrame','2012-12-22 19:56:13'),(18,2,'资源管理',0,'1#2#18',2,NULL,NULL,'2016-10-21 11:43:59'),(19,18,'资源添加',1,'1#2#18#19',3,'/system/rosource/toAdd.ac','centerFrame','2016-10-21 11:46:46'),(20,18,'资源查询',1,'1#2#18#20',3,'/system/resource/toList.ac','centerFrame','2016-10-21 11:47:05'),(21,2,'asdb',0,'1#2#21',2,NULL,NULL,'2016-10-23 19:06:26');
 
 /*Table structure for table `permission` */
 
@@ -76,19 +77,6 @@ CREATE TABLE `role_permission` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `role_permission` */
-
-/*Table structure for table `rule` */
-
-DROP TABLE IF EXISTS `rule`;
-
-CREATE TABLE `rule` (
-  `id` int(11) NOT NULL,
-  `path` varchar(128) NOT NULL,
-  `rule` varchar(512) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `rule` */
 
 /*Table structure for table `users` */
 

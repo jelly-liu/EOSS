@@ -26,7 +26,7 @@ $(function(){
 		},
 		async: {
 			enable: true,
-			url: EossGlobal.basePath + "/menu/queryMenuSubAjax.ac",
+			url: EossGlobal.basePath + "/system/menu/querySubAjax.ac",
 			autoParam: ["id"],
 			otherParam: {"onlyParent":"yes"},
 			dataFilter: function(treeId, parentNode, responseData){

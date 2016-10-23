@@ -37,11 +37,11 @@ $(function() {
 		$.ajax({
 			type: 'POST',
 			dataType: 'json',
-			url: EossGlobal.basePath + '/login/loginIn.ac',
+			url: EossGlobal.basePath + '/login.ac',
 			data: {username:$name.val(), password:$pwd.val(), icode:$icode.val()},
 			success: function(rs){
 				if(rs.flag){
-					window.location.href = EossGlobal.basePath + '/login/layout.ac';
+					window.location.href = EossGlobal.basePath + '/layout.ac';
 				}else{
 					$.messager.waitClose();
 					$.messager.alert('提示', rs.msg);

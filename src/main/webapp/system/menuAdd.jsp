@@ -7,7 +7,7 @@
 	</head>
 
 	<body>
-		<form id="submitForm" action="${BASE_PATH}/menu/addMenu.ac" class="eossForm" method="post">
+		<form id="submitForm" action="${BASE_PATH}/system/menu/add.ac" class="eossForm" method="post">
 			<table class="eossFromTable">
 				<tr class="panel-header">
 					<td colspan="99">菜单添加</td>

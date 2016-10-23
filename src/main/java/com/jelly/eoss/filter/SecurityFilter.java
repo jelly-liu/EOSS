@@ -22,10 +22,10 @@ public class SecurityFilter implements Filter {
 	public void init(FilterConfig arg0) throws ServletException {
 		GreenUrlSet.add(Const.BASE_PATH + "/");
 		GreenUrlSet.add(Const.BASE_PATH + "/index.jsp");
-		GreenUrlSet.add(Const.BASE_PATH + "/login.jsp");
 		GreenUrlSet.add(Const.BASE_PATH + "/icode.jpg");
 		GreenUrlSet.add(Const.BASE_PATH + "/info.jsp");
-		GreenUrlSet.add(Const.BASE_PATH + "/login/loginIn.ac");
+		GreenUrlSet.add(Const.BASE_PATH + "/toLogin.ac");
+        GreenUrlSet.add(Const.BASE_PATH + "/login.ac");
 	}
 
 	public void doFilter(ServletRequest srequest, ServletResponse sresponse, FilterChain filterChain) throws IOException, ServletException {
@@ -56,7 +56,7 @@ public class SecurityFilter implements Filter {
 
 				//跳转到登陆页面
 				Log.Debug("security filter, deney, " + request.getRequestURI());
-				String html = "<script type=\"text/javascript\">top.window.location.href=\"_BP_/login.jsp\"</script>";
+				String html = "<script type=\"text/javascript\">top.window.location.href=\"_BP_/toLogin.ac\"</script>";
 				html = html.replace("_BP_", Const.BASE_PATH);
 				sresponse.getWriter().write(html);
 			} else {

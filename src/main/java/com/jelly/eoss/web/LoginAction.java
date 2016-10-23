@@ -22,12 +22,16 @@ import com.jelly.eoss.util.security.Digest;
 import com.jelly.eoss.model.Users;
 
 @Controller
-@RequestMapping(value = "/login")
 public class LoginAction extends BaseAction {
 	@Resource
 	private BaseService baseService;
+
+    @RequestMapping(value = "/toLogin")
+    public String toLoginIn(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "/login.jsp";
+    }
 	
-	@RequestMapping(value = "/loginIn")
+	@RequestMapping(value = "/login")
 	public void loginIn(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try{
 			String username = ServletRequestUtils.getStringParameter(request, "username");
@@ -98,17 +102,16 @@ public class LoginAction extends BaseAction {
 		}
 	}
 	
-	@RequestMapping(value = "/layout")
-	public ModelAndView layout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mv = new ModelAndView("/system/layout/main.jsp");
-		return mv;
-	}
-	
-	@RequestMapping(value = "/loginOut")
+	@RequestMapping(value = "/logout")
 	public void loginOut(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.getSession().removeAttribute(Const.LOGIN_SESSION_KEY);
 		request.getSession().removeAttribute(Const.LOGIN_MENU_TREE_IDS_KEY);
 		response.getWriter().write("y");
+	}
+
+	@RequestMapping(value = "/layout")
+	public String layout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return "/system/layout/main.jsp";
 	}
 	
 	//getter and setter

@@ -22,12 +22,12 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = "/permission")
+@RequestMapping(value = "/system/permission")
 public class PermissionAction extends BaseAction{
 	@Resource
 	private BaseService baseService;
 
-	@RequestMapping(value = "/queryPermissionPage")
+	@RequestMapping(value = "/toList")
 	public ModelAndView queryPermissionPage(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Integer page = ServletRequestUtils.getIntParameter(request, "page", 1);
 		
@@ -44,8 +44,13 @@ public class PermissionAction extends BaseAction{
 		this.resetAllRequestParams(request);
 		return new ModelAndView("/system/permissionList.jsp");
 	}
+
+	@RequestMapping(value = "/toAdd")
+	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response, Permission permission) throws Exception{
+		return new ModelAndView("/system/permissionAdd.jsp");
+	}
 	
-	@RequestMapping(value = "/addPermission")
+	@RequestMapping(value = "/add")
 	public ModelAndView addPermission(HttpServletRequest request, HttpServletResponse response, Permission permission) throws Exception{
 		int id = ComUtil.QueryNextID("id", "permission");
 		permission.setId(id);
@@ -53,7 +58,7 @@ public class PermissionAction extends BaseAction{
 		return new ModelAndView("/system/permissionList.jsp");
 	}
 	
-	@RequestMapping(value = "/deletePermission")
+	@RequestMapping(value = "/delete")
 	public void deletePermission(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = request.getParameter("id");
 //		Log.Debug("id:" + id);
@@ -61,7 +66,7 @@ public class PermissionAction extends BaseAction{
 		response.getWriter().write("y");
 	}
 	
-	@RequestMapping(value = "/updatePermissionPrepare")
+	@RequestMapping(value = "/toUpdate")
 	public ModelAndView updatePermissionPrepare(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String id = request.getParameter("id");
 
@@ -71,7 +76,7 @@ public class PermissionAction extends BaseAction{
 		return new ModelAndView("/system/permissionUpdate.jsp");
 	}
 	
-	@RequestMapping(value = "/updatePermission")
+	@RequestMapping(value = "/update")
 	public ModelAndView updatePermission(HttpServletRequest request, HttpServletResponse response, Permission permission) throws ServletException, IOException{
 		this.baseService.myUpdate(Permission.Update, permission);
 
