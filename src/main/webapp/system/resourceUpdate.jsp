@@ -12,7 +12,7 @@
 	</head>
 
 	<body>
-		<form id="submitForm" action="${BASE_PATH}/resource/updateResource.ac" class="eossForm" method="post">
+		<form id="submitForm" action="${BASE_PATH}/system/resource/update.ac" class="eossForm" method="post">
 			<input type="hidden" id="menuId" name="id" value="${menu.id}"/>
 			<input type="hidden" id="menuLev" name="lev" value="${menu.lev}"/>
 			<input type="hidden" id="menuPath" name="path" value="${menu.path}"/>

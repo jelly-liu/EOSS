@@ -7,7 +7,7 @@ $(function () {
             	$.ajax({
         			type:'POST',
         			dataType: 'text',
-        			url: EossGlobal.basePath + '/loginOut.ac',
+        			url: EossGlobal.basePath + '/logout.ac',
         			success: function(rs){
         				if(rs == 'y'){
         					top.window.location.href = EossGlobal.basePath + '/toLogin';

@@ -28,7 +28,7 @@ public class PermissionAction extends BaseAction{
 	private BaseService baseService;
 
 	@RequestMapping(value = "/toList")
-	public ModelAndView queryPermissionPage(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView toList(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Integer page = ServletRequestUtils.getIntParameter(request, "page", 1);
 		
 		Map<String, String> param = this.getRequestMap(request);
@@ -51,15 +51,15 @@ public class PermissionAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/add")
-	public ModelAndView addPermission(HttpServletRequest request, HttpServletResponse response, Permission permission) throws Exception{
+	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, Permission permission) throws Exception{
 		int id = ComUtil.QueryNextID("id", "permission");
 		permission.setId(id);
 		this.baseService.myInsert(Permission.Insert, permission);
-		return new ModelAndView("/system/permissionList.jsp");
+		return new ModelAndView("/system/permission/toList.ac");
 	}
 	
 	@RequestMapping(value = "/delete")
-	public void deletePermission(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = request.getParameter("id");
 //		Log.Debug("id:" + id);
 		this.baseService.myDelete(Permission.DeleteByPk, id);
@@ -67,7 +67,7 @@ public class PermissionAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/toUpdate")
-	public ModelAndView updatePermissionPrepare(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String id = request.getParameter("id");
 
 		Permission permission = this.baseService.mySelectOne(Permission.SelectByPk, id);
@@ -77,11 +77,11 @@ public class PermissionAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView updatePermission(HttpServletRequest request, HttpServletResponse response, Permission permission) throws ServletException, IOException{
+	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, Permission permission) throws ServletException, IOException{
 		this.baseService.myUpdate(Permission.Update, permission);
 
 		request.setAttribute("permission", permission);
-		return new ModelAndView("/system/permissionList.jsp");
+		return new ModelAndView("/system/permission/toList.ac");
 	}
 	
 	//getter and setter

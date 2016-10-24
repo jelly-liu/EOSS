@@ -7,7 +7,7 @@
 	</head>
 
 	<body>
-		<form id="submitForm" action="${BASE_PATH}/permission/updatePermission.ac" class="eossForm" method="post">
+		<form id="submitForm" action="${BASE_PATH}/system/permission/update.ac" class="eossForm" method="post">
 			<input type="hidden" id="menuId" name="id" value="${permission.id}"/>
 			<table class="eossFromTable">
 				<tr class="panel-header">

@@ -27,7 +27,7 @@ $(function(){
 		},
 		async: {
 			enable: true,
-			url: EossGlobal.basePath + "/menu/queryMenuSubAjax.ac",
+			url: EossGlobal.basePath + "/system/menu/querySubAjax.ac",
 			autoParam: ["id"],
 			otherParam: {"onlyParent":"yes"},
 			dataFilter: function(treeId, parentNode, responseData){
@@ -65,7 +65,7 @@ $(function(){
 		}else{
 			var reg = '^\/';
 			if(url.search(reg) == -1){
-				top.$.messager.alert('提示','权限地址必须从服务器根目录开始，例如/system/addXX.jsp');
+				top.$.messager.alert('提示','权限地址必须从服务器根目录开始，例如/system/user/add.jsp');
 				return;
 			}
 		}

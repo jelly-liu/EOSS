@@ -49,7 +49,7 @@ public class UserAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/toList")
-	public ModelAndView queryUserPage(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView toList(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Integer page = ServletRequestUtils.getIntParameter(request, "page", 1);
 		
 		Map<String, String> param = this.getRequestMap(request);
@@ -72,7 +72,7 @@ public class UserAction extends BaseAction{
 	}
 
 		@RequestMapping(value = "/add")
-	public ModelAndView addUser(HttpServletRequest request, HttpServletResponse response, Users user) throws Exception{
+	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, Users user) throws Exception{
 		String roleIds = request.getParameter("roleIds");
         String resourcesIds = request.getParameter("resourcesIds");
 		ModelAndView mv = new ModelAndView();
@@ -99,11 +99,11 @@ public class UserAction extends BaseAction{
         //插入资源
         this.batchInsertUserResource(user.getId(), resourcesIds);
 		
-		return new ModelAndView("/system/userList.jsp");
+		return new ModelAndView("/system/user/toList.ac");
 	}
 	
 	@RequestMapping(value = "/toUpdate")
-	public ModelAndView updateUserPrepare(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = request.getParameter("id");
 		
 		//查询自己
@@ -155,7 +155,7 @@ public class UserAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView updateUser(HttpServletRequest request, HttpServletResponse response, Users user) throws Exception{
+	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, Users user) throws Exception{
 		//更新用户信息
 		Users u = this.baseService.mySelectOne(Users.SelectByPk, user.getId());
 		u.setUsername(user.getUsername());
@@ -170,11 +170,10 @@ public class UserAction extends BaseAction{
         String resourceIds = request.getParameter("resourceIds");
         this.batchInsertUserResource(user.getId(), resourceIds);
 		
-		return new ModelAndView("/system/userList.jsp");
+		return new ModelAndView("/system/user/toList.ac");
 	}
 	
 	//批量插入用户对应的角色，只选择用JdbcTemplate的批量更新方法，以保证高性能
-	@RequestMapping(value = "/batchInsertUserRole")
 	private void batchInsertUserRole(Integer userId, String roleIdsStr){
 		String sqlDelete = "delete from users_role where users_id = ?";
 		this.baseService.jdDelete(sqlDelete, userId);
@@ -227,7 +226,7 @@ public class UserAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/delete")
-	public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
 		
 		//删除自己

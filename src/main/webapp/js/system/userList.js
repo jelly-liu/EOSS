@@ -13,7 +13,7 @@ $(function(){
 				type: 'POST',
 				dataType: 'text',
 				data: 'id=' + $this.attr('value'),
-				url: EossGlobal.basePath + '/user/deleteUser.ac',
+				url: EossGlobal.basePath + '/system/user/delete.ac',
 				success: function(rs){
 					if(rs == 'y'){
 						top.$.messager.alert('提示','操作已成功', 'info', function(){
@@ -28,7 +28,7 @@ $(function(){
 	});
 	
 	$('table.eossDataTable').find('a[type=update]').click(function(){
-		window.location.href = EossGlobal.basePath + '/user/updateUserPrepare.ac?id=' + $(this).attr('value');
+		window.location.href = EossGlobal.basePath + '/system/user/toUpdate.ac?id=' + $(this).attr('value');
 	});
 
 	/*************************************** check submit ***************************************/

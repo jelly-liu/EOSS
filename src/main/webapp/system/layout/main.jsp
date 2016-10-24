@@ -12,7 +12,7 @@
 	<input type="hidden" id="userName" value="${EossLoginUser.username}" />
 
 	<!-- north -->
-	<div data-options="region:'north',split:true,href:'${BASE_PATH}/system/layout/northAjax.jsp'" style="height:40px;">
+	<div data-options="region:'north',split:true,href:'${BASE_PATH}/system/layout/northAjax.jsp'" style="height:50px;">
 		<!-- <iframe id="northFrame" name="northFrame" src="${BASE_PATH}/system/layout/north.jsp" frameborder=0 width="100%" height="100%"></iframe> -->
 	</div>
 
@@ -31,7 +31,7 @@
 	</div>
 
 	<!-- south -->
-	<div data-options="region:'south',split:true,href:'${BASE_PATH}/system/layout/southAjax.jsp'" style="height:35px;">
+	<div data-options="region:'south',split:true,href:'${BASE_PATH}/system/layout/southAjax.jsp'" style="height:60px;">
 	</div>
 </body>
 </html>

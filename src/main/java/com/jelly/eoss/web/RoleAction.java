@@ -36,7 +36,7 @@ public class RoleAction extends BaseAction{
 	private MenuService menuService;
 	
 	@RequestMapping(value = "/queryAllAjax")
-	public void queryAllRoleAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void queryAllAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<Map<String, Object>> roleList = this.baseService.mySelectList("_EXT.Role_QueryRolePage");
 		for(Map<String, Object> m : roleList){
 			m.put("pId", "-1");
@@ -49,7 +49,7 @@ public class RoleAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/toList")
-	public ModelAndView queryRolePage(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView toList(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Integer page = ServletRequestUtils.getIntParameter(request, "page", 1);
 		
 		Map<String, String> param = this.getRequestMap(request);
@@ -67,14 +67,14 @@ public class RoleAction extends BaseAction{
 	}
 
 	@RequestMapping(value = "/toAdd")
-	public ModelAndView toAddRole(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		List<Permission> permissionList = this.baseService.mySelectList(Permission.Select);
 		request.setAttribute("permissionList", permissionList);
 		return new ModelAndView("/system/roleAdd.jsp");
 	}
 
 	@RequestMapping(value = "/add")
-	public ModelAndView addRole(HttpServletRequest request, HttpServletResponse response, Role role) throws Exception{
+	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, Role role) throws Exception{
 		int id = ComUtil.QueryNextID("id", "role");
 		String permissionIdsStr = request.getParameter("permissionIds");
 		
@@ -86,11 +86,11 @@ public class RoleAction extends BaseAction{
 		//插入角色对应的权限
 		this.batchInsertRolePermission(role.getId(), permissionIdsStr);
 		
-		return new ModelAndView("/system/roleList.jsp");
+		return new ModelAndView("/system/role/toList.ac");
 	}
 	
 	@RequestMapping(value = "/delete")
-	public void deleteRole(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
 		this.baseService.jdDelete("delete from role where id = ?", id);
 		this.baseService.jdDelete("delete from role_permission where role_id = ?", id);
@@ -99,7 +99,7 @@ public class RoleAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/toUpdate")
-	public ModelAndView updateRolePrepare(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = request.getParameter("id");
 
 		Role role = this.baseService.mySelectOne(Role.SelectByPk, id);
@@ -111,7 +111,7 @@ public class RoleAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView updateRole(HttpServletRequest request, HttpServletResponse responsej, Role role) throws Exception{
+	public ModelAndView update(HttpServletRequest request, HttpServletResponse responsej, Role role) throws Exception{
 		String permissionIdsStr = request.getParameter("permissionIds");
 		
 		//更新角色
@@ -122,7 +122,7 @@ public class RoleAction extends BaseAction{
 		//更新角色原有权限
 		this.batchInsertRolePermission(role.getId(), permissionIdsStr);
 		
-		return new ModelAndView("/system/roleList.jsp");
+		return new ModelAndView("/system/role/toList.ac");
 	}
 	
 	//批量插入角色对应的权限，只选择用JdbcTemplate的批量更新方法，以保证高性能

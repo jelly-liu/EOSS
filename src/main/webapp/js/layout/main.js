@@ -20,11 +20,21 @@ $(function() {
 	//初始化右边主视图的操作窗口
 	$('#centerWindowDiv').window(initWinConfig());
 	function initWinConfig(){
-		var $win = $('#centerWindow');
 		var padding = 10;
+		var $win = $('#centerWindow');
+
+		var $np = $('body').layout('panel', 'north');
+		var npW = $np.panel('options').width;
+		var npH = $np.panel('options').height;
+
+		var $wp = $('body').layout('panel', 'west');
+		var wpW = $wp.panel('options').width;
+		var wpH = $wp.panel('options').height;
+
 		var $cp = $('body').layout('panel', 'center');
 		var cpW = $cp.panel('options').width;
 		var cpH = $cp.panel('options').height;
+
 		var bdW = $(document.body).width();
 		var bdH = $(document.body).height();
 		
@@ -36,8 +46,8 @@ $(function() {
 			modal: false,
 			width: cpW - padding,
 			height: cpH - padding,
-			top: (bdH - cpH)/2 + padding/2,
-			left: (bdW - cpW) + padding/2,
+			top: npH + padding/2,
+			left: wpW + padding/2,
 			onRestore: function(){
 				$('#centerWindowDiv').window(initWinConfig());
 			}

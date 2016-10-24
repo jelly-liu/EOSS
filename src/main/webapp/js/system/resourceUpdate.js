@@ -53,7 +53,7 @@ $(function(){
 		}else{
 			var reg = '^\/';
 			if(url.search(reg) == -1){
-				top.$.messager.alert('提示','权限地址必须从服务器根目录开始，例如/system/addXX.jsp');
+				top.$.messager.alert('提示','权限地址必须从服务器根目录开始，例如/system/usr/add.ac');
 				return;
 			}
 		}

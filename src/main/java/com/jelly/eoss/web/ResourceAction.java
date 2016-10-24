@@ -28,7 +28,7 @@ public class ResourceAction extends BaseAction{
 	private MenuService menuService;
 	
 	@RequestMapping(value = "/toList")
-	public ModelAndView queryPermissionPage(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView toList(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Integer page = ServletRequestUtils.getIntParameter(request, "page", 1);
 		
 		Map<String, String> param = this.getRequestMap(request);
@@ -52,7 +52,7 @@ public class ResourceAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/add")
-	public ModelAndView addPermission(HttpServletRequest request, HttpServletResponse response, Menu menu) throws Exception{
+	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, Menu menu) throws Exception{
 		int id = ComUtil.QueryNextID("id", "menu");
 		menu.setUrl(Const.BASE_PATH + menu.getUrl());
 		menu.setId(id);
@@ -61,11 +61,11 @@ public class ResourceAction extends BaseAction{
 		menu.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
 		this.baseService.myInsert(Menu.Insert, menu);
 		Log.Debug(menu.getTarget());
-		return new ModelAndView("/system/resourceList.jsp");
+		return new ModelAndView("/system/resource/toList.ac");
 	}
 	
 	@RequestMapping(value = "/delete")
-	public void deletePermission(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = request.getParameter("id");
 //		Log.Debug("id:" + id);
 		this.baseService.myDelete(Menu.DeleteByPk, id);
@@ -73,7 +73,7 @@ public class ResourceAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/toUpdate")
-	public ModelAndView updatePermissionPrepare(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String id = request.getParameter("id");
 		Menu menu = this.baseService.mySelectOne(Menu.SelectByPk, id);
 		
@@ -91,7 +91,7 @@ public class ResourceAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView updatePermission(HttpServletRequest request, HttpServletResponse response, Menu menu) throws ServletException, IOException{
+	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, Menu menu) throws ServletException, IOException{
 		Menu m = this.baseService.mySelectOne(Menu.SelectByPk, menu.getId());
 		m.setName(menu.getName());
 		m.setTarget(menu.getTarget());
@@ -100,7 +100,7 @@ public class ResourceAction extends BaseAction{
 		m.setUrl(menu.getUrl());
 		m.setPid(menu.getPid());
 		this.baseService.myUpdate(Menu.Update, m);
-		return new ModelAndView("/success.jsp");
+		return new ModelAndView("/system/resource/toList.ac");
 	}
 	
 	//getter and setter

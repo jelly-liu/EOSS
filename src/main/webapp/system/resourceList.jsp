@@ -9,7 +9,7 @@
 	</head>
 
 	<body>
-		<form id="submitForm" action="${BASE_PATH}/resource/queryResourcePage.ac" class="eossForm" method="post">
+		<form id="submitForm" action="${BASE_PATH}/system/resource/toList.ac" class="eossForm" method="post">
 			<input type="hidden" id="page" name="page" value="${pager.page}"/>
 			<table class="eossFromTable">
 				<tr class="panel-header">

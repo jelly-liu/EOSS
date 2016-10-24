@@ -17,7 +17,7 @@ $(function(){
 		},
 		async: {
 			enable: true,
-			url: EossGlobal.basePath + '/menu/queryMenuTreeWestOfLoginUser.ac',
+			url: EossGlobal.basePath + '/system/menu/queryTreeByUser.ac',
 			autoParam: ['id'],
 			otherParam: {'onlyParent':'yes'},
 			dataFilter: function(treeId, parentNode, responseData){
@@ -85,7 +85,7 @@ $(function(){
 				type: 'POST',
 				dataType: 'text',
 				data: 'id=' + $this.attr('value'),
-				url: EossGlobal.basePath + '/resource/deleteResource.ac',
+				url: EossGlobal.basePath + '/system/resource/delete.ac',
 				success: function(rs){
 					if(rs == 'y'){
 						top.$.messager.alert('提示','操作已成功','info', function(){
@@ -101,7 +101,7 @@ $(function(){
 	
 	//更新事件
 	$('table.eossDataTable').find('a[type=update]').click(function(){
-		window.location.href = EossGlobal.basePath + '/resource/updateResourcePrepare.ac?id=' + $(this).attr('value');
+		window.location.href = EossGlobal.basePath + '/system/resource/toUpdate.ac?id=' + $(this).attr('value');
 	});
 
 	/*************************************** check submit ***************************************/

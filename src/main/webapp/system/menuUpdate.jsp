@@ -13,7 +13,7 @@
 
 	<body>
 		<div id="zTreeJson">${jsonZTree}</div>
-		<form id="submitForm" action="${BASE_PATH}/menu/updateMenu.ac" class="eossForm" method="post">
+		<form id="submitForm" action="${BASE_PATH}/system/menu/update.ac" class="eossForm" method="post">
 			<input type="hidden" id="menuId" name="id" value="${menu.id}"/>
 			<input type="hidden" id="menuLev" name="lev"/>
 			<input type="hidden" id="menuPath" name="path"/>

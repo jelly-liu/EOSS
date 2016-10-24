@@ -35,7 +35,7 @@ public class MenuAction extends BaseAction{
 	
 	//针对登录用户查询专用
 	@RequestMapping(value = "/queryByUser")
-	public void queryMenuOfLoginUser(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	public void queryByUser(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		try{
 			//该登录用户所拥有的所有菜单，key=menuId
 			String idsOfLoginUserMenu = request.getSession().getAttribute(Const.LOGIN_MENU_TREE_IDS_KEY).toString();
@@ -53,7 +53,7 @@ public class MenuAction extends BaseAction{
 	
 	//针对登录用户查询专用
 	@RequestMapping(value = "/queryTreeByUser")
-	public ModelAndView queryMenuTreeWestOfLoginUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView queryTreeByUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//该登录用户所拥有的所有菜单，key=menuId
 		String idsOfLoginUserMenu = request.getSession().getAttribute(Const.LOGIN_MENU_TREE_IDS_KEY).toString();
 		//该用户所捅有的菜单树
@@ -69,7 +69,7 @@ public class MenuAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/querySub")
-	public ModelAndView queryMenuSub(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView querySub(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Map<String, String> pm = this.getRequestMap(request);
 		String jsonZTree = this.menuService.queryMenuSub(pm);
 		Log.Debug(jsonZTree);
@@ -79,7 +79,7 @@ public class MenuAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/querySubAjax")
-	public void queryMenuSubAjax(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public void querySubAjax(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Map<String, String> pm = this.getRequestMap(request);
 		String jsonZTree = this.menuService.queryMenuSub(pm);
 		Log.Debug(jsonZTree);
@@ -87,7 +87,7 @@ public class MenuAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/toList")
-	public ModelAndView queryMenuPage(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView toList(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Integer page = ServletRequestUtils.getIntParameter(request, "page", 1);
 		
 		Map<String, String> param = this.getRequestMap(request);
@@ -111,7 +111,7 @@ public class MenuAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/add")
-	public ModelAndView addMenu(HttpServletRequest request, HttpServletResponse response, Menu menu) throws ServletException, IOException{
+	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, Menu menu) throws ServletException, IOException{
 		int id = ComUtil.QueryNextID("id", "menu");
 		menu.setId(id);
 		menu.setLeaf(0);
@@ -123,7 +123,7 @@ public class MenuAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/delete")
-	public void deleteMenu(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = ServletRequestUtils.getStringParameter(request, "id");
 		
 		//不能删除根菜单
@@ -145,11 +145,11 @@ public class MenuAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/toUpdate")
-	public ModelAndView updateMenuPrepare(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String id = request.getParameter("id");
 		Menu mu = this.baseService.getSqlSessionTemplate().selectOne(Menu.SelectByPk, id);
 		
-		List<Map<String, Object>> subMenuList = this.baseService.getSqlSessionTemplate().selectList("_EXT.Menu_QueryAllSubMenu", id);
+		List<Map<String, Object>> subMenuList = this.baseService.mySelectList("_EXT.Menu_QueryAllSubMenu", mu.getId());
 		//将所有id值拼接成1,2,3,4,5,6的形式
 		StringBuilder sb = new StringBuilder();
 		sb.append(id + ",");
@@ -176,7 +176,7 @@ public class MenuAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView updateMenu(HttpServletRequest request, HttpServletResponse response, Menu menu) throws ServletException, IOException{
+	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, Menu menu) throws ServletException, IOException{
 		//如果是根菜单，则只能更新菜单名
 		if(menu.getId() == 1){
 			menu.setPid(-1);
@@ -185,7 +185,7 @@ public class MenuAction extends BaseAction{
 		menu.setLeaf(0);
 		this.baseService.getSqlSessionTemplate().update(Menu.Update, menu);
 		
-		return new ModelAndView("/system/menuList.jsp");
+		return new ModelAndView("/system/menu/toList.ac");
 	}
 
 	//getter and setter
