@@ -3,8 +3,8 @@
 <%
 	Object obj = request.getSession().getAttribute(Const.LOGIN_SESSION_KEY);
 	if(obj == null){
-		request.getRequestDispatcher("/login.jsp").forward(request, response);
+		request.getRequestDispatcher("/toLogin.ac").forward(request, response);
 	}else{
-		request.getRequestDispatcher("/base/main.jsp").forward(request, response);
+		request.getRequestDispatcher("/layout/main.ac").forward(request, response);
 	}
 %>

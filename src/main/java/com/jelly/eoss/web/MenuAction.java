@@ -1,29 +1,23 @@
 package com.jelly.eoss.web;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jelly.eoss.dao.BaseService;
+import com.jelly.eoss.model.Menu;
+import com.jelly.eoss.service.MenuService;
+import com.jelly.eoss.util.*;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.service.MenuService;
-import com.jelly.eoss.util.ComUtil;
-import com.jelly.eoss.util.Const;
-import com.jelly.eoss.util.DateUtil;
-import com.jelly.eoss.util.Log;
-import com.jelly.eoss.util.Pager;
-import com.jelly.eoss.model.Menu;
+import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/system/menu")
@@ -75,7 +69,7 @@ public class MenuAction extends BaseAction{
 		Log.Debug(jsonZTree);
 		request.setAttribute("jsonZTree", jsonZTree);
 		
-		return new ModelAndView("/base/west.jsp");
+		return new ModelAndView("/layout/west.jsp");
 	}
 	
 	@RequestMapping(value = "/querySubAjax")

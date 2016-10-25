@@ -1,25 +1,18 @@
 package com.jelly.eoss.web;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.jelly.eoss.dao.BaseService;
+import com.jelly.eoss.model.Users;
+import com.jelly.eoss.servlet.ICodeServlet;
+import com.jelly.eoss.util.Const;
+import com.jelly.eoss.util.security.Digest;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.servlet.ICodeServlet;
-import com.jelly.eoss.util.Const;
-import com.jelly.eoss.util.security.Digest;
-import com.jelly.eoss.model.Users;
+import java.util.*;
 
 @Controller
 public class LoginAction extends BaseAction {
@@ -27,8 +20,8 @@ public class LoginAction extends BaseAction {
 	private BaseService baseService;
 
     @RequestMapping(value = "/toLogin")
-    public String toLoginIn(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return "/login.jsp";
+    public void toLoginIn(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 	
 	@RequestMapping(value = "/login")
@@ -109,11 +102,6 @@ public class LoginAction extends BaseAction {
 		response.getWriter().write("y");
 	}
 
-	@RequestMapping(value = "/layout")
-	public String layout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		return "/system/layout/main.jsp";
-	}
-	
 	//getter and setter
 
 	public BaseService getBaseDao() {

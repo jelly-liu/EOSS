@@ -1,14 +1,13 @@
 package com.jelly.eoss.web;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jelly.eoss.dao.BaseService;
+import com.jelly.eoss.service.MenuService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.service.MenuService;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping(value = "/test")

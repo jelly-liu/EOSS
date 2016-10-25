@@ -1,31 +1,22 @@
 package com.jelly.eoss.web;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jelly.eoss.dao.BaseService;
 import com.jelly.eoss.model.Permission;
-import net.sf.json.JSONArray;
-
+import com.jelly.eoss.model.Role;
+import com.jelly.eoss.service.MenuService;
+import com.jelly.eoss.util.*;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.service.MenuService;
-import com.jelly.eoss.util.ComUtil;
-import com.jelly.eoss.util.Const;
-import com.jelly.eoss.util.DateUtil;
-import com.jelly.eoss.util.Log;
-import com.jelly.eoss.util.Pager;
-import com.jelly.eoss.model.Role;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/system/role")
@@ -43,7 +34,7 @@ public class RoleAction extends BaseAction{
 			m.put("isParent", "false");
 			m.put("iconSkin", "icon_eoss_role01");
 		}
-		String jsonStr = JSONArray.fromObject(roleList).toString();
+		String jsonStr = JsonUtil.toJson(roleList);
 		Log.Debug(jsonStr);
 		response.getWriter().write(jsonStr);
 	}

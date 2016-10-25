@@ -1,28 +1,20 @@
 package com.jelly.eoss.web;
 
-import java.util.*;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jelly.eoss.dao.BaseService;
+import com.jelly.eoss.model.Users;
 import com.jelly.eoss.service.MenuService;
-import net.sf.json.JSONArray;
-
+import com.jelly.eoss.util.*;
+import com.jelly.eoss.util.security.Digest;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.util.ComUtil;
-import com.jelly.eoss.util.Const;
-import com.jelly.eoss.util.DateUtil;
-import com.jelly.eoss.util.Log;
-import com.jelly.eoss.util.Pager;
-import com.jelly.eoss.util.security.Digest;
-import com.jelly.eoss.model.Users;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "/system/user")
@@ -127,7 +119,7 @@ public class UserAction extends BaseAction{
 				m.put("checked", "true");
 			}
 		}
-		String zTreeNodeJson = JSONArray.fromObject(roleList).toString();
+		String zTreeNodeJson = JsonUtil.toJson(roleList);
 
         //将该角色已有菜单资源用逗号连接成一个字符串，如1,2,3,4,5,6
         String sqlMenu = "select menu_id as id from users_menu where users_id = ?";

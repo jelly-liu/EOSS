@@ -3,8 +3,8 @@
 <html>
 	<head>
 		<title>${PROJECT_NAME}</title>
-		<%@ include file="/system/include/head.jsp"%>
-		<script src="${BASE_PATH}/js/login.js" type="text/javascript"></script>
+		<%@ include file="WEB-INF/pages/include/head.jsp"%>
+		<script src="${BASE_PATH}/static/js/login.js" type="text/javascript"></script>
 		<style type="text/css">
 			.eossFromTable td{
 				border:0px;

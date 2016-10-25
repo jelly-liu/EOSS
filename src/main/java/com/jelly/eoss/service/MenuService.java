@@ -2,7 +2,7 @@ package com.jelly.eoss.service;
 
 import com.jelly.eoss.dao.BaseService;
 import com.jelly.eoss.util.Const;
-import net.sf.json.JSONArray;
+import com.jelly.eoss.util.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -86,7 +86,7 @@ public class MenuService {
 		this.decorateZnode(list, pm);
 		
 //		jsonStr=[{"id":1,"name":"系统管理"},{"id":2,"name":"业务管理"}]
-		String jsonStr = JSONArray.fromObject(list).toString();
+		String jsonStr = JsonUtil.toJson(list);
 //		Log.Debug(jsonStr);
 		return jsonStr;
 	}
