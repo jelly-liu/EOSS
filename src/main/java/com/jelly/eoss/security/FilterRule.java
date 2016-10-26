@@ -4,52 +4,64 @@ package com.jelly.eoss.security;
  * Created by jelly on 2016-10-25.
  */
 
-import org.apache.commons.lang3.StringUtils;
-
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- /index.html = anon
- /user/create = anon
- /user/** = authc
- /admin/** = authc, roles[administrator]
- /rest/** = authc, rest
- /remoting/rpc/** = authc, perms[remote:invoke]
- */
 public class FilterRule {
-    private boolean anno = true;
-    private boolean authc = false;
     private String pattern;
+    private String rule;
+    private boolean anno = false;
+    private boolean authc = true;
     private Set<String> roleSet = new HashSet<>();
     private Set<String> permSet = new HashSet<>();
 
-    public FilterRule(boolean anno, boolean authc, String pattern, Set<String> roleSet, Set<String> permSet) {
-        this.anno = anno;
-        this.authc = authc;
-        this.pattern = pattern;
-        this.roleSet = roleSet;
-        this.permSet = permSet;
+    public FilterRule() {
     }
 
-    public boolean hasRole(Set<String> roleOfUser){
+    public boolean userHasRole(Collection<String> rolesOfUser){
+        if(rolesOfUser == null || rolesOfUser.size() == 0){
+            return false;
+        }
+
+        if(this.roleSet.size() == 0){
+            return true;
+        }
+
         for(String role : this.roleSet){
-            if(roleOfUser.contains(role)){
+            if(rolesOfUser.contains(role)){
                 return true;
             }
         }
+
         return false;
     }
 
-    public boolean hasPerm(Set<String> permOfUser){
+    public boolean userHasPerm(Collection<String> permsOfUser){
+        if(permsOfUser == null || permsOfUser.size() == 0){
+            return false;
+        }
+
+        if(this.permSet.size() == 0){
+            return true;
+        }
+
         for(String perm : this.permSet){
-            if(permOfUser.contains(perm)){
+            if(permsOfUser.contains(perm)){
                 return true;
             }
         }
         return false;
     }
 
+    public String getRule() {
+        return rule;
+    }
+
+    public FilterRule setRule(String rule) {
+        this.rule = rule;
+        return this;
+    }
 
     public boolean getAnno() {
         return anno;
