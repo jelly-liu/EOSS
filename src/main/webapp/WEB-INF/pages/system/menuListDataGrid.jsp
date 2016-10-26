@@ -12,7 +12,7 @@
 		<form id="submitForm" action="${BASE_PATH}/page/queryForPage.ac" class="eossForm">
 			<input type="hidden" name="dataBaseType" value="mysql"/>
 			<input type="hidden" name="statement" value="Menu_QueryMenuPage"/>
-			<input type="hidden" name="forwardUrl" value="/system/menuList.jsp"/>
+			<input type="hidden" name="forwardUrl" value="/system/menu/toList.ac"/>
 			<input type="hidden" name="leaf" value="0"/>
 			<table class="eossFromTable">
 				<tr class="panel-header">

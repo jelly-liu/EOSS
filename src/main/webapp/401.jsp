@@ -9,7 +9,7 @@
 		<table class="tableCenter">
 			<tr>
 				<td>
-					${INFO}操作已成功！
+					401！Not AuthorizationInfo
 				</td>
 			</tr>
 		</table>

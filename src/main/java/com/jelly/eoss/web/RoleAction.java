@@ -76,8 +76,9 @@ public class RoleAction extends BaseAction{
 		
 		//插入角色对应的权限
 		this.batchInsertRolePermission(role.getId(), permissionIdsStr);
-		
-		return new ModelAndView("/system/role/toList.ac");
+
+		request.getRequestDispatcher("/system/role/toList.ac").forward(request, response);
+		return null;
 	}
 	
 	@RequestMapping(value = "/delete")
@@ -102,7 +103,7 @@ public class RoleAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView update(HttpServletRequest request, HttpServletResponse responsej, Role role) throws Exception{
+	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, Role role) throws Exception{
 		String permissionIdsStr = request.getParameter("permissionIds");
 		
 		//更新角色
@@ -112,8 +113,8 @@ public class RoleAction extends BaseAction{
 		
 		//更新角色原有权限
 		this.batchInsertRolePermission(role.getId(), permissionIdsStr);
-		
-		return new ModelAndView("/system/role/toList.ac");
+		request.getRequestDispatcher("/system/role/toList.ac").forward(request, response);
+		return null;
 	}
 	
 	//批量插入角色对应的权限，只选择用JdbcTemplate的批量更新方法，以保证高性能

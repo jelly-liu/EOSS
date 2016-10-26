@@ -53,7 +53,8 @@ public class PermissionAction extends BaseAction{
 		int id = ComUtil.QueryNextID("id", "permission");
 		permission.setId(id);
 		this.baseService.myInsert(Permission.Insert, permission);
-		return new ModelAndView("/system/permission/toList.ac");
+		request.getRequestDispatcher("/system/permission/toList.ac").forward(request, response);
+		return null;
 	}
 	
 	@RequestMapping(value = "/delete")
@@ -79,7 +80,8 @@ public class PermissionAction extends BaseAction{
 		this.baseService.myUpdate(Permission.Update, permission);
 
 		request.setAttribute("permission", permission);
-		return new ModelAndView("/system/permission/toList.ac");
+        request.getRequestDispatcher("/system/permission/toList.ac").forward(request, response);
+		return null;
 	}
 	
 	//getter and setter

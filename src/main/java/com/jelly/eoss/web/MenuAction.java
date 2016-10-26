@@ -112,8 +112,10 @@ public class MenuAction extends BaseAction{
 		menu.setPath(menu.getPath() + "#" + id);
 		menu.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
 		this.baseService.myInsert(Menu.Insert, menu);
+
+		request.getRequestDispatcher("/system/menu/toList.ac").forward(request, response);
 		
-		return new ModelAndView("/system/menu/toList.ac");
+		return null;
 	}
 	
 	@RequestMapping(value = "/delete")
@@ -178,8 +180,10 @@ public class MenuAction extends BaseAction{
 		
 		menu.setLeaf(0);
 		this.baseService.getSqlSessionTemplate().update(Menu.Update, menu);
-		
-		return new ModelAndView("/system/menu/toList.ac");
+
+        request.getRequestDispatcher("/system/menu/toList.ac").forward(request, response);
+
+		return null;
 	}
 
 	//getter and setter

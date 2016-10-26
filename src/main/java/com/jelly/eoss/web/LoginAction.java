@@ -1,6 +1,8 @@
 package com.jelly.eoss.web;
 
 import com.jelly.eoss.dao.BaseService;
+import com.jelly.eoss.model.Role;
+import com.jelly.eoss.model.UserRolesPerms;
 import com.jelly.eoss.model.Users;
 import com.jelly.eoss.servlet.ICodeServlet;
 import com.jelly.eoss.util.Const;
@@ -84,7 +86,24 @@ public class LoginAction extends BaseAction {
 			}
 			
 			//登录成功
-			request.getSession().setAttribute(Const.LOGIN_SESSION_KEY, user);
+            UserRolesPerms userRolesPerms = new UserRolesPerms();
+            List<String> roleList = this.baseService.mySelectList("_EXT.Role_QueryByUserId", user.getId());
+            List<String> permList = this.baseService.mySelectList("_EXT.Permission_QueryByUserId", user.getId());
+
+            Set<String> roleSet = new HashSet<>();
+            Set<String> permSet = new HashSet<>();
+
+            if(roleList != null && roleList.size() > 0){
+                roleSet.addAll(roleList);
+            }
+
+            if(permList != null && permList.size() > 0){
+                permSet.addAll(permList);
+            }
+
+            userRolesPerms.setUsers(user).setRolesOfUser(roleSet).setPermsOfUser(permSet);
+
+			request.getSession().setAttribute(Const.LOGIN_SESSION_KEY, userRolesPerms);
 			request.getSession().setAttribute(Const.LOGIN_MENU_TREE_IDS_KEY, sb.toString());
 			
 			this.responseSimpleJson(response, true, "");

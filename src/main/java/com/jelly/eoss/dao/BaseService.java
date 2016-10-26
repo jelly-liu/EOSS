@@ -52,7 +52,7 @@ public class BaseService {
 	public <E> List<E> mySelectList(String statement, Object param){
 		return this.sqlSessionTemplate.selectList(statement, param);
 	}
-	
+
 	public <T> T mySelectOne(String statement){
 		return this.sqlSessionTemplate.selectOne(statement);
 	}

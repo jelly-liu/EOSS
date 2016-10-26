@@ -17,12 +17,12 @@ import java.util.List;
 public class FilterRuleFactory {
     private static final Logger log = LoggerFactory.getLogger(FilterRuleFactory.class);
 
-    private static final String EQUAL = "=";
-    private static final String COMMA = ",";
-    private static final String MID_BRACE_START = "[";
-    private static final String SEMICOLON = ";";
-    private static final String COLON = ":";
-    private static final String MID_BRACE_END = "]";
+    public static final String EQUAL = "=";
+    public static final String COMMA = ",";
+    public static final String MID_BRACE_START = "[";
+    public static final String SEMICOLON = ";";
+    public static final String COLON = ":";
+    public static final String MID_BRACE_END = "]";
 
     public static List<FilterRule> initRuleByFilterDefinition(String filterDefinition){
         List<FilterRule> filterRuleList = new LinkedList<>();

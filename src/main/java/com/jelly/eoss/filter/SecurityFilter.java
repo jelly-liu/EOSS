@@ -11,60 +11,72 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import com.jelly.eoss.model.UserRolesPerms;
+import com.jelly.eoss.security.FilterCore;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.util.Log;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SecurityFilter implements Filter {
-	// 不登陆也可以访问的资源
-	private static Set<String> GreenUrlSet = new HashSet<String>();
+    private static final Logger log = LoggerFactory.getLogger(SecurityFilter.class);
 
-	public void init(FilterConfig arg0) throws ServletException {
-		GreenUrlSet.add(Const.BASE_PATH + "/");
-		GreenUrlSet.add(Const.BASE_PATH + "/index.jsp");
-		GreenUrlSet.add(Const.BASE_PATH + "/icode.jpg");
-		GreenUrlSet.add(Const.BASE_PATH + "/info.jsp");
-		GreenUrlSet.add(Const.BASE_PATH + "/toLogin.ac");
-        GreenUrlSet.add(Const.BASE_PATH + "/login.ac");
+	private FilterCore filterCore;
+
+	public void init(FilterConfig filterConfig) throws ServletException {
+		String filterDefinition = filterConfig.getInitParameter("filterDefinition");
+        log.debug("filterDefinition={}", filterDefinition);
+
+        String config = StringUtils.substringBetween(filterDefinition, "[config]", "[urls]");
+        String urls = StringUtils.substringAfter(filterDefinition, "[urls]");
+
+		filterCore = new FilterCore();
+        filterCore.init(config, urls);
 	}
 
-	public void doFilter(ServletRequest srequest, ServletResponse sresponse, FilterChain filterChain) throws IOException, ServletException {
-		HttpServletRequest request = (HttpServletRequest) srequest;
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain) throws IOException, ServletException {
+		HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) res;
 
-		if (Const.ENABLE_SECURITY_FILTER) {
-			if (request.getSession().getAttribute(Const.LOGIN_SESSION_KEY) == null) {
-				// String url = request.getRequestURL().toString();
-				String uri = request.getRequestURI();
-				
-				//不处理js, css, ico
-				if (uri.endsWith(".js") 
-						|| uri.endsWith(".css") 
-						|| uri.endsWith(".jpg") 
-						|| uri.endsWith(".gif")
-						|| uri.endsWith(".ico")) {
-					Log.Debug("security filter, pass, " + request.getRequestURI());
-					filterChain.doFilter(srequest, sresponse);
-					return;
-				}
+        String contextPath = request.getServletContext().getContextPath();
+        String uri = request.getRequestURI();
+        String path = StringUtils.substringAfter(uri, contextPath);
+        log.debug("contextPath={}, uri={}, path={}", contextPath, uri, path);
 
-				//不处理指定的action, jsp
-				if (GreenUrlSet.contains(uri)) {
-					Log.Debug("security filter, pass, " + request.getRequestURI());
-					filterChain.doFilter(srequest, sresponse);
-					return;
-				}
+        UserRolesPerms userRolesPerms = (UserRolesPerms) request.getSession().getAttribute(Const.LOGIN_SESSION_KEY);
+        Set<String> roleSet = null;
+        Set<String> permSet = null;
 
-				//跳转到登陆页面
-				Log.Debug("security filter, deney, " + request.getRequestURI());
-				String html = "<script type=\"text/javascript\">top.window.location.href=\"_BP_/toLogin.ac\"</script>";
-				html = html.replace("_BP_", Const.BASE_PATH);
-				sresponse.getWriter().write(html);
-			} else {
-				filterChain.doFilter(srequest, sresponse);
-			}
-		} else {
-			filterChain.doFilter(srequest, sresponse);
-		}
+        boolean authc = false;
+        if(userRolesPerms != null){
+            authc = true;
+            roleSet = userRolesPerms.getRolesOfUser();
+            permSet = userRolesPerms.getPermsOfUser();
+        }
+        log.debug("authc={}, roleSetOfUser={}, permSetOfUser={}", authc, roleSet, permSet);
+
+        if(filterCore.doFilter(path, authc, roleSet, permSet)){
+            filterChain.doFilter(request, response);
+        }else{
+            if(userRolesPerms == null){
+                if(StringUtils.startsWith(path, filterCore.getLoginUrl())){
+                    log.debug("is login url, pass, path={}, loginUrl={}", path, filterCore.getLoginUrl());
+                    filterChain.doFilter(request, response);
+                    return;
+                }
+                //跳转到登陆页面
+                log.debug("security filter, deney, " + request.getRequestURI());
+                String html = "<script type=\"text/javascript\">top.window.location.href=\"_BP_/toLogin.ac\"</script>";
+                html = html.replace("_BP_", Const.BASE_PATH);
+                response.getWriter().write(html);
+                return;
+            }else{
+                request.getRequestDispatcher("/401.jsp").forward(request, response);
+            }
+        }
 	}
 
 	public void destroy() {

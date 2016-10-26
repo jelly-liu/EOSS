@@ -53,7 +53,7 @@ $(function() {
 	//验证码点击后，更换新验证码
 	$('#icodeImg').click(function(){
 		$(this).attr({
-			src: EossGlobal.basePath + '/icode.jpg?' + Math.random()
+			src: EossGlobal.basePath + '/static/icode.jpg?' + new Date().getMilliseconds()
 		});
 	});
 

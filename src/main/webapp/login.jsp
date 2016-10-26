@@ -37,7 +37,7 @@
 					<tr>
 						<td align="right"></td>
 						<td>
-							<img id="icodeImg" class="icodeImg" src="${BASE_PATH}/icode.jpg" title="点击图片刷新验证码"/>
+							<img id="icodeImg" class="icodeImg" src="${BASE_PATH}/static/icode.jpg" title="点击图片刷新验证码"/>
 						</td>
 					</tr>
 				</table>

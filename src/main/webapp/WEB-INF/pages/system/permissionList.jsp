@@ -60,7 +60,7 @@
 				</tbody>
 			</table>
 			<!-- pagination -->
-			<jsp:include page="/system/include/pagerFooter.jsp" flush="true">
+			<jsp:include page="/WEB-INF/pages/include/pagerFooter.jsp" flush="true">
 				<jsp:param name="formId" value="submitForm"/>
 				<jsp:param name="pageId" value="page"/>
 				<jsp:param name="totalPage" value="${pager.totalPage}"/>

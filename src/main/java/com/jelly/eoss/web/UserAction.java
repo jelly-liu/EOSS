@@ -90,8 +90,8 @@ public class UserAction extends BaseAction{
 		this.batchInsertUserRole(user.getId(), roleIds);
         //插入资源
         this.batchInsertUserResource(user.getId(), resourcesIds);
-		
-		return new ModelAndView("/system/user/toList.ac");
+		request.getRequestDispatcher("/system/user/toList.ac").forward(request, response);
+		return null;
 	}
 	
 	@RequestMapping(value = "/toUpdate")
@@ -161,8 +161,8 @@ public class UserAction extends BaseAction{
         //更新资源
         String resourceIds = request.getParameter("resourceIds");
         this.batchInsertUserResource(user.getId(), resourceIds);
-		
-		return new ModelAndView("/system/user/toList.ac");
+        request.getRequestDispatcher("/system/user/toList.ac").forward(request, response);
+		return null;
 	}
 	
 	//批量插入用户对应的角色，只选择用JdbcTemplate的批量更新方法，以保证高性能

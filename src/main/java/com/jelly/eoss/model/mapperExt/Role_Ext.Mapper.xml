@@ -32,4 +32,11 @@
 		FROM permission p
 		LEFT JOIN role_permission rp ON p.ID = rp.PERMISSION_ID AND rp.ROLE_ID = #{id}
 	</select>
+
+	<select id="Role_QueryByUserId" parameterType="Integer" resultType="String">
+		SELECT DISTINCT b.name
+		FROM users_role a INNER JOIN role b ON a.role_id = b.id
+		WHERE 1 = 1
+		AND a.users_id = #{userId}
+	</select>
 </mapper>

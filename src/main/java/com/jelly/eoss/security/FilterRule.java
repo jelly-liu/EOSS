@@ -4,7 +4,10 @@ package com.jelly.eoss.security;
  * Created by jelly on 2016-10-25.
  */
 
+import org.springframework.util.CollectionUtils;
+
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,11 +23,7 @@ public class FilterRule {
     }
 
     public boolean userHasRole(Collection<String> rolesOfUser){
-        if(rolesOfUser == null || rolesOfUser.size() == 0){
-            return false;
-        }
-
-        if(this.roleSet.size() == 0){
+        if(CollectionUtils.isEmpty(roleSet)){
             return true;
         }
 
@@ -38,11 +37,7 @@ public class FilterRule {
     }
 
     public boolean userHasPerm(Collection<String> permsOfUser){
-        if(permsOfUser == null || permsOfUser.size() == 0){
-            return false;
-        }
-
-        if(this.permSet.size() == 0){
+        if(CollectionUtils.isEmpty(permSet)){
             return true;
         }
 
