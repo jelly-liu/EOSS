@@ -3,17 +3,6 @@
 <mapper namespace="_EXT">
 	<!-- 非工具生成的单表的SQL都以下划线开头 -->
 	
-	<select id="SelectUserByNameAndPwd" parameterType="HashMap" resultType="com.jelly.eoss.model.User">
-		select
-		id as "id",
-		username as "username",
-		password as "password",
-		create_datetime as "createDatetime"
-		from user m
-		where m.username = #{username}
-		and m.password = #{password}
-	</select>
-	
 	<select id="Login_QueryTreePathByUserId" parameterType="int" resultType="LinkedHashMap">
 		SELECT m.path AS "ids"
 		FROM user u

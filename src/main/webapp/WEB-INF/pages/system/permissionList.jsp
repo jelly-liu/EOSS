@@ -16,13 +16,9 @@
 					<td colspan="99">权限查询</td>
 				</tr>
 				<tr>
-					<td align="right">ID：</td>
-					<td><input type="text" name="id" value="${id}"/></td>
-					<td align="right">权限名称：</td>
-					<td><input type="text" name="name" value="${name}"/></td>
-				</tr>
-				<tr>
-					<td colspan="99" align="center">
+					<td align="left">
+						ID：<input type="text" name="id" value="${id}"/>&nbsp;&nbsp;&nbsp;&nbsp;
+						权限名称：<input type="text" name="name" value="${name}"/>&nbsp;&nbsp;&nbsp;&nbsp;
 						<a id="submitBtn" href="###" class="easyui-linkbutton">查询</a>
 					</td>
 				</tr>

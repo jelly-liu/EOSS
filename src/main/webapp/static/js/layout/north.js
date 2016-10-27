@@ -10,7 +10,7 @@ $(function () {
         			url: EossGlobal.basePath + '/logout.ac',
         			success: function(rs){
         				if(rs == 'y'){
-        					top.window.location.href = EossGlobal.basePath + '/toLogin';
+        					top.window.location.href = EossGlobal.basePath + '/toLogin.ac';
         				}
         			}
         		});
