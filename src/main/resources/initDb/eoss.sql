@@ -78,7 +78,7 @@ CREATE TABLE `role` (
 
 /*Data for the table `role` */
 
-insert  into `role`(`ID`,`NAME`,`CREATE_DATETIME`) values (1,'系统管理员','2012-12-22 16:27:04');
+insert  into `role`(`ID`,`NAME`,`CREATE_DATETIME`) values (1,'系统管理员','2012-12-22 16:27:04'),(2,'业务员','2016-10-26 19:01:45');
 
 /*Table structure for table `role_permission` */
 
@@ -91,11 +91,11 @@ CREATE TABLE `role_permission` (
 
 /*Data for the table `role_permission` */
 
-/*Table structure for table `users` */
+/*Table structure for table `user` */
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `user`;
 
-CREATE TABLE `users` (
+CREATE TABLE `user` (
   `ID` int(11) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(32) NOT NULL,
@@ -104,35 +104,35 @@ CREATE TABLE `users` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `users` */
+/*Data for the table `user` */
 
-insert  into `users`(`ID`,`username`,`password`,`salt`,`CREATE_DATETIME`) values (1,'admin','96e79218965eb72c92a549dd5a330112','abc','2012-12-22 19:25:48');
+insert  into `user`(`ID`,`username`,`password`,`salt`,`CREATE_DATETIME`) values (1,'admin','96e79218965eb72c92a549dd5a330112','abc','2012-12-22 19:25:48');
 
-/*Table structure for table `users_menu` */
+/*Table structure for table `user_menu` */
 
-DROP TABLE IF EXISTS `users_menu`;
+DROP TABLE IF EXISTS `user_menu`;
 
-CREATE TABLE `users_menu` (
+CREATE TABLE `user_menu` (
   `MENU_ID` int(11) NOT NULL,
-  `USERS_ID` int(11) NOT NULL
+  `USER_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `users_menu` */
+/*Data for the table `user_menu` */
 
-insert  into `users_menu`(`MENU_ID`,`USERS_ID`) values (7,1),(9,1),(16,1),(17,1),(14,1),(15,1),(10,1),(13,1),(19,1),(20,1),(22,1);
+insert  into `user_menu`(`MENU_ID`,`USER_ID`) values (7,1),(9,1),(16,1),(17,1),(14,1),(15,1),(10,1),(13,1),(19,1),(20,1),(22,1);
 
-/*Table structure for table `users_role` */
+/*Table structure for table `user_role` */
 
-DROP TABLE IF EXISTS `users_role`;
+DROP TABLE IF EXISTS `user_role`;
 
-CREATE TABLE `users_role` (
-  `USERS_ID` int(11) NOT NULL,
+CREATE TABLE `user_role` (
+  `USER_ID` int(11) NOT NULL,
   `ROLE_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `users_role` */
+/*Data for the table `user_role` */
 
-insert  into `users_role`(`USERS_ID`,`ROLE_ID`) values (1,1);
+insert  into `user_role`(`USER_ID`,`ROLE_ID`) values (1,1),(1,2);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

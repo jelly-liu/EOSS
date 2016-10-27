@@ -6,25 +6,25 @@ import java.util.Set;
  * Created by jelly on 2016-10-26.
  */
 public class UserRolesPerms {
-    private Users users;
+    private User user;
     private Set<String> rolesOfUser;
     private Set<String> permsOfUser;
 
     public UserRolesPerms() {
     }
 
-    public UserRolesPerms(Users users, Set<String> rolesOfUser, Set<String> permsOfUser) {
-        this.users = users;
+    public UserRolesPerms(User user, Set<String> rolesOfUser, Set<String> permsOfUser) {
+        this.user = user;
         this.rolesOfUser = rolesOfUser;
         this.permsOfUser = permsOfUser;
     }
 
-    public Users getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public UserRolesPerms setUsers(Users users) {
-        this.users = users;
+    public UserRolesPerms setUser(User user) {
+        this.user = user;
         return this;
     }
 

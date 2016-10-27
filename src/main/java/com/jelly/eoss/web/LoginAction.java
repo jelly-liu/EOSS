@@ -1,9 +1,8 @@
 package com.jelly.eoss.web;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.Role;
 import com.jelly.eoss.model.UserRolesPerms;
-import com.jelly.eoss.model.Users;
+import com.jelly.eoss.model.User;
 import com.jelly.eoss.servlet.ICodeServlet;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.util.security.Digest;
@@ -53,7 +52,7 @@ public class LoginAction extends BaseAction {
 			Map<String, String> pm = new HashMap<String, String>();
 			pm.put("username", username);
 			pm.put("password", Digest.GetMD5(password));
-			Users user = this.baseService.mySelectOne("_EXT.SelectUserByNameAndPwd", pm);
+			User user = this.baseService.mySelectOne("_EXT.SelectUserByNameAndPwd", pm);
 			if(user == null){
 				this.responseSimpleJson(response, false, "用户名与密码不匹配");
 				return;
@@ -101,7 +100,7 @@ public class LoginAction extends BaseAction {
                 permSet.addAll(permList);
             }
 
-            userRolesPerms.setUsers(user).setRolesOfUser(roleSet).setPermsOfUser(permSet);
+            userRolesPerms.setUser(user).setRolesOfUser(roleSet).setPermsOfUser(permSet);
 
 			request.getSession().setAttribute(Const.LOGIN_SESSION_KEY, userRolesPerms);
 			request.getSession().setAttribute(Const.LOGIN_MENU_TREE_IDS_KEY, sb.toString());

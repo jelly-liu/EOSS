@@ -3,21 +3,21 @@
 <mapper namespace="_EXT">
 	<!-- 非工具生成的单表的SQL都以下划线开头 -->
 	
-	<select id="SelectUserByNameAndPwd" parameterType="HashMap" resultType="com.jelly.eoss.model.Users">
+	<select id="SelectUserByNameAndPwd" parameterType="HashMap" resultType="com.jelly.eoss.model.User">
 		select
 		id as "id",
 		username as "username",
 		password as "password",
 		create_datetime as "createDatetime"
-		from users m
+		from user m
 		where m.username = #{username}
 		and m.password = #{password}
 	</select>
 	
 	<select id="Login_QueryTreePathByUserId" parameterType="int" resultType="LinkedHashMap">
 		SELECT m.path AS "ids"
-		FROM users u
-		INNER JOIN users_menu um ON u.ID = um.USERS_ID
+		FROM user u
+		INNER JOIN user_menu um ON u.ID = um.USER_ID
 		INNER JOIN menu m ON m.id =um.MENU_ID
 		WHERE u.id = #{id}
 	</select>

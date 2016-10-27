@@ -22,11 +22,11 @@
 
 	<select id="Permission_QueryByUserId" parameterType="Integer" resultType="String">
 		SELECT DISTINCT d.name
-		FROM users_role a
+		FROM user_role a
 		INNER JOIN role b ON a.role_id = b.id
 		INNER JOIN role_permission c ON a.role_id = c.role_id
 		INNER JOIN permission d ON c.permission_id = d.id
 		WHERE 1 = 1
-		AND a.users_id = #{userId}
+		AND a.user_id = #{userId}
 	</select>
 </mapper>

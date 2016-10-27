@@ -1,7 +1,7 @@
 package com.jelly.eoss.web;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.Users;
+import com.jelly.eoss.model.User;
 import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.util.*;
 import com.jelly.eoss.util.security.Digest;
@@ -28,7 +28,7 @@ public class UserAction extends BaseAction{
 	public void queryUserNameAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try{
 			String name = request.getParameter("name");
-			int total = this.baseService.jdQueryForInt("select count(*) total from users where name = ?", name);
+			int total = this.baseService.jdQueryForInt("select count(*) total from user where name = ?", name);
 			if(total == 0){
 				response.getWriter().write("y");
 			}else{
@@ -59,32 +59,32 @@ public class UserAction extends BaseAction{
 	}
 
 	@RequestMapping(value = "/toAdd")
-	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response, Users user) throws Exception {
+	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response, User user) throws Exception {
 		return new ModelAndView("/system/userAdd.jsp");
 	}
 
 		@RequestMapping(value = "/add")
-	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, Users user) throws Exception{
+	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, User user) throws Exception{
 		String roleIds = request.getParameter("roleIds");
         String resourcesIds = request.getParameter("resourcesIds");
 		ModelAndView mv = new ModelAndView();
 		
 		//查询用户名是否存在
-		int total = this.baseService.jdQueryForInt("select count(*) total from users where username = ?", user.getUsername());
+		int total = this.baseService.jdQueryForInt("select count(*) total from user where username = ?", user.getUsername());
 		if(total != 0){
 			request.setAttribute("INFO", "该用户名已存在，请选择一个新的用户名");
 			mv.setViewName("/info.jsp");
 			return mv;
 		}
 		
-		int id = ComUtil.QueryNextID("id", "users");
+		int id = ComUtil.QueryNextID("id", "user");
 		
 		//插入用户
 		user.setId(id);
 		user.setPassword(Digest.GetMD5(user.getPassword()));
 		user.setSalt(new Random().nextInt(1000) + "");
 		user.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
-		this.baseService.myInsert(Users.Insert, user);
+		this.baseService.myInsert(User.Insert, user);
 		
 		//插入角色
 		this.batchInsertUserRole(user.getId(), roleIds);
@@ -99,10 +99,10 @@ public class UserAction extends BaseAction{
 		String id = request.getParameter("id");
 		
 		//查询自己
-		Users users = this.baseService.mySelectOne(Users.SelectByPk, id);
+		User user = this.baseService.mySelectOne(User.SelectByPk, id);
 		
 		//查询该用户已拥有的角色
-		String sql = "select * from users_role where users_id = ?";
+		String sql = "select * from user_role where user_id = ?";
 		List<Map<String, Object>> roleOldList = this.baseService.jdQueryForList(sql, id);
 		Set<String> roleOldSet = new HashSet<String>();
 		for(Map<String, Object> m : roleOldList){
@@ -122,7 +122,7 @@ public class UserAction extends BaseAction{
 		String zTreeNodeJson = JsonUtil.toJson(roleList);
 
         //将该角色已有菜单资源用逗号连接成一个字符串，如1,2,3,4,5,6
-        String sqlMenu = "select menu_id as id from users_menu where users_id = ?";
+        String sqlMenu = "select menu_id as id from user_menu where user_id = ?";
         List<Map<String, Object>> resourceIdsOldList = this.baseService.jdQueryForList(sqlMenu, id);
         StringBuilder sb = new StringBuilder();
         for(Map<String, Object> m : resourceIdsOldList){
@@ -142,17 +142,17 @@ public class UserAction extends BaseAction{
 
         request.setAttribute("zTreeNodeJson", zTreeNodeJson);
 		request.setAttribute("zTreeNodeJsonResource", zTreeNodeJsonResource);
-		request.setAttribute("user", users);
+		request.setAttribute("user", user);
 		return new ModelAndView("/system/userUpdate.jsp");
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, Users user) throws Exception{
+	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, User user) throws Exception{
 		//更新用户信息
-		Users u = this.baseService.mySelectOne(Users.SelectByPk, user.getId());
+		User u = this.baseService.mySelectOne(User.SelectByPk, user.getId());
 		u.setUsername(user.getUsername());
 		u.setPassword(Digest.GetMD5(user.getPassword()));
-		this.baseService.myUpdate(Users.Update, u);
+		this.baseService.myUpdate(User.Update, u);
 		
 		//更新角色
 		String roleIds = request.getParameter("roleIds");
@@ -167,7 +167,7 @@ public class UserAction extends BaseAction{
 	
 	//批量插入用户对应的角色，只选择用JdbcTemplate的批量更新方法，以保证高性能
 	private void batchInsertUserRole(Integer userId, String roleIdsStr){
-		String sqlDelete = "delete from users_role where users_id = ?";
+		String sqlDelete = "delete from user_role where user_id = ?";
 		this.baseService.jdDelete(sqlDelete, userId);
 		
 		//没有选择角色，直接返回
@@ -178,7 +178,7 @@ public class UserAction extends BaseAction{
 		//插入角色
 		String[] permissionIds = roleIdsStr.split(",");
 		if(permissionIds.length > 0){
-			String sqlInsert = "insert into users_role (users_id, role_id) values (?, ?)";
+			String sqlInsert = "insert into user_role (user_id, role_id) values (?, ?)";
 			Object[] objs = null;
 			List<Object[]> batchParams = new ArrayList<Object[]>();
 			for(String permissionId : permissionIds){
@@ -193,7 +193,7 @@ public class UserAction extends BaseAction{
 
 	//批量插入用户对应的资源，只选择用JdbcTemplate的批量更新方法，以保证高性能
 	private void batchInsertUserResource(int userId, String resourceIdsStr){
-		String sqlDelete = "delete from users_menu where users_id = ?";
+		String sqlDelete = "delete from user_menu where user_id = ?";
 		this.baseService.jdDelete(sqlDelete, userId);
 
 		//没有选择资源，直接返回
@@ -204,7 +204,7 @@ public class UserAction extends BaseAction{
 		//插入资源
 		String[] resourceIds = resourceIdsStr.split(",");
 		if(resourceIds.length > 0){
-			String sqlInsert = "insert into users_menu (users_id, menu_id) values (?, ?)";
+			String sqlInsert = "insert into user_menu (user_id, menu_id) values (?, ?)";
 			Object[] objs = null;
 			List<Object[]> batchParams = new ArrayList<Object[]>();
 			for(String resourceId : resourceIds){
@@ -222,13 +222,13 @@ public class UserAction extends BaseAction{
 		String id = request.getParameter("id");
 		
 		//删除自己
-		this.baseService.myDelete(Users.DeleteByPk, id);
+		this.baseService.myDelete(User.DeleteByPk, id);
 		
 		//删除对应的角色
-		this.baseService.jdDelete("delete from users_role where users_id = ?", id);
+		this.baseService.jdDelete("delete from user_role where user_id = ?", id);
 
         //删除对应的资源
-        this.baseService.jdDelete("delete from users_menu where users_id = ?", id);
+        this.baseService.jdDelete("delete from user_menu where user_id = ?", id);
 
 		response.getWriter().write("y");
 	}

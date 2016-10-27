@@ -3,17 +3,17 @@
 <!-- author:Collonn, Email:collonn@126.com, QQ:195358385 -->
 
 
-<mapper namespace="com.jelly.eoss.model.UsersMenu">
+<mapper namespace="com.jelly.eoss.model.UserMenu">
 	<!-- 生成Insert -->
-    <insert id="Insert" parameterType="com.jelly.eoss.model.UsersMenu">
-			insert into USERS_MENU (
+    <insert id="Insert" parameterType="com.jelly.eoss.model.UserMenu">
+			insert into USER_MENU (
 				<trim suffixOverrides=",">
                             <if test="menuId != null">
 							MENU_ID,
                             </if>
 
-                            <if test="usersId != null">
-							USERS_ID,
+                            <if test="userId != null">
+							USER_ID,
                             </if>
 
 				</trim>
@@ -22,8 +22,8 @@
                             <if test="menuId != null">
                                 #{menuId},
                             </if>
-                            <if test="usersId != null">
-                                #{usersId},
+                            <if test="userId != null">
+                                #{userId},
                             </if>
 				</trim>
 			)
@@ -37,17 +37,17 @@
 	
 	<!-- 根据表的主键生成Delete -->
 	<!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误删除 -->
-	<delete id="DeleteByPojo" parameterType="com.jelly.eoss.model.UsersMenu">
+	<delete id="DeleteByPojo" parameterType="com.jelly.eoss.model.UserMenu">
 		<!-- 请注意，该表没有主键 -->
 		delete
-		from USERS_MENU
+		from USER_MENU
 		where
         <trim suffixOverrides="and">
                 <if test="menuId != null">
 					MENU_ID = #{menuId} and
                 </if>
-                <if test="usersId != null">
-					USERS_ID = #{usersId} and
+                <if test="userId != null">
+					USER_ID = #{userId} and
                 </if>
 		</trim>
 	</delete>
@@ -56,7 +56,7 @@
 	<sql id="SelectColumns">
 		<trim suffixOverrides=",">
 				MENU_ID as "menuId",
-				USERS_ID as "usersId",
+				USER_ID as "userId",
 		</trim>
 	</sql>
 	
@@ -65,24 +65,24 @@
                 <if test="menuId != null">
                     and MENU_ID = #{menuId}
                 </if>
-                <if test="usersId != null">
-                    and USERS_ID = #{usersId}
+                <if test="userId != null">
+                    and USER_ID = #{userId}
                 </if>
 	</sql>
 	
 	<!-- 生成Select -->
-	<select id="Select" parameterType="com.jelly.eoss.model.UsersMenu" resultType="com.jelly.eoss.model.UsersMenu">
+	<select id="Select" parameterType="com.jelly.eoss.model.UserMenu" resultType="com.jelly.eoss.model.UserMenu">
 		select
 		<include refid="SelectColumns"/>
-		from USERS_MENU
+		from USER_MENU
 		where 1 = 1
 		<include refid="SelectWheres"/>
 	</select>
 
     <!-- 生成SelectCount -->
-    <select id="SelectCount" parameterType="com.jelly.eoss.model.UsersMenu" resultType="Long">
+    <select id="SelectCount" parameterType="com.jelly.eoss.model.UserMenu" resultType="Long">
         select count(*) ct
-        from USERS_MENU
+        from USER_MENU
         <where>
             <include refid="SelectWheres"/>
         </where>

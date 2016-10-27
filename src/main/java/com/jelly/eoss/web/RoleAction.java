@@ -86,7 +86,7 @@ public class RoleAction extends BaseAction{
 		String id = request.getParameter("id");
 		this.baseService.jdDelete("delete from role where id = ?", id);
 		this.baseService.jdDelete("delete from role_permission where role_id = ?", id);
-		this.baseService.jdDelete("delete from users_role where role_id = ?", id);
+		this.baseService.jdDelete("delete from user_role where role_id = ?", id);
 		response.getWriter().write("y");
 	}
 	

@@ -35,8 +35,8 @@
 
 	<select id="Role_QueryByUserId" parameterType="Integer" resultType="String">
 		SELECT DISTINCT b.name
-		FROM users_role a INNER JOIN role b ON a.role_id = b.id
+		FROM user_role a INNER JOIN role b ON a.role_id = b.id
 		WHERE 1 = 1
-		AND a.users_id = #{userId}
+		AND a.user_id = #{userId}
 	</select>
 </mapper>
