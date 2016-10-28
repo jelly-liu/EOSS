@@ -1,10 +1,10 @@
 package com.jelly.eoss.util;
 
+import org.apache.log4j.Logger;
+
 import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
-
-import org.apache.log4j.Logger;
 
 public class Log {
 	private static String pre = "";

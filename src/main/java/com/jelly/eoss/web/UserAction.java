@@ -3,7 +3,6 @@ package com.jelly.eoss.web;
 import com.jelly.eoss.dao.BaseService;
 import com.jelly.eoss.model.User;
 import com.jelly.eoss.service.MenuService;
-import com.jelly.eoss.shiro.EossAuthorizingRealm;
 import com.jelly.eoss.util.*;
 import com.jelly.eoss.util.security.Digest;
 import org.apache.ibatis.session.RowBounds;
