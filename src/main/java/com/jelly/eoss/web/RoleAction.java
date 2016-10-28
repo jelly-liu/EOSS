@@ -6,6 +6,8 @@ import com.jelly.eoss.model.Role;
 import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.util.*;
 import org.apache.ibatis.session.RowBounds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,8 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/system/role")
 public class RoleAction extends BaseAction{
+	private static final Logger log = LoggerFactory.getLogger(RoleAction.class);
+
 	@Resource
 	private BaseService baseService;
 	@Resource
@@ -35,7 +39,7 @@ public class RoleAction extends BaseAction{
 			m.put("iconSkin", "icon_eoss_role01");
 		}
 		String jsonStr = JsonUtil.toJson(roleList);
-		Log.Debug(jsonStr);
+		log.debug(jsonStr);
 		response.getWriter().write(jsonStr);
 	}
 	

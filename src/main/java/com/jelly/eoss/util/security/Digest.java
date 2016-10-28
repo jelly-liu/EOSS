@@ -1,6 +1,5 @@
 package com.jelly.eoss.util.security;
 
-import com.jelly.eoss.util.Log;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -63,10 +62,5 @@ public class Digest {
 			}
 		}
 		return sb.toString();
-	}
-
-	public static void main(String[] args) {
-		Log.Debug(Digest.GetMD5("111111"));
-		Log.Debug(Digest.GetSHA1("111111"));
 	}
 }
