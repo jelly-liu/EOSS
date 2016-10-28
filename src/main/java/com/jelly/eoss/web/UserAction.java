@@ -7,8 +7,6 @@ import com.jelly.eoss.shiro.EossAuthorizingRealm;
 import com.jelly.eoss.util.*;
 import com.jelly.eoss.util.security.Digest;
 import org.apache.ibatis.session.RowBounds;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +24,6 @@ public class UserAction extends BaseAction {
     private BaseService baseService;
     @Resource
     private MenuService menuService;
-    @Resource
-    private EossAuthorizingRealm eossAuthorizingRealm;
 
     @RequestMapping(value = "/queryUserNameAjax")
     public void queryUserNameAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -169,9 +165,10 @@ public class UserAction extends BaseAction {
         this.batchInsertUserResource(user.getId(), resourceIds);
         request.getRequestDispatcher("/system/user/toList.ac").forward(request, response);
 
-        //清理shiro cache of AuthorizationInfo
-        PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
-        eossAuthorizingRealm.clearCachedAuthorizationInfo(principals);
+        //更新用户所拥有的菜单缓存，一但用户更新了自己所拥有的菜单，再刷新左侧的菜单时，菜单可以及时的更新
+        String menuTreeIdsOfUser = this.menuService.queryMenuTreeIdsOfUser(user);
+        request.getSession().setAttribute(Const.LOGIN_MENU_TREE_IDS_KEY, menuTreeIdsOfUser);
+
         return null;
     }
 

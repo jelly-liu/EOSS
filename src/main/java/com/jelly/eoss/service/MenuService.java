@@ -1,6 +1,7 @@
 package com.jelly.eoss.service;
 
 import com.jelly.eoss.dao.BaseService;
+import com.jelly.eoss.model.User;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.util.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -15,7 +16,41 @@ import java.util.Set;
 @Service
 public class MenuService {
 	@Resource
-	private BaseService baseDao;
+	private BaseService baseService;
+
+    /*
+     *数据样例：
+     * 1#2#4#7
+     * 1#2#4#9
+     * 1#2#5#16
+     * 将重复的id过滤掉
+     */
+	public String queryMenuTreeIdsOfUser(User user){
+	    if(user == null){
+	        return "";
+        }
+
+		List<Map<String, Object>> list = this.baseService.mySelectList("_EXT.Login_QueryTreePathByUserId", user.getId());
+		Set<String> treeIdSet = new HashSet<String>();
+		String[] ids = null;
+		for(Map<String, Object> m : list){
+			ids = m.get("ids").toString().split("#");
+			for(String id : ids){
+				treeIdSet.add(id);
+			}
+		}
+
+		//将treeSet中的值拼接成select xx from xx where id in (_inIds_)
+		StringBuilder sb = new StringBuilder();
+		for(String id : treeIdSet){
+			sb.append(id + ",");
+		}
+		if(sb.length() > 0){
+			sb.deleteCharAt(sb.length() - 1);
+		}
+
+		return sb.toString();
+	}
 	
 	/*
 	 * 修饰一下znode节点，修改样式等
@@ -82,7 +117,7 @@ public class MenuService {
 	
 	//根据条件查询子菜单
 	public String queryMenuSub(Map<String, String> pm){
-		List<Map<String, Object>> list = this.baseDao.mySelectList("_EXT.Menu_QueryMenuTree", pm);
+		List<Map<String, Object>> list = this.baseService.mySelectList("_EXT.Menu_QueryMenuTree", pm);
 		this.decorateZnode(list, pm);
 		
 //		jsonStr=[{"id":1,"name":"系统管理"},{"id":2,"name":"业务管理"}]
@@ -91,11 +126,11 @@ public class MenuService {
 		return jsonStr;
 	}
 	
-	public BaseService getBaseDao() {
-		return baseDao;
+	public BaseService getBaseService() {
+		return baseService;
 	}
 
-	public void setBaseDao(BaseService baseDao) {
-		this.baseDao = baseDao;
+	public void setBaseService(BaseService baseService) {
+		this.baseService = baseService;
 	}
 }

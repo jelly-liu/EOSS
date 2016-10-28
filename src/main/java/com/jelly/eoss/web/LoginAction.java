@@ -2,6 +2,7 @@ package com.jelly.eoss.web;
 
 import com.jelly.eoss.dao.BaseService;
 import com.jelly.eoss.model.User;
+import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.servlet.ICodeServlet;
 import com.jelly.eoss.util.Const;
 import org.apache.commons.lang3.StringUtils;
@@ -29,6 +30,9 @@ public class LoginAction extends BaseAction {
 
 	@Resource
 	private BaseService baseService;
+
+	@Resource
+	MenuService menuService;
 
     @RequestMapping(value = "/toLogin")
     public void toLoginIn(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -101,36 +105,11 @@ public class LoginAction extends BaseAction {
                 return;
             }
 
-			/*
-			 *数据样例：
-			 * 1#2#4#7
-			 * 1#2#4#9
-			 * 1#2#5#16
-			 * 将重复的id过滤掉
-			 */
-            User user = (User)subject.getPrincipal();
-			List<Map<String, Object>> list = this.baseService.mySelectList("_EXT.Login_QueryTreePathByUserId", user.getId());
-			Set<String> treeIdSet = new HashSet<String>();
-			String[] ids = null;
-			for(Map<String, Object> m : list){
-				ids = m.get("ids").toString().split("#");
-				for(String id : ids){
-					treeIdSet.add(id);
-				}
-			}
-			
-			//将treeSet中的值拼接成select xx from xx where id in (_inIds_)
-			StringBuilder sb = new StringBuilder();
-			for(String id : treeIdSet){
-				sb.append(id + ",");
-			}
-			if(sb.length() > 0){
-				sb.deleteCharAt(sb.length() - 1);
-			}
-			
+			User user = (User)subject.getPrincipal();
+			String menuTreeIdsOfUser = this.menuService.queryMenuTreeIdsOfUser(user);
 
 			request.getSession().setAttribute(Const.LOGIN_SESSION_KEY, user);
-			request.getSession().setAttribute(Const.LOGIN_MENU_TREE_IDS_KEY, sb.toString());
+			request.getSession().setAttribute(Const.LOGIN_MENU_TREE_IDS_KEY, menuTreeIdsOfUser);
 			
 			this.responseSimpleJson(response, true, "");
 		}catch(Exception e){
@@ -143,6 +122,8 @@ public class LoginAction extends BaseAction {
 	public void loginOut(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.getSession().removeAttribute(Const.LOGIN_SESSION_KEY);
 		request.getSession().removeAttribute(Const.LOGIN_MENU_TREE_IDS_KEY);
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
 		response.getWriter().write("y");
 	}
 

@@ -26,11 +26,6 @@ public class EossAuthorizingRealm extends AuthorizingRealm {
     BaseService baseService;
 
     @Override
-    public void clearCachedAuthorizationInfo(PrincipalCollection principals) {
-        super.clearCachedAuthorizationInfo(principals);
-    }
-
-    @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         User user = (User)principalCollection.fromRealm(this.getName()).iterator().next();
         SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
