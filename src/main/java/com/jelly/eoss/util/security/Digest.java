@@ -1,11 +1,11 @@
 package com.jelly.eoss.util.security;
 
+import com.jelly.eoss.util.Log;
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import com.jelly.eoss.util.Log;
-import org.apache.commons.lang3.StringUtils;
 
 public class Digest {
 	/*
