@@ -7,6 +7,7 @@ import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.servlet.ICodeServlet;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.util.security.Digest;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -56,12 +57,15 @@ public class LoginAction extends BaseAction {
 				return;
 			}
 
+			User user = this.baseService.mySelectOne(User.Select, new User().setUsername(username));
+            if(user == null){
+                this.responseSimpleJson(response, false, "该用户不存在");
+                return;
+            }
+
 			//检查用户名与密码
-			Map<String, String> pm = new HashMap<>();
-			pm.put("username", username);
-			pm.put("password", Digest.GetMD5(password));
-			User user = this.baseService.mySelectOne("_EXT.SelectUserByNameAndPwd", pm);
-			if(user == null){
+			String passwordMD5 = Digest.GetMD5(password + user.getSalt());
+			if(!StringUtils.equals(passwordMD5, user.getPassword())){
 				this.responseSimpleJson(response, false, "用户名与密码不匹配");
 				return;
 			}

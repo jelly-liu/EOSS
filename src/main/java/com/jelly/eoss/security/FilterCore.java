@@ -64,7 +64,7 @@ public class FilterCore {
             return true;
         }
 
-        boolean matchPass = true;
+        boolean matchPass = false;
         log.debug("------will do filter path={}------", path);
         for(FilterRule filterRule : filterRuleList){
             if(patternMatcher.matches(filterRule.getPattern(), path)){
@@ -74,16 +74,20 @@ public class FilterCore {
                     matchPass = false;
                 }else {
                     boolean userHasRole = filterRule.userHasRole(rolesOfUser);
-                    if (!userHasRole) {
-                        matchPass = false;
-                    }
-
                     boolean userHasPerm = filterRule.userHasPerm(permsOfUser);
-                    if (!userHasPerm) {
-                        matchPass = false;
+
+                    if(filterRule.getRoleSet().size() > 0 && filterRule.getPermSet().size() > 0){
+                        if(userHasRole || userHasPerm) matchPass = true;
+                    }else if(filterRule.getRoleSet().size() > 0 && filterRule.getPermSet().size() == 0){
+                        if(userHasRole) matchPass = true;
+                    }else if(filterRule.getRoleSet().size() == 0 && filterRule.getPermSet().size() > 0){
+                        if(userHasPerm) matchPass = true;
+                    }else if(filterRule.getRoleSet().size() == 0 && filterRule.getPermSet().size() == 0){
+                        matchPass = true;
                     }
                 }
                 log.debug("---------access={}, path={}, pattern={}, rule={}", matchPass, path, filterRule.getPattern(), filterRule.getRule());
+                break;
             }
         }
         log.debug("------after do filter matchPass={}, path={}------", matchPass, path);

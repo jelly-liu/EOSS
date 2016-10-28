@@ -37,6 +37,10 @@ public class FilterRuleFactory {
                     continue;
                 }
 
+                if(StringUtils.startsWith(line, "#")){
+                    continue;
+                }
+
                 FilterRule filterRule = parseLine(line);
                 if(filterRule == null){
                     continue;

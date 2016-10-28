@@ -48,13 +48,23 @@
                 [config]
                 loginUrl = /toLogin.ac
                 [urls]
-                /** = authc
                 / = anon
                 /static/** = anon
                 /toLogin.ac = anon
                 /login.ac = anon
-                /system/** = roles[系统管理员]
+                #/system/** = roles[系统管理员]
+                /system/** = roles[系统管理员,系统管理员2]; perms[user:add,user:delete,user:list,user*]
                 /business/** = roles[业务员]
+                /** = authc
+
+                #/system/** = roles[系统管理员,系统管理员2]; perms[user:add,user:delete,user:list,user*]
+                #the above lineRule, mean that user must has any roles, ***OR*** has any perms
+
+                #------------------- notice -------------------#
+                #--when an request coming
+                #--request url will match(ant-path-matcher) the rule from first lineRule to last lineRule
+                #--if match any lineRule, break
+                #------------------- notice -------------------#
 			</param-value>
 		</init-param>
 	</filter>
