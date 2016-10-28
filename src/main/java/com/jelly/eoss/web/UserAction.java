@@ -18,12 +18,12 @@ import java.util.*;
 
 @Controller
 @RequestMapping(value = "/system/user")
-public class UserAction extends BaseAction{
-	@Resource
-	private BaseService baseService;
+public class UserAction extends BaseAction {
+    @Resource
+    private BaseService baseService;
     @Resource
     private MenuService menuService;
-	
+
 	@RequestMapping(value = "/queryUserNameAjax")
 	public void queryUserNameAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try{
@@ -39,20 +39,20 @@ public class UserAction extends BaseAction{
 			throw e;
 		}
 	}
-	
+
 	@RequestMapping(value = "/toList")
 	public ModelAndView toList(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Integer page = ServletRequestUtils.getIntParameter(request, "page", 1);
-		
+
 		Map<String, String> param = this.getRequestMap(request);
 		RowBounds rb = new RowBounds((page -1) * Const.PAGE_SIZE, Const.PAGE_SIZE);
-		
+
 		Integer totalRow = this.baseService.mySelectOne("_EXT.User_QueryUser_Count", param);
 		List<Map<String, Object>> dataList = this.baseService.getSqlSessionTemplate().selectList("_EXT.User_QueryUser_Page", param, rb);
-		
+
 		Pager pager = new Pager(page.intValue(), Const.PAGE_SIZE, totalRow.intValue());
 		pager.setData(dataList);
-		
+
 		request.setAttribute("pager", pager);
 		this.resetAllRequestParams(request);
 		return new ModelAndView("/system/userList.jsp");
@@ -68,7 +68,7 @@ public class UserAction extends BaseAction{
 		String roleIds = request.getParameter("roleIds");
         String resourcesIds = request.getParameter("resourcesIds");
 		ModelAndView mv = new ModelAndView();
-		
+
 		//查询用户名是否存在
 		int total = this.baseService.jdQueryForInt("select count(*) total from user where username = ?", user.getUsername());
 		if(total != 0){
@@ -76,16 +76,16 @@ public class UserAction extends BaseAction{
 			mv.setViewName("/info.jsp");
 			return mv;
 		}
-		
+
 		int id = ComUtil.QueryNextID("id", "user");
-		
+
 		//插入用户
 		user.setId(id);
 		user.setPassword(Digest.GetMD5(user.getPassword()));
 		user.setSalt(new Random().nextInt(1000) + "");
 		user.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
 		this.baseService.myInsert(User.Insert, user);
-		
+
 		//插入角色
 		this.batchInsertUserRole(user.getId(), roleIds);
         //插入资源
@@ -93,14 +93,14 @@ public class UserAction extends BaseAction{
 		request.getRequestDispatcher("/system/user/toList.ac").forward(request, response);
 		return null;
 	}
-	
+
 	@RequestMapping(value = "/toUpdate")
 	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = request.getParameter("id");
-		
+
 		//查询自己
 		User user = this.baseService.mySelectOne(User.SelectByPk, id);
-		
+
 		//查询该用户已拥有的角色
 		String sql = "select * from user_role where user_id = ?";
 		List<Map<String, Object>> roleOldList = this.baseService.jdQueryForList(sql, id);
@@ -108,7 +108,7 @@ public class UserAction extends BaseAction{
 		for(Map<String, Object> m : roleOldList){
 			roleOldSet.add(m.get("role_id").toString());
 		}
-		
+
 		//设置初始化选中的角色
 		List<Map<String, Object>> roleList = this.baseService.mySelectList("_EXT.Role_QueryRolePage");
 		for(Map<String, Object> m : roleList){
@@ -145,7 +145,7 @@ public class UserAction extends BaseAction{
 		request.setAttribute("user", user);
 		return new ModelAndView("/system/userUpdate.jsp");
 	}
-	
+
 	@RequestMapping(value = "/update")
 	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, User user) throws Exception{
 		//更新用户信息
@@ -153,7 +153,7 @@ public class UserAction extends BaseAction{
 		u.setUsername(user.getUsername());
 		u.setPassword(Digest.GetMD5(user.getPassword()));
 		this.baseService.myUpdate(User.Update, u);
-		
+
 		//更新角色
 		String roleIds = request.getParameter("roleIds");
 		this.batchInsertUserRole(user.getId(), roleIds);
@@ -162,34 +162,38 @@ public class UserAction extends BaseAction{
         String resourceIds = request.getParameter("resourceIds");
         this.batchInsertUserResource(user.getId(), resourceIds);
         request.getRequestDispatcher("/system/user/toList.ac").forward(request, response);
+
+		//更新用户menu菜单ids缓存
+		String menuTreeIdsOfUser = this.menuService.queryMenuTreeIdsOfUser(user);
+		request.getSession().setAttribute(Const.LOGIN_MENU_TREE_IDS_KEY, menuTreeIdsOfUser);
 		return null;
 	}
-	
-	//批量插入用户对应的角色，只选择用JdbcTemplate的批量更新方法，以保证高性能
-	private void batchInsertUserRole(Integer userId, String roleIdsStr){
-		String sqlDelete = "delete from user_role where user_id = ?";
-		this.baseService.jdDelete(sqlDelete, userId);
-		
-		//没有选择角色，直接返回
-		if(roleIdsStr == null || roleIdsStr.trim().equals("")){
-			return;
-		}
-		
-		//插入角色
-		String[] permissionIds = roleIdsStr.split(",");
-		if(permissionIds.length > 0){
-			String sqlInsert = "insert into user_role (user_id, role_id) values (?, ?)";
-			Object[] objs = null;
-			List<Object[]> batchParams = new ArrayList<Object[]>();
-			for(String permissionId : permissionIds){
-				objs = new Object[2];
-				objs[0] = userId;
-				objs[1] = permissionId;
-				batchParams.add(objs);
-			}
-			this.baseService.jdBatchUpdate(sqlInsert, batchParams);
-		}
-	}
+
+    //批量插入用户对应的角色，只选择用JdbcTemplate的批量更新方法，以保证高性能
+    private void batchInsertUserRole(Integer userId, String roleIdsStr) {
+        String sqlDelete = "delete from user_role where user_id = ?";
+        this.baseService.jdDelete(sqlDelete, userId);
+
+        //没有选择角色，直接返回
+        if (roleIdsStr == null || roleIdsStr.trim().equals("")) {
+            return;
+        }
+
+        //插入角色
+        String[] permissionIds = roleIdsStr.split(",");
+        if (permissionIds.length > 0) {
+            String sqlInsert = "insert into user_role (user_id, role_id) values (?, ?)";
+            Object[] objs = null;
+            List<Object[]> batchParams = new ArrayList<Object[]>();
+            for (String permissionId : permissionIds) {
+                objs = new Object[2];
+                objs[0] = userId;
+                objs[1] = permissionId;
+                batchParams.add(objs);
+            }
+            this.baseService.jdBatchUpdate(sqlInsert, batchParams);
+        }
+    }
 
 	//批量插入用户对应的资源，只选择用JdbcTemplate的批量更新方法，以保证高性能
 	private void batchInsertUserResource(int userId, String resourceIdsStr){
@@ -216,14 +220,14 @@ public class UserAction extends BaseAction{
 			this.baseService.jdBatchUpdate(sqlInsert, batchParams);
 		}
 	}
-	
+
 	@RequestMapping(value = "/delete")
 	public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
-		
+
 		//删除自己
 		this.baseService.myDelete(User.DeleteByPk, id);
-		
+
 		//删除对应的角色
 		this.baseService.jdDelete("delete from user_role where user_id = ?", id);
 
@@ -232,7 +236,7 @@ public class UserAction extends BaseAction{
 
 		response.getWriter().write("y");
 	}
-	
+
 	//getter and setter
 	public BaseService getBaseDao() {
 		return baseService;

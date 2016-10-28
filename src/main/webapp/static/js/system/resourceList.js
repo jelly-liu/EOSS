@@ -60,7 +60,7 @@ $(function(){
 	    minimizable:false,
 	    maximizable:false,
 	    draggable:false,
-	    resizable:false
+	    resizable:true
 	});
 	//所属菜单选择事件
 	$('#pnameText').click(function(){

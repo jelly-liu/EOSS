@@ -3,9 +3,12 @@ package com.jelly.eoss.web;
 import com.jelly.eoss.dao.BaseService;
 import com.jelly.eoss.model.UserRolesPerms;
 import com.jelly.eoss.model.User;
+import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.servlet.ICodeServlet;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.util.security.Digest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +20,13 @@ import java.util.*;
 
 @Controller
 public class LoginAction extends BaseAction {
+    private static final Logger log = LoggerFactory.getLogger(LoginAction.class);
+
 	@Resource
 	private BaseService baseService;
+
+	@Resource
+	MenuService menuService;
 
     @RequestMapping(value = "/toLogin")
     public void toLoginIn(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -47,9 +55,9 @@ public class LoginAction extends BaseAction {
 				this.responseSimpleJson(response, false, "验证码输入错误");
 				return;
 			}
-			
+
 			//检查用户名与密码
-			Map<String, String> pm = new HashMap<String, String>();
+			Map<String, String> pm = new HashMap<>();
 			pm.put("username", username);
 			pm.put("password", Digest.GetMD5(password));
 			User user = this.baseService.mySelectOne("_EXT.SelectUserByNameAndPwd", pm);
@@ -57,33 +65,9 @@ public class LoginAction extends BaseAction {
 				this.responseSimpleJson(response, false, "用户名与密码不匹配");
 				return;
 			}
-			
-			/*
-			 *数据样例：
-			 * 1#2#4#7
-			 * 1#2#4#9
-			 * 1#2#5#16
-			 * 将重复的id过滤掉
-			 */
-			List<Map<String, Object>> list = this.baseService.mySelectList("_EXT.Login_QueryTreePathByUserId", user.getId());
-			Set<String> treeIdSet = new HashSet<String>();
-			String[] ids = null;
-			for(Map<String, Object> m : list){
-				ids = m.get("ids").toString().split("#");
-				for(String id : ids){
-					treeIdSet.add(id);
-				}
-			}
-			
-			//将treeSet中的值拼接成select xx from xx where id in (_inIds_)
-			StringBuilder sb = new StringBuilder();
-			for(String id : treeIdSet){
-				sb.append(id + ",");
-			}
-			if(sb.length() > 0){
-				sb.deleteCharAt(sb.length() - 1);
-			}
-			
+
+			String menuTreeIdsOfUser = this.menuService.queryMenuTreeIdsOfUser(user);
+
 			//登录成功
             UserRolesPerms userRolesPerms = new UserRolesPerms();
             List<String> roleList = this.baseService.mySelectList("_EXT.Role_QueryByUserId", user.getId());
@@ -103,10 +87,9 @@ public class LoginAction extends BaseAction {
             userRolesPerms.setUser(user).setRolesOfUser(roleSet).setPermsOfUser(permSet);
 
 			request.getSession().setAttribute(Const.LOGIN_SESSION_KEY, userRolesPerms);
-			request.getSession().setAttribute(Const.LOGIN_MENU_TREE_IDS_KEY, sb.toString());
+			request.getSession().setAttribute(Const.LOGIN_MENU_TREE_IDS_KEY, menuTreeIdsOfUser);
 			
 			this.responseSimpleJson(response, true, "");
-//			request.getRequestDispatcher("/base/main.jsp").forward(request, response);
 		}catch(Exception e){
 			e.printStackTrace();
 			this.responseSimpleJson(response, false, "未知错误");
