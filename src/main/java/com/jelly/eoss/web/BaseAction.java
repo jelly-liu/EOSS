@@ -1,6 +1,7 @@
 package com.jelly.eoss.web;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,8 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BaseAction {
-	protected Logger logger = Logger.getLogger(this.getClass());
-	
+	private static final Logger log = LoggerFactory.getLogger(BaseAction.class);
+
 	protected boolean isEmptyString(String string){
 		boolean flag = false;
 		if(string == null || string.trim().equals("")){
@@ -56,7 +57,7 @@ public class BaseAction {
         	if(sb.length() > 0){
         		sb.deleteCharAt(sb.length() - 1);
         	}
-        	logger.debug("requestParams:" + key + "---->" + sb.toString());
+        	log.debug("requestParams:" + key + "---->" + sb.toString());
         	paramMap.put(key, sb.toString());
         }
     	return paramMap;

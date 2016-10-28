@@ -5,6 +5,8 @@ import com.jelly.eoss.model.Menu;
 import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.util.*;
 import org.apache.ibatis.session.RowBounds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,8 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/system/menu")
 public class MenuAction extends BaseAction{
+    private static final Logger log = LoggerFactory.getLogger(MenuAction.class);
+
 	@Resource
 	private BaseService baseService;
 	@Resource
@@ -55,7 +59,7 @@ public class MenuAction extends BaseAction{
 		pm.put("inIds", idsOfLoginUserMenu);
 		pm.put("openAll", "y");
 		String jsonZTree = this.menuService.queryMenuSub(pm);
-		Log.Debug(jsonZTree);
+		log.debug(jsonZTree);
 		
 		response.getWriter().write(jsonZTree);
 		
@@ -66,7 +70,7 @@ public class MenuAction extends BaseAction{
 	public ModelAndView querySub(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Map<String, String> pm = this.getRequestMap(request);
 		String jsonZTree = this.menuService.queryMenuSub(pm);
-		Log.Debug(jsonZTree);
+        log.debug(jsonZTree);
 		request.setAttribute("jsonZTree", jsonZTree);
 		
 		return new ModelAndView("/layout/west.jsp");
@@ -76,7 +80,7 @@ public class MenuAction extends BaseAction{
 	public void querySubAjax(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Map<String, String> pm = this.getRequestMap(request);
 		String jsonZTree = this.menuService.queryMenuSub(pm);
-		Log.Debug(jsonZTree);
+		log.debug(jsonZTree);
 		response.getWriter().write(jsonZTree);
 	}
 	

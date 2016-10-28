@@ -1,5 +1,8 @@
 package com.jelly.eoss.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,6 +11,8 @@ import java.util.Date;
  *	为保证线程安全，必须用new SimpleDateFormat(xxx);
  */
 public class DateUtil {
+	private static final Logger log = LoggerFactory.getLogger(DateUtil.class);
+
 	public final static String YYYY_MM_DD = "yyyy-MM-dd";
 	public final static String YYYYMMDD = "yyyyMMdd";
 	public final static String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
@@ -43,7 +48,7 @@ public class DateUtil {
 				SDF1 = null;
 				SDF2 = null;
 			}catch(Exception e){
-				Log.Error(e);
+				log.error("Exception", e);
 			}
 		}
 	}
@@ -95,7 +100,6 @@ public class DateUtil {
 	 * 输入:2012-05-08 17:59:41<br/>
 	 * 输出:20100101223056
 	 * 
-	 * @param withSeparator
 	 * @return
 	 */
 	public static final long ChangeDateTimeToLong(String dateTime) {
@@ -113,7 +117,7 @@ public class DateUtil {
 			Date date = new SimpleDateFormat(YYYYMMDDHHMMSS).parse(longStr);
 			str = new SimpleDateFormat(YYYY_MM_DD_HH_MM_SS).format(date);
 		} catch (ParseException e) {
-			Log.Error(e);
+			log.error("ParseException", e);
 		}
 		
 		return str;
@@ -140,7 +144,7 @@ public class DateUtil {
 				timeMillis = new SimpleDateFormat(YYYYMMDDHHMMSS).parse(dateTimeStr).getTime();
 			}
 		}catch(ParseException e){
-			Log.Error(e);
+            log.error("ParseException", e);
 		}
 		
 		return timeMillis;
@@ -166,7 +170,7 @@ public class DateUtil {
 				rs = new SimpleDateFormat("E").format(new SimpleDateFormat(YYYYMMDDHHMMSS).parse(dateTimeStr));
 			}
 		}catch(Exception e){
-			Log.Error(e);
+            log.error("Exception", e);
 		}
 		return rs;
 	}

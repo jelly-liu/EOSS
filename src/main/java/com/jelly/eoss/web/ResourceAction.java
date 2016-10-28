@@ -5,6 +5,8 @@ import com.jelly.eoss.model.Menu;
 import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.util.*;
 import org.apache.ibatis.session.RowBounds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,8 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/system/resource")
 public class ResourceAction extends BaseAction{
+	private static final Logger log = LoggerFactory.getLogger(ResourceAction.class);
+
 	@Resource
 	private BaseService baseService;
 	@Resource
@@ -60,7 +64,7 @@ public class ResourceAction extends BaseAction{
 		menu.setPath(menu.getPath() + "#" + id);
 		menu.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
 		this.baseService.myInsert(Menu.Insert, menu);
-		Log.Debug(menu.getTarget());
+		log.debug(menu.getTarget());
 		return new ModelAndView("/system/resource/toList.ac");
 	}
 	

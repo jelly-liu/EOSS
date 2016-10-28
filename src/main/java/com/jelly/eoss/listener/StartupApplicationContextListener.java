@@ -2,6 +2,8 @@ package com.jelly.eoss.listener;
 
 import com.jelly.eoss.util.Const;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -12,6 +14,7 @@ import javax.servlet.ServletContextListener;
 import java.util.Properties;
 
 public class StartupApplicationContextListener implements ServletContextListener {
+	private static final Logger log = LoggerFactory.getLogger(StartupApplicationContextListener.class);
 
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
 		try{
