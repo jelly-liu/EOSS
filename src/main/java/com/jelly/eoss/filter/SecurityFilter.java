@@ -22,7 +22,7 @@ public class SecurityFilter implements Filter {
 		String filterDefinition = filterConfig.getInitParameter("filterDefinition");
         log.debug("filterDefinition={}", filterDefinition);
 
-        String config = StringUtils.substringBetween(filterDefinition, "[config]", "[urls]");
+        String config = StringUtils.substringBetween(filterDefinition, "[main]", "[urls]");
         String urls = StringUtils.substringAfter(filterDefinition, "[urls]");
 
 		filterCore = new FilterCore();

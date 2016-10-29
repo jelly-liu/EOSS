@@ -20,7 +20,7 @@ public class FilterRuleFactory {
     public static final String EQUAL = "=";
     public static final String COMMA = ",";
     public static final String MID_BRACE_START = "[";
-    public static final String SEMICOLON = ";";
+    public static final String SEMICOLON = "],";
     public static final String COLON = ":";
     public static final String MID_BRACE_END = "]";
 
@@ -80,11 +80,15 @@ public class FilterRuleFactory {
         filterRule.setPattern(pattern);
         filterRule.setRule(ruleSegment);
 
-        String[] rules = StringUtils.split(ruleSegment, SEMICOLON);
+        String[] rules = StringUtils.splitByWholeSeparator(ruleSegment, SEMICOLON);
         for(String rule : rules){
             rule = StringUtils.trimToNull(rule);
             if(StringUtils.isEmpty(rule)){
                 continue;
+            }
+
+            if(!StringUtils.endsWith(rule, "]")){
+                rule += "]";
             }
 
             if(StringUtils.equals(rule, RuleKey.anon.toString())){

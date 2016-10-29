@@ -114,12 +114,20 @@ public class FilterCore {
 
         FilterCore filterCore = new FilterCore();
         filterCore.init(null, "" +
-                "/ = anon\n" +
-                "/static/** = anon\n" +
-                "/toLogin.ac = anon\n" +
-                "/system/** = auth\n" +
-                "/system/menu/** = authc; roles[adminSuper, adminMenu]\n" +
-                "/system/*/add = authc; roles[adminSuper]; perms[admin:add]" +
+                "#the [main] section must config\n" +
+                "                [main]\n" +
+                "                loginUrl = /toLogin.ac\n" +
+                "\n" +
+                "\t\t\t\t#the [urls] section must config\n" +
+                "                [urls]\n" +
+                "                / = anon\n" +
+                "                /static/** = anon\n" +
+                "                /toLogin.ac = anon\n" +
+                "                /login.ac = anon\n" +
+                "                #/system/** = roles[系统管理员]\n" +
+                "                /system/** = roles[系统管理员,系统管理员2], perms[user:add,user:delete,user:list,user*]\n" +
+                "                /business/** = roles[业务员]\n" +
+                "                /** = authc"+
                 "");
 
         filterCore.doFilter("/", true, rolesOfUser, permsOfUser);

@@ -45,15 +45,18 @@
 		<init-param>
 			<param-name>filterDefinition</param-name>
 			<param-value>
-                [config]
+				#the [main] section must config
+                [main]
                 loginUrl = /toLogin.ac
+
+				#the [urls] section must config
                 [urls]
                 / = anon
                 /static/** = anon
                 /toLogin.ac = anon
                 /login.ac = anon
                 #/system/** = roles[系统管理员]
-                /system/** = roles[系统管理员,系统管理员2]; perms[user:add,user:delete,user:list,user*]
+                /system/** = roles[系统管理员,系统管理员2], perms[user:add,user:delete,user:list,user*]
                 /business/** = roles[业务员]
                 /** = authc
 
