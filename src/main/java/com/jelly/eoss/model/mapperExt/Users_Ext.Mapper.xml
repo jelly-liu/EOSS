@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="_EXT">
+	<!-- 非工具生成的单表的SQL都以下划线开头 -->
+	
+	<sql id="User_QueryUser_Body">
+		from user m
+		where 1 = 1
+		<if test="id != null and id != ''">and m.id = #{id}</if>
+		<if test="username != null and username != ''">and instr(m.username, #{username}) > 0</if>
+		<if test="createTimeStart != null and createTimeStart != ''">
+			and m.create_datetime &gt;= CONCAT('${createTimeStart}', ' 00:00:00')
+		</if>
+		<if test="createTimeEnd != null and createTimeEnd != ''">
+			and m.create_datetime &lt;= CONCAT('${createTimeEnd}', ' 23:59:59')
+		</if>
+	</sql>
+	<select id="User_QueryUser_Count" parameterType="HashMap" resultType="Integer">
+		select count(*)
+		<include refid="User_QueryUser_Body"/>
+	</select>
+	<select id="User_QueryUser_Page" parameterType="HashMap" resultType="LinkedHashMap">
+		select
+		id as "id",
+		username as "username",
+		password as "password",
+		salt as "salt",
+		create_datetime as "createDatetime"
+		<include refid="User_QueryUser_Body"/>
+	</select>
+</mapper>

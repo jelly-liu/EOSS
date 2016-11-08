@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="_EXT">
+	<!-- 非工具生成的单表的SQL都以下划线开头 -->
+	
+	<select id="Login_QueryTreePathByUserId" parameterType="int" resultType="LinkedHashMap">
+		SELECT m.path AS "ids"
+		FROM user u
+		INNER JOIN user_menu um ON u.ID = um.USER_ID
+		INNER JOIN menu m ON m.id =um.MENU_ID
+		WHERE u.id = #{id}
+	</select>
+</mapper>

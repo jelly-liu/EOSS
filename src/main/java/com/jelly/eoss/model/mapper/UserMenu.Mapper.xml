@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:Collonn, Email:collonn@126.com, QQ:195358385 -->
+
+
+<mapper namespace="com.jelly.eoss.model.UserMenu">
+	<!-- 生成Insert -->
+    <insert id="Insert" parameterType="com.jelly.eoss.model.UserMenu">
+			insert into USER_MENU (
+				<trim suffixOverrides=",">
+                            <if test="menuId != null">
+							MENU_ID,
+                            </if>
+
+                            <if test="userId != null">
+							USER_ID,
+                            </if>
+
+				</trim>
+			) values (
+				<trim suffixOverrides=",">
+                            <if test="menuId != null">
+                                #{menuId},
+                            </if>
+                            <if test="userId != null">
+                                #{userId},
+                            </if>
+				</trim>
+			)
+		</insert>
+
+	<!-- 生成Update -->
+    <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+
+    <!-- 生成UpdateWithNull -->
+    <!-- 注意调用该SQL前必须先根据主键查询出该记录所有列数据，再设置某列为null -->
+	
+	<!-- 根据表的主键生成Delete -->
+	<!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误删除 -->
+	<delete id="DeleteByPojo" parameterType="com.jelly.eoss.model.UserMenu">
+		<!-- 请注意，该表没有主键 -->
+		delete
+		from USER_MENU
+		where
+        <trim suffixOverrides="and">
+                <if test="menuId != null">
+					MENU_ID = #{menuId} and
+                </if>
+                <if test="userId != null">
+					USER_ID = #{userId} and
+                </if>
+		</trim>
+	</delete>
+
+	<!-- 生成Select通用表头 -->
+	<sql id="SelectColumns">
+		<trim suffixOverrides=",">
+				MENU_ID as "menuId",
+				USER_ID as "userId",
+		</trim>
+	</sql>
+	
+	<!-- 生成Select通用查询条件 -->
+	<sql id="SelectWheres">
+                <if test="menuId != null">
+                    and MENU_ID = #{menuId}
+                </if>
+                <if test="userId != null">
+                    and USER_ID = #{userId}
+                </if>
+	</sql>
+	
+	<!-- 生成Select -->
+	<select id="Select" parameterType="com.jelly.eoss.model.UserMenu" resultType="com.jelly.eoss.model.UserMenu">
+		select
+		<include refid="SelectColumns"/>
+		from USER_MENU
+		where 1 = 1
+		<include refid="SelectWheres"/>
+	</select>
+
+    <!-- 生成SelectCount -->
+    <select id="SelectCount" parameterType="com.jelly.eoss.model.UserMenu" resultType="Long">
+        select count(*) ct
+        from USER_MENU
+        <where>
+            <include refid="SelectWheres"/>
+        </where>
+    </select>
+
+    <!-- 根据表的主键生成SelectByPk，该表只有单列主键 -->
+</mapper>

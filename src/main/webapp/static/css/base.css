@@ -1,0 +1,152 @@
+@CHARSET "UTF-8";
+
+*{
+	font-size:12px;
+	margin:0px;
+	padding:0px;
+}
+
+html,body{
+	width:100%;
+	height:100%;
+	border:0px;
+}
+
+ul{
+	list-style:none;
+	margin:0px;
+	padding:0px;
+}
+
+img{
+	border:0px;
+	padding:0px;
+	margin:0px;
+	cursor:pointer;
+}
+
+pre{
+	display:inline;
+	margin:0px;
+	padding:0px;
+}
+
+.clear{
+	clear:both;
+}
+
+a{
+	text-decoration:none;
+}
+
+input{
+	height:20px;
+}
+
+table{
+	border-collapse:collapse;
+}
+
+table th, table td{
+	border: 1px #CCC solid;
+}
+
+table.noborder th, table.noborder td{
+	border: 0px;
+}
+
+/* custom style of table */
+.tableXCenter{
+	width:100%;
+}
+.tableXCenter td, .tableXCenter th{
+	text-align:center;
+}
+.tableCenter{
+	width:100%;
+	height:100%;
+}
+.tableCenter td, .tableCenter th{
+	text-align:center;
+}
+.tableLeft{
+	width:100%;
+	height:100%;
+}
+.tableLeft td, .tableLeft th{
+	text-align:left;
+}
+.tableRight{
+	width:100%;
+	height:100%;
+}
+.tableRight td, .tableRight th{
+	text-align:right;
+}
+
+/* style of data list element*/
+.eossDataTable{
+	width:100%;
+	margin:0;
+}
+.eossDataTable th{
+	background: none;
+}
+.eossDataTable th, .eossDataTable td{
+	height:25px;
+}
+
+.eossDataTable tr.odd{
+	background:#EFFFFF;
+}
+.eossDataTable tr.even{
+	background:#FFFFFF;
+}
+.eossDataTable tr.hover{
+	background:#EEFAFF;
+}
+.eossDataTable tr.clicked{
+	background:#EEEFFF;
+}
+
+/* style of form element*/
+.eossForm{
+	width:100%;
+	margin:0px;
+}
+.eossForm th{
+	background:none;
+}
+.eossForm input, .eossForm select, .eossForm select option{
+	width:100px;
+}
+.eossForm input.inputMid{
+	width:300px;
+}
+.eossForm input.inputLong{
+	width:100%;
+}
+.eossFromTable{
+	width:100%;
+}
+.eossFromTable th, .eossFromTable td{
+	padding:6px;
+}
+
+/*
+a:link{
+	color:#000;
+}
+
+a:visited{
+	color:#333;
+}
+
+a:hover{
+	color:#333;
+}
+
+a:active{
+	color:#333;
+}
+*/

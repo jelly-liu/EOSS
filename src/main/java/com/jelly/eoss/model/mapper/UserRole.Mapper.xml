@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:Collonn, Email:collonn@126.com, QQ:195358385 -->
+
+
+<mapper namespace="com.jelly.eoss.model.UserRole">
+	<!-- 生成Insert -->
+    <insert id="Insert" parameterType="com.jelly.eoss.model.UserRole">
+			insert into USER_ROLE (
+				<trim suffixOverrides=",">
+                            <if test="userId != null">
+							USER_ID,
+                            </if>
+
+                            <if test="roleId != null">
+							ROLE_ID,
+                            </if>
+
+				</trim>
+			) values (
+				<trim suffixOverrides=",">
+                            <if test="userId != null">
+                                #{userId},
+                            </if>
+                            <if test="roleId != null">
+                                #{roleId},
+                            </if>
+				</trim>
+			)
+		</insert>
+
+	<!-- 生成Update -->
+    <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+
+    <!-- 生成UpdateWithNull -->
+    <!-- 注意调用该SQL前必须先根据主键查询出该记录所有列数据，再设置某列为null -->
+	
+	<!-- 根据表的主键生成Delete -->
+	<!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误删除 -->
+	<delete id="DeleteByPojo" parameterType="com.jelly.eoss.model.UserRole">
+		<!-- 请注意，该表没有主键 -->
+		delete
+		from USER_ROLE
+		where
+        <trim suffixOverrides="and">
+                <if test="userId != null">
+					USER_ID = #{userId} and
+                </if>
+                <if test="roleId != null">
+					ROLE_ID = #{roleId} and
+                </if>
+		</trim>
+	</delete>
+
+	<!-- 生成Select通用表头 -->
+	<sql id="SelectColumns">
+		<trim suffixOverrides=",">
+				USER_ID as "userId",
+				ROLE_ID as "roleId",
+		</trim>
+	</sql>
+	
+	<!-- 生成Select通用查询条件 -->
+	<sql id="SelectWheres">
+                <if test="userId != null">
+                    and USER_ID = #{userId}
+                </if>
+                <if test="roleId != null">
+                    and ROLE_ID = #{roleId}
+                </if>
+	</sql>
+	
+	<!-- 生成Select -->
+	<select id="Select" parameterType="com.jelly.eoss.model.UserRole" resultType="com.jelly.eoss.model.UserRole">
+		select
+		<include refid="SelectColumns"/>
+		from USER_ROLE
+		where 1 = 1
+		<include refid="SelectWheres"/>
+	</select>
+
+    <!-- 生成SelectCount -->
+    <select id="SelectCount" parameterType="com.jelly.eoss.model.UserRole" resultType="Long">
+        select count(*) ct
+        from USER_ROLE
+        <where>
+            <include refid="SelectWheres"/>
+        </where>
+    </select>
+
+    <!-- 根据表的主键生成SelectByPk，该表只有单列主键 -->
+</mapper>

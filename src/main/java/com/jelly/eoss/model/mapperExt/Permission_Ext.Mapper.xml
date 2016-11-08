@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="_EXT">
+	<!-- 非工具生成的单表的SQL都以下划线开头 -->
+	
+	<sql id="Permission_QueryPermissionPage_Body">
+		from permission p
+		where 1 = 1
+		<if test="id != null and id != ''">and p.id = #{id}</if>
+		<if test="name != null and name != ''">and instr(p.name, #{name}) > 0</if>
+	</sql>
+	<select id="Permission_QueryPermissionPage_Count" parameterType="HashMap" resultType="Integer">
+		select count(*)
+		<include refid="Permission_QueryPermissionPage_Body"/>
+	</select>
+	<select id="Permission_QueryPermissionPage" parameterType="HashMap" resultType="LinkedHashMap">
+		select
+		id as "id",
+		name as "name"
+		<include refid="Permission_QueryPermissionPage_Body"/>
+	</select>
+
+	<select id="Permission_QueryByUserId" parameterType="Integer" resultType="String">
+		SELECT DISTINCT d.name
+		FROM user_role a
+		INNER JOIN role b ON a.role_id = b.id
+		INNER JOIN role_permission c ON a.role_id = c.role_id
+		INNER JOIN permission d ON c.permission_id = d.id
+		WHERE 1 = 1
+		AND a.user_id = #{userId}
+	</select>
+</mapper>

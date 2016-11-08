@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="_EXT">
+	<!-- 非工具生成的单表的SQL都以下划线开头 -->
+	
+	<select id="Menu_QueryMenuTree" parameterType="HashMap" resultType="LinkedHashMap">
+		select 
+		id as "id", 
+		pid as "pId", 
+		name as "name", 
+		leaf as "leaf",
+		<if test="withoutUrl == null or withoutUrl == ''">
+			url as "url",
+		</if>
+		target as "target",
+		lev as "lev"
+		from menu m
+		<where>
+			<if test="id != null and id != ''">
+				m.pid = #{id}
+			</if>
+			<if test="onlyParent != null and onlyParent != ''">
+				and m.leaf = 0
+			</if>
+			<if test="notInIds != null and notInIds != ''">
+				and id not in (${notInIds})
+			</if>
+			<if test="inIds != null and inIds != ''">
+				and id in (${inIds})
+			</if>
+		</where>
+		order by m.id asc
+	</select>
+	
+	<!-- 根据path查询某菜单下的所有子菜单(即子树，包括该菜单) -->
+	<select id="Menu_QueryAllSubMenu" parameterType="Integer" resultType="LinkedHashMap">
+		SELECT m.id as "id"
+		FROM menu m
+		WHERE 1 = 1
+		AND m.leaf = 0
+		AND m.path LIKE CONCAT((SELECT path FROM menu WHERE id = #{id}), '%')
+	</select>
+	
+	<sql id="Menu_QueryMenuPage_Body">
+		FROM menu m
+		INNER JOIN menu m2 ON m.pid = m2.id
+		WHERE 1 = 1
+		<if test="dirId != null and dirId != '' and dirId != 1">
+			AND m.path LIKE CONCAT((SELECT path FROM menu WHERE id = #{dirId}), '%')
+		</if>
+		<if test="leaf != null and leaf != ''">and m.leaf = #{leaf}</if>
+		<if test="id != null and id != ''">and m.id = #{id}</if>
+		<if test="name != null and name != ''">and instr(m.name, #{name}) > 0</if>
+		<if test="createTimeStart != null and createTimeStart != ''">
+			and m.create_datetime &gt;= CONCAT('${createTimeStart}', ' 00:00:00')
+		</if>
+		<if test="createTimeEnd != null and createTimeEnd != ''">
+			and m.create_datetime &lt;= CONCAT('${createTimeEnd}', ' 23:59:59')
+		</if>
+	</sql>
+	<select id="Menu_QueryMenuPage" parameterType="HashMap" resultType="LinkedHashMap">
+		SELECT 
+		m.id AS "id", 
+		m.pid AS "pid", 
+		m2.name AS "pname", 
+		m.name AS "name", 
+		m.url AS "url", 
+		m.create_datetime AS "createDatetime"
+		<include refid="Menu_QueryMenuPage_Body"/>
+	</select>
+	<select id="Menu_QueryMenuPage_Count" parameterType="HashMap" resultType="Integer">
+		select count(*)
+		<include refid="Menu_QueryMenuPage_Body"/>
+	</select>
+</mapper>
