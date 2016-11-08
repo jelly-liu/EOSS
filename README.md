@@ -6,10 +6,15 @@ If you want to known about Apache Shiro, see here [shiro-demo](https://github.co
 Or you can checkout eoss-shiro branch, this branch already integrated with Apache Shiro
 
 # About EOSS-Pure
-This is the default branch, also master branch
+This is the default branch, also master branch, just use apache shiro and ini config
 
 # About EOSS-Shiro Branch
 This is the EOSS completed integrated with Apache Shiro  
+------------ integrated framework ------------  
+--support mysql  
+--support mybatis  
+--support spring  
+------------ funtional support ------------  
 --support user[CRUD]  
 ----support user-role[CRUD]  
 ----support user-menu[CRUD]  
@@ -19,8 +24,9 @@ This is the EOSS completed integrated with Apache Shiro
 --support permistion[CRUD]  
 --support resource[CRUD]  
 --support menu tree[CRUD]  
---support dynamic FilterChainDefinitions, change filter chain definitions on line, and do not need restart tomcat
-
+--support RoleOrAuthorizationFilter  
+--support dynamic FilterChainDefinitions, change filter chain definitions on line, and do not need restart tomcat  
+--more support in the future  
 
 # ScreenShot  
 ![login](https://github.com/jelly-liu/EOSS/blob/master/screen_shot_login.png "login")  
