@@ -9,7 +9,7 @@
 
     <bean id="roleOr" class="com.jelly.eoss.shiro.RoleOrAuthorizationFilter"/>
 
-    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" depends-on="roleOr">
+    <bean id="shiroFilter" class="com.jelly.eoss.shiro.EossShiroFilterFactoryBean" depends-on="roleOr">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/toLogin.ac"/>
         <property name="unauthorizedUrl" value="/401.jsp"/>
@@ -20,6 +20,7 @@
         </property>
         <property name="filterChainDefinitions">
             <value>
+                [urls]
                 /static/** = anon
                 /toLogin.ac = anon
                 /login.ac = anon

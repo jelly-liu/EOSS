@@ -6,11 +6,15 @@
 	<head>
 		<%@ include file="/WEB-INF/pages/include/head.jsp"%>
   		<script src="${BASE_PATH}/static/js/system/filterDefinition.js" type="text/javascript"></script>
+		<style type="text/css">
+			#definition{
+				font-size: 14px;
+			}
+		</style>
 	</head>
 
 	<body>
 	<form id="submitForm" action="${BASE_PATH}/system/filterDefinition/update.ac" class="eossForm" method="post">
-		<input type="hidden" name="id" value="${filterDefinition.id}"/>
 		<table class="eossFromTable">
 			<tr class="panel-header">
 				<td colspan="99">安全过滤规则</td>
@@ -18,7 +22,7 @@
 			<tr>
 				<td align="right" width="100">定义：</td>
 				<td>
-					<textarea id="rule" name="rule" style="width: 100%; height: 350px; text-align: left">${filterDefinition.rule}</textarea>
+					<textarea id="definition" name="definition" style="width: 100%; height: 350px; text-align: left">${filterDefinition.definition}</textarea>
 				</td>
 			</tr>
 			<tr>

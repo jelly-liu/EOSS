@@ -16,20 +16,6 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`eoss` /*!40100 DEFAULT CHARACTER SET ut
 
 USE `eoss`;
 
-/*Table structure for table `filter_definition` */
-
-DROP TABLE IF EXISTS `filter_definition`;
-
-CREATE TABLE `filter_definition` (
-  `id` int(11) NOT NULL,
-  `rule` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `filter_definition` */
-
-insert  into `filter_definition`(`id`,`rule`) values (1,NULL);
-
 /*Table structure for table `menu` */
 
 DROP TABLE IF EXISTS `menu`;
@@ -106,7 +92,7 @@ CREATE TABLE `user` (
 
 /*Data for the table `user` */
 
-insert  into `user`(`ID`,`username`,`password`,`salt`,`CREATE_DATETIME`) values (1,'admin','96e79218965eb72c92a549dd5a330112','abc','2012-12-22 19:25:48');
+insert  into `user`(`ID`,`username`,`password`,`salt`,`CREATE_DATETIME`) values (1,'admin','f717c48426a62bad132a9b7718a02ff4','683','2012-12-22 19:25:48');
 
 /*Table structure for table `user_menu` */
 
@@ -132,7 +118,7 @@ CREATE TABLE `user_role` (
 
 /*Data for the table `user_role` */
 
-insert  into `user_role`(`USER_ID`,`ROLE_ID`) values (1,1),(1,2);
+insert  into `user_role`(`USER_ID`,`ROLE_ID`) values (1,1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

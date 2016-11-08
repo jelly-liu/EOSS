@@ -78,7 +78,7 @@ public class EossAuthorizingRealm extends AuthorizingRealm {
     }
 
     public static void main(String[] args) {
-        SimpleHash simpleHash = new SimpleHash("MD5", "111111", "abc", 1);
+        SimpleHash simpleHash = new SimpleHash("MD5", "111111", "683", 1);
         System.out.println(simpleHash.toString());
         System.out.println((System.currentTimeMillis() + "").length());
     }
