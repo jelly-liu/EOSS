@@ -10,10 +10,10 @@ view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 # About Master Branch
 Master branch is sync with EOSS-SHIRO branch
 
-# About EOSS-PURE Branch
+# About EOSS-Pure Branch
 This is the default branch, also master branch, just use apache shiro and ini config
 
-# About EOSS-ShIRO Branch
+# About EOSS-SHIRO Branch
 This is the EOSS completed integrated with Apache Shiro  
 ------------ integrated framework ------------  
 --support mysql  
