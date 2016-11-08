@@ -8,12 +8,12 @@ view here [shiro-demo](https://github.com/jelly-liu/shiro-demo "shiro-demo")
 view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 
 # About Master Branch
-Master branch is sync with EOSS-Shiro branch
+Master branch is sync with EOSS-SHIRO branch
 
-# About EOSS-Pure
+# About EOSS-PURE Branch
 This is the default branch, also master branch, just use apache shiro and ini config
 
-# About EOSS-Shiro Branch
+# About EOSS-ShIRO Branch
 This is the EOSS completed integrated with Apache Shiro  
 ------------ integrated framework ------------  
 --support mysql  
