@@ -31,6 +31,8 @@ This is the EOSS completed integrated with Apache Shiro
 --support menu tree[CRUD]  
 --support RoleOrAuthorizationFilter  
 --support dynamic FilterChainDefinitions, change filter chain definitions on line, and do not need restart tomcat  
+--support MemoryConstrainedCacheManager  
+--support refresh AuthenticationInfo and AuthorizationInfo in local cache, when update user or role  
 --more support in the future  
 
 # ScreenShot  
