@@ -3,13 +3,16 @@ package com.jelly.eoss.web;
 import com.jelly.eoss.dao.BaseService;
 import com.jelly.eoss.model.User;
 import com.jelly.eoss.service.MenuService;
+import com.jelly.eoss.shiro.EossAuthorizingRealm;
 import com.jelly.eoss.util.*;
 import com.jelly.eoss.util.security.Digest;
 import org.apache.ibatis.session.RowBounds;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.WebUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +26,8 @@ public class UserAction extends BaseAction {
     private BaseService baseService;
     @Resource
     private MenuService menuService;
+    @Resource
+    EossAuthorizingRealm eossAuthorizingRealm;
 
     @RequestMapping(value = "/queryUserNameAjax")
     public void queryUserNameAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -167,6 +172,9 @@ public class UserAction extends BaseAction {
         //更新用户所拥有的菜单缓存，一但用户更新了自己所拥有的菜单，再刷新左侧的菜单时，菜单可以及时的更新
         String menuTreeIdsOfUser = this.menuService.queryMenuTreeIdsOfUser(user);
         request.getSession().setAttribute(Const.LOGIN_MENU_TREE_IDS_KEY, menuTreeIdsOfUser);
+
+        //更新shiro AuthenticationInfo and AuthorizationInfo in local cache
+        eossAuthorizingRealm.refreshAuthInfo(SecurityUtils.getSubject().getPrincipals(), u);
 
         return null;
     }

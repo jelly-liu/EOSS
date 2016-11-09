@@ -4,6 +4,9 @@
 */
 package com.jelly.eoss.model;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 public class User {
 	public static final String Insert = "com.jelly.eoss.model.User.Insert";
 	public static final String Update = "com.jelly.eoss.model.User.Update";
@@ -21,6 +24,10 @@ public class User {
 	private String password;
 	
 	private String salt;
+	
+	private Integer locked;
+	
+	private Integer disabled;
 	
 	private String createDatetime;
 
@@ -59,6 +66,24 @@ public class User {
 	
 	public String getSalt () {
 		return this.salt;
+	}
+
+	public User setLocked (Integer locked) {
+		this.locked = locked;
+		return this;
+	}
+	
+	public Integer getLocked () {
+		return this.locked;
+	}
+
+	public User setDisabled (Integer disabled) {
+		this.disabled = disabled;
+		return this;
+	}
+	
+	public Integer getDisabled () {
+		return this.disabled;
 	}
 
 	public User setCreateDatetime (String createDatetime) {

@@ -40,25 +40,24 @@ public class LoginAction extends BaseAction {
 		try{
 			String username = ServletRequestUtils.getStringParameter(request, "username");
 			String password = ServletRequestUtils.getStringParameter(request, "password");
-			String icode = ServletRequestUtils.getStringParameter(request, "icode");
+			String vCode = ServletRequestUtils.getStringParameter(request, "vCode");
             String rememberMe = ServletRequestUtils.getStringParameter(request, "rememberMe");
 			
-			Object icodeObj = request.getSession().getAttribute(ICodeServlet.ICODE_SESSION_KEY);
-			if(icodeObj == null){
+			Object vCodeObj = request.getSession().getAttribute(ICodeServlet.ICODE_SESSION_KEY);
+			if(vCodeObj == null){
 				this.responseSimpleJson(response, false, "验证码已失效");
 				return;
 			}
 			
 			//检查验证码
-			if(icode == null || icode.equals("")){
+			if(vCode == null || vCode.equals("")){
 				this.responseSimpleJson(response, false, "请输入验证码");
 				return;
 			}
-			if(!icode.equals(icodeObj.toString())){
+			if(!vCode.equals(vCodeObj.toString())){
 				this.responseSimpleJson(response, false, "验证码输入错误");
 				return;
 			}
-
 
 
 			//****************************** try shiro login ******************************//
@@ -70,29 +69,8 @@ public class LoginAction extends BaseAction {
                     token.setRememberMe(true);
                 }
                 subject.login(token);
-            } catch (IncorrectCredentialsException e) {
-                log.error("IncorrectCredentialsException", e);
-                msg = "username or password error!";
-            } catch (ExcessiveAttemptsException e) {
-                log.error("ExcessiveAttemptsException", e);
-                msg = "try login to many times";
-            } catch (LockedAccountException e) {
-                log.error("LockedAccountException", e);
-                msg = "LockedAccount";
-            } catch (DisabledAccountException e) {
-                log.error("DisabledAccountException", e);
-                msg = "DisabledAccount";
-            } catch (ExpiredCredentialsException e) {
-                log.error("ExpiredCredentialsException", e);
-                msg = "ExpiredCredentials";
-            } catch (UnknownAccountException e) {
-                log.error("UnknownAccountException", e);
-                msg = "UnknownAccount";
-            } catch (UnauthorizedException e) {
-                log.error("UnauthorizedException", e);
-                msg = "Unauthorized";
             } catch (Throwable e){
-                msg = "Other Exception!";
+                msg = e.getMessage();
             }
             token.clear();
 

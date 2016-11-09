@@ -17,7 +17,7 @@ $(function() {
 	//登陆验证
 	$name = $('#name');
 	$pwd = $('#pwd');
-	$icode = $('#icode');
+	$vCode = $('#vCode');
 	function login(){
 		if($.trim($name.val()) == ''){
 			$.messager.alert('提示','用户名不能为空!');
@@ -27,7 +27,7 @@ $(function() {
 			$.messager.alert('提示','密码不能为空!');
 			return;
 		}
-		if($.trim($icode.val()) == ''){
+		if($.trim($vCode.val()) == ''){
 			$.messager.alert('提示','验证码不能为空!');
 			return;
 		}
@@ -38,7 +38,10 @@ $(function() {
 			type: 'POST',
 			dataType: 'json',
 			url: EossGlobal.basePath + '/login.ac',
-			data: {username:$name.val(), password:$pwd.val(), icode:$icode.val()},
+			data: {
+				username:$name.val(),
+				password:$pwd.val(),
+				vCode:$vCode.val()},
 			success: function(rs){
 				if(rs.flag){
 					window.location.href = EossGlobal.basePath + '/system/layout/main.ac';
@@ -53,7 +56,7 @@ $(function() {
 	//验证码点击后，更换新验证码
 	$('#icodeImg').click(function(){
 		$(this).attr({
-			src: EossGlobal.basePath + '/static/icode.jpg?' + new Date().getMilliseconds()
+			src: EossGlobal.basePath + '/static/vCode.jpg?' + new Date().getMilliseconds()
 		});
 	});
 
