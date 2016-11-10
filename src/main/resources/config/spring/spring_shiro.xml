@@ -7,15 +7,36 @@
         http://www.springframework.org/schema/util
         http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="roleOr" class="com.jelly.eoss.shiro.RoleOrAuthorizationFilter"/>
+    <!-- use MD5 hash -->
+    <bean id="hashedCredentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="MD5"/>
+    </bean>
+    <bean id="eossAuthorizingRealm" class="com.jelly.eoss.shiro.EossAuthorizingRealm">
+        <property name="credentialsMatcher" ref="hashedCredentialsMatcher"/>
+    </bean>
 
-    <bean id="shiroFilter" class="com.jelly.eoss.shiro.EossShiroFilterFactoryBean" depends-on="roleOr">
+    <!-- enable cacheManager to use localCache -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
+
+    <!-- config SecurityManager -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="eossAuthorizingRealm" />
+        <property name="cacheManager" ref="cacheManager" />
+    </bean>
+
+    <!-- custom AuthorizationFilter -->
+    <bean id="rolesOr" class="com.jelly.eoss.shiro.RolesOrAuthorizationFilter"/>
+    <bean id="permsOr" class="com.jelly.eoss.shiro.PermsOrAuthorizationFilter"/>
+
+    <!-- this bean id must be specific to shiroFilter to create an ShiroFilter -->
+    <bean id="shiroFilter" class="com.jelly.eoss.shiro.EossShiroFilterFactoryBean" depends-on="rolesOr, permsOr">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/toLogin.ac"/>
         <property name="unauthorizedUrl" value="/401.jsp"/>
         <property name="filters">
             <util:map>
-                <entry key="roleOr" value-ref="roleOr"/>
+                <entry key="roleOr" value-ref="rolesOr"/>
+                <entry key="permOr" value-ref="permsOr"/>
             </util:map>
         </property>
         <property name="filterChainDefinitions">
@@ -24,29 +45,15 @@
                 /static/** = anon
                 /toLogin.ac = anon
                 /login.ac = anon
-                /system/** = authc, roleOr[系统管理员]
-                /business/** = authc, roleOr[业务员]
+                /system/** = authc, rolesOr[系统管理员]
+                /business/** = authc, permsOr[perm:add, perm:delete]
                 /** = authc
             </value>
         </property>
     </bean>
 
-    <bean id="hashedCredentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-        <property name="hashAlgorithmName" value="MD5"/>
-    </bean>
-
-    <bean id="eossAuthorizingRealm" class="com.jelly.eoss.shiro.EossAuthorizingRealm">
-        <property name="credentialsMatcher" ref="hashedCredentialsMatcher"/>
-    </bean>
-
-    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
-
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="eossAuthorizingRealm" />
-        <property name="cacheManager" ref="cacheManager" />
-    </bean>
+    <!-- Bean post processor for Spring that automatically calls the init() and/or destroy() methods on Shiro objects. -->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
-
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
