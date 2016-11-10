@@ -77,7 +77,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>icodeServlet</servlet-name>
-		<url-pattern>/static/icode.jpg</url-pattern>
+		<url-pattern>/static/vCode.jpg</url-pattern>
 	</servlet-mapping>
 
 	<!-- session config -->

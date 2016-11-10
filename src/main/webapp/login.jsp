@@ -31,13 +31,13 @@
 					<tr>
 						<td align="right">验证码：</td>
 						<td>
-							<input type="text" id="icode" name="icode"/>
+							<input type="text" id="vCode" name="vCode"/>
 						</td>
 					</tr>
 					<tr>
 						<td align="right"></td>
 						<td>
-							<img id="icodeImg" class="icodeImg" src="${BASE_PATH}/static/icode.jpg" title="点击图片刷新验证码"/>
+							<img id="icodeImg" class="icodeImg" src="${BASE_PATH}/static/vCode.jpg" title="点击图片刷新验证码"/>
 						</td>
 					</tr>
 				</table>

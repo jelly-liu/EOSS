@@ -1,0 +1,7 @@
+*.js linguist-language=java
+*.css linguist-language=java
+*.jpg linguist-language=java
+*.gif linguist-language=java
+*.png linguist-language=java
+*.html linguist-language=java
+*.jsp linguist-language=java

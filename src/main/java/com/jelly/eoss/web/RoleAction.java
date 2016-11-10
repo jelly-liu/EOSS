@@ -3,9 +3,12 @@ package com.jelly.eoss.web;
 import com.jelly.eoss.dao.BaseService;
 import com.jelly.eoss.model.Permission;
 import com.jelly.eoss.model.Role;
+import com.jelly.eoss.model.User;
 import com.jelly.eoss.service.MenuService;
+import com.jelly.eoss.shiro.EossAuthorizingRealm;
 import com.jelly.eoss.util.*;
 import org.apache.ibatis.session.RowBounds;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -29,7 +32,9 @@ public class RoleAction extends BaseAction{
 	private BaseService baseService;
 	@Resource
 	private MenuService menuService;
-	
+	@Resource
+	EossAuthorizingRealm eossAuthorizingRealm;
+
 	@RequestMapping(value = "/queryAllAjax")
 	public void queryAllAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<Map<String, Object>> roleList = this.baseService.mySelectList("_EXT.Role_QueryRolePage");
@@ -91,6 +96,11 @@ public class RoleAction extends BaseAction{
 		this.baseService.jdDelete("delete from role where id = ?", id);
 		this.baseService.jdDelete("delete from role_permission where role_id = ?", id);
 		this.baseService.jdDelete("delete from user_role where role_id = ?", id);
+
+        //更新shiro AuthenticationInfo and AuthorizationInfo in local cache
+        User u = SecurityUtils.getSubject().getPrincipals().oneByType(User.class);
+        eossAuthorizingRealm.refreshAuthInfo(SecurityUtils.getSubject().getPrincipals(), u);
+
 		response.getWriter().write("y");
 	}
 	
@@ -118,6 +128,11 @@ public class RoleAction extends BaseAction{
 		//更新角色原有权限
 		this.batchInsertRolePermission(role.getId(), permissionIdsStr);
 		request.getRequestDispatcher("/system/role/toList.ac").forward(request, response);
+
+        //更新shiro AuthenticationInfo and AuthorizationInfo in local cache
+        User u = SecurityUtils.getSubject().getPrincipals().oneByType(User.class);
+        eossAuthorizingRealm.refreshAuthInfo(SecurityUtils.getSubject().getPrincipals(), u);
+
 		return null;
 	}
 	

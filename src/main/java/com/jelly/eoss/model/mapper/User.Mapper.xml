@@ -24,6 +24,14 @@
 							SALT,
                             </if>
 
+                            <if test="locked != null">
+							LOCKED,
+                            </if>
+
+                            <if test="disabled != null">
+							DISABLED,
+                            </if>
+
                             <if test="createDatetime != null and createDatetime != ''">
 							CREATE_DATETIME,
                             </if>
@@ -42,6 +50,12 @@
                             </if>
                             <if test="salt != null and salt != ''">
                                 #{salt},
+                            </if>
+                            <if test="locked != null">
+                                #{locked},
+                            </if>
+                            <if test="disabled != null">
+                                #{disabled},
                             </if>
                             <if test="createDatetime != null and createDatetime != ''">
                                 #{createDatetime},
@@ -67,6 +81,12 @@
                     <if test="salt != null and salt != ''">
                     	SALT = #{salt},
                     </if>
+                    <if test="locked != null">
+                    	LOCKED = #{locked},
+                    </if>
+                    <if test="disabled != null">
+                    	DISABLED = #{disabled},
+                    </if>
                     <if test="createDatetime != null and createDatetime != ''">
                     	CREATE_DATETIME = #{createDatetime},
                     </if>
@@ -87,6 +107,8 @@
 			USERNAME = #{username},
 			PASSWORD = #{password},
 			SALT = #{salt},
+			LOCKED = #{locked},
+			DISABLED = #{disabled},
 			CREATE_DATETIME = #{createDatetime},
         </trim>
         where
@@ -122,6 +144,12 @@
                 <if test="salt != null and salt != ''">
 					SALT = #{salt} and
                 </if>
+                <if test="locked != null">
+					LOCKED = #{locked} and
+                </if>
+                <if test="disabled != null">
+					DISABLED = #{disabled} and
+                </if>
                 <if test="createDatetime != null and createDatetime != ''">
 					CREATE_DATETIME = #{createDatetime} and
                 </if>
@@ -135,6 +163,8 @@
 				USERNAME as "username",
 				PASSWORD as "password",
 				SALT as "salt",
+				LOCKED as "locked",
+				DISABLED as "disabled",
 				CREATE_DATETIME as "createDatetime",
 		</trim>
 	</sql>
@@ -152,6 +182,12 @@
                 </if>
                 <if test="salt != null and salt != ''">
                     and SALT = #{salt}
+                </if>
+                <if test="locked != null">
+                    and LOCKED = #{locked}
+                </if>
+                <if test="disabled != null">
+                    and DISABLED = #{disabled}
                 </if>
                 <if test="createDatetime != null and createDatetime != ''">
                     and CREATE_DATETIME = #{createDatetime}
