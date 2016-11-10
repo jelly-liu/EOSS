@@ -10,20 +10,22 @@ import java.io.IOException;
 /**
  * Created by jelly on 2016-10-18.
  */
-public class RoleOrAuthorizationFilter extends AuthorizationFilter {
+public class PermsOrAuthorizationFilter extends AuthorizationFilter {
+    //mappedValue, the filter-specific config value mapped to this filter in the URL rules mappings
     public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
-
         Subject subject = getSubject(request, response);
-        String[] rolesArray = (String[]) mappedValue;
+        String[] perms = (String[]) mappedValue;
 
-        if (rolesArray == null || rolesArray.length == 0) {
-            //no roles specified, so nothing to check - allow access.
+        if(perms == null || perms.length == 0){
+            //no permissions specified, so nothing to check - allow access.
             return true;
         }
 
-        for(String role : rolesArray){
-            if(subject.hasRole(role)){
-                return true;
+        if (perms != null && perms.length > 0) {
+            for(String perm : perms){
+                if (subject.isPermitted(perm)) {
+                    return true;
+                }
             }
         }
 
