@@ -16,9 +16,10 @@ This is the default branch, also master branch, just use apache shiro and ini co
 # About EOSS-Shiro Branch
 This is the EOSS completed integrated with Apache Shiro  
 ------------ integrated framework ------------  
---support mysql  
---support mybatis  
---support spring  
+--integrate mysql  
+--integrate mybatis  
+--integrate spring  
+--integrate apache shiro  
 ------------ funtional support ------------  
 --support user[CRUD]  
 ----support user-role[CRUD]  
