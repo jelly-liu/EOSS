@@ -86,13 +86,15 @@ CREATE TABLE `user` (
   `username` varchar(100) NOT NULL,
   `password` varchar(32) NOT NULL,
   `salt` varchar(32) DEFAULT NULL,
+  `locked` tinyint(4) DEFAULT '0',
+  `disabled` tinyint(4) DEFAULT '0',
   `CREATE_DATETIME` varchar(19) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `user` */
 
-insert  into `user`(`ID`,`username`,`password`,`salt`,`CREATE_DATETIME`) values (1,'admin','f717c48426a62bad132a9b7718a02ff4','683','2012-12-22 19:25:48');
+insert  into `user`(`ID`,`username`,`password`,`salt`,`locked`,`disabled`,`CREATE_DATETIME`) values (1,'admin','f717c48426a62bad132a9b7718a02ff4','683',0,0,'2012-12-22 19:25:48');
 
 /*Table structure for table `user_menu` */
 
@@ -118,7 +120,7 @@ CREATE TABLE `user_role` (
 
 /*Data for the table `user_role` */
 
-insert  into `user_role`(`USER_ID`,`ROLE_ID`) values (1,1);
+insert  into `user_role`(`USER_ID`,`ROLE_ID`) values (1,1),(1,2);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
