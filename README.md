@@ -16,6 +16,7 @@ This branch just use apache shiro and ini config
 # About EOSS-Shiro Branch
 This is the EOSS completed integrated with Apache Shiro  
 ------------ integrated framework ------------  
+--maven  
 --mysql  
 --mybatis  
 --spring  
