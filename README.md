@@ -11,16 +11,16 @@ view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 Master branch is sync with EOSS-Shiro branch
 
 # About EOSS-Pure Branch
-This is the default branch, also master branch, just use apache shiro and ini config
+This branch just use apache shiro and ini config
 
 # About EOSS-Shiro Branch
 This is the EOSS completed integrated with Apache Shiro  
 ------------ integrated framework ------------  
---integrate mysql  
---integrate mybatis  
---integrate spring  
---integrate apache shiro  
------------- funtional support ------------  
+--mysql  
+--mybatis  
+--spring  
+--shiro  
+------------ basic RBAC feature support ------------  
 --support user[CRUD]  
 ----support user-role[CRUD]  
 ----support user-menu[CRUD]  
@@ -30,11 +30,13 @@ This is the EOSS completed integrated with Apache Shiro
 --support permistion[CRUD]  
 --support resource[CRUD]  
 --support menu tree[CRUD]  
+------------ shiro feature support ------------  
+--support MD5 HashedCredentialsMatcher  
 --support RolesOrAuthorizationFilter  
 --support PermsOrAuthorizationFilter  
---support dynamic FilterChainDefinitions, change filter chain definitions on line, and do not need restart tomcat  
+--support dynamic edit FilterChainDefinitions on line, do not need relogin or restart tomcat  
 --support MemoryConstrainedCacheManager  
---support refresh AuthenticationInfoCache and AuthorizationInfoCache in local cache, when update user or role  
+--support refresh Authentication cache, when update user or role, do not need relogin or restart tomcat  
 --more support in the future  
 
 # ScreenShot  
