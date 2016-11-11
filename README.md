@@ -1,8 +1,8 @@
 # EOSS With Apache Shiro
 RBAC(Role Based Access Control) Project Use Spring MyBatis MySQL  
-User, Role, Permission, Resource, FilterChainDefinition  
-Simulate Apache Shiro, Or integration with Apache Shiro  
-If you want to known about Apache Shiro  
+User, Role, Permission, Resource, Menu, FilterChainDefinition  
+EOSS-Pure simulate but without apache shiro, Or EOSS-Shiro completely integrate with Apache Shiro  
+If you want to known more about apache shiro  
 view here [Apache Shiro](http://shiro.apache.org/index.html "Apache Shiro")  
 view here [shiro-demo](https://github.com/jelly-liu/shiro-demo "shiro-demo")  
 view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
