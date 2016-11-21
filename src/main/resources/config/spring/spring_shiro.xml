@@ -16,7 +16,10 @@
     </bean>
 
     <!-- enable cacheManager to use localCache -->
-    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
+    <!--<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>-->
+    <bean id="cacheManager" class="com.jelly.eoss.shiro.cache.RedisCacheManager">
+        <property name="redisTemplate" ref="redisTemplate"/>
+    </bean>
 
     <!-- config SecurityManager -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
@@ -35,8 +38,8 @@
         <property name="unauthorizedUrl" value="/401.jsp"/>
         <property name="filters">
             <util:map>
-                <entry key="roleOr" value-ref="rolesOr"/>
-                <entry key="permOr" value-ref="permsOr"/>
+                <entry key="rolesOr" value-ref="rolesOr"/>
+                <entry key="permsOr" value-ref="permsOr"/>
             </util:map>
         </property>
         <property name="filterChainDefinitions">
