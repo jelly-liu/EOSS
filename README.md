@@ -21,6 +21,7 @@ This is the EOSS completed integrated with Apache Shiro
 --mybatis  
 --spring  
 --shiro  
+--redis  
 ------------ basic RBAC feature support ------------  
 --support user[CRUD]  
 ----support user-role[CRUD]  
@@ -38,7 +39,8 @@ This is the EOSS completed integrated with Apache Shiro
 --support dynamic edit FilterChainDefinitions on line, do not need relogin or restart tomcat  
 --support MemoryConstrainedCacheManager  
 --support refresh Authentication cache, when update user or role, do not need relogin or restart tomcat  
---more support in the future  
+--support redisCacheManager
+--support sessionManager and sessionDAO
 
 # ScreenShot  
 ![ScreenShot1](https://github.com/jelly-liu/EOSS/blob/master/ScreenShot1.png "ScreenShot1")  
