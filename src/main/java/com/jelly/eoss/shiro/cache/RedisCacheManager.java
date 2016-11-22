@@ -15,12 +15,15 @@ public class RedisCacheManager extends AbstractCacheManager {
     private static final Logger log = LoggerFactory.getLogger(RedisCacheManager.class);
     private RedisTemplate redisTemplate;
 
+    private int localSize;
+    private int expireTimeSeconds;
+
     @Override
     protected Cache createCache(String name) throws CacheException {
         if(log.isDebugEnabled()){
             log.debug("R_CACHE, create local cache, name={}", name);
         }
-        return new RedisCache(name, redisTemplate);
+        return new RedisCache(name, redisTemplate, localSize, expireTimeSeconds);
     }
 
     //getter and setter
@@ -30,6 +33,24 @@ public class RedisCacheManager extends AbstractCacheManager {
 
     public RedisCacheManager setRedisTemplate(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
+        return this;
+    }
+
+    public int getLocalSize() {
+        return localSize;
+    }
+
+    public RedisCacheManager setLocalSize(int localSize) {
+        this.localSize = localSize;
+        return this;
+    }
+
+    public int getExpireTimeSeconds() {
+        return expireTimeSeconds;
+    }
+
+    public RedisCacheManager setExpireTimeSeconds(int expireTimeSeconds) {
+        this.expireTimeSeconds = expireTimeSeconds;
         return this;
     }
 }

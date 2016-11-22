@@ -84,6 +84,8 @@ public class LoginAction extends BaseAction {
 
 			request.getSession().setAttribute(Const.LOGIN_SESSION_KEY, user);
 			request.getSession().setAttribute(Const.LOGIN_MENU_TREE_IDS_KEY, menuTreeIdsOfUser);
+
+			subject.getSession().setAttribute("USER_INFO", user);
 			
 			this.responseSimpleJson(response, true, "");
 		}catch(Exception e){

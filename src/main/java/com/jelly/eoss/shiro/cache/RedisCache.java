@@ -10,10 +10,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-import redis.clients.jedis.ShardedJedis;
-import redis.clients.jedis.ShardedJedisPool;
 
-import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Set;
@@ -30,10 +27,15 @@ public class RedisCache<K, V> implements Cache<K, V> {
     private String name;
     private RedisTemplate redisTemplate;
 
-    public RedisCache(String name, RedisTemplate redisTemplate) {
+    private int localSize;
+    private int expireTimeSeconds;
+
+    public RedisCache(String name, RedisTemplate redisTemplate, int localSize, int expireTimeSeconds) {
         this.name = name;
         this.redisTemplate = redisTemplate;
-        cache = CacheBuilder.newBuilder().maximumSize(10000).build();
+        this.localSize = localSize;
+        this.expireTimeSeconds = expireTimeSeconds;
+        cache = CacheBuilder.newBuilder().maximumSize(localSize).expireAfterAccess(expireTimeSeconds, TimeUnit.SECONDS).build();
     }
 
     @Override
@@ -50,9 +52,12 @@ public class RedisCache<K, V> implements Cache<K, V> {
                     return v;
                 }
             });
+            if(log.isDebugEnabled()){
+                log.debug("R_CACHE, cache name={}, get from redis, key{}, value={}", name, key, value);
+            }
         }
         if(log.isDebugEnabled()){
-            log.debug("R_CACHE, get from cache, key{}, value={}", key, value);
+            log.debug("R_CACHE, cache name={}, get from cache, key{}, value={}", name, key, value);
         }
         return value;
     }
@@ -66,12 +71,15 @@ public class RedisCache<K, V> implements Cache<K, V> {
             @Override
             public Object doInRedis(RedisConnection redisConnection) throws DataAccessException {
                 redisConnection.set(key.toString().getBytes(charset), ProtoStuffSerializer.writeObject(value));
+                if(log.isDebugEnabled()){
+                    log.debug("R_CACHE, cache name={}, put to redis, key{}, value={}", name, key, value);
+                }
                 return null;
             }
         });
 
         if(log.isDebugEnabled()){
-            log.debug("R_CACHE, put to cache, key{}, value={}, oldValue={}", key, value, v);
+            log.debug("R_CACHE, cache name={}, put to cache, key{}, value={}, oldValue={}", name, key, value, v);
         }
         return v;
     }
@@ -84,11 +92,14 @@ public class RedisCache<K, V> implements Cache<K, V> {
             @Override
             public Object doInRedis(RedisConnection redisConnection) throws DataAccessException {
                 redisConnection.del(key.toString().getBytes(charset));
+                if(log.isDebugEnabled()){
+                    log.debug("R_CACHE, cache name={}, remove from redis, key{}, oldValue={}", name, key, v);
+                }
                 return null;
             }
         });
         if(log.isDebugEnabled()){
-            log.debug("R_CACHE, remove from cache, key{}, oldValue={}", key, v);
+            log.debug("R_CACHE, cache name={}, remove from cache, key{}, oldValue={}", name, key, v);
         }
         return v;
     }
@@ -111,5 +122,23 @@ public class RedisCache<K, V> implements Cache<K, V> {
     @Override
     public Collection<V> values() {
         throw new RuntimeException("not support");
+    }
+
+    public int getLocalSize() {
+        return localSize;
+    }
+
+    public RedisCache setLocalSize(int localSize) {
+        this.localSize = localSize;
+        return this;
+    }
+
+    public int getExpireTimeSeconds() {
+        return expireTimeSeconds;
+    }
+
+    public RedisCache setExpireTimeSeconds(int expireTimeSeconds) {
+        this.expireTimeSeconds = expireTimeSeconds;
+        return this;
     }
 }

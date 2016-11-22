@@ -46,7 +46,6 @@
             <param-value>true</param-value>
         </init-param>
     </filter>
-
     <!-- Make sure any request you want accessible to Shiro is filtered. /* catches all -->
     <!-- requests.  Usually this filter mapping is defined first (before all others) to -->
     <!-- ensure that Shiro works in subsequent filters in the filter chain:             -->
@@ -54,6 +53,16 @@
         <filter-name>shiroFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+	<!-- my filter -->
+	<filter>
+		<filter-name>myFilter</filter-name>
+		<filter-class>com.jelly.eoss.filter.MyFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>myFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	
 	<!-- spring mvc -->
 	<servlet>
