@@ -42,6 +42,9 @@ This is the EOSS completed integrated with Apache Shiro
 --support redisCacheManager
 --support sessionManager and sessionDAO
 
+# Problem
+when use RedisCacheManager, found always put to redis
+
 # ScreenShot  
 ![ScreenShot1](https://github.com/jelly-liu/EOSS/blob/master/ScreenShot1.png "ScreenShot1")  
 ![ScreenShot2](https://github.com/jelly-liu/EOSS/blob/master/ScreenShot2.png "ScreenShot2")  
