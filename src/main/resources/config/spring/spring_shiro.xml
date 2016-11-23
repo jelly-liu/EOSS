@@ -16,12 +16,26 @@
     </bean>
 
     <!-- enable cacheManager to use localCache -->
-    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
+    <!--<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>-->
+    <bean id="cacheManager" class="com.jelly.eoss.shiro.cache.RedisCacheManager">
+        <property name="redisTemplate" ref="redisTemplate"/>
+        <property name="localSize" value="${shiro.local.cache.size}"/>
+        <property name="expireTimeSeconds" value="${shiro.local.cache.expire.timeout.seconds}"/>
+    </bean>
+
+    <!-- session configuration -->
+    <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+        <property name="cacheManager" ref="cacheManager"/>
+    </bean>
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionDAO" ref="sessionDAO"/>
+    </bean>
 
     <!-- config SecurityManager -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="eossAuthorizingRealm" />
-        <property name="cacheManager" ref="cacheManager" />
+        <property name="realm" ref="eossAuthorizingRealm"/>
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="sessionManager" ref="sessionManager"/>
     </bean>
 
     <!-- custom AuthorizationFilter -->
@@ -35,8 +49,8 @@
         <property name="unauthorizedUrl" value="/401.jsp"/>
         <property name="filters">
             <util:map>
-                <entry key="roleOr" value-ref="rolesOr"/>
-                <entry key="permOr" value-ref="permsOr"/>
+                <entry key="rolesOr" value-ref="rolesOr"/>
+                <entry key="permsOr" value-ref="permsOr"/>
             </util:map>
         </property>
         <property name="filterChainDefinitions">
@@ -54,7 +68,8 @@
 
     <!-- Bean post processor for Spring that automatically calls the init() and/or destroy() methods on Shiro objects. -->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>

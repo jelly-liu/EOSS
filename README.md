@@ -1,8 +1,8 @@
-# EOSS
+# EOSS With Apache Shiro
 RBAC(Role Based Access Control) Project Use Spring MyBatis MySQL  
-User, Role, Permission, Resource, FilterChainDefinition  
-Simulate Apache Shiro, Or integration with Apache Shiro  
-If you want to known about Apache Shiro  
+User, Role, Permission, Resource, Menu, FilterChainDefinition  
+EOSS-Pure simulate but without apache shiro, Or EOSS-Shiro completely integrate with Apache Shiro  
+If you want to known more about apache shiro  
 view here [Apache Shiro](http://shiro.apache.org/index.html "Apache Shiro")  
 view here [shiro-demo](https://github.com/jelly-liu/shiro-demo "shiro-demo")  
 view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
@@ -11,15 +11,18 @@ view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 Master branch is sync with EOSS-Shiro branch
 
 # About EOSS-Pure Branch
-This is the default branch, also master branch, just use apache shiro and ini config
+This branch just use apache shiro and ini config
 
 # About EOSS-Shiro Branch
 This is the EOSS completed integrated with Apache Shiro  
 ------------ integrated framework ------------  
---support mysql  
---support mybatis  
---support spring  
------------- funtional support ------------  
+--maven  
+--mysql  
+--mybatis  
+--spring  
+--shiro  
+--redis  
+------------ basic RBAC feature support ------------  
 --support user[CRUD]  
 ----support user-role[CRUD]  
 ----support user-menu[CRUD]  
@@ -29,11 +32,15 @@ This is the EOSS completed integrated with Apache Shiro
 --support permistion[CRUD]  
 --support resource[CRUD]  
 --support menu tree[CRUD]  
---support RoleOrAuthorizationFilter  
---support dynamic FilterChainDefinitions, change filter chain definitions on line, and do not need restart tomcat  
+------------ shiro feature support ------------  
+--support MD5 HashedCredentialsMatcher  
+--support RolesOrAuthorizationFilter  
+--support PermsOrAuthorizationFilter  
+--support dynamic edit FilterChainDefinitions on line, do not need relogin or restart tomcat  
 --support MemoryConstrainedCacheManager  
---support refresh AuthenticationInfo and AuthorizationInfo in local cache, when update user or role  
---more support in the future  
+--support refresh Authentication cache, when update user or role, do not need relogin or restart tomcat  
+--support redisCacheManager
+--support sessionManager and sessionDAO
 
 # ScreenShot  
 ![ScreenShot1](https://github.com/jelly-liu/EOSS/blob/master/ScreenShot1.png "ScreenShot1")  
