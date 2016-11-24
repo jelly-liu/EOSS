@@ -8,12 +8,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 /**
  * Created by jelly on 2016-11-21.
  */
 public class RedisCacheManager extends AbstractCacheManager {
     private static final Logger log = LoggerFactory.getLogger(RedisCacheManager.class);
     private RedisTemplate redisTemplate;
+    private final ConcurrentMap<String, Cache> caches = new ConcurrentHashMap<String, Cache>();
 
     private int localSize;
     private int expireTimeSeconds;
@@ -23,7 +27,9 @@ public class RedisCacheManager extends AbstractCacheManager {
         if(log.isDebugEnabled()){
             log.debug("R_CACHE, create local cache, name={}", name);
         }
-        return new RedisCache(name, redisTemplate, localSize, expireTimeSeconds);
+        RedisCache redisCache = new RedisCache(name, redisTemplate, localSize, expireTimeSeconds);
+        caches.put(name, redisCache);
+        return redisCache;
     }
 
     //getter and setter

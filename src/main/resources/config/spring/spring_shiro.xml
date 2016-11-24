@@ -24,11 +24,28 @@
     </bean>
 
     <!-- session configuration -->
+    <!-- notice -->
+    <!-- you must specify an SessionIdGenerator, otherwise the id of SimpleSession will be null
+         and if store it to cacheDb, will cause an error like:
+         DelegatingSession implementation requires that the SessionKey argument returns a non-null sessionId
+         DelegatingSession.java:70-->
+    <!--
+        1, if you use an custom cacheManager, and store Session to cacheDb,
+        whenever you call subject.getSession(), will modify lastAccessTime of session
+        this will cause put to cacheDb many more time, there is an potential performance barrier
+        2, as we known, local cache can not cache all data, it must has an maxi size, or expired time
+        but the interface Cache has clear(), size(), keys(), values(), it only represent part of all data,
+        not all data, so, use it carefully according to your business requirement
+        the RedisCache not implement those above methods -->
+    <bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
     <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
         <property name="cacheManager" ref="cacheManager"/>
+        <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
     </bean>
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
         <property name="sessionDAO" ref="sessionDAO"/>
+        <property name="globalSessionTimeout" value="1800000"/><!-- milliseconds -->
+        <property name="sessionIdCookieEnabled" value="true"/>
     </bean>
 
     <!-- config SecurityManager -->

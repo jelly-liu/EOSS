@@ -53,16 +53,6 @@
         <filter-name>shiroFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
-	<!-- my filter -->
-	<filter>
-		<filter-name>myFilter</filter-name>
-		<filter-class>com.jelly.eoss.filter.MyFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>myFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
 	
 	<!-- spring mvc -->
 	<servlet>
@@ -78,6 +68,16 @@
 		<servlet-name>spring3mvc</servlet-name>
 		<url-pattern>*.ac</url-pattern>
 	</servlet-mapping>
+
+	<!-- my filter -->
+	<!--<filter>
+		<filter-name>myFilter</filter-name>
+		<filter-class>com.jelly.eoss.filter.MyFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>myFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>-->
 
 	<!-- config servlet here -->
 	<servlet>
