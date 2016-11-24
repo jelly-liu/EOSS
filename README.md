@@ -37,10 +37,9 @@ This is the EOSS completed integrated with Apache Shiro
 --support MD5 HashedCredentialsMatcher  
 --support RolesOrAuthorizationFilter  
 --support PermsOrAuthorizationFilter  
---support dynamic edit FilterChainDefinitions on line, do not need relogin or restart tomcat  
---support MemoryConstrainedCacheManager  
+--support dynamic edit FilterChainDefinitions on line, do not need relogin or restart tomcat    
 --support refresh Authentication cache, when update user or role, do not need relogin or restart tomcat  
---support redisCacheManager
+--support Redis and Guava CacheManager  
 --support sessionManager and sessionDAO and cacheManager
 
 # ScreenShot  
