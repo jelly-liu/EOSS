@@ -17,15 +17,6 @@ public class MyFilter implements Filter {
 	}
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain) throws IOException, ServletException {
-		Subject subject = SecurityUtils.getSubject();
-        if(subject != null){
-            User user = (User)subject.getSession().getAttribute("USER_INFO");
-            if(user != null){
-                if(log.isDebugEnabled()){
-                    log.debug("user info in Shiro.Subject, user.id={}, user.name={}", user.getId(), user.getUsername());
-                }
-            }
-        }
         filterChain.doFilter(req, res);
 	}
 

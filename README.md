@@ -42,6 +42,10 @@ This is the EOSS completed integrated with Apache Shiro
 --support redisCacheManager
 --support sessionManager and sessionDAO
 
+# Problem
+--1 when use RedisCacheManager, found always put to redis  
+--2 access normal, restart server, access normal, will always receive this error:DelegatingSession implementation requires that the SessionKey argument returns a non-null sessionId
+
 # ScreenShot  
 ![ScreenShot1](https://github.com/jelly-liu/EOSS/blob/master/ScreenShot1.png "ScreenShot1")  
 ![ScreenShot2](https://github.com/jelly-liu/EOSS/blob/master/ScreenShot2.png "ScreenShot2")  
