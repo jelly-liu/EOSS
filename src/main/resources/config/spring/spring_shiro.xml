@@ -70,6 +70,7 @@
                 <entry key="permsOr" value-ref="permsOr"/>
             </util:map>
         </property>
+        <!--<property name="anyFilterName" value="rolesOr, permsOr"/>-->
         <property name="filterChainDefinitions">
             <value>
                 [urls]
