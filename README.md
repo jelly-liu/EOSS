@@ -17,11 +17,12 @@ This branch just use apache shiro and ini config
 This is the EOSS completed integrated with Apache Shiro  
 ------------ integrated framework ------------  
 --maven  
---mysql  
+--mysql(easy translate to oracle)  
 --mybatis  
 --spring  
 --shiro  
 --redis  
+--google guava  
 ------------ basic RBAC feature support ------------  
 --support user[CRUD]  
 ----support user-role[CRUD]  
@@ -36,15 +37,10 @@ This is the EOSS completed integrated with Apache Shiro
 --support MD5 HashedCredentialsMatcher  
 --support RolesOrAuthorizationFilter  
 --support PermsOrAuthorizationFilter  
---support dynamic edit FilterChainDefinitions on line, do not need relogin or restart tomcat  
---support MemoryConstrainedCacheManager  
+--support dynamic edit FilterChainDefinitions on line, do not need relogin or restart tomcat    
 --support refresh Authentication cache, when update user or role, do not need relogin or restart tomcat  
---support redisCacheManager
---support sessionManager and sessionDAO
-
-# Problem
---1 when use RedisCacheManager, found always put to redis  
---2 access normal, restart server, access normal, will always receive this error:DelegatingSession implementation requires that the SessionKey argument returns a non-null sessionId
+--support Redis and Guava CacheManager  
+--support sessionManager and sessionDAO and cacheManager
 
 # ScreenShot  
 ![ScreenShot1](https://github.com/jelly-liu/EOSS/blob/master/ScreenShot1.png "ScreenShot1")  
