@@ -40,7 +40,8 @@ This is the EOSS completed integrated with Apache Shiro
 --support dynamic edit FilterChainDefinitions on line, do not need relogin or restart tomcat    
 --support refresh Authentication cache, when update user or role, do not need relogin or restart tomcat  
 --support Redis and Guava CacheManager  
---support sessionManager and sessionDAO and cacheManager
+--support sessionManager and sessionDAO and cacheManager  
+--support or logic between all filter of one rule which configued in [urls] section, need open by manual
 
 # ScreenShot  
 ![ScreenShot1](https://github.com/jelly-liu/EOSS/blob/master/ScreenShot1.png "ScreenShot1")  
