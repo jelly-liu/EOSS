@@ -50,8 +50,8 @@ public class RedisCache<K, V> implements Cache<K, V> {
                     public Object doInRedis(RedisConnection redisConnection) throws DataAccessException {
                         byte[] bytes = redisConnection.get(key.toString().getBytes(charset));
                         if (bytes == null || bytes.length == 0) return null;
-//                        V v = (V)ProtoStuffSerializer.readObject(bytes);
-                        V v = JavaSerializer.deserialize(bytes);
+                        V v = (V)ProtoStuffSerializer.readObject(bytes);
+//                        V v = JavaSerializer.deserialize(bytes);
                         cache.put(key, v);
                         return v;
                     }
@@ -80,8 +80,8 @@ public class RedisCache<K, V> implements Cache<K, V> {
             redisTemplate.execute(new RedisCallback<Object>() {
                 @Override
                 public Object doInRedis(RedisConnection redisConnection) throws DataAccessException {
-//                    byte[] bytes = ProtoStuffSerializer.writeObject(value);
-                    byte[] bytes = JavaSerializer.serialize(value);
+                    byte[] bytes = ProtoStuffSerializer.writeObject(value);
+//                    byte[] bytes = JavaSerializer.serialize(value);
                     redisConnection.set(key.toString().getBytes(charset), bytes);
                     if (log.isDebugEnabled()) {
                         log.debug("R_CACHE, cache name={}, put to redis, key{}, value={}", name, key, value);

@@ -1,5 +1,6 @@
 package com.jelly.eoss.util;
 
+import com.google.common.primitives.Ints;
 import io.protostuff.GraphIOUtil;
 import io.protostuff.LinkedBuffer;
 import io.protostuff.Schema;
@@ -13,10 +14,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ProtoStuffSerializer {
     private static final Logger log = LoggerFactory.getLogger(ProtoStuffSerializer.class);
-    private final static ConcurrentHashMap<Class<?>, Schema<?>> cachedSchema = new ConcurrentHashMap<>();
+    private final static ConcurrentHashMap<Class, Schema> cachedSchema = new ConcurrentHashMap<>();
 
-    private  static <T> Schema<T> getSchema(Class<T> clazz) {
-        Schema<T> schema = (Schema<T>) cachedSchema.get(clazz);
+    private  static Schema getSchema(Class clazz) {
+        Schema schema = cachedSchema.get(clazz);
         if (schema == null) {
             schema = RuntimeSchema.createFrom(clazz);
             cachedSchema.put(clazz, schema);
@@ -42,9 +43,9 @@ public class ProtoStuffSerializer {
         return null;
     }
 
-    public static <T> T deserialize( final byte[] bytes , final Class<T> clazz ) {
+    public static <T> T deserialize( final byte[] bytes , final Class clazz ) {
         try {
-            Schema<T> schema = getSchema(clazz);
+            Schema schema = getSchema(clazz);
             final T result = (T)schema.newMessage();
             GraphIOUtil.mergeFrom(bytes, result, schema);
             return result;
@@ -56,13 +57,14 @@ public class ProtoStuffSerializer {
     }
 
     public static <T> byte[] writeObject (final T source) {
-        final Class<T> clazz = (Class<T>) source.getClass();
+        final Class cls = source.getClass();
         final LinkedBuffer buffer = LinkedBuffer.allocate();
         try {
-            final Schema<T> schema = getSchema( clazz );
+            final Schema schema = getSchema(cls);
             ByteArrayOutputStream temp = new ByteArrayOutputStream();
-            byte [] cname = clazz.getName().getBytes();
-            temp.write(cname.length);
+            byte [] cname = cls.getName().getBytes();
+            byte[] cnameLengthBytes = Ints.toByteArray(cname.length);
+            temp.write(cnameLengthBytes);
             temp.write(cname);
             GraphIOUtil.writeTo(temp, source, schema, buffer);
             temp.close();
@@ -84,11 +86,13 @@ public class ProtoStuffSerializer {
         Class clazz = null;
         try {
             ByteArrayInputStream bis = new ByteArrayInputStream(buff);
-            int len = bis.read();
-            if (len<0) throw new IllegalStateException("class name more than 1024 bytes:"+len);
-            byte[] temp = new byte[len];
-            bis.read(temp);
-            clazz = Class.forName(new String(temp));
+            byte[] cnameLengthBytes = new byte[4];
+            bis.read(cnameLengthBytes);
+            int cnameLength = Ints.fromByteArray(cnameLengthBytes);
+
+            byte[] cnameBytes = new byte[cnameLength];
+            bis.read(cnameBytes);
+            clazz = Class.forName(String.valueOf(cnameBytes));
             Schema schema = getSchema(clazz);
             final Object result = schema.newMessage();
             GraphIOUtil.mergeFrom(bis, result, schema);
