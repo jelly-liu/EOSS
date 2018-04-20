@@ -65,7 +65,7 @@ public class ResourceAction extends BaseAction{
 		menu.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
 		this.baseService.myInsert(Menu.Insert, menu);
 		log.debug(menu.getTarget());
-		return new ModelAndView("/system/resource/toList.ac");
+		return new ModelAndView("/system/resource/toList");
 	}
 	
 	@RequestMapping(value = "/delete")
@@ -104,7 +104,7 @@ public class ResourceAction extends BaseAction{
 		m.setUrl(menu.getUrl());
 		m.setPid(menu.getPid());
 		this.baseService.myUpdate(Menu.Update, m);
-		return new ModelAndView("/system/resource/toList.ac");
+		return new ModelAndView("/system/resource/toList");
 	}
 	
 	//getter and setter

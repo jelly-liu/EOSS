@@ -8,7 +8,7 @@ $(function(){
 			pagination: true,
 			pageSize:3,
 			pageList:[3,5,10,15,20,30,50,100],
-		    url: EossGlobal.basePath + '/menu/queryMenuPage.ac',  
+		    url: EossGlobal.basePath + '/menu/queryMenuPage',
 		    queryParams : {
 		    	id: $('#menuId').val(),
 		    	name: $('#menuName').val(),
@@ -61,7 +61,7 @@ $(function(){
 					type: 'POST',
 					dataType: 'text',
 					data: 'id=' + $this.attr('menu_id'),
-					url: EossGlobal.basePath + '/menu/deleteMenu.ac',
+					url: EossGlobal.basePath + '/menu/deleteMenu',
 					success: function(rs){
 						if(rs == 'y'){
 							top.$.messager.alert('提示','操作已成功!','info',function(){
@@ -76,7 +76,7 @@ $(function(){
 		});
 		
 		$('a.update_menu').click(function(){
-			window.location.href = EossGlobal.basePath + '/menu/updateMenuPrepare.ac?id=' + $(this).attr('menu_id');
+			window.location.href = EossGlobal.basePath + '/menu/updateMenuPrepare?id=' + $(this).attr('menu_id');
 		});
 	}
 	

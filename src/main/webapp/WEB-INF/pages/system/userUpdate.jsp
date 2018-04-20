@@ -12,7 +12,7 @@
 	</head>
 
 	<body>
-		<form id="submitForm" action="${BASE_PATH}/system/user/update.ac" class="eossForm" method="post">
+		<form id="submitForm" action="${BASE_PATH}/system/user/update" class="eossForm" method="post">
 			<input type="hidden" name="id" value="${user.id}"/>
 			<table class="eossFromTable">
 				<tr class="panel-header">

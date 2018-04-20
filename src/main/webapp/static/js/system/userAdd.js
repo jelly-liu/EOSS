@@ -22,7 +22,7 @@ $(function(){
 		},
 		async: {
 			enable: true,
-			url: EossGlobal.basePath + "/system/role/queryAllAjax.ac",
+			url: EossGlobal.basePath + "/system/role/queryAllAjax",
 			dataFilter: function(treeId, parentNode, responseData){
 				//filter the response data, but we do nothing at here, just return the whole data immediately
 				return responseData;
@@ -49,7 +49,7 @@ $(function(){
 		},
 		async: {
 			enable: true,
-			url: EossGlobal.basePath + '/system/menu/querySubAjax.ac?withoutUrl=y',
+			url: EossGlobal.basePath + '/system/menu/querySubAjax?withoutUrl=y',
 			autoParam: ['id'],
 			otherParam: {'onlyLeafCanCheck':'yes', 'openAll':'yes'},
 			dataFilter: function(treeId, parentNode, responseData){

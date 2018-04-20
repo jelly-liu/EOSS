@@ -53,7 +53,7 @@ public class PermissionAction extends BaseAction{
 		int id = ComUtil.QueryNextID("id", "permission");
 		permission.setId(id);
 		this.baseService.myInsert(Permission.Insert, permission);
-		request.getRequestDispatcher("/system/permission/toList.ac").forward(request, response);
+		request.getRequestDispatcher("/system/permission/toList").forward(request, response);
 		return null;
 	}
 	
@@ -80,7 +80,7 @@ public class PermissionAction extends BaseAction{
 		this.baseService.myUpdate(Permission.Update, permission);
 
 		request.setAttribute("permission", permission);
-        request.getRequestDispatcher("/system/permission/toList.ac").forward(request, response);
+        request.getRequestDispatcher("/system/permission/toList").forward(request, response);
 		return null;
 	}
 	

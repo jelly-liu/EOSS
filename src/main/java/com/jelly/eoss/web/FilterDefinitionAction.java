@@ -49,7 +49,7 @@ public class FilterDefinitionAction extends BaseAction{
             eossShiroFilterFactoryBean.refreshFilterChainDefinition(filterDefinition.getDefinition(), springShiroFilter);
         }
 
-        request.getRequestDispatcher("/system/filterDefinition/toUpdate.ac").forward(request, response);
+        request.getRequestDispatcher("/system/filterDefinition/toUpdate").forward(request, response);
 		return null;
 	}
 	

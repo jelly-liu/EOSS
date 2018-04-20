@@ -7,7 +7,7 @@
 	</head>
 
 	<body>
-		<form id="submitForm" action="${BASE_PATH}/system/permission/add.ac" class="eossForm" method="post">
+		<form id="submitForm" action="${BASE_PATH}/system/permission/add" class="eossForm" method="post">
 			<table class="eossFromTable">
 				<tr class="panel-header">
 					<td colspan="99">权限添加</td>

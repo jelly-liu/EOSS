@@ -8,7 +8,7 @@
 	</head>
 
 	<body>
-		<form id="submitForm" action="${BASE_PATH}/system/role/update.ac" class="eossForm" method="post">
+		<form id="submitForm" action="${BASE_PATH}/system/role/update" class="eossForm" method="post">
 			<input type="hidden" name="id" value="${role.id}"/>
 			<table class="eossFromTable">
 				<tr class="panel-header">

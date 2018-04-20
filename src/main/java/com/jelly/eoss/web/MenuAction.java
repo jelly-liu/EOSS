@@ -117,7 +117,7 @@ public class MenuAction extends BaseAction{
 		menu.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
 		this.baseService.myInsert(Menu.Insert, menu);
 
-		request.getRequestDispatcher("/system/menu/toList.ac").forward(request, response);
+		request.getRequestDispatcher("/system/menu/toList").forward(request, response);
 		
 		return null;
 	}
@@ -185,7 +185,7 @@ public class MenuAction extends BaseAction{
 		menu.setLeaf(0);
 		this.baseService.getSqlSessionTemplate().update(Menu.Update, menu);
 
-        request.getRequestDispatcher("/system/menu/toList.ac").forward(request, response);
+        request.getRequestDispatcher("/system/menu/toList").forward(request, response);
 
 		return null;
 	}

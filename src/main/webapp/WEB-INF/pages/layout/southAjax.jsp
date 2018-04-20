@@ -5,7 +5,7 @@
 	<tr>
 		<td>
 			<%--${COPY_RIGHT}--%>
-			<a href="/business/money/add.ac">moneyAdd</a>
+			<a href="/business/money/add">moneyAdd</a>
 		</td>
 	</tr>
 </table>

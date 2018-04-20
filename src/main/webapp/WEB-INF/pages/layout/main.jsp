@@ -12,7 +12,7 @@
 	<input type="hidden" id="userName" value="${EossLoginUser.username}" />
 
 	<!-- north -->
-	<div data-options="region:'north',split:true,href:'${BASE_PATH}/system/layout/northAjax.ac'" style="height:50px;">
+	<div data-options="region:'north',split:true,href:'${BASE_PATH}/system/layout/northAjax'" style="height:50px;">
 		<!-- <iframe id="northFrame" name="northFrame" src="${BASE_PATH}/system/layout/north.jsp" frameborder=0 width="100%" height="100%"></iframe> -->
 	</div>
 
@@ -26,12 +26,12 @@
 	<!-- center -->
 	<div data-options="region:'center'">
 		<div id="centerWindowDiv">
-			<iframe id="centerFrame" name="centerFrame" src="${BASE_PATH}/system/layout/center.ac" frameborder="0" width="100%" height="100%" marginwidth="0" marginheight="0"></iframe>
+			<iframe id="centerFrame" name="centerFrame" src="${BASE_PATH}/system/layout/center" frameborder="0" width="100%" height="100%" marginwidth="0" marginheight="0"></iframe>
 		</div>
 	</div>
 
 	<!-- south -->
-	<div data-options="region:'south',split:true,href:'${BASE_PATH}/system/layout/southAjax.ac'" style="height:60px;">
+	<div data-options="region:'south',split:true,href:'${BASE_PATH}/system/layout/southAjax'" style="height:60px;">
 	</div>
 </body>
 </html>

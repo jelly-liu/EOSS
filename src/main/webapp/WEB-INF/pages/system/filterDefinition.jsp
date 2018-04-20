@@ -14,7 +14,7 @@
 	</head>
 
 	<body>
-	<form id="submitForm" action="${BASE_PATH}/system/filterDefinition/update.ac" class="eossForm" method="post">
+	<form id="submitForm" action="${BASE_PATH}/system/filterDefinition/update" class="eossForm" method="post">
 		<table class="eossFromTable">
 			<tr class="panel-header">
 				<td colspan="99">安全过滤规则</td>

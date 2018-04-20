@@ -11,10 +11,57 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd ">
 
-    <mvc:annotation-driven />
-	<context:component-scan base-package="com.jelly.eoss" />
+	<!-- 默认扫描的包路径 -->
+	<context:component-scan base-package="com.jelly.eoss.web" />
+
+	<!-- 启用MVC注解 -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<!-- 设置返回字符串编码 -->
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html;charset=UTF-8</value>
+						<value>application/json;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper">
+					<bean class="com.fasterxml.jackson.databind.ObjectMapper">
+						<!-- 处理responseBody 里面日期类型 -->
+						<!--<property name="dateFormat">-->
+						<!--<bean class="java.text.SimpleDateFormat">-->
+						<!--<constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/>-->
+						<!--</bean>-->
+						<!--</property>-->
+						<!-- 为null字段时不显示 -->
+						<property name="serializationInclusion">
+							<value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</value>
+						</property>
+					</bean>
+				</property>
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html;charset=UTF-8</value>
+						<value>application/json; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+    <!-- 定义跳转的文件的前后缀 -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/pages" />
 		<property name="suffix" value="" />
 	</bean>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 指定所上传文件的总大小不能超过2048KB。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 -->
+        <property name="maxUploadSize" value="2048000"/>
+        <property name="resolveLazily" value="true"/>
+    </bean>
+    <!-- 静态资源文件，不会被Spring MVC拦截 -->
+    <mvc:resources location="/static/" mapping="/static/**"/>
 </beans>
