@@ -14,7 +14,7 @@
 
 	<body>
 		<div id="loginFormDiv">
-		    <form id="loginForm" action="${BASE_PATH}/login/loginIn"" method="post">
+		    <form id="loginForm" action="${BASE_PATH}/login/loginIn" method="post">
 		    	<table id="loginTable" class="eossFromTable">
 					<tr>
 						<td align="right" width="60">用户名：</td>
