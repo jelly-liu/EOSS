@@ -11,7 +11,10 @@ view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 Master branch is sync with EOSS-Shiro branch
 
 # About EOSS-Pure Branch
-This branch just use apache shiro and ini config
+This branch is pure, but simulate shiro
+
+# *********** EOSS-Pure-Restfull Branch, keep on updating, recommended ***********
+This branch is pure, with restfull flaver, but simulate shiro
 
 # About EOSS-Shiro Branch
 This is the EOSS completed integrated with Apache Shiro  
