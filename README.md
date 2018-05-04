@@ -13,7 +13,7 @@ Master branch is sync with EOSS-Shiro branch
 # About EOSS-Pure Branch
 This branch is pure, but simulate shiro
 
-# *********** EOSS-Pure-Restfull Branch, keep on updating, recommended ***********
+# **** Pure-Restfull, keep on updating ***
 This branch is pure, with restfull flaver, but simulate shiro
 
 # About EOSS-Shiro Branch
