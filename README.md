@@ -7,14 +7,14 @@ view here [Apache Shiro](http://shiro.apache.org/index.html "Apache Shiro")
 view here [shiro-demo](https://github.com/jelly-liu/shiro-demo "shiro-demo")  
 view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 
+# **** Pure-Restfull, keep on updating ***
+This branch is pure, with restfull flaver, but simulate shiro
+
 # About Master Branch
 Master branch is sync with EOSS-Shiro branch
 
 # About EOSS-Pure Branch
 This branch is pure, but simulate shiro
-
-# **** Pure-Restfull, keep on updating ***
-This branch is pure, with restfull flaver, but simulate shiro
 
 # About EOSS-Shiro Branch
 This is the EOSS completed integrated with Apache Shiro  
