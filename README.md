@@ -1,4 +1,4 @@
-# More info here
+# Need more help?
 [wiki help](https://github.com/jelly-liu/EOSS/wiki)  
 # EOSS With Apache Shiro
 RBAC(Role Based Access Control) Project Use Spring MyBatis MySQL  
