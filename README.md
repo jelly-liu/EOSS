@@ -1,3 +1,5 @@
+# More info here
+[wiki help](https://github.com/jelly-liu/EOSS/wiki)  
 # EOSS With Apache Shiro
 RBAC(Role Based Access Control) Project Use Spring MyBatis MySQL  
 User, Role, Permission, Resource, Menu, FilterChainDefinition  
