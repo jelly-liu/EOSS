@@ -81,7 +81,7 @@ public class UserAction extends BaseAction {
             return mv;
         }
 
-        int id = ComUtil.QueryNextID("id", "user");
+        int id = ComUtil.QueryNextID("id", "admin_user");
 
         //插入用户
         user.setId(id);

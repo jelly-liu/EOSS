@@ -75,7 +75,7 @@ public class RoleAction extends BaseAction{
 
 	@RequestMapping(value = "/add")
 	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, AdminRole role) throws Exception{
-		int id = ComUtil.QueryNextID("id", "role");
+		int id = ComUtil.QueryNextID("id", "admin_role");
 		String permissionIdsStr = request.getParameter("permissionIds");
 		
 		//插入角色

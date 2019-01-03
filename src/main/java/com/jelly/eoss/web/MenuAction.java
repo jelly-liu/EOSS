@@ -134,7 +134,7 @@ public class MenuAction extends BaseAction{
 		
 //		Log.Debug("id:" + id);
 		//有子菜单，不能删除
-		String sql = "select count(*) total from menu where pid = ?";
+		String sql = "select count(*) total from admin_menu where pid = ?";
 		int total = this.baseService.getJdbcTemplate().queryForObject(sql, Integer.class, id);
 		if(total == 0){
 			this.baseService.getSqlSessionTemplate().delete(AdminMenu.DeleteByPk, id);

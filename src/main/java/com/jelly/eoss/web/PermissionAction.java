@@ -50,7 +50,7 @@ public class PermissionAction extends BaseAction{
 	
 	@RequestMapping(value = "/add")
 	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, AdminPermission permission) throws Exception{
-		int id = ComUtil.QueryNextID("id", "permission");
+		int id = ComUtil.QueryNextID("id", "admin_permission");
 		permission.setId(id);
 		this.baseService.myInsert(AdminPermission.Insert, permission);
 		request.getRequestDispatcher("/system/permission/toList.ac").forward(request, response);
