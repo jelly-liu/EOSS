@@ -4,7 +4,7 @@
 	<!-- 非工具生成的单表的SQL都以下划线开头 -->
 	
 	<sql id="User_QueryUser_Body">
-		from user m
+		from admin_user m
 		where 1 = 1
 		<if test="id != null and id != ''">and m.id = #{id}</if>
 		<if test="username != null and username != ''">and instr(m.username, #{username}) > 0</if>

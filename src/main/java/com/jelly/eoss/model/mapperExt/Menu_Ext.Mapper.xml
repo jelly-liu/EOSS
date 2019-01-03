@@ -14,7 +14,7 @@
 		</if>
 		target as "target",
 		lev as "lev"
-		from menu m
+		from admin_menu m
 		<where>
 			<if test="id != null and id != ''">
 				m.pid = #{id}
@@ -35,18 +35,18 @@
 	<!-- 根据path查询某菜单下的所有子菜单(即子树，包括该菜单) -->
 	<select id="Menu_QueryAllSubMenu" parameterType="Integer" resultType="LinkedHashMap">
 		SELECT m.id as "id"
-		FROM menu m
+		FROM admin_menu m
 		WHERE 1 = 1
 		AND m.leaf = 0
-		AND m.path LIKE CONCAT((SELECT path FROM menu WHERE id = #{id}), '%')
+		AND m.path LIKE CONCAT((SELECT path FROM admin_menu WHERE id = #{id}), '%')
 	</select>
 	
 	<sql id="Menu_QueryMenuPage_Body">
-		FROM menu m
-		INNER JOIN menu m2 ON m.pid = m2.id
+		FROM admin_menu m
+		INNER JOIN admin_menu m2 ON m.pid = m2.id
 		WHERE 1 = 1
 		<if test="dirId != null and dirId != '' and dirId != 1">
-			AND m.path LIKE CONCAT((SELECT path FROM menu WHERE id = #{dirId}), '%')
+			AND m.path LIKE CONCAT((SELECT path FROM admin_menu WHERE id = #{dirId}), '%')
 		</if>
 		<if test="leaf != null and leaf != ''">and m.leaf = #{leaf}</if>
 		<if test="id != null and id != ''">and m.id = #{id}</if>

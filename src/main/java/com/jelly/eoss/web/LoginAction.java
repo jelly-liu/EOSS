@@ -1,14 +1,13 @@
 package com.jelly.eoss.web;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.User;
+import com.jelly.eoss.model.AdminUser;
 import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.servlet.ICodeServlet;
 import com.jelly.eoss.util.Const;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +78,7 @@ public class LoginAction extends BaseAction {
                 return;
             }
 
-			User user = (User)subject.getPrincipal();
+			AdminUser user = (AdminUser)subject.getPrincipal();
 			String menuTreeIdsOfUser = this.menuService.queryMenuTreeIdsOfUser(user);
 
 			request.getSession().setAttribute(Const.LOGIN_SESSION_KEY, user);

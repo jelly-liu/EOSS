@@ -4,7 +4,7 @@
 	<!-- 非工具生成的单表的SQL都以下划线开头 -->
 	
 	<sql id="Role_QueryRolePage_Body">
-		from role r
+		from admin_role r
 		where 1 = 1
 		<if test="id != null and id != ''">and r.id = #{id}</if>
 		<if test="name != null and name != ''">and instr(r.name, #{name}) > 0</if>
@@ -29,13 +29,13 @@
 
 	<select id="Role_QueryAllPermissionWithRole" parameterType="HashMap" resultType="LinkedHashMap">
 		SELECT p.id AS 'id', p.NAME AS 'name', rp.ROLE_ID AS 'roleId'
-		FROM permission p
-		LEFT JOIN role_permission rp ON p.ID = rp.PERMISSION_ID AND rp.ROLE_ID = #{id}
+		FROM admin_permission p
+		LEFT JOIN admin_role_permission rp ON p.ID = rp.PERMISSION_ID AND rp.ROLE_ID = #{id}
 	</select>
 
 	<select id="Role_QueryByUserId" parameterType="Integer" resultType="String">
 		SELECT DISTINCT b.name
-		FROM user_role a INNER JOIN role b ON a.role_id = b.id
+		FROM admin_user_role a INNER JOIN admin_role b ON a.role_id = b.id
 		WHERE 1 = 1
 		AND a.user_id = #{userId}
 	</select>

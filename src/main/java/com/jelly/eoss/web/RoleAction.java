@@ -1,9 +1,9 @@
 package com.jelly.eoss.web;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.Permission;
-import com.jelly.eoss.model.Role;
-import com.jelly.eoss.model.User;
+import com.jelly.eoss.model.AdminPermission;
+import com.jelly.eoss.model.AdminRole;
+import com.jelly.eoss.model.AdminUser;
 import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.shiro.EossAuthorizingRealm;
 import com.jelly.eoss.util.*;
@@ -68,20 +68,20 @@ public class RoleAction extends BaseAction{
 
 	@RequestMapping(value = "/toAdd")
 	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		List<Permission> permissionList = this.baseService.mySelectList(Permission.Select);
+		List<AdminPermission> permissionList = this.baseService.mySelectList(AdminPermission.Select);
 		request.setAttribute("permissionList", permissionList);
 		return new ModelAndView("/system/roleAdd.jsp");
 	}
 
 	@RequestMapping(value = "/add")
-	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, Role role) throws Exception{
+	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, AdminRole role) throws Exception{
 		int id = ComUtil.QueryNextID("id", "role");
 		String permissionIdsStr = request.getParameter("permissionIds");
 		
 		//插入角色
 		role.setId(id);
 		role.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
-		baseService.myInsert(Role.Insert, role);
+		baseService.myInsert(AdminRole.Insert, role);
 		
 		//插入角色对应的权限
 		this.batchInsertRolePermission(role.getId(), permissionIdsStr);
@@ -93,12 +93,12 @@ public class RoleAction extends BaseAction{
 	@RequestMapping(value = "/delete")
 	public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
-		this.baseService.jdDelete("delete from role where id = ?", id);
-		this.baseService.jdDelete("delete from role_permission where role_id = ?", id);
-		this.baseService.jdDelete("delete from user_role where role_id = ?", id);
+		this.baseService.jdDelete("delete from admin_role where id = ?", id);
+		this.baseService.jdDelete("delete from admin_role_permission where role_id = ?", id);
+		this.baseService.jdDelete("delete from admin_user_role where role_id = ?", id);
 
         //更新shiro AuthenticationInfo and AuthorizationInfo in local cache
-        User u = SecurityUtils.getSubject().getPrincipals().oneByType(User.class);
+        AdminUser u = SecurityUtils.getSubject().getPrincipals().oneByType(AdminUser.class);
         eossAuthorizingRealm.refreshAuthInfo(SecurityUtils.getSubject().getPrincipals(), u);
 
 		response.getWriter().write("y");
@@ -108,7 +108,7 @@ public class RoleAction extends BaseAction{
 	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = request.getParameter("id");
 
-		Role role = this.baseService.mySelectOne(Role.SelectByPk, id);
+		AdminRole role = this.baseService.mySelectOne(AdminRole.SelectByPk, id);
         List<Map<String, Object>> permissionList = this.baseService.mySelectList("_EXT.Role_QueryAllPermissionWithRole", role.getId());
 
 		request.setAttribute("role", role);
@@ -117,20 +117,20 @@ public class RoleAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, Role role) throws Exception{
+	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, AdminRole role) throws Exception{
 		String permissionIdsStr = request.getParameter("permissionIds");
 		
 		//更新角色
-		Role r = this.baseService.mySelectOne(Role.SelectByPk, role.getId());
+		AdminRole r = this.baseService.mySelectOne(AdminRole.SelectByPk, role.getId());
 		r.setName(role.getName());
-		this.baseService.myUpdate(Role.Update, r);
+		this.baseService.myUpdate(AdminRole.Update, r);
 		
 		//更新角色原有权限
 		this.batchInsertRolePermission(role.getId(), permissionIdsStr);
 		request.getRequestDispatcher("/system/role/toList.ac").forward(request, response);
 
         //更新shiro AuthenticationInfo and AuthorizationInfo in local cache
-        User u = SecurityUtils.getSubject().getPrincipals().oneByType(User.class);
+        AdminUser u = SecurityUtils.getSubject().getPrincipals().oneByType(AdminUser.class);
         eossAuthorizingRealm.refreshAuthInfo(SecurityUtils.getSubject().getPrincipals(), u);
 
 		return null;
@@ -138,7 +138,7 @@ public class RoleAction extends BaseAction{
 	
 	//批量插入角色对应的权限，只选择用JdbcTemplate的批量更新方法，以保证高性能
 	private void batchInsertRolePermission(int roleId, String permissionIdsStr){
-		String sqlDelete = "delete from role_permission where role_id = ?";
+		String sqlDelete = "delete from admin_role_permission where role_id = ?";
 		this.baseService.jdDelete(sqlDelete, roleId);
 		
 		//没有选择权限，直接返回
@@ -149,7 +149,7 @@ public class RoleAction extends BaseAction{
 		//插入权限
 		String[] permissionIds = permissionIdsStr.split(",");
 		if(permissionIds.length > 0){
-			String sqlInsert = "insert into role_permission (role_id, permission_id) values (?, ?)";
+			String sqlInsert = "insert into admin_role_permission (role_id, permission_id) values (?, ?)";
 			Object[] objs = null;
 			List<Object[]> batchParams = new ArrayList<Object[]>();
 			for(String permissionId : permissionIds){

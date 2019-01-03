@@ -4,15 +4,15 @@
 */
 package com.jelly.eoss.model;
 
-public class Menu {
-	public static final String Insert = "com.jelly.eoss.model.Menu.Insert";
-	public static final String Update = "com.jelly.eoss.model.Menu.Update";
-	public static final String UpdateWithNull = "com.jelly.eoss.model.Menu.UpdateWithNull";
-	public static final String DeleteByPk = "com.jelly.eoss.model.Menu.DeleteByPk";
-	public static final String DeleteByPojo = "com.jelly.eoss.model.Menu.DeleteByPojo";
-	public static final String Select = "com.jelly.eoss.model.Menu.Select";
-	public static final String SelectCount = "com.jelly.eoss.model.Menu.SelectCount";
-	public static final String SelectByPk = "com.jelly.eoss.model.Menu.SelectByPk";
+public class AdminMenu extends ConditionDomain {
+	public static final String Insert = "com.jelly.eoss.model.AdminMenu.Insert";
+	public static final String Update = "com.jelly.eoss.model.AdminMenu.Update";
+	public static final String UpdateWithNull = "com.jelly.eoss.model.AdminMenu.UpdateWithNull";
+	public static final String DeleteByPk = "com.jelly.eoss.model.AdminMenu.DeleteByPk";
+	public static final String DeleteByPojo = "com.jelly.eoss.model.AdminMenu.DeleteByPojo";
+	public static final String Select = "com.jelly.eoss.model.AdminMenu.Select";
+	public static final String SelectCount = "com.jelly.eoss.model.AdminMenu.SelectCount";
+	public static final String SelectByPk = "com.jelly.eoss.model.AdminMenu.SelectByPk";
 	
 	private Integer id;
 	
@@ -33,7 +33,7 @@ public class Menu {
 	private String createDatetime;
 
 
-	public Menu setId (Integer id) {
+	public AdminMenu setId (Integer id) {
 		this.id = id;
 		return this;
 	}
@@ -42,7 +42,7 @@ public class Menu {
 		return this.id;
 	}
 
-	public Menu setPid (Integer pid) {
+	public AdminMenu setPid (Integer pid) {
 		this.pid = pid;
 		return this;
 	}
@@ -51,7 +51,7 @@ public class Menu {
 		return this.pid;
 	}
 
-	public Menu setName (String name) {
+	public AdminMenu setName (String name) {
 		this.name = name;
 		return this;
 	}
@@ -60,7 +60,7 @@ public class Menu {
 		return this.name;
 	}
 
-	public Menu setLeaf (Integer leaf) {
+	public AdminMenu setLeaf (Integer leaf) {
 		this.leaf = leaf;
 		return this;
 	}
@@ -69,7 +69,7 @@ public class Menu {
 		return this.leaf;
 	}
 
-	public Menu setPath (String path) {
+	public AdminMenu setPath (String path) {
 		this.path = path;
 		return this;
 	}
@@ -78,7 +78,7 @@ public class Menu {
 		return this.path;
 	}
 
-	public Menu setLev (Integer lev) {
+	public AdminMenu setLev (Integer lev) {
 		this.lev = lev;
 		return this;
 	}
@@ -87,7 +87,7 @@ public class Menu {
 		return this.lev;
 	}
 
-	public Menu setUrl (String url) {
+	public AdminMenu setUrl (String url) {
 		this.url = url;
 		return this;
 	}
@@ -96,7 +96,7 @@ public class Menu {
 		return this.url;
 	}
 
-	public Menu setTarget (String target) {
+	public AdminMenu setTarget (String target) {
 		this.target = target;
 		return this;
 	}
@@ -105,7 +105,7 @@ public class Menu {
 		return this.target;
 	}
 
-	public Menu setCreateDatetime (String createDatetime) {
+	public AdminMenu setCreateDatetime (String createDatetime) {
 		this.createDatetime = createDatetime;
 		return this;
 	}

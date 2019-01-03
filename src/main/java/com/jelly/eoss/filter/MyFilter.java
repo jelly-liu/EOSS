@@ -1,8 +1,5 @@
 package com.jelly.eoss.filter;
 
-import com.jelly.eoss.model.User;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

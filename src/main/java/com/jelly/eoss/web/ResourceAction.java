@@ -1,7 +1,7 @@
 package com.jelly.eoss.web;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.Menu;
+import com.jelly.eoss.model.AdminMenu;
 import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.util.*;
 import org.apache.ibatis.session.RowBounds;
@@ -51,19 +51,19 @@ public class ResourceAction extends BaseAction{
 	}
 
 	@RequestMapping(value = "/toAdd")
-	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response, Menu menu) throws Exception{
+	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws Exception{
 		return new ModelAndView("/system/resourceAdd.jsp");
 	}
 	
 	@RequestMapping(value = "/add")
-	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, Menu menu) throws Exception{
-		int id = ComUtil.QueryNextID("id", "menu");
+	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws Exception{
+		int id = ComUtil.QueryNextID("id", "admin_menu");
 		menu.setUrl(Const.BASE_PATH + menu.getUrl());
 		menu.setId(id);
 		menu.setLeaf(1);
 		menu.setPath(menu.getPath() + "#" + id);
 		menu.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
-		this.baseService.myInsert(Menu.Insert, menu);
+		this.baseService.myInsert(AdminMenu.Insert, menu);
 		log.debug(menu.getTarget());
 		return new ModelAndView("/system/resource/toList.ac");
 	}
@@ -72,14 +72,14 @@ public class ResourceAction extends BaseAction{
 	public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = request.getParameter("id");
 //		Log.Debug("id:" + id);
-		this.baseService.myDelete(Menu.DeleteByPk, id);
+		this.baseService.myDelete(AdminMenu.DeleteByPk, id);
 		response.getWriter().write("y");
 	}
 	
 	@RequestMapping(value = "/toUpdate")
 	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String id = request.getParameter("id");
-		Menu menu = this.baseService.mySelectOne(Menu.SelectByPk, id);
+		AdminMenu menu = this.baseService.mySelectOne(AdminMenu.SelectByPk, id);
 		
 		//装饰zTreeNode
 		Map<String, String> pm = new HashMap<String, String>();
@@ -95,15 +95,15 @@ public class ResourceAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, Menu menu) throws ServletException, IOException{
-		Menu m = this.baseService.mySelectOne(Menu.SelectByPk, menu.getId());
+	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws ServletException, IOException{
+		AdminMenu m = this.baseService.mySelectOne(AdminMenu.SelectByPk, menu.getId());
 		m.setName(menu.getName());
 		m.setTarget(menu.getTarget());
 		m.setLev(menu.getLev());
 		m.setPath(menu.getPath());
 		m.setUrl(menu.getUrl());
 		m.setPid(menu.getPid());
-		this.baseService.myUpdate(Menu.Update, m);
+		this.baseService.myUpdate(AdminMenu.Update, m);
 		return new ModelAndView("/system/resource/toList.ac");
 	}
 	

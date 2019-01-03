@@ -5,9 +5,9 @@
 	
 	<select id="Login_QueryTreePathByUserId" parameterType="int" resultType="LinkedHashMap">
 		SELECT m.path AS "ids"
-		FROM user u
-		INNER JOIN user_menu um ON u.ID = um.USER_ID
-		INNER JOIN menu m ON m.id =um.MENU_ID
+		FROM admin_user u
+		INNER JOIN admin_user_menu um ON u.ID = um.USER_ID
+		INNER JOIN admin_menu m ON m.id =um.MENU_ID
 		WHERE u.id = #{id}
 	</select>
 </mapper>

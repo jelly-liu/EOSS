@@ -1,7 +1,7 @@
 package com.jelly.eoss.service;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.User;
+import com.jelly.eoss.model.AdminUser;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.util.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +25,7 @@ public class MenuService {
      * 1#2#5#16
      * 将重复的id过滤掉
      */
-	public String queryMenuTreeIdsOfUser(User user){
+	public String queryMenuTreeIdsOfUser(AdminUser user){
 	    if(user == null){
 	        return "";
         }

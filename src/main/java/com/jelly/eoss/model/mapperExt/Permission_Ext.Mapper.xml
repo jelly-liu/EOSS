@@ -4,7 +4,7 @@
 	<!-- 非工具生成的单表的SQL都以下划线开头 -->
 	
 	<sql id="Permission_QueryPermissionPage_Body">
-		from permission p
+		from admin_permission p
 		where 1 = 1
 		<if test="id != null and id != ''">and p.id = #{id}</if>
 		<if test="name != null and name != ''">and instr(p.name, #{name}) > 0</if>
@@ -22,10 +22,10 @@
 
 	<select id="Permission_QueryByUserId" parameterType="Integer" resultType="String">
 		SELECT DISTINCT d.name
-		FROM user_role a
-		INNER JOIN role b ON a.role_id = b.id
-		INNER JOIN role_permission c ON a.role_id = c.role_id
-		INNER JOIN permission d ON c.permission_id = d.id
+		FROM admin_user_role a
+		INNER JOIN admin_role b ON a.role_id = b.id
+		INNER JOIN admin_role_permission c ON a.role_id = c.role_id
+		INNER JOIN admin_permission d ON c.permission_id = d.id
 		WHERE 1 = 1
 		AND a.user_id = #{userId}
 	</select>

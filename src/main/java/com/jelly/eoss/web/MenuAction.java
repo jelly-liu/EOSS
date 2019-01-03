@@ -1,7 +1,7 @@
 package com.jelly.eoss.web;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.Menu;
+import com.jelly.eoss.model.AdminMenu;
 import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.util.*;
 import org.apache.ibatis.session.RowBounds;
@@ -104,18 +104,18 @@ public class MenuAction extends BaseAction{
 	}
 
 	@RequestMapping(value = "/toAdd")
-	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response, Menu menu) throws ServletException, IOException{
+	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws ServletException, IOException{
 		return new ModelAndView("/system/menuAdd.jsp");
 	}
 	
 	@RequestMapping(value = "/add")
-	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, Menu menu) throws ServletException, IOException{
-		int id = ComUtil.QueryNextID("id", "menu");
+	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws ServletException, IOException{
+		int id = ComUtil.QueryNextID("id", "admin_menu");
 		menu.setId(id);
 		menu.setLeaf(0);
 		menu.setPath(menu.getPath() + "#" + id);
 		menu.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
-		this.baseService.myInsert(Menu.Insert, menu);
+		this.baseService.myInsert(AdminMenu.Insert, menu);
 
 		request.getRequestDispatcher("/system/menu/toList.ac").forward(request, response);
 		
@@ -137,7 +137,7 @@ public class MenuAction extends BaseAction{
 		String sql = "select count(*) total from menu where pid = ?";
 		int total = this.baseService.getJdbcTemplate().queryForObject(sql, Integer.class, id);
 		if(total == 0){
-			this.baseService.getSqlSessionTemplate().delete(Menu.DeleteByPk, id);
+			this.baseService.getSqlSessionTemplate().delete(AdminMenu.DeleteByPk, id);
 			response.getWriter().write("y");
 		}else{
 			response.getWriter().write("请先删除或移动，该菜单的所有子菜单和权限");
@@ -147,7 +147,7 @@ public class MenuAction extends BaseAction{
 	@RequestMapping(value = "/toUpdate")
 	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String id = request.getParameter("id");
-		Menu mu = this.baseService.getSqlSessionTemplate().selectOne(Menu.SelectByPk, id);
+		AdminMenu mu = this.baseService.getSqlSessionTemplate().selectOne(AdminMenu.SelectByPk, id);
 		
 		List<Map<String, Object>> subMenuList = this.baseService.mySelectList("_EXT.Menu_QueryAllSubMenu", mu.getId());
 		//将所有id值拼接成1,2,3,4,5,6的形式
@@ -176,14 +176,14 @@ public class MenuAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, Menu menu) throws ServletException, IOException{
+	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws ServletException, IOException{
 		//如果是根菜单，则只能更新菜单名
 		if(menu.getId() == 1){
 			menu.setPid(-1);
 		}
 		
 		menu.setLeaf(0);
-		this.baseService.getSqlSessionTemplate().update(Menu.Update, menu);
+		this.baseService.getSqlSessionTemplate().update(AdminMenu.Update, menu);
 
         request.getRequestDispatcher("/system/menu/toList.ac").forward(request, response);
 

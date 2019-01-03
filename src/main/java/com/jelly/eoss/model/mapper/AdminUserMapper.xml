@@ -3,37 +3,37 @@
 <!-- author:Collonn, Email:collonn@126.com, QQ:195358385 -->
 
 
-<mapper namespace="com.jelly.eoss.model.User">
+<mapper namespace="com.jelly.eoss.model.AdminUser">
 	<!-- 生成Insert -->
-        	<insert id="Insert" useGeneratedKeys="true" keyProperty="ID" parameterType="com.jelly.eoss.model.User">
-			insert into USER (
+        	<insert id="Insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.jelly.eoss.model.AdminUser">
+			insert into admin_user (
 				<trim suffixOverrides=",">
                             <if test="id != null">
-							ID,
+							id,
                             </if>
 
                             <if test="username != null and username != ''">
-							USERNAME,
+							username,
                             </if>
 
                             <if test="password != null and password != ''">
-							PASSWORD,
+							password,
                             </if>
 
                             <if test="salt != null and salt != ''">
-							SALT,
+							salt,
                             </if>
 
                             <if test="locked != null">
-							LOCKED,
+							locked,
                             </if>
 
                             <if test="disabled != null">
-							DISABLED,
+							disabled,
                             </if>
 
                             <if test="createDatetime != null and createDatetime != ''">
-							CREATE_DATETIME,
+							create_datetime,
                             </if>
 
 				</trim>
@@ -66,53 +66,53 @@
 
 	<!-- 生成Update -->
     <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
-	<update id="Update" parameterType="com.jelly.eoss.model.User">
-		update USER set 
+	<update id="Update" parameterType="com.jelly.eoss.model.AdminUser">
+		update admin_user set 
 		<trim suffixOverrides=",">
                     <if test="id != null">
-                    	ID = #{id},
+                    	id = #{id},
                     </if>
                     <if test="username != null and username != ''">
-                    	USERNAME = #{username},
+                    	username = #{username},
                     </if>
                     <if test="password != null and password != ''">
-                    	PASSWORD = #{password},
+                    	password = #{password},
                     </if>
                     <if test="salt != null and salt != ''">
-                    	SALT = #{salt},
+                    	salt = #{salt},
                     </if>
                     <if test="locked != null">
-                    	LOCKED = #{locked},
+                    	locked = #{locked},
                     </if>
                     <if test="disabled != null">
-                    	DISABLED = #{disabled},
+                    	disabled = #{disabled},
                     </if>
                     <if test="createDatetime != null and createDatetime != ''">
-                    	CREATE_DATETIME = #{createDatetime},
+                    	create_datetime = #{createDatetime},
                     </if>
 		</trim>
         where
                 <if test="id != null and id != ''">
-				ID = #{id}
+				id = #{id}
                 </if>
             
 	</update>
 
     <!-- 生成UpdateWithNull -->
     <!-- 注意调用该SQL前必须先根据主键查询出该记录所有列数据，再设置某列为null -->
-    <update id="UpdateWithNull" parameterType="com.jelly.eoss.model.User">
-        update USER set
+    <update id="UpdateWithNull" parameterType="com.jelly.eoss.model.AdminUser">
+        update admin_user set
         <trim suffixOverrides=",">
-			ID = #{id},
-			USERNAME = #{username},
-			PASSWORD = #{password},
-			SALT = #{salt},
-			LOCKED = #{locked},
-			DISABLED = #{disabled},
-			CREATE_DATETIME = #{createDatetime},
+			id = #{id},
+			username = #{username},
+			password = #{password},
+			salt = #{salt},
+			locked = #{locked},
+			disabled = #{disabled},
+			create_datetime = #{createDatetime},
         </trim>
         where
-		ID = #{id}
+		id = #{id}
 			
     </update>
 	
@@ -120,38 +120,38 @@
 		<delete id="DeleteByPk" parameterType="java.io.Serializable">
 			
 			delete 
-			from USER 
+			from admin_user 
 			where 
-				ID = #{id}
+				id = #{id}
 				
 		</delete>
 	<!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误删除 -->
-	<delete id="DeleteByPojo" parameterType="com.jelly.eoss.model.User">
+	<delete id="DeleteByPojo" parameterType="com.jelly.eoss.model.AdminUser">
 		<!-- 请注意，该表没有主键 -->
 		delete
-		from USER
+		from admin_user
 		where
         <trim suffixOverrides="and">
                 <if test="id != null">
-					ID = #{id} and
+					id = #{id} and
                 </if>
                 <if test="username != null and username != ''">
-					USERNAME = #{username} and
+					username = #{username} and
                 </if>
                 <if test="password != null and password != ''">
-					PASSWORD = #{password} and
+					password = #{password} and
                 </if>
                 <if test="salt != null and salt != ''">
-					SALT = #{salt} and
+					salt = #{salt} and
                 </if>
                 <if test="locked != null">
-					LOCKED = #{locked} and
+					locked = #{locked} and
                 </if>
                 <if test="disabled != null">
-					DISABLED = #{disabled} and
+					disabled = #{disabled} and
                 </if>
                 <if test="createDatetime != null and createDatetime != ''">
-					CREATE_DATETIME = #{createDatetime} and
+					create_datetime = #{createDatetime} and
                 </if>
 		</trim>
 	</delete>
@@ -159,66 +159,117 @@
 	<!-- 生成Select通用表头 -->
 	<sql id="SelectColumns">
 		<trim suffixOverrides=",">
-				ID as "id",
-				USERNAME as "username",
-				PASSWORD as "password",
-				SALT as "salt",
-				LOCKED as "locked",
-				DISABLED as "disabled",
-				CREATE_DATETIME as "createDatetime",
+				id as "id",
+				username as "username",
+				password as "password",
+				salt as "salt",
+				locked as "locked",
+				disabled as "disabled",
+				create_datetime as "createDatetime",
 		</trim>
 	</sql>
 	
 	<!-- 生成Select通用查询条件 -->
 	<sql id="SelectWheres">
                 <if test="id != null">
-                    and ID = #{id}
+                    and id = #{id}
                 </if>
-                <if test="username != null and username != ''">
-                    and USERNAME = #{username}
-                </if>
-                <if test="password != null and password != ''">
-                    and PASSWORD = #{password}
-                </if>
-                <if test="salt != null and salt != ''">
-                    and SALT = #{salt}
-                </if>
+                <choose>
+                    <when test="likeSqlColumnSet != null and 'username' in likeSqlColumnSet">
+                        and username like '%${username}%'
+                    </when>
+                    <otherwise>
+                        <if test="username != null and username != ''">
+                            and username = #{username}
+                        </if>
+                    </otherwise>
+                </choose>
+                <choose>
+                    <when test="likeSqlColumnSet != null and 'password' in likeSqlColumnSet">
+                        and password like '%${password}%'
+                    </when>
+                    <otherwise>
+                        <if test="password != null and password != ''">
+                            and password = #{password}
+                        </if>
+                    </otherwise>
+                </choose>
+                <choose>
+                    <when test="likeSqlColumnSet != null and 'salt' in likeSqlColumnSet">
+                        and salt like '%${salt}%'
+                    </when>
+                    <otherwise>
+                        <if test="salt != null and salt != ''">
+                            and salt = #{salt}
+                        </if>
+                    </otherwise>
+                </choose>
                 <if test="locked != null">
-                    and LOCKED = #{locked}
+                    and locked = #{locked}
                 </if>
                 <if test="disabled != null">
-                    and DISABLED = #{disabled}
+                    and disabled = #{disabled}
                 </if>
-                <if test="createDatetime != null and createDatetime != ''">
-                    and CREATE_DATETIME = #{createDatetime}
-                </if>
+                <choose>
+                    <when test="likeSqlColumnSet != null and 'createDatetime' in likeSqlColumnSet">
+                        and create_datetime like '%${createDatetime}%'
+                    </when>
+                    <otherwise>
+                        <if test="createDatetime != null and createDatetime != ''">
+                            and create_datetime = #{createDatetime}
+                        </if>
+                    </otherwise>
+                </choose>
 	</sql>
+
+    <sql id="SelectOrderBy">
+        <if test="sortConditionSet != null and sortConditionSet.size() > 0">
+            order by
+            <trim suffixOverrides=",">
+                <foreach collection="sortConditionSet" item="item">
+                    ${item.colName} ${item.sort},
+                </foreach>
+            </trim>
+        </if>
+    </sql>
 	
 	<!-- 生成Select -->
-	<select id="Select" parameterType="com.jelly.eoss.model.User" resultType="com.jelly.eoss.model.User">
+	<select id="Select" parameterType="com.jelly.eoss.model.AdminUser" resultType="com.jelly.eoss.model.AdminUser">
 		select
 		<include refid="SelectColumns"/>
-		from USER
+		from admin_user
 		where 1 = 1
 		<include refid="SelectWheres"/>
+        <include refid="SelectOrderBy"/>
 	</select>
 
+    <!-- 生成Select -->
+    <select id="selectPage" parameterType="com.jelly.eoss.model.AdminUser" resultType="com.jelly.eoss.model.AdminUser">
+        select
+        <include refid="SelectColumns"/>
+        from admin_user
+        where 1 = 1
+        <include refid="SelectWheres"/>
+        <include refid="SelectOrderBy"/>
+        limit #{offset},#{length}
+    </select>
+
     <!-- 生成SelectCount -->
-    <select id="SelectCount" parameterType="com.jelly.eoss.model.User" resultType="Long">
+    <select id="SelectCount" parameterType="com.jelly.eoss.model.AdminUser" resultType="Long">
         select count(*) ct
-        from USER
+        from admin_user
         <where>
             <include refid="SelectWheres"/>
         </where>
     </select>
 
     <!-- 根据表的主键生成SelectByPk，该表只有单列主键 -->
-	<select id="SelectByPk" parameterType="java.io.Serializable" resultType="com.jelly.eoss.model.User">
+	<select id="SelectByPk" parameterType="java.io.Serializable" resultType="com.jelly.eoss.model.AdminUser">
 		select
 		<include refid="SelectColumns"/>
-		from USER
+		from admin_user
 		where
-				ID = #{id}
+				id = #{id}
 			
 	</select>
 </mapper>

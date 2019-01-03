@@ -3,17 +3,17 @@
 <!-- author:Collonn, Email:collonn@126.com, QQ:195358385 -->
 
 
-<mapper namespace="com.jelly.eoss.model.UserMenu">
+<mapper namespace="com.jelly.eoss.model.AdminUserMenu">
 	<!-- 生成Insert -->
-    <insert id="Insert" parameterType="com.jelly.eoss.model.UserMenu">
-			insert into USER_MENU (
+    <insert id="Insert" parameterType="com.jelly.eoss.model.AdminUserMenu">
+			insert into admin_user_menu (
 				<trim suffixOverrides=",">
                             <if test="menuId != null">
-							MENU_ID,
+							menu_id,
                             </if>
 
                             <if test="userId != null">
-							USER_ID,
+							user_id,
                             </if>
 
 				</trim>
@@ -37,17 +37,17 @@
 	
 	<!-- 根据表的主键生成Delete -->
 	<!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误删除 -->
-	<delete id="DeleteByPojo" parameterType="com.jelly.eoss.model.UserMenu">
+	<delete id="DeleteByPojo" parameterType="com.jelly.eoss.model.AdminUserMenu">
 		<!-- 请注意，该表没有主键 -->
 		delete
-		from USER_MENU
+		from admin_user_menu
 		where
         <trim suffixOverrides="and">
                 <if test="menuId != null">
-					MENU_ID = #{menuId} and
+					menu_id = #{menuId} and
                 </if>
                 <if test="userId != null">
-					USER_ID = #{userId} and
+					user_id = #{userId} and
                 </if>
 		</trim>
 	</delete>
@@ -55,34 +55,57 @@
 	<!-- 生成Select通用表头 -->
 	<sql id="SelectColumns">
 		<trim suffixOverrides=",">
-				MENU_ID as "menuId",
-				USER_ID as "userId",
+				menu_id as "menuId",
+				user_id as "userId",
 		</trim>
 	</sql>
 	
 	<!-- 生成Select通用查询条件 -->
 	<sql id="SelectWheres">
                 <if test="menuId != null">
-                    and MENU_ID = #{menuId}
+                    and menu_id = #{menuId}
                 </if>
                 <if test="userId != null">
-                    and USER_ID = #{userId}
+                    and user_id = #{userId}
                 </if>
 	</sql>
+
+    <sql id="SelectOrderBy">
+        <if test="sortConditionSet != null and sortConditionSet.size() > 0">
+            order by
+            <trim suffixOverrides=",">
+                <foreach collection="sortConditionSet" item="item">
+                    ${item.colName} ${item.sort},
+                </foreach>
+            </trim>
+        </if>
+    </sql>
 	
 	<!-- 生成Select -->
-	<select id="Select" parameterType="com.jelly.eoss.model.UserMenu" resultType="com.jelly.eoss.model.UserMenu">
+	<select id="Select" parameterType="com.jelly.eoss.model.AdminUserMenu" resultType="com.jelly.eoss.model.AdminUserMenu">
 		select
 		<include refid="SelectColumns"/>
-		from USER_MENU
+		from admin_user_menu
 		where 1 = 1
 		<include refid="SelectWheres"/>
+        <include refid="SelectOrderBy"/>
 	</select>
 
+    <!-- 生成Select -->
+    <select id="selectPage" parameterType="com.jelly.eoss.model.AdminUserMenu" resultType="com.jelly.eoss.model.AdminUserMenu">
+        select
+        <include refid="SelectColumns"/>
+        from admin_user_menu
+        where 1 = 1
+        <include refid="SelectWheres"/>
+        <include refid="SelectOrderBy"/>
+        limit #{offset},#{length}
+    </select>
+
     <!-- 生成SelectCount -->
-    <select id="SelectCount" parameterType="com.jelly.eoss.model.UserMenu" resultType="Long">
+    <select id="SelectCount" parameterType="com.jelly.eoss.model.AdminUserMenu" resultType="Long">
         select count(*) ct
-        from USER_MENU
+        from admin_user_menu
         <where>
             <include refid="SelectWheres"/>
         </where>

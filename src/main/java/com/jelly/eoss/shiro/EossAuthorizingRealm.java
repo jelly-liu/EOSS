@@ -1,7 +1,7 @@
 package com.jelly.eoss.shiro;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.User;
+import com.jelly.eoss.model.AdminUser;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -28,7 +28,7 @@ public class EossAuthorizingRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        User user = (User)principalCollection.fromRealm(this.getName()).iterator().next();
+        AdminUser user = (AdminUser)principalCollection.fromRealm(this.getName()).iterator().next();
         AuthorizationInfo authorizationInfo = this.doGetAuthorizationInfo(user.getId());
         return authorizationInfo;
     }
@@ -69,7 +69,7 @@ public class EossAuthorizingRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
 
         //only do check out user is exit or not, do not need do password matching
-        User user = this.baseService.mySelectOne(User.Select, new User().setUsername(token.getUsername()));
+        AdminUser user = this.baseService.mySelectOne(AdminUser.Select, new AdminUser().setUsername(token.getUsername()));
         if(user == null){
             throw new UnknownAccountException("can not find user, name=" + token.getUsername());
         }
@@ -92,7 +92,7 @@ public class EossAuthorizingRealm extends AuthorizingRealm {
     }
 
     //refresh authentication info in local cache
-    private void refreshAuthorizationInfo(PrincipalCollection principals, User user){
+    private void refreshAuthorizationInfo(PrincipalCollection principals, AdminUser user){
         AuthorizationInfo authorizationInfo = this.doGetAuthorizationInfo(user.getId());
 
         Cache<Object, AuthorizationInfo> authorizationCache = getAuthorizationCache();
@@ -103,7 +103,7 @@ public class EossAuthorizingRealm extends AuthorizingRealm {
     }
 
     //refresh authentication info in local cache
-    private void refreshAuthenticationInfo(PrincipalCollection principals, User user){
+    private void refreshAuthenticationInfo(PrincipalCollection principals, AdminUser user){
         Cache<Object, AuthenticationInfo> authenticationCache = getAuthenticationCache();
         if(authenticationCache != null){
             authenticationCache.remove(principals);
@@ -115,7 +115,7 @@ public class EossAuthorizingRealm extends AuthorizingRealm {
         }
     }
 
-    public void refreshAuthInfo(PrincipalCollection principals, User user){
+    public void refreshAuthInfo(PrincipalCollection principals, AdminUser user){
         this.refreshAuthenticationInfo(principals, user);
         this.refreshAuthorizationInfo(principals, user);
     }

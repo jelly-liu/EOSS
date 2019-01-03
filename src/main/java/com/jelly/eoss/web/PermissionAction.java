@@ -1,7 +1,7 @@
 package com.jelly.eoss.web;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.Permission;
+import com.jelly.eoss.model.AdminPermission;
 import com.jelly.eoss.util.ComUtil;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.util.Pager;
@@ -44,15 +44,15 @@ public class PermissionAction extends BaseAction{
 	}
 
 	@RequestMapping(value = "/toAdd")
-	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response, Permission permission) throws Exception{
+	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response, AdminPermission permission) throws Exception{
 		return new ModelAndView("/system/permissionAdd.jsp");
 	}
 	
 	@RequestMapping(value = "/add")
-	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, Permission permission) throws Exception{
+	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, AdminPermission permission) throws Exception{
 		int id = ComUtil.QueryNextID("id", "permission");
 		permission.setId(id);
-		this.baseService.myInsert(Permission.Insert, permission);
+		this.baseService.myInsert(AdminPermission.Insert, permission);
 		request.getRequestDispatcher("/system/permission/toList.ac").forward(request, response);
 		return null;
 	}
@@ -61,7 +61,7 @@ public class PermissionAction extends BaseAction{
 	public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = request.getParameter("id");
 //		Log.Debug("id:" + id);
-		this.baseService.myDelete(Permission.DeleteByPk, id);
+		this.baseService.myDelete(AdminPermission.DeleteByPk, id);
 		response.getWriter().write("y");
 	}
 	
@@ -69,15 +69,15 @@ public class PermissionAction extends BaseAction{
 	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String id = request.getParameter("id");
 
-		Permission permission = this.baseService.mySelectOne(Permission.SelectByPk, id);
+		AdminPermission permission = this.baseService.mySelectOne(AdminPermission.SelectByPk, id);
 
 		request.setAttribute("permission", permission);
 		return new ModelAndView("/system/permissionUpdate.jsp");
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, Permission permission) throws ServletException, IOException{
-		this.baseService.myUpdate(Permission.Update, permission);
+	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, AdminPermission permission) throws ServletException, IOException{
+		this.baseService.myUpdate(AdminPermission.Update, permission);
 
 		request.setAttribute("permission", permission);
         request.getRequestDispatcher("/system/permission/toList.ac").forward(request, response);
