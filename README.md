@@ -9,7 +9,7 @@ view here [Apache Shiro](http://shiro.apache.org/index.html "Apache Shiro")
 view here [shiro-demo](https://github.com/jelly-liu/shiro-demo "shiro-demo")  
 view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 
-# **** EOSS-Pure Branch And Pure-RestFull Branch, both keep on updating ***
+# **** Pure And Shiro, boths keep on updating ***
 This branch is pure, with restfull flaver, but simulate shiro
 
 # About Master Branch
