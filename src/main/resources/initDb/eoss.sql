@@ -11,11 +11,28 @@
  Target Server Version : 50722
  File Encoding         : utf-8
 
- Date: 01/04/2019 09:57:27 AM
+ Date: 01/06/2019 01:28:55 AM
 */
 
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+--  Table structure for `admin_filterchain_definition`
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_filterchain_definition`;
+CREATE TABLE `admin_filterchain_definition` (
+  `id` int(11) NOT NULL,
+  `definition` text COLLATE utf8_bin,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ----------------------------
+--  Records of `admin_filterchain_definition`
+-- ----------------------------
+BEGIN;
+INSERT INTO `admin_filterchain_definition` VALUES ('1', '[urls]\r\n/static/** = anon\r\n/toLogin.ac = anon\r\n/login.ac = anon\r\n/system/** = authc, rolesOr[系统管理员]\r\n/business/** = authc, permsOr[money:add]\r\n/** = authc');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `admin_menu`
@@ -55,7 +72,7 @@ CREATE TABLE `admin_permission` (
 --  Records of `admin_permission`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_permission` VALUES ('1', 'permission:add'), ('2', 'permission:list'), ('3', 'permission:delete'), ('4', 'permission:*');
+INSERT INTO `admin_permission` VALUES ('1', 'money:add'), ('2', 'money:list'), ('3', 'money:delete'), ('4', 'money:*');
 COMMIT;
 
 -- ----------------------------
@@ -84,6 +101,13 @@ CREATE TABLE `admin_role_permission` (
   `PERMISSION_ID` int(11) NOT NULL,
   `ROLE_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Records of `admin_role_permission`
+-- ----------------------------
+BEGIN;
+INSERT INTO `admin_role_permission` VALUES ('3', '2');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `admin_user`
@@ -136,7 +160,7 @@ CREATE TABLE `admin_user_role` (
 --  Records of `admin_user_role`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_user_role` VALUES ('1', '1'), ('1', '2');
+INSERT INTO `admin_user_role` VALUES ('1', '1');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
