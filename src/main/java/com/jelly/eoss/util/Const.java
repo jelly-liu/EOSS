@@ -3,6 +3,8 @@ package com.jelly.eoss.util;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.servlet.ServletContext;
+
 public class Const {
 	public static String BASE_PATH;
 	public static String PROJECT_NAME;
@@ -22,4 +24,5 @@ public class Const {
 	
 	public static JdbcTemplate jdbcTemplate;
 	public static SqlSessionTemplate sqlSessionTemplate;
+	public static ServletContext servletContext;
 }

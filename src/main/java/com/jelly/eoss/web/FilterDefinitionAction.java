@@ -5,22 +5,23 @@ import com.jelly.eoss.model.AdminFilterchainDefinition;
 import com.jelly.eoss.shiro.EossShiroFilterFactoryBean;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping(value = "/system/filterDefinition")
 public class FilterDefinitionAction extends BaseAction{
-	@Resource
+	@Autowired
 	private BaseService baseService;
-    @Resource
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+    @Autowired
 	AbstractShiroFilter abstractShiroFilter;
-    @Resource
+    @Autowired
     EossShiroFilterFactoryBean eossShiroFilterFactoryBean;
 
 	@RequestMapping(value = "/toUpdate")

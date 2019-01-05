@@ -3,20 +3,9 @@
 
 	<display-name>EOSS</display-name>
 
-	<!-- config spring param -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath*:config/spring/spring_*.xml</param-value>
-	</context-param>
-
-	<!-- config spring -->
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-
 	<!-- config user define ServletContextListener -->
 	<listener>
-		<listener-class>com.jelly.eoss.listener.StartupApplicationContextListener</listener-class>
+		<listener-class>com.jelly.eoss.listener.EossServletContextListener</listener-class>
 	</listener>
 	
 	<!-- config encode, must be the first filter -->

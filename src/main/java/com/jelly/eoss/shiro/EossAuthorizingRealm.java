@@ -4,6 +4,7 @@ import com.jelly.eoss.dao.BaseService;
 import com.jelly.eoss.model.AdminUser;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.cache.Cache;
@@ -25,6 +26,10 @@ public class EossAuthorizingRealm extends AuthorizingRealm {
 
     @Resource
     BaseService baseService;
+
+    public EossAuthorizingRealm(CredentialsMatcher credentialsMatcher) {
+        this.setCredentialsMatcher(credentialsMatcher);
+    }
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -97,8 +102,8 @@ public class EossAuthorizingRealm extends AuthorizingRealm {
 
         Cache<Object, AuthorizationInfo> authorizationCache = getAuthorizationCache();
         if (authorizationCache != null) {
-            authorizationCache.remove(principals);
-            authorizationCache.put(principals, authorizationInfo);
+            authorizationCache.remove(getAuthorizationCacheKey(principals));
+            authorizationCache.put(getAuthorizationCacheKey(principals), authorizationInfo);
         }
     }
 
@@ -106,8 +111,8 @@ public class EossAuthorizingRealm extends AuthorizingRealm {
     private void refreshAuthenticationInfo(PrincipalCollection principals, AdminUser user){
         Cache<Object, AuthenticationInfo> authenticationCache = getAuthenticationCache();
         if(authenticationCache != null){
-            authenticationCache.remove(principals);
-            authenticationCache.put(principals, new SimpleAuthenticationInfo(
+            authenticationCache.remove(getAuthenticationCacheKey(principals));
+            authenticationCache.put(getAuthenticationCacheKey(principals), new SimpleAuthenticationInfo(
                     user,
                     user.getPassword(),
                     new SimpleByteSource(user.getSalt()),
