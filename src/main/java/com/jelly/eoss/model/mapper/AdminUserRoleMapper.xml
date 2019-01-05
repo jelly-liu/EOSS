@@ -3,7 +3,7 @@
 <!-- author:Collonn, Email:collonn@126.com, QQ:195358385 -->
 
 
-<mapper namespace="com.jelly.eoss.model.AdminUserRole">
+<mapper namespace="AdminUserRole">
 	<!-- 生成Insert -->
     <insert id="Insert" parameterType="com.jelly.eoss.model.AdminUserRole">
 			insert into admin_user_role (

@@ -1,7 +1,7 @@
 package com.jelly.eoss.web;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.FilterChainDefinition;
+import com.jelly.eoss.model.AdminFilterchainDefinition;
 import com.jelly.eoss.shiro.EossShiroFilterFactoryBean;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/system/filterDefinition")
@@ -20,33 +19,30 @@ public class FilterDefinitionAction extends BaseAction{
 	@Resource
 	private BaseService baseService;
     @Resource
-    EossShiroFilterFactoryBean eossShiroFilterFactoryBean;
+	AbstractShiroFilter abstractShiroFilter;
     @Resource
-    AbstractShiroFilter springShiroFilter;
+    EossShiroFilterFactoryBean eossShiroFilterFactoryBean;
 
 	@RequestMapping(value = "/toUpdate")
 	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		FilterChainDefinition filterDefinition = new FilterChainDefinition();
+        AdminFilterchainDefinition filterDefinition = new AdminFilterchainDefinition();
 
         //try to get filterChainDefinition from shiro-spring-config
-        Map<String, String> filterChainDefinitionMap = eossShiroFilterFactoryBean.getFilterChainDefinitionMap();
-        StringBuilder rule = new StringBuilder();
-        for(Map.Entry<String, String> filterChainEntry : filterChainDefinitionMap.entrySet()){
-            rule.append(filterChainEntry.getKey()).append("=").append(filterChainEntry.getValue()).append("\r\n");
-        }
-        filterDefinition.setId(1).setDefinition(StringUtils.trimToEmpty(rule.toString()));
+        String definition = eossShiroFilterFactoryBean.getFilterChainDefinitions();
+        filterDefinition.setId(1).setDefinition(StringUtils.trimToEmpty(definition));
 
 		request.setAttribute("filterDefinition", filterDefinition);
 		return new ModelAndView("/system/filterDefinition.jsp");
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, FilterChainDefinition filterDefinition) throws Exception{
+	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, AdminFilterchainDefinition filterDefinition) throws Exception{
 		filterDefinition.setDefinition(StringUtils.trimToNull(filterDefinition.getDefinition()));
 
         //refresh filterChainDefinition
         if(filterDefinition.getDefinition() != null){
-            eossShiroFilterFactoryBean.refreshFilterChainDefinition(filterDefinition.getDefinition(), springShiroFilter);
+            eossShiroFilterFactoryBean.updateFilterChainDefinitions(filterDefinition.getDefinition(), abstractShiroFilter);
+            baseService.myUpdate(AdminFilterchainDefinition.Update, filterDefinition.setId(1));
         }
 
         request.getRequestDispatcher("/system/filterDefinition/toUpdate.ac").forward(request, response);

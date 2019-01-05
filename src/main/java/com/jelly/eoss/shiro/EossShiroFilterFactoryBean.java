@@ -1,42 +1,61 @@
 package com.jelly.eoss.shiro;
 
+import com.google.common.io.LineReader;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.mgt.FilterChainManager;
 import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
+import org.springframework.stereotype.Component;
+
+import java.io.StringReader;
 
 /**
  * Created by jelly on 2016-11-8.
  */
 public class EossShiroFilterFactoryBean extends ShiroFilterFactoryBean {
-    /**
-     * @See com.jelly.eoss.shiro.EossSpringShiroFilter
-     */
-    private String anyFilterName;
 
-    public void refreshFilterChainDefinition(String filterChainDefinition, AbstractShiroFilter springShiroFilter){
-        setFilterChainDefinitions(filterChainDefinition);
+    private String filterChainDefinitions;
+
+    @Override
+    public void setFilterChainDefinitions(String definitions) {
+        definitions = format(definitions);
+        super.setFilterChainDefinitions(definitions);
+        this.filterChainDefinitions = definitions;
+    }
+
+    //for more information, check: ShiroFilterFactoryBean.createInstance();
+    public void updateFilterChainDefinitions(String definitions, AbstractShiroFilter abstractShiroFilter) {
+        this.setFilterChainDefinitions(definitions);
 
         FilterChainManager manager = createFilterChainManager();
         PathMatchingFilterChainResolver chainResolver = new PathMatchingFilterChainResolver();
         chainResolver.setFilterChainManager(manager);
 
-        springShiroFilter.setFilterChainResolver(chainResolver);
+        abstractShiroFilter.setFilterChainResolver(chainResolver);
     }
 
-    @Override
-    protected AbstractShiroFilter createInstance() throws Exception {
-        AbstractShiroFilter springShiroFilter =  super.createInstance();
-//        return new EossSpringShiroFilter(springShiroFilter.getSecurityManager(), springShiroFilter.getFilterChainResolver(), anyFilterName);
-        return springShiroFilter;
+    private String format(String definitions){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        try {
+            LineReader lineReader = new LineReader(new StringReader(definitions));
+
+            String line = null;
+            while ((line = lineReader.readLine()) != null) {
+                line = StringUtils.trimToNull(line);
+                if(StringUtils.isNotEmpty(line)){
+                    stringBuilder.append(line).append("\n");
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return stringBuilder.toString();
     }
 
-    public String getAnyFilterName() {
-        return anyFilterName;
-    }
-
-    public EossShiroFilterFactoryBean setAnyFilterName(String anyFilterName) {
-        this.anyFilterName = anyFilterName;
-        return this;
+    public String getFilterChainDefinitions() {
+        return this.filterChainDefinitions;
     }
 }

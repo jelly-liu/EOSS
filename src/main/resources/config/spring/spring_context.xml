@@ -47,11 +47,11 @@
 	</bean>
 
 	<!-- transaction -->
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<tx:annotation-driven transaction-manager="txManager"/>
 
 	<!-- redis configuration -->
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">

@@ -4,15 +4,19 @@
 */
 package com.jelly.eoss.model;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import com.jelly.eoss.model.ConditionDomain;
+
 public class AdminUser extends ConditionDomain {
-	public static final String Insert = "com.jelly.eoss.model.AdminUser.Insert";
-	public static final String Update = "com.jelly.eoss.model.AdminUser.Update";
-	public static final String UpdateWithNull = "com.jelly.eoss.model.AdminUser.UpdateWithNull";
-	public static final String DeleteByPk = "com.jelly.eoss.model.AdminUser.DeleteByPk";
-	public static final String DeleteByPojo = "com.jelly.eoss.model.AdminUser.DeleteByPojo";
-	public static final String Select = "com.jelly.eoss.model.AdminUser.Select";
-	public static final String SelectCount = "com.jelly.eoss.model.AdminUser.SelectCount";
-	public static final String SelectByPk = "com.jelly.eoss.model.AdminUser.SelectByPk";
+	public static final String Insert = "AdminUser.Insert";
+	public static final String Update = "AdminUser.Update";
+	public static final String UpdateWithNull = "AdminUser.UpdateWithNull";
+	public static final String DeleteByPk = "AdminUser.DeleteByPk";
+	public static final String DeleteByPojo = "AdminUser.DeleteByPojo";
+	public static final String Select = "AdminUser.Select";
+	public static final String SelectCount = "AdminUser.SelectCount";
+	public static final String SelectByPk = "AdminUser.SelectByPk";
 	
 	private Integer id;
 	
