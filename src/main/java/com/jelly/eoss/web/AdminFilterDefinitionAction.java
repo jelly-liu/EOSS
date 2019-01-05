@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping(value = "/system/filterDefinition")
-public class FilterDefinitionAction extends BaseAction{
+public class AdminFilterDefinitionAction extends BaseAction{
 	@Autowired
 	private BaseService baseService;
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -37,7 +37,7 @@ public class FilterDefinitionAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, AdminFilterchainDefinition filterDefinition) throws Exception{
+	public ModelAndView txUpdate(HttpServletRequest request, HttpServletResponse response, AdminFilterchainDefinition filterDefinition) throws Exception{
 		filterDefinition.setDefinition(StringUtils.trimToNull(filterDefinition.getDefinition()));
 
         //refresh filterChainDefinition

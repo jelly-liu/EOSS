@@ -23,8 +23,8 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/system/resource")
-public class ResourceAction extends BaseAction{
-	private static final Logger log = LoggerFactory.getLogger(ResourceAction.class);
+public class AdminResourceAction extends BaseAction{
+	private static final Logger log = LoggerFactory.getLogger(AdminResourceAction.class);
 
 	@Resource
 	private BaseService baseService;
@@ -56,7 +56,7 @@ public class ResourceAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/add")
-	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws Exception{
+	public ModelAndView txAdd(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws Exception{
 		int id = ComUtil.QueryNextID("id", "admin_menu");
 		menu.setUrl(Const.BASE_PATH + menu.getUrl());
 		menu.setId(id);
@@ -69,7 +69,7 @@ public class ResourceAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/delete")
-	public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public void txDelete(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = request.getParameter("id");
 //		Log.Debug("id:" + id);
 		this.baseService.myDelete(AdminMenu.DeleteByPk, id);
@@ -95,7 +95,7 @@ public class ResourceAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws ServletException, IOException{
+	public ModelAndView txUpdate(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws ServletException, IOException{
 		AdminMenu m = this.baseService.mySelectOne(AdminMenu.SelectByPk, menu.getId());
 		m.setName(menu.getName());
 		m.setTarget(menu.getTarget());

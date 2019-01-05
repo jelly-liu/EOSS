@@ -21,7 +21,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/system/permission")
-public class PermissionAction extends BaseAction{
+public class AdminPermissionAction extends BaseAction{
 	@Resource
 	private BaseService baseService;
 
@@ -49,7 +49,7 @@ public class PermissionAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/add")
-	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, AdminPermission permission) throws Exception{
+	public ModelAndView txAdd(HttpServletRequest request, HttpServletResponse response, AdminPermission permission) throws Exception{
 		int id = ComUtil.QueryNextID("id", "admin_permission");
 		permission.setId(id);
 		this.baseService.myInsert(AdminPermission.Insert, permission);
@@ -58,7 +58,7 @@ public class PermissionAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/delete")
-	public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public void txDelete(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = request.getParameter("id");
 //		Log.Debug("id:" + id);
 		this.baseService.myDelete(AdminPermission.DeleteByPk, id);
@@ -76,7 +76,7 @@ public class PermissionAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, AdminPermission permission) throws ServletException, IOException{
+	public ModelAndView txUpdate(HttpServletRequest request, HttpServletResponse response, AdminPermission permission) throws ServletException, IOException{
 		this.baseService.myUpdate(AdminPermission.Update, permission);
 
 		request.setAttribute("permission", permission);

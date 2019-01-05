@@ -20,7 +20,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping(value = "/system/user")
-public class UserAction extends BaseAction {
+public class AdminUserAction extends BaseAction {
     @Resource
     private BaseService baseService;
     @Resource
@@ -68,7 +68,7 @@ public class UserAction extends BaseAction {
     }
 
     @RequestMapping(value = "/add")
-    public ModelAndView add(HttpServletRequest request, HttpServletResponse response, AdminUser user) throws Exception {
+    public ModelAndView txAdd(HttpServletRequest request, HttpServletResponse response, AdminUser user) throws Exception {
         String roleIds = request.getParameter("roleIds");
         String resourcesIds = request.getParameter("resourcesIds");
         ModelAndView mv = new ModelAndView();
@@ -151,7 +151,7 @@ public class UserAction extends BaseAction {
     }
 
     @RequestMapping(value = "/update")
-    public ModelAndView update(HttpServletRequest request, HttpServletResponse response, AdminUser user) throws Exception {
+    public ModelAndView txUpdate(HttpServletRequest request, HttpServletResponse response, AdminUser user) throws Exception {
         //更新用户信息
         AdminUser u = this.baseService.mySelectOne(AdminUser.SelectByPk, user.getId());
         u.setUsername(user.getUsername());
@@ -231,7 +231,7 @@ public class UserAction extends BaseAction {
     }
 
     @RequestMapping(value = "/delete")
-    public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void txDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String id = request.getParameter("id");
 
         //删除自己

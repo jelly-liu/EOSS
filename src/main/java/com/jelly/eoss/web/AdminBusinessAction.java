@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping(value = "/business/money")
-public class BusinessAction extends BaseAction {
+public class AdminBusinessAction extends BaseAction {
 	@Resource
 	private BaseService baseService;
 

@@ -25,8 +25,8 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/system/role")
-public class RoleAction extends BaseAction{
-	private static final Logger log = LoggerFactory.getLogger(RoleAction.class);
+public class AdminRoleAction extends BaseAction{
+	private static final Logger log = LoggerFactory.getLogger(AdminRoleAction.class);
 
 	@Resource
 	private BaseService baseService;
@@ -74,7 +74,7 @@ public class RoleAction extends BaseAction{
 	}
 
 	@RequestMapping(value = "/add")
-	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, AdminRole role) throws Exception{
+	public ModelAndView txAdd(HttpServletRequest request, HttpServletResponse response, AdminRole role) throws Exception{
 		int id = ComUtil.QueryNextID("id", "admin_role");
 		String permissionIdsStr = request.getParameter("permissionIds");
 		
@@ -91,7 +91,7 @@ public class RoleAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/delete")
-	public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void txDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
 		this.baseService.jdDelete("delete from admin_role where id = ?", id);
 		this.baseService.jdDelete("delete from admin_role_permission where role_id = ?", id);
@@ -117,7 +117,7 @@ public class RoleAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, AdminRole role) throws Exception{
+	public ModelAndView txUpdate(HttpServletRequest request, HttpServletResponse response, AdminRole role) throws Exception{
 		String permissionIdsStr = request.getParameter("permissionIds");
 		
 		//更新角色

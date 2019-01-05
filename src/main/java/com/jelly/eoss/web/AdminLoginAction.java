@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-public class LoginAction extends BaseAction {
-    private static final Logger log = LoggerFactory.getLogger(LoginAction.class);
+public class AdminLoginAction extends BaseAction {
+    private static final Logger log = LoggerFactory.getLogger(AdminLoginAction.class);
 
 	@Resource
 	private BaseService baseService;
@@ -35,7 +35,7 @@ public class LoginAction extends BaseAction {
     }
 	
 	@RequestMapping(value = "/login")
-	public void loginIn(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void txLoginIn(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try{
 			String username = ServletRequestUtils.getStringParameter(request, "username");
 			String password = ServletRequestUtils.getStringParameter(request, "password");
@@ -94,7 +94,7 @@ public class LoginAction extends BaseAction {
 	}
 	
 	@RequestMapping(value = "/logout")
-	public void loginOut(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void txLoginOut(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.getSession().removeAttribute(Const.LOGIN_SESSION_KEY);
 		request.getSession().removeAttribute(Const.LOGIN_MENU_TREE_IDS_KEY);
         Subject subject = SecurityUtils.getSubject();

@@ -23,8 +23,8 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/system/menu")
-public class MenuAction extends BaseAction{
-    private static final Logger log = LoggerFactory.getLogger(MenuAction.class);
+public class AdminMenuAction extends BaseAction{
+    private static final Logger log = LoggerFactory.getLogger(AdminMenuAction.class);
 
 	@Resource
 	private BaseService baseService;
@@ -109,7 +109,7 @@ public class MenuAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/add")
-	public ModelAndView add(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws ServletException, IOException{
+	public ModelAndView txAdd(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws ServletException, IOException{
 		int id = ComUtil.QueryNextID("id", "admin_menu");
 		menu.setId(id);
 		menu.setLeaf(0);
@@ -123,7 +123,7 @@ public class MenuAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/delete")
-	public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public void txDelete(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String id = ServletRequestUtils.getStringParameter(request, "id");
 		
 		//不能删除根菜单
@@ -176,7 +176,7 @@ public class MenuAction extends BaseAction{
 	}
 	
 	@RequestMapping(value = "/update")
-	public ModelAndView update(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws ServletException, IOException{
+	public ModelAndView txUpdate(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws ServletException, IOException{
 		//如果是根菜单，则只能更新菜单名
 		if(menu.getId() == 1){
 			menu.setPid(-1);
