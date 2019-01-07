@@ -39,14 +39,14 @@ This is the EOSS completed integrated with Apache Shiro
 --support resource[CRUD]  
 --support menu tree[CRUD]  
 ------------ shiro feature support ------------  
---support MD5 HashedCredentialsMatcher  
---support RolesOrAuthorizationFilter  
---support PermsOrAuthorizationFilter  
---support dynamic edit FilterChainDefinitions on line, do not need relogin or restart tomcat    
+--sppport custom AntPathMatcher, not care about capital or lower case, EossAntPathMatcher  
+--support MD5 hashed with salt, HashedCredentialsMatcher  
+--support RolesOrAuthorizationFilter, work with EossAntPathMatcher  
+--support PermsOrAuthorizationFilter, work with EossAntPathMatcher  
+--support dynamic edit FilterChainDefinitions on line, do not need relogin or restart tomcat  
 --support refresh Authentication cache, when update user or role, do not need relogin or restart tomcat  
---support Redis and Guava CacheManager  
---support sessionManager and sessionDAO and cacheManager  
---support or logic between all filter of one rule which configued in [urls] section, need open by manual
+--support not, now only supper MemCache, in the future, will support Redis and Guava CacheManager  
+--support not, sessionManager and sessionDAO and cacheManager  
 
 # ScreenShot  
 ![ScreenShot1](https://github.com/jelly-liu/EOSS/blob/master/ScreenShot1.png "ScreenShot1")  
