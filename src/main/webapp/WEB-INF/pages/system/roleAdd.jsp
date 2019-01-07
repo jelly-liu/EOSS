@@ -24,8 +24,12 @@
 					<td align="right" width="100">选择权限：</td>
 					<td>
                         <input type="hidden" id="permissionIdsHide" name="permissionIds"/>
-						<c:forEach var="it" items="${permissionList}" varStatus="st">
-							<input type="checkbox" class="permission" name="permission" value="${it.id}"/>${it.name}
+						<c:forEach var="pList" items="${permissionLList}" varStatus="st1">
+							<div>
+								<c:forEach var="it" items="${pList}" varStatus="st2">
+									<input type="checkbox" class="permission" name="permission" value="${it.id}" style="width: auto;"/>${it.name}&nbsp;&nbsp;
+								</c:forEach>
+							</div>
 						</c:forEach>
 					</td>
 				</tr>

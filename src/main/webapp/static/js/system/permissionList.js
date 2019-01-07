@@ -27,8 +27,56 @@ $(function(){
 	
 	//更新事件
 	$('table.eossDataTable').find('a[type=update]').click(function(){
-		window.location.href = EossGlobal.basePath + '/system/permission/toUpdate.ac?id=' + $(this).attr('value');
+        $this = $(this);
+        top.$.messager.confirm('提示','确定更新吗？', function(r){
+            if(!r){
+                return;
+            }
+
+            var name = $this.closest('tr').find('td[contenteditable]').text();
+            name = $.trim(name);
+
+            $.ajax({
+                type: 'POST',
+                dataType: 'text',
+                data: 'id=' + $this.attr('value')+ '&name=' + name,
+                url: EossGlobal.basePath + '/system/permission/updateAjax.ac',
+                success: function(rs){
+                    if(rs == 'y'){
+                        top.$.messager.alert('提示','操作已成功','info', function(){
+                            $('#submitForm').submit();
+                        });
+                    }else{
+                        top.$.messager.alert('提示','操作失败，请联系系统管理员');
+                    }
+                }
+            });
+        });
 	});
+
+    //添加事件
+    $('table.eossDataTable').find('a[type=add]').click(function(){
+        top.$.messager.prompt('提示', '请输入权限名称', function(r){
+            r = $.trim(r);
+            if (r && r != ""){
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'text',
+                    data: 'name=' + r,
+                    url: EossGlobal.basePath + '/system/permission/addAjax.ac',
+                    success: function(rs){
+                        if(rs == 'y'){
+                            top.$.messager.alert('提示','操作已成功','info', function(){
+                                $('#submitForm').submit();
+                            });
+                        }else{
+                            top.$.messager.alert('提示','操作失败，请联系系统管理员');
+                        }
+                    }
+                });
+            }
+        });
+    });
 
 	/*************************************** check submit ***************************************/
 	$('#submitBtn').click(function(){

@@ -1,9 +1,10 @@
-package com.jelly.eoss.web;
+package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.dao.BaseService;
 import com.jelly.eoss.model.AdminMenu;
 import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.util.*;
+import com.jelly.eoss.web.BaseAction;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/system/resource")
-public class AdminResourceAction extends BaseAction{
+public class AdminResourceAction extends BaseAction {
 	private static final Logger log = LoggerFactory.getLogger(AdminResourceAction.class);
 
 	@Resource

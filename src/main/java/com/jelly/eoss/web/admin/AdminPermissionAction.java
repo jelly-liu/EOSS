@@ -1,10 +1,11 @@
-package com.jelly.eoss.web;
+package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.dao.BaseService;
 import com.jelly.eoss.model.AdminPermission;
 import com.jelly.eoss.util.ComUtil;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.util.Pager;
+import com.jelly.eoss.web.BaseAction;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/system/permission")
-public class AdminPermissionAction extends BaseAction{
+public class AdminPermissionAction extends BaseAction {
 	@Resource
 	private BaseService baseService;
 
@@ -56,6 +57,14 @@ public class AdminPermissionAction extends BaseAction{
 		request.getRequestDispatcher("/system/permission/toList.ac").forward(request, response);
 		return null;
 	}
+
+    @RequestMapping(value = "/addAjax")
+    public void txAddAjax(HttpServletRequest request, HttpServletResponse response, AdminPermission permission) throws Exception{
+        int id = ComUtil.QueryNextID("id", "admin_permission");
+        permission.setId(id);
+        this.baseService.myInsert(AdminPermission.Insert, permission);
+        response.getWriter().write("y");
+    }
 	
 	@RequestMapping(value = "/delete")
 	public void txDelete(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -83,7 +92,13 @@ public class AdminPermissionAction extends BaseAction{
         request.getRequestDispatcher("/system/permission/toList.ac").forward(request, response);
 		return null;
 	}
-	
+
+	@RequestMapping(value = "/updateAjax")
+	public void txUpdateAjax(HttpServletRequest request, HttpServletResponse response, AdminPermission permission) throws ServletException, IOException{
+		this.baseService.myUpdate(AdminPermission.Update, permission);
+		response.getWriter().write("y");
+	}
+
 	//getter and setter
 	public BaseService getBaseDao() {
 		return baseService;

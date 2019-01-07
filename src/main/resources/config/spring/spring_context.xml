@@ -66,8 +66,8 @@
          配置切点表达式
          在多个表达式之间使用 ||,or表示 或，使用 &&,and表示 与，！表示
         -->
-        <aop:pointcut expression="execution(* com.jelly.eoss.service..*.*(..)) or execution(* com.jelly.eoss.web.Admin*Action.*(..))" id="txService" />
+        <aop:pointcut expression="execution(* com.jelly.eoss.service..*.*(..)) or execution(* com.jelly.eoss.web.admin..*.*(..))" id="txPointcut" />
         <!-- 配置切面 : 通知+切点 advice-ref:通知的名称 pointcut-ref:切点的名称 -->
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="txService" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
     </aop:config>
 </beans>

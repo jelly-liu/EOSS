@@ -4,8 +4,7 @@
 <table class="tableCenter noborder">
 	<tr>
 		<td>
-			<%--${COPY_RIGHT}--%>
-			<a href="/business/money/add.ac">moneyAdd</a>
+			${COPY_RIGHT}
 		</td>
 	</tr>
 </table>

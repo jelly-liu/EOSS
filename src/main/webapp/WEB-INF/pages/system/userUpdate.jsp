@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<%@ include file="/WEB-INF/pages/include/head.jsp"%>
-  		<script src="${BASE_PATH}/static/js/system/userUpdate.js" type="text/javascript"></script>
+  		<script src="${BASE_PATH}/static/js/system/userUpdate.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
   		<style type="text/css">
   			#zTreeNodeJson{
   				display:none;
@@ -28,12 +28,6 @@
 					<td align="right" width="100">用户密码：</td>
 					<td>
 						<input type="text" id="userPwd" name="password"/>
-					</td>
-				</tr>
-				<tr>
-					<td align="right" width="100">密码盐值：</td>
-					<td>
-						<input type="text" id="pwdSalt" name="salt" value="${user.salt}" readonly="readonly"/>
 					</td>
 				</tr>
 				<tr>

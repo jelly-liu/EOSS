@@ -1,4 +1,4 @@
-package com.jelly.eoss.web;
+package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.dao.BaseService;
 import com.jelly.eoss.model.AdminUser;
@@ -6,8 +6,12 @@ import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.shiro.EossAuthorizingRealm;
 import com.jelly.eoss.util.*;
 import com.jelly.eoss.util.security.Digest;
+import com.jelly.eoss.web.BaseAction;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +31,8 @@ public class AdminUserAction extends BaseAction {
     private MenuService menuService;
     @Resource
     EossAuthorizingRealm eossAuthorizingRealm;
+    @Resource
+    SecureRandomNumberGenerator secureRandomNumberGenerator;
 
     @RequestMapping(value = "/queryUserNameAjax")
     public void queryUserNameAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -83,10 +89,14 @@ public class AdminUserAction extends BaseAction {
 
         int id = ComUtil.QueryNextID("id", "admin_user");
 
+        //加密密码
+        String salt = secureRandomNumberGenerator.nextBytes(32).toString();
+        String passwordMd5 = new Md5Hash(user.getPassword(), salt, 1).toString();
+
         //插入用户
         user.setId(id);
-        user.setSalt(new Random().nextInt(1000) + "");
-        user.setPassword(Digest.GetMD5(user.getPassword() + user.getSalt()));
+        user.setSalt(salt);
+        user.setPassword(passwordMd5);
         user.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
         this.baseService.myInsert(AdminUser.Insert, user);
 
@@ -152,28 +162,32 @@ public class AdminUserAction extends BaseAction {
 
     @RequestMapping(value = "/update")
     public ModelAndView txUpdate(HttpServletRequest request, HttpServletResponse response, AdminUser user) throws Exception {
+        //加密密码
+        String salt = secureRandomNumberGenerator.nextBytes(32).toString();
+        String passwordMd5 = new Md5Hash(user.getPassword(), salt, 1).toString();
+
         //更新用户信息
-        AdminUser u = this.baseService.mySelectOne(AdminUser.SelectByPk, user.getId());
-        u.setUsername(user.getUsername());
-        user.setSalt(new Random().nextInt(1000) + "");
-        user.setPassword(Digest.GetMD5(user.getPassword() + user.getSalt()));
-        this.baseService.myUpdate(AdminUser.Update, u);
+        AdminUser adminUser = this.baseService.mySelectOne(AdminUser.SelectByPk, user.getId());
+        adminUser.setUsername(user.getUsername());
+        adminUser.setSalt(salt);
+        adminUser.setPassword(passwordMd5);
+        this.baseService.myUpdate(AdminUser.Update, adminUser);
 
         //更新角色
         String roleIds = request.getParameter("roleIds");
-        this.batchInsertUserRole(user.getId(), roleIds);
+        this.batchInsertUserRole(adminUser.getId(), roleIds);
 
         //更新资源
         String resourceIds = request.getParameter("resourceIds");
-        this.batchInsertUserResource(user.getId(), resourceIds);
+        this.batchInsertUserResource(adminUser.getId(), resourceIds);
         request.getRequestDispatcher("/system/user/toList.ac").forward(request, response);
 
         //更新用户所拥有的菜单缓存，一但用户更新了自己所拥有的菜单，再刷新左侧的菜单时，菜单可以及时的更新
-        String menuTreeIdsOfUser = this.menuService.queryMenuTreeIdsOfUser(user);
+        String menuTreeIdsOfUser = this.menuService.queryMenuTreeIdsOfUser(adminUser);
         request.getSession().setAttribute(Const.LOGIN_MENU_TREE_IDS_KEY, menuTreeIdsOfUser);
 
         //更新shiro AuthenticationInfo and AuthorizationInfo in local cache
-        eossAuthorizingRealm.refreshAuthInfo(SecurityUtils.getSubject().getPrincipals(), u);
+        eossAuthorizingRealm.refreshAuthInfo(SecurityUtils.getSubject().getPrincipals(), adminUser);
 
         return null;
     }
@@ -255,4 +269,14 @@ public class AdminUserAction extends BaseAction {
         this.baseService = baseDao;
     }
 
+    public static void main(String[] args) {
+        SecureRandomNumberGenerator secureRandomNumberGenerator = new SecureRandomNumberGenerator();
+        String salt = secureRandomNumberGenerator.nextBytes(32).toString();
+        String password = "111111";
+
+        Md5Hash md5Hash = new Md5Hash(password, salt, 1);
+        String passwordHashed = md5Hash.toString();
+
+        System.out.println("password=" + password + ", salt=" + salt.length() + ", passwordHashed=" + passwordHashed);
+    }
 }

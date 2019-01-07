@@ -1,8 +1,9 @@
-package com.jelly.eoss.web;
+package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.dao.BaseService;
 import com.jelly.eoss.model.AdminFilterchainDefinition;
 import com.jelly.eoss.shiro.EossShiroFilterFactoryBean;
+import com.jelly.eoss.web.BaseAction;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping(value = "/system/filterDefinition")
-public class AdminFilterDefinitionAction extends BaseAction{
+public class AdminFilterDefinitionAction extends BaseAction {
 	@Autowired
 	private BaseService baseService;
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")

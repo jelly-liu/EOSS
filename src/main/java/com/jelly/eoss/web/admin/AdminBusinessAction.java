@@ -1,6 +1,7 @@
-package com.jelly.eoss.web;
+package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.dao.BaseService;
+import com.jelly.eoss.web.BaseAction;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 

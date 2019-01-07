@@ -2,12 +2,11 @@ package com.jelly.eoss.configuration;
 
 import com.jelly.eoss.dao.BaseService;
 import com.jelly.eoss.model.AdminFilterchainDefinition;
-import com.jelly.eoss.shiro.EossAuthorizingRealm;
-import com.jelly.eoss.shiro.EossShiroFilterFactoryBean;
-import com.jelly.eoss.shiro.PermsOrAuthorizationFilter;
-import com.jelly.eoss.shiro.RolesOrAuthorizationFilter;
+import com.jelly.eoss.shiro.*;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +19,10 @@ import java.util.Map;
 /**
  * @Author ：jelly.liu
  * @Date ：Created At 6:54 PM 2019/1/5
- * @Description：${description}
+ * @Description：
+ * ************************************************
+ * bean name default is function name
+ * ************************************************
  */
 
 @Configuration
@@ -30,8 +32,15 @@ public class ShiroConfiguration {
     private BaseService baseService;
 
     @Bean
+    public SecureRandomNumberGenerator secureRandomNumberGenerator(){
+        return new SecureRandomNumberGenerator();
+    }
+
+    @Bean
     public HashedCredentialsMatcher credentialsMatcher(){
-        return new HashedCredentialsMatcher("MD5");
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher("MD5");
+        hashedCredentialsMatcher.setHashIterations(1);
+        return hashedCredentialsMatcher;
     }
 
     @Bean
@@ -54,12 +63,16 @@ public class ShiroConfiguration {
 
     @Bean
     public RolesOrAuthorizationFilter rolesOr(){
-        return new RolesOrAuthorizationFilter();
+        RolesOrAuthorizationFilter rolesOrAuthorizationFilter = new RolesOrAuthorizationFilter();
+        rolesOrAuthorizationFilter.setPathMather(new EossAntPathMatcher());
+        return rolesOrAuthorizationFilter;
     }
 
     @Bean
     public PermsOrAuthorizationFilter permsOr(){
-        return new PermsOrAuthorizationFilter();
+        PermsOrAuthorizationFilter permsOrAuthorizationFilter = new PermsOrAuthorizationFilter();
+        permsOrAuthorizationFilter.setPathMather(new EossAntPathMatcher());
+        return permsOrAuthorizationFilter;
     }
 
     @Bean

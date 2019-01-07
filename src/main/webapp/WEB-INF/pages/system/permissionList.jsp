@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<%@ include file="/WEB-INF/pages/include/head.jsp"%>
-  		<script src="${BASE_PATH}/static/js/system/permissionList.js" type="text/javascript"></script>
+  		<script src="${BASE_PATH}/static/js/system/permissionList.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
 	</head>
 
 	<body>
@@ -32,7 +32,7 @@
 					<tr class="datagrid-header">
 						<th>序号</th>
 						<th>ID</th>
-						<th>权限名称</th>
+						<th>权限名称(点击可编辑)</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -46,10 +46,11 @@
 						</c:if>
 						<td>${pager.rowStart + st.index}</td>
 						<td>${it.id}</td>
-						<td>${it.name}</td>
+						<td contenteditable="true">${it.name}</td>
 						<td>
 							<a href="###" type="delete" value="${it.id}">删除</a>&nbsp;&nbsp;&nbsp;&nbsp;
-							<a href="###" type="update" value="${it.id}">更新</a>
+							<a href="###" type="update" value="${it.id}">更新</a>&nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="###" type="add" value="${it.id}">添加</a>
 						</td>
 						</tr>
 					</c:forEach>

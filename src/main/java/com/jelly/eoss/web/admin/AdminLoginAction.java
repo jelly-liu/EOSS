@@ -1,10 +1,11 @@
-package com.jelly.eoss.web;
+package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.dao.BaseService;
 import com.jelly.eoss.model.AdminUser;
 import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.servlet.ICodeServlet;
 import com.jelly.eoss.util.Const;
+import com.jelly.eoss.web.BaseAction;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;

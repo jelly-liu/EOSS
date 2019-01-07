@@ -1,4 +1,4 @@
-package com.jelly.eoss.web;
+package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.dao.BaseService;
 import com.jelly.eoss.model.AdminPermission;
@@ -7,6 +7,8 @@ import com.jelly.eoss.model.AdminUser;
 import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.shiro.EossAuthorizingRealm;
 import com.jelly.eoss.util.*;
+import com.jelly.eoss.web.BaseAction;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
@@ -19,13 +21,11 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "/system/role")
-public class AdminRoleAction extends BaseAction{
+public class AdminRoleAction extends BaseAction {
 	private static final Logger log = LoggerFactory.getLogger(AdminRoleAction.class);
 
 	@Resource
@@ -69,7 +69,25 @@ public class AdminRoleAction extends BaseAction{
 	@RequestMapping(value = "/toAdd")
 	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		List<AdminPermission> permissionList = this.baseService.mySelectList(AdminPermission.Select);
-		request.setAttribute("permissionList", permissionList);
+
+		Map<String, List<AdminPermission>> permMap = new TreeMap<>();
+		for(AdminPermission perm : permissionList){
+		    String firstPart = StringUtils.substringBefore(perm.getName(), ":");
+
+            List<AdminPermission> tmpList = permMap.get(firstPart);
+            if(tmpList == null){
+                tmpList = new LinkedList<>();
+                permMap.put(firstPart, tmpList);
+            }
+
+            tmpList.add(perm);
+        }
+
+        for(List<AdminPermission> list : permMap.values()){
+            Collections.sort(list, (o1, o2) -> o1.getName().compareTo(o2.getName()));
+        }
+
+		request.setAttribute("permissionLList", permMap.values());
 		return new ModelAndView("/system/roleAdd.jsp");
 	}
 
@@ -111,8 +129,25 @@ public class AdminRoleAction extends BaseAction{
 		AdminRole role = this.baseService.mySelectOne(AdminRole.SelectByPk, id);
         List<Map<String, Object>> permissionList = this.baseService.mySelectList("_EXT.Role_QueryAllPermissionWithRole", role.getId());
 
+        Map<String, List<Map<String, Object>>> permMap = new TreeMap<>();
+        for(Map<String, Object> perm : permissionList){
+            String firstPart = StringUtils.substringBefore(perm.get("name").toString(), ":");
+
+            List<Map<String, Object>> tmpList = permMap.get(firstPart);
+            if(tmpList == null){
+                tmpList = new LinkedList<>();
+                permMap.put(firstPart, tmpList);
+            }
+
+            tmpList.add(perm);
+        }
+
+        for(List<Map<String, Object>> list : permMap.values()){
+            Collections.sort(list, (o1, o2) -> o1.get("name").toString().compareTo(o2.get("name").toString()));
+        }
+
 		request.setAttribute("role", role);
-        request.setAttribute("permissionList", permissionList);
+        request.setAttribute("permissionLList", permMap.values());
 		return new ModelAndView("/system/roleUpdate.jsp");
 	}
 	
@@ -135,7 +170,7 @@ public class AdminRoleAction extends BaseAction{
 
 		return null;
 	}
-	
+
 	//批量插入角色对应的权限，只选择用JdbcTemplate的批量更新方法，以保证高性能
 	private void batchInsertRolePermission(int roleId, String permissionIdsStr){
 		String sqlDelete = "delete from admin_role_permission where role_id = ?";
