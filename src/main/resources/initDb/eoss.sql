@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : utf-8
 
- Date: 01/06/2019 01:28:55 AM
+ Date: 01/07/2019 15:00:12 PM
 */
 
 SET NAMES utf8;
@@ -31,7 +31,7 @@ CREATE TABLE `admin_filterchain_definition` (
 --  Records of `admin_filterchain_definition`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_filterchain_definition` VALUES ('1', '[urls]\r\n/static/** = anon\r\n/toLogin.ac = anon\r\n/login.ac = anon\r\n/system/** = authc, rolesOr[系统管理员]\r\n/business/** = authc, permsOr[money:add]\r\n/** = authc');
+INSERT INTO `admin_filterchain_definition` VALUES ('1', '[urls]\r\n/static/** = anon\r\n/toLogin.ac = anon\r\n/login.ac = anon\r\n/system/**/*add* = authc, rolesOr[系统管理员]\r\n/system/**/*update* = authc, rolesOr[系统管理员]\r\n/system/**/*delete* = authc, rolesOr[系统管理员]\r\n/** = authc');
 COMMIT;
 
 -- ----------------------------
@@ -72,7 +72,7 @@ CREATE TABLE `admin_permission` (
 --  Records of `admin_permission`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_permission` VALUES ('1', 'money:add'), ('2', 'money:list'), ('3', 'money:delete'), ('4', 'money:*');
+INSERT INTO `admin_permission` VALUES ('1', 'menu:add'), ('2', 'menu:list'), ('3', 'menu:delete'), ('5', 'menu:*'), ('6', 'user:*'), ('7', 'user:add'), ('8', 'user:delete'), ('9', 'user:list'), ('10', 'role:*'), ('11', 'role:add'), ('12', 'role:delete'), ('13', 'role:list'), ('14', 'perm:*'), ('15', 'perm:add'), ('16', 'perm:delete'), ('17', 'perm:list'), ('18', 'res:*'), ('19', 'res:add'), ('20', 'res:delete'), ('21', 'res:list'), ('22', 'filterDef:*'), ('23', 'filterDef:update');
 COMMIT;
 
 -- ----------------------------
@@ -90,7 +90,7 @@ CREATE TABLE `admin_role` (
 --  Records of `admin_role`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_role` VALUES ('1', '系统管理员', '2012-12-22 16:27:04'), ('2', '业务员', '2016-10-26 19:01:45');
+INSERT INTO `admin_role` VALUES ('1', '系统管理员', '2012-12-22 16:27:04'), ('2', '系统查看员', '2019-01-06 11:23:39');
 COMMIT;
 
 -- ----------------------------
@@ -106,7 +106,7 @@ CREATE TABLE `admin_role_permission` (
 --  Records of `admin_role_permission`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_role_permission` VALUES ('3', '2');
+INSERT INTO `admin_role_permission` VALUES ('22', '1'), ('5', '1'), ('14', '1'), ('18', '1'), ('10', '1'), ('6', '1'), ('2', '2'), ('17', '2'), ('21', '2'), ('13', '2'), ('9', '2');
 COMMIT;
 
 -- ----------------------------
@@ -117,7 +117,7 @@ CREATE TABLE `admin_user` (
   `ID` int(11) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(32) NOT NULL,
-  `salt` varchar(32) DEFAULT NULL,
+  `salt` varchar(44) DEFAULT NULL,
   `locked` tinyint(4) DEFAULT '0',
   `disabled` tinyint(4) DEFAULT '0',
   `CREATE_DATETIME` varchar(19) NOT NULL,
@@ -128,7 +128,7 @@ CREATE TABLE `admin_user` (
 --  Records of `admin_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_user` VALUES ('1', 'admin', 'f717c48426a62bad132a9b7718a02ff4', '683', '0', '0', '2012-12-22 19:25:48');
+INSERT INTO `admin_user` VALUES ('1', 'admin', '503a736f87ec3b18e62314196a1d26fc', '/JRVFniRN/xNGNth2AmqOgeRhGXGITPFlYlOJ5oMXDQ=', '0', '0', '2012-12-22 19:25:48'), ('2', 'adminViewer', '7f5dded2d7b72d09093ba6d4911e91c2', 'gNtOrtPpdrcuGcUNc938RJrNz3iYPWHIeMiJiWSSkY8=', '0', '0', '2019-01-06 11:25:57');
 COMMIT;
 
 -- ----------------------------
@@ -144,7 +144,7 @@ CREATE TABLE `admin_user_menu` (
 --  Records of `admin_user_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_user_menu` VALUES ('7', '1'), ('9', '1'), ('16', '1'), ('17', '1'), ('14', '1'), ('15', '1'), ('10', '1'), ('13', '1'), ('19', '1'), ('20', '1'), ('22', '1');
+INSERT INTO `admin_user_menu` VALUES ('7', '1'), ('9', '1'), ('16', '1'), ('17', '1'), ('14', '1'), ('15', '1'), ('10', '1'), ('13', '1'), ('19', '1'), ('20', '1'), ('22', '1'), ('7', '2'), ('9', '2'), ('16', '2'), ('17', '2'), ('14', '2'), ('15', '2'), ('10', '2'), ('13', '2'), ('19', '2'), ('20', '2'), ('22', '2');
 COMMIT;
 
 -- ----------------------------
@@ -160,7 +160,7 @@ CREATE TABLE `admin_user_role` (
 --  Records of `admin_user_role`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_user_role` VALUES ('1', '1');
+INSERT INTO `admin_user_role` VALUES ('1', '1'), ('2', '2');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
