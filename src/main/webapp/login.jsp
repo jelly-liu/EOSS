@@ -6,6 +6,9 @@
 		<%@ include file="WEB-INF/pages/include/head.jsp"%>
 		<script src="${BASE_PATH}/static/js/login.js" type="text/javascript"></script>
 		<style type="text/css">
+			body{
+				background: #99cdff url('/static/images/osx00.png') repeat;
+			}
 			.eossFromTable td{
 				border:0px;
 			}
@@ -17,7 +20,7 @@
 		    <form id="loginForm" action="${BASE_PATH}/login/loginIn.ac" method="post">
 		    	<table id="loginTable" class="eossFromTable">
 					<tr>
-						<td align="right" width="60">用户名：</td>
+						<td align="right" width="120">用户名：</td>
 						<td>
 							<input type="text" id="name" name="name" value="admin"/>
 						</td>
