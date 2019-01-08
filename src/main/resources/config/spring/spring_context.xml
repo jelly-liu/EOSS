@@ -42,6 +42,9 @@
 		<property name="configLocation" value="classpath:config/mybatis/mybatis_base.xml"></property>
 		<property name="mapperLocations" value="classpath*:com/jelly/eoss/db/mapper/**/*Mapper.xml" />
 	</bean>
+
+    <!-- sqlSessionTemplate still remain here, for the special usage -->
+    <!-- such as prepared statement, ext... -->
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
