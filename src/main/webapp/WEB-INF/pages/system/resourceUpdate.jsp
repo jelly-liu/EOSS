@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<%@ include file="/WEB-INF/pages/include/head.jsp"%>
-  		<script src="${BASE_PATH}/static/js/system/resourceUpdate.js" type="text/javascript"></script>
+  		<script src="${BASE_PATH}/static/js/system/resourceUpdate.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
   		<style type="text/css">
   			#zTreeNodeJson{
   				display:none;
@@ -12,7 +12,7 @@
 	</head>
 
 	<body>
-		<form id="submitForm" action="${BASE_PATH}/system/resource/update.ac" class="eossForm" method="post">
+		<form id="submitForm" action="${BASE_PATH}/system/resource/update" class="eossForm" method="post">
 			<input type="hidden" id="menuId" name="id" value="${menu.id}"/>
 			<input type="hidden" id="menuLev" name="lev" value="${menu.lev}"/>
 			<input type="hidden" id="menuPath" name="path" value="${menu.path}"/>

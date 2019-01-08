@@ -78,7 +78,7 @@ public class ShiroConfiguration {
     public EossShiroFilterFactoryBean shiroFilter() throws Exception {
         EossShiroFilterFactoryBean shiroFilterFactoryBean = new EossShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager());
-        shiroFilterFactoryBean.setLoginUrl("/toLogin.ac");
+        shiroFilterFactoryBean.setLoginUrl("/toLogin");
         shiroFilterFactoryBean.setUnauthorizedUrl("/401.jsp");
 
         Map<String, Filter> filters = new LinkedHashMap<>();

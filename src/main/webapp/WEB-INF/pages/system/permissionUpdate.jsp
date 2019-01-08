@@ -3,11 +3,11 @@
 <html>
 	<head>
 		<%@ include file="/WEB-INF/pages/include/head.jsp"%>
-  		<script src="${BASE_PATH}/static/js/system/permissionUpdate.js" type="text/javascript"></script>
+  		<script src="${BASE_PATH}/static/js/system/permissionUpdate.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
 	</head>
 
 	<body>
-		<form id="submitForm" action="${BASE_PATH}/system/permission/update.ac" class="eossForm" method="post">
+		<form id="submitForm" action="${BASE_PATH}/system/permission/update" class="eossForm" method="post">
 			<input type="hidden" id="menuId" name="id" value="${permission.id}"/>
 			<table class="eossFromTable">
 				<tr class="panel-header">

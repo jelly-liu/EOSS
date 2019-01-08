@@ -4,7 +4,7 @@
 	<head>
 		<title>${PROJECT_NAME}</title>
 		<%@ include file="WEB-INF/pages/include/head.jsp"%>
-		<script src="${BASE_PATH}/static/js/login.js" type="text/javascript"></script>
+		<script src="${BASE_PATH}/static/js/login.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
 		<style type="text/css">
 			body{
 				background: #99cdff url('/static/images/osx00.png') repeat;
@@ -17,7 +17,7 @@
 
 	<body>
 		<div id="loginFormDiv">
-		    <form id="loginForm" action="${BASE_PATH}/login/loginIn.ac" method="post">
+		    <form id="loginForm" action="${BASE_PATH}/login/loginIn" method="post">
 		    	<table id="loginTable" class="eossFromTable">
 					<tr>
 						<td align="right" width="120">用户名：</td>

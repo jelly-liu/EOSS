@@ -119,7 +119,7 @@ public class AdminUserAction extends BaseAction {
         this.batchInsertUserRole(user.getId(), roleIds);
         //插入资源
         this.batchInsertUserResource(user.getId(), resourcesIds);
-        request.getRequestDispatcher("/system/user/toList.ac").forward(request, response);
+        request.getRequestDispatcher("/system/user/toList").forward(request, response);
         return null;
     }
 
@@ -193,7 +193,7 @@ public class AdminUserAction extends BaseAction {
         //更新资源
         String resourceIds = request.getParameter("resourceIds");
         this.batchInsertUserResource(adminUser.getId(), resourceIds);
-        request.getRequestDispatcher("/system/user/toList.ac").forward(request, response);
+        request.getRequestDispatcher("/system/user/toList").forward(request, response);
 
         //更新用户所拥有的菜单缓存，一但用户更新了自己所拥有的菜单，再刷新左侧的菜单时，菜单可以及时的更新
         String menuTreeIdsOfUser = this.eossMenuService.txQueryMenuTreeIdsOfUser(adminUser);

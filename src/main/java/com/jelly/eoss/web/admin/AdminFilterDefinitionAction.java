@@ -47,7 +47,7 @@ public class AdminFilterDefinitionAction extends BaseAction {
             filterchainDefinitionService.update(filterDefinition.setId(1));
         }
 
-        request.getRequestDispatcher("/system/filterDefinition/toUpdate.ac").forward(request, response);
+        request.getRequestDispatcher("/system/filterDefinition/toUpdate").forward(request, response);
 		return null;
 	}
 }

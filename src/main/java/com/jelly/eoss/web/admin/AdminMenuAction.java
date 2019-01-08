@@ -126,7 +126,7 @@ public class AdminMenuAction extends BaseAction {
 		menu.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
 		menuService.insert(menu);
 
-		request.getRequestDispatcher("/system/menu/toList.ac").forward(request, response);
+		request.getRequestDispatcher("/system/menu/toList").forward(request, response);
 		
 		return null;
 	}
@@ -193,7 +193,7 @@ public class AdminMenuAction extends BaseAction {
 		menu.setLeaf(0);
 		menuService.update(menu);
 
-        request.getRequestDispatcher("/system/menu/toList.ac").forward(request, response);
+        request.getRequestDispatcher("/system/menu/toList").forward(request, response);
 
 		return null;
 	}

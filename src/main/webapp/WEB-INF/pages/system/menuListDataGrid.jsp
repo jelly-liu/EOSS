@@ -5,13 +5,13 @@
 <html>
 	<head>
 		<%@ include file="/WEB-INF/pages/include/head.jsp"%>
-  		<script src="${BASE_PATH}/static/js/system/menuList.js" type="text/javascript"></script>
+  		<script src="${BASE_PATH}/static/js/system/menuList.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
 	</head>
 
 	<body>
-		<form id="submitForm" action="${BASE_PATH}/page/queryForPage.ac" class="eossForm">
+		<form id="submitForm" action="${BASE_PATH}/page/queryForPage" class="eossForm">
 			<input type="hidden" name="dataBaseType" value="mysql"/>
-			<input type="hidden" name="forwardUrl" value="/system/menu/toList.ac"/>
+			<input type="hidden" name="forwardUrl" value="/system/menu/toList"/>
 			<input type="hidden" name="leaf" value="0"/>
 			<table class="eossFromTable">
 				<tr class="panel-header">

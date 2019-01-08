@@ -1,6 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <!-- head -->
-<script src="${BASE_PATH}/static/js/layout/west.js" type="text/javascript"></script>
+<script src="${BASE_PATH}/static/js/layout/west.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
 <!-- body -->
 <table class="tableCenter noborder">
 	<tr>

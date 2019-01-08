@@ -3,11 +3,11 @@
 <html>
 	<head>
 		<%@ include file="/WEB-INF/pages/include/head.jsp"%>
-  		<script src="${BASE_PATH}/static/js/system/userAdd.js" type="text/javascript"></script>
+  		<script src="${BASE_PATH}/static/js/system/userAdd.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
 	</head>
 
 	<body>
-		<form id="submitForm" action="${BASE_PATH}/system/user/add.ac" class="eossForm" method="post">
+		<form id="submitForm" action="${BASE_PATH}/system/user/add" class="eossForm" method="post">
 			<table class="eossFromTable">
 				<tr class="panel-header">
 					<td colspan="99">用户添加</td>

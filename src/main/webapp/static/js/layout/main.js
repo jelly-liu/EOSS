@@ -7,7 +7,7 @@ $(function() {
 		width: 200,
 		height: 'auto',
 		collapsible: false,
-		href: EossGlobal.basePath + '/system/layout/westAjax.ac',
+		href: EossGlobal.basePath + '/system/layout/westAjax',
 		tools: [{
 			iconCls:'icon-reload',
         	handler:function(){

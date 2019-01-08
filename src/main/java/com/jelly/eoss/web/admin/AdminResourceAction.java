@@ -72,7 +72,7 @@ public class AdminResourceAction extends BaseAction {
 		menu.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
 		adminMenuService.insert(menu);
 		log.debug(menu.getTarget());
-		return new ModelAndView("/system/resource/toList.ac");
+		return new ModelAndView("/system/resource/toList");
 	}
 	
 	@RequestMapping(value = "/delete")
@@ -110,6 +110,6 @@ public class AdminResourceAction extends BaseAction {
 		m.setUrl(menu.getUrl());
 		m.setPid(menu.getPid());
 		adminMenuService.update(m);
-		return new ModelAndView("/system/resource/toList.ac");
+		return new ModelAndView("/system/resource/toList");
 	}
 }

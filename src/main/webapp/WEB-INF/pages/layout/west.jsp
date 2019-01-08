@@ -3,7 +3,7 @@
 <html>
   <head>
   	<%@ include file="/WEB-INF/pages/include/head.jsp"%>
-  	<script src="${BASE_PATH}/static/js/layout/west.js" type="text/javascript"></script>
+  	<script src="${BASE_PATH}/static/js/layout/west.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
   	<style type="text/css">
   		#zTreeJson, #zTreeUL{
   			display:none;

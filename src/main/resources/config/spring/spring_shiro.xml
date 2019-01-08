@@ -30,7 +30,7 @@
     <!--&lt;!&ndash; this bean id must be specific to shiroFilter to create an ShiroFilter &ndash;&gt;-->
     <!--<bean id="shiroFilter" class="com.jelly.eoss.shiro.EossShiroFilterFactoryBean" depends-on="rolesOr, permsOr">-->
         <!--<property name="securityManager" ref="securityManager"/>-->
-        <!--<property name="loginUrl" value="/toLogin.ac"/>-->
+        <!--<property name="loginUrl" value="/toLogin"/>-->
         <!--<property name="unauthorizedUrl" value="/401.jsp"/>-->
         <!--<property name="filters">-->
             <!--<util:map>-->
@@ -43,8 +43,8 @@
             <!--<value>-->
                 <!--[urls]-->
                 <!--/static/** = anon-->
-                <!--/toLogin.ac = anon-->
-                <!--/login.ac = anon-->
+                <!--/to? = anon-->
+                <!--/? = anon-->
                 <!--/system/** = authc, rolesOr[系统管理员]-->
                 <!--/business/** = authc, permsOr[perm:add, perm:delete]-->
                 <!--/** = authc-->

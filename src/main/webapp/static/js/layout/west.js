@@ -7,7 +7,7 @@ function loadPermission(){
 	$.ajax({
 		type: 'POST',
 		dataType: 'json',
-		url: EossGlobal.basePath + '/system/menu/queryTreeByUser.ac',
+		url: EossGlobal.basePath + '/system/menu/queryTreeByUser',
 		success: function(zTreeJson){
 			createZTree(zTreeJson);
 		}

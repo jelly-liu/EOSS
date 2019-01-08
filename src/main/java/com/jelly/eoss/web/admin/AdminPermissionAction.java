@@ -58,7 +58,7 @@ public class AdminPermissionAction extends BaseAction {
 		int id = ComUtil.QueryNextID("id", "admin_permission");
 		permission.setId(id);
 		permissionService.insert(permission);
-		request.getRequestDispatcher("/system/permission/toList.ac").forward(request, response);
+		request.getRequestDispatcher("/system/permission/toList").forward(request, response);
 		return null;
 	}
 
@@ -92,7 +92,7 @@ public class AdminPermissionAction extends BaseAction {
 		permissionService.update(permission);
 
 		request.setAttribute("permission", permission);
-        request.getRequestDispatcher("/system/permission/toList.ac").forward(request, response);
+        request.getRequestDispatcher("/system/permission/toList").forward(request, response);
 		return null;
 	}
 

@@ -11,7 +11,7 @@ $(function(){
 				type: 'POST',
 				dataType: 'text',
 				data: 'id=' + $this.attr('value'),
-				url: EossGlobal.basePath + '/system/permission/delete.ac',
+				url: EossGlobal.basePath + '/system/permission/delete',
 				success: function(rs){
 					if(rs == 'y'){
 						top.$.messager.alert('提示','操作已成功','info', function(){
@@ -40,7 +40,7 @@ $(function(){
                 type: 'POST',
                 dataType: 'text',
                 data: 'id=' + $this.attr('value')+ '&name=' + name,
-                url: EossGlobal.basePath + '/system/permission/updateAjax.ac',
+                url: EossGlobal.basePath + '/system/permission/updateAjax',
                 success: function(rs){
                     if(rs == 'y'){
                         top.$.messager.alert('提示','操作已成功','info', function(){
@@ -63,7 +63,7 @@ $(function(){
                     type: 'POST',
                     dataType: 'text',
                     data: 'name=' + r,
-                    url: EossGlobal.basePath + '/system/permission/addAjax.ac',
+                    url: EossGlobal.basePath + '/system/permission/addAjax',
                     success: function(rs){
                         if(rs == 'y'){
                             top.$.messager.alert('提示','操作已成功','info', function(){

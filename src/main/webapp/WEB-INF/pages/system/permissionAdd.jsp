@@ -3,11 +3,11 @@
 <html>
 	<head>
 		<%@ include file="/WEB-INF/pages/include/head.jsp"%>
-  		<script src="${BASE_PATH}/static/js/system/permissionAdd.js" type="text/javascript"></script>
+  		<script src="${BASE_PATH}/static/js/system/permissionAdd.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
 	</head>
 
 	<body>
-		<form id="submitForm" action="${BASE_PATH}/system/permission/add.ac" class="eossForm" method="post">
+		<form id="submitForm" action="${BASE_PATH}/system/permission/add" class="eossForm" method="post">
 			<table class="eossFromTable">
 				<tr class="panel-header">
 					<td colspan="99">权限添加</td>

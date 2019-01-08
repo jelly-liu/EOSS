@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<%@ include file="/WEB-INF/pages/include/head.jsp"%>
-  		<script src="${BASE_PATH}/static/js/system/menuUpdate.js" type="text/javascript"></script>
+  		<script src="${BASE_PATH}/static/js/system/menuUpdate.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
   		<style type="text/css">
 	  		#zTreeJson{
 	  			display:none;
@@ -13,7 +13,7 @@
 
 	<body>
 		<div id="zTreeJson">${jsonZTree}</div>
-		<form id="submitForm" action="${BASE_PATH}/system/menu/update.ac" class="eossForm" method="post">
+		<form id="submitForm" action="${BASE_PATH}/system/menu/update" class="eossForm" method="post">
 			<input type="hidden" id="menuId" name="id" value="${menu.id}"/>
 			<input type="hidden" id="menuLev" name="lev"/>
 			<input type="hidden" id="menuPath" name="path"/>

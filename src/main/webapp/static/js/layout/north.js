@@ -7,10 +7,10 @@ $(function () {
             	$.ajax({
         			type:'POST',
         			dataType: 'text',
-        			url: EossGlobal.basePath + '/logout.ac',
+        			url: EossGlobal.basePath + '/logout',
         			success: function(rs){
         				if(rs == 'y'){
-        					top.window.location.href = EossGlobal.basePath + '/toLogin.ac';
+        					top.window.location.href = EossGlobal.basePath + '/toLogin';
         				}
         			}
         		});
