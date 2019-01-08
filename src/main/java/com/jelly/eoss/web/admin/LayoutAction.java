@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping(value = "/system/layout")
 public class LayoutAction extends BaseAction {
-	@Resource
-	private BaseDao baseService;
-
     @RequestMapping(value = "/main")
     public String main(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "/layout/main.jsp";
@@ -39,14 +36,4 @@ public class LayoutAction extends BaseAction {
     public String westAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "/layout/westAjax.jsp";
     }
-	
-	//getter and setter
-
-	public BaseDao getBaseDao() {
-		return baseService;
-	}
-
-	public void setBaseDao(BaseDao baseDao) {
-		this.baseService = baseDao;
-	}
 }

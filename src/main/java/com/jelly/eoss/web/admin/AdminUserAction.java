@@ -1,10 +1,13 @@
 package com.jelly.eoss.web.admin;
 
-import com.jelly.eoss.dao.BaseDao;
 import com.jelly.eoss.db.entity.AdminUser;
-import com.jelly.eoss.db.mapper.ext.iface.RoleExtMapper;
-import com.jelly.eoss.db.mapper.ext.iface.UserExtMapper;
-import com.jelly.eoss.service.EossMenuService;
+import com.jelly.eoss.db.entity.AdminUserMenu;
+import com.jelly.eoss.db.entity.AdminUserRole;
+import com.jelly.eoss.db.mapper.business.iface.RoleExtMapper;
+import com.jelly.eoss.db.mapper.business.iface.UserExtMapper;
+import com.jelly.eoss.service.business.EossMenuService;
+import com.jelly.eoss.service.basic.AdminUserMenuService;
+import com.jelly.eoss.service.basic.AdminUserRoleService;
 import com.jelly.eoss.service.basic.AdminUserService;
 import com.jelly.eoss.shiro.EossAuthorizingRealm;
 import com.jelly.eoss.util.*;
@@ -28,15 +31,19 @@ import java.util.*;
 @RequestMapping(value = "/system/user")
 public class AdminUserAction extends BaseAction {
     @Resource
-    private BaseDao baseService;
-    @Resource
-    private EossMenuService eossMenuService;
+    EossMenuService eossMenuService;
     @Autowired
     AdminUserService adminUserService;
     @Autowired
     private RoleExtMapper roleExtMapper;
     @Autowired
-    private UserExtMapper userExtMapper;
+    UserExtMapper userExtMapper;
+    @Autowired
+    AdminUserService userService;
+    @Autowired
+    AdminUserRoleService userRoleService;
+    @Autowired
+    AdminUserMenuService userMenuService;
     @Resource
     EossAuthorizingRealm eossAuthorizingRealm;
     @Resource
@@ -46,7 +53,7 @@ public class AdminUserAction extends BaseAction {
     public void queryUserNameAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
             String name = request.getParameter("name");
-            int total = this.baseService.jdQueryForInt("select count(*) total from admin_user where name = ?", name);
+            int total = userService.selectCount(new AdminUser().setUsername(name));
             if (total == 0) {
                 response.getWriter().write("y");
             } else {
@@ -89,7 +96,7 @@ public class AdminUserAction extends BaseAction {
         ModelAndView mv = new ModelAndView();
 
         //查询用户名是否存在
-        int total = this.baseService.jdQueryForInt("select count(*) total from admin_user where username = ?", user.getUsername());
+        int total = userService.selectCount(new AdminUser().setUsername(user.getUsername()));
         if (total != 0) {
             request.setAttribute("INFO", "该用户名已存在，请选择一个新的用户名");
             mv.setViewName("/info.jsp");
@@ -125,11 +132,10 @@ public class AdminUserAction extends BaseAction {
         AdminUser user = adminUserService.selectByPk(id);
 
         //查询该用户已拥有的角色
-        String sql = "select * from admin_user_role where user_id = ?";
-        List<Map<String, Object>> roleOldList = this.baseService.jdQueryForList(sql, id);
+        List<AdminUserRole> roleOldList = userRoleService.select(new AdminUserRole().setUserId(id));
         Set<String> roleOldSet = new HashSet<String>();
-        for (Map<String, Object> m : roleOldList) {
-            roleOldSet.add(m.get("role_id").toString());
+        for (AdminUserRole m : roleOldList) {
+            roleOldSet.add(m.getRoleId()+"");
         }
 
         //设置初始化选中的角色
@@ -145,11 +151,10 @@ public class AdminUserAction extends BaseAction {
         String zTreeNodeJson = JsonUtil.toJson(roleList);
 
         //将该角色已有菜单资源用逗号连接成一个字符串，如1,2,3,4,5,6
-        String sqlMenu = "select menu_id as id from admin_user_menu where user_id = ?";
-        List<Map<String, Object>> resourceIdsOldList = this.baseService.jdQueryForList(sqlMenu, id);
+        List<AdminUserMenu> resourceIdsOldList = userMenuService.select(new AdminUserMenu().setUserId(id));
         StringBuilder sb = new StringBuilder();
-        for (Map<String, Object> m : resourceIdsOldList) {
-            sb.append(m.get("id").toString() + ",");
+        for (AdminUserMenu m : resourceIdsOldList) {
+            sb.append(m.getMenuId()+",");
         }
         if (sb.length() > 0) {
             sb.deleteCharAt(sb.length() - 1);
@@ -203,8 +208,7 @@ public class AdminUserAction extends BaseAction {
 
     //批量插入用户对应的角色，只选择用JdbcTemplate的批量更新方法，以保证高性能
     private void batchInsertUserRole(Integer userId, String roleIdsStr) {
-        String sqlDelete = "delete from admin_user_role where user_id = ?";
-        this.baseService.jdDelete(sqlDelete, userId);
+        userRoleService.deleteByPojo(new AdminUserRole().setUserId(userId));
 
         //没有选择角色，直接返回
         if (roleIdsStr == null || roleIdsStr.trim().equals("")) {
@@ -214,23 +218,16 @@ public class AdminUserAction extends BaseAction {
         //插入角色
         String[] permissionIds = roleIdsStr.split(",");
         if (permissionIds.length > 0) {
-            String sqlInsert = "insert into admin_user_role (user_id, role_id) values (?, ?)";
-            Object[] objs = null;
-            List<Object[]> batchParams = new ArrayList<Object[]>();
-            for (String permissionId : permissionIds) {
-                objs = new Object[2];
-                objs[0] = userId;
-                objs[1] = permissionId;
-                batchParams.add(objs);
+            for (String roleIdStr : permissionIds) {
+                Integer roleId = Integer.valueOf(roleIdStr);
+                userRoleService.insert(new AdminUserRole().setUserId(userId).setRoleId(roleId));
             }
-            this.baseService.jdBatchUpdate(sqlInsert, batchParams);
         }
     }
 
     //批量插入用户对应的资源，只选择用JdbcTemplate的批量更新方法，以保证高性能
     private void batchInsertUserResource(int userId, String resourceIdsStr) {
-        String sqlDelete = "delete from admin_user_menu where user_id = ?";
-        this.baseService.jdDelete(sqlDelete, userId);
+        userMenuService.deleteByPojo(new AdminUserMenu().setUserId(userId));
 
         //没有选择资源，直接返回
         if (resourceIdsStr == null || resourceIdsStr.trim().equals("")) {
@@ -240,16 +237,10 @@ public class AdminUserAction extends BaseAction {
         //插入资源
         String[] resourceIds = resourceIdsStr.split(",");
         if (resourceIds.length > 0) {
-            String sqlInsert = "insert into admin_user_menu (user_id, menu_id) values (?, ?)";
-            Object[] objs = null;
-            List<Object[]> batchParams = new ArrayList<Object[]>();
-            for (String resourceId : resourceIds) {
-                objs = new Object[2];
-                objs[0] = userId;
-                objs[1] = resourceId;
-                batchParams.add(objs);
+            for (String resourceIdStr : resourceIds) {
+                Integer resourceId = Integer.valueOf(resourceIdStr);
+                userMenuService.insert(new AdminUserMenu().setUserId(userId).setMenuId(resourceId));
             }
-            this.baseService.jdBatchUpdate(sqlInsert, batchParams);
         }
     }
 
@@ -261,21 +252,12 @@ public class AdminUserAction extends BaseAction {
         adminUserService.deleteByPk(id);
 
         //删除对应的角色
-        this.baseService.jdDelete("delete from admin_user_role where user_id = ?", id);
+        userRoleService.deleteByPojo(new AdminUserRole().setUserId(id));
 
         //删除对应的资源
-        this.baseService.jdDelete("delete from admin_user_menu where user_id = ?", id);
+        userMenuService.deleteByPojo(new AdminUserMenu().setUserId(id));
 
         response.getWriter().write("y");
-    }
-
-    //getter and setter
-    public BaseDao getBaseDao() {
-        return baseService;
-    }
-
-    public void setBaseDao(BaseDao baseDao) {
-        this.baseService = baseDao;
     }
 
     public static void main(String[] args) {

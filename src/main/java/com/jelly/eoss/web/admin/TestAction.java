@@ -1,7 +1,7 @@
 package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.dao.BaseDao;
-import com.jelly.eoss.service.EossMenuService;
+import com.jelly.eoss.service.business.EossMenuService;
 import com.jelly.eoss.web.BaseAction;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -31,22 +31,5 @@ public class TestAction extends BaseAction {
             subject.getSession().setAttribute("COUNTER", 1);
             int i = 0;
 		}
-	}
-	
-	//getter and setter
-	public EossMenuService getEossMenuService() {
-		return eossMenuService;
-	}
-	
-	public void setEossMenuService(EossMenuService eossMenuService) {
-		this.eossMenuService = eossMenuService;
-	}
-
-	public BaseDao getBaseDao() {
-		return baseDao;
-	}
-
-	public void setBaseDao(BaseDao baseDao) {
-		this.baseDao = baseDao;
 	}
 }

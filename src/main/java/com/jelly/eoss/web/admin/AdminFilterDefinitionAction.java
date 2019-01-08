@@ -18,8 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping(value = "/system/filterDefinition")
 public class AdminFilterDefinitionAction extends BaseAction {
-	@Autowired
-	private BaseDao baseService;
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
 	AbstractShiroFilter abstractShiroFilter;
@@ -52,14 +50,5 @@ public class AdminFilterDefinitionAction extends BaseAction {
 
         request.getRequestDispatcher("/system/filterDefinition/toUpdate.ac").forward(request, response);
 		return null;
-	}
-	
-	//getter and setter
-	public BaseDao getBaseDao() {
-		return baseService;
-	}
-
-	public void setBaseDao(BaseDao baseDao) {
-		this.baseService = baseDao;
 	}
 }

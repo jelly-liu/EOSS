@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jelly.eoss.db.mapper.ext.iface.MenuExtMapper">
+<mapper namespace="com.jelly.eoss.db.mapper.business.iface.MenuExtMapper">
 	<!-- 非工具生成的单表的SQL都以下划线开头 -->
 	
 	<select id="queryMenuTree" parameterType="HashMap" resultType="HashMap">

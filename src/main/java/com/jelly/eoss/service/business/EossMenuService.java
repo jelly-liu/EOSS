@@ -1,9 +1,9 @@
-package com.jelly.eoss.service;
+package com.jelly.eoss.service.business;
 
 import com.jelly.eoss.dao.BaseDao;
 import com.jelly.eoss.db.entity.AdminUser;
-import com.jelly.eoss.db.mapper.ext.iface.LoginExtMapper;
-import com.jelly.eoss.db.mapper.ext.iface.MenuExtMapper;
+import com.jelly.eoss.db.mapper.business.iface.LoginExtMapper;
+import com.jelly.eoss.db.mapper.business.iface.MenuExtMapper;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.util.JsonUtil;
 import org.apache.commons.lang3.StringUtils;

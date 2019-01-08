@@ -1,14 +1,13 @@
 package com.jelly.eoss.web.admin;
 
-import com.jelly.eoss.dao.BaseDao;
 import com.jelly.eoss.db.entity.AdminUser;
-import com.jelly.eoss.service.EossMenuService;
+import com.jelly.eoss.service.business.EossMenuService;
 import com.jelly.eoss.servlet.ICodeServlet;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.web.BaseAction;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class AdminLoginAction extends BaseAction {
     private static final Logger log = LoggerFactory.getLogger(AdminLoginAction.class);
-
-	@Resource
-	private BaseDao baseService;
 
 	@Resource
     EossMenuService eossMenuService;
@@ -101,15 +97,5 @@ public class AdminLoginAction extends BaseAction {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
 		response.getWriter().write("y");
-	}
-
-	//getter and setter
-
-	public BaseDao getBaseDao() {
-		return baseService;
-	}
-
-	public void setBaseDao(BaseDao baseDao) {
-		this.baseService = baseDao;
 	}
 }

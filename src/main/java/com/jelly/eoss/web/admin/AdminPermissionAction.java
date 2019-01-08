@@ -1,8 +1,7 @@
 package com.jelly.eoss.web.admin;
 
-import com.jelly.eoss.dao.BaseDao;
 import com.jelly.eoss.db.entity.AdminPermission;
-import com.jelly.eoss.db.mapper.ext.iface.PermissionExtMapper;
+import com.jelly.eoss.db.mapper.business.iface.PermissionExtMapper;
 import com.jelly.eoss.service.basic.AdminPermissionService;
 import com.jelly.eoss.util.ComUtil;
 import com.jelly.eoss.util.Const;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,8 +24,6 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/system/permission")
 public class AdminPermissionAction extends BaseAction {
-	@Resource
-	private BaseDao baseService;
 	@Autowired
 	private AdminPermissionService permissionService;
 	@Autowired
@@ -104,10 +100,5 @@ public class AdminPermissionAction extends BaseAction {
 	public void txUpdateAjax(HttpServletRequest request, HttpServletResponse response, AdminPermission permission) throws ServletException, IOException{
 		permissionService.update(permission);
 		response.getWriter().write("y");
-	}
-
-	//getter and setter
-	public BaseDao getBaseDao() {
-		return baseService;
 	}
 }

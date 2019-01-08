@@ -1,11 +1,13 @@
 package com.jelly.eoss.web.admin;
 
-import com.jelly.eoss.dao.BaseDao;
 import com.jelly.eoss.db.entity.AdminMenu;
-import com.jelly.eoss.db.mapper.ext.iface.MenuExtMapper;
-import com.jelly.eoss.service.EossMenuService;
+import com.jelly.eoss.db.mapper.business.iface.MenuExtMapper;
+import com.jelly.eoss.service.business.EossMenuService;
 import com.jelly.eoss.service.basic.AdminMenuService;
-import com.jelly.eoss.util.*;
+import com.jelly.eoss.util.ComUtil;
+import com.jelly.eoss.util.Const;
+import com.jelly.eoss.util.DateUtil;
+import com.jelly.eoss.util.Pager;
 import com.jelly.eoss.web.BaseAction;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
@@ -31,14 +33,12 @@ public class AdminMenuAction extends BaseAction {
     private static final Logger log = LoggerFactory.getLogger(AdminMenuAction.class);
 
 	@Resource
-	private BaseDao baseService;
-	@Resource
 	private EossMenuService eossMenuService;
 	@Autowired
 	private AdminMenuService menuService;
 	@Autowired
 	private MenuExtMapper menuExtMapper;
-	
+
 	//针对登录用户查询专用
 	@RequestMapping(value = "/queryByUser")
 	public void queryByUser(HttpServletRequest request, HttpServletResponse response) throws IOException{
@@ -144,8 +144,7 @@ public class AdminMenuAction extends BaseAction {
 		
 //		Log.Debug("id:" + id);
 		//有子菜单，不能删除
-		String sql = "select count(*) total from admin_menu where pid = ?";
-		int total = this.baseService.getJdbcTemplate().queryForObject(sql, Integer.class, id);
+		int total = menuService.selectCount(new AdminMenu().setPid(id));
 		if(total == 0){
 			menuService.deleteByPk(id);
 			response.getWriter().write("y");
@@ -198,22 +197,5 @@ public class AdminMenuAction extends BaseAction {
         request.getRequestDispatcher("/system/menu/toList.ac").forward(request, response);
 
 		return null;
-	}
-
-	//getter and setter
-	public EossMenuService getEossMenuService() {
-		return eossMenuService;
-	}
-	
-	public void setEossMenuService(EossMenuService eossMenuService) {
-		this.eossMenuService = eossMenuService;
-	}
-
-	public BaseDao getBaseDao() {
-		return baseService;
-	}
-
-	public void setBaseDao(BaseDao baseDao) {
-		this.baseService = baseDao;
 	}
 }

@@ -1,4 +1,4 @@
-package com.jelly.eoss.db.mapper.ext.iface;
+package com.jelly.eoss.db.mapper.business.iface;
 
 import org.springframework.stereotype.Repository;
 

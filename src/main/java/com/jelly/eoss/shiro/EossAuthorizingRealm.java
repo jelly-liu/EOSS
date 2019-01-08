@@ -2,8 +2,8 @@ package com.jelly.eoss.shiro;
 
 import com.jelly.eoss.dao.BaseDao;
 import com.jelly.eoss.db.entity.AdminUser;
-import com.jelly.eoss.db.mapper.ext.iface.PermissionExtMapper;
-import com.jelly.eoss.db.mapper.ext.iface.RoleExtMapper;
+import com.jelly.eoss.db.mapper.business.iface.PermissionExtMapper;
+import com.jelly.eoss.db.mapper.business.iface.RoleExtMapper;
 import com.jelly.eoss.service.basic.AdminUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;

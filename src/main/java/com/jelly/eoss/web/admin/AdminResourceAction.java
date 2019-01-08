@@ -1,11 +1,13 @@
 package com.jelly.eoss.web.admin;
 
-import com.jelly.eoss.dao.BaseDao;
 import com.jelly.eoss.db.entity.AdminMenu;
-import com.jelly.eoss.db.mapper.ext.iface.MenuExtMapper;
-import com.jelly.eoss.service.EossMenuService;
+import com.jelly.eoss.db.mapper.business.iface.MenuExtMapper;
+import com.jelly.eoss.service.business.EossMenuService;
 import com.jelly.eoss.service.basic.AdminMenuService;
-import com.jelly.eoss.util.*;
+import com.jelly.eoss.util.ComUtil;
+import com.jelly.eoss.util.Const;
+import com.jelly.eoss.util.DateUtil;
+import com.jelly.eoss.util.Pager;
 import com.jelly.eoss.web.BaseAction;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
@@ -30,8 +32,6 @@ import java.util.Map;
 public class AdminResourceAction extends BaseAction {
 	private static final Logger log = LoggerFactory.getLogger(AdminResourceAction.class);
 
-	@Resource
-	private BaseDao baseService;
 	@Resource
 	private EossMenuService eossMenuService;
 	@Autowired
@@ -112,22 +112,5 @@ public class AdminResourceAction extends BaseAction {
 		m.setPid(menu.getPid());
 		adminMenuService.update(m);
 		return new ModelAndView("/system/resource/toList.ac");
-	}
-	
-	//getter and setter
-	public BaseDao getBaseDao() {
-		return baseService;
-	}
-
-	public void setBaseDao(BaseDao baseDao) {
-		this.baseService = baseDao;
-	}
-
-	public EossMenuService getEossMenuService() {
-		return eossMenuService;
-	}
-
-	public void setEossMenuService(EossMenuService eossMenuService) {
-		this.eossMenuService = eossMenuService;
 	}
 }
