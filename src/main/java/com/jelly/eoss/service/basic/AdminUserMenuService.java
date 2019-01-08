@@ -5,6 +5,7 @@
 package com.jelly.eoss.service.basic;
 
 import com.jelly.eoss.db.entity.AdminUserMenu;
+
 import java.util.List;
 
 public interface AdminUserMenuService {

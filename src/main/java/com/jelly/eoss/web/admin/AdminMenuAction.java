@@ -2,8 +2,8 @@ package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.db.entity.AdminMenu;
 import com.jelly.eoss.db.mapper.business.iface.MenuExtMapper;
-import com.jelly.eoss.service.business.EossMenuService;
 import com.jelly.eoss.service.basic.AdminMenuService;
+import com.jelly.eoss.service.business.EossMenuService;
 import com.jelly.eoss.util.ComUtil;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.util.DateUtil;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +31,7 @@ import java.util.Map;
 public class AdminMenuAction extends BaseAction {
     private static final Logger log = LoggerFactory.getLogger(AdminMenuAction.class);
 
-	@Resource
+	@Autowired
 	private EossMenuService eossMenuService;
 	@Autowired
 	private AdminMenuService menuService;

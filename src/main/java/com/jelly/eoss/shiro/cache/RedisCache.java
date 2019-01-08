@@ -1,7 +1,6 @@
 package com.jelly.eoss.shiro.cache;
 
 import com.google.common.cache.CacheBuilder;
-import com.jelly.eoss.util.JavaSerializer;
 import com.jelly.eoss.util.ProtoStuffSerializer;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.cache.Cache;

@@ -5,6 +5,7 @@
 package com.jelly.eoss.service.basic;
 
 import com.jelly.eoss.db.entity.AdminUserRole;
+
 import java.util.List;
 
 public interface AdminUserRoleService {

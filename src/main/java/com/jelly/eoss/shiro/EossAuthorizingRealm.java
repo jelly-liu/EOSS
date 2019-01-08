@@ -1,6 +1,5 @@
 package com.jelly.eoss.shiro;
 
-import com.jelly.eoss.dao.BaseDao;
 import com.jelly.eoss.db.entity.AdminUser;
 import com.jelly.eoss.db.mapper.business.iface.PermissionExtMapper;
 import com.jelly.eoss.db.mapper.business.iface.RoleExtMapper;
@@ -19,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -28,8 +26,6 @@ import java.util.List;
 public class EossAuthorizingRealm extends AuthorizingRealm {
     private static final Logger log = LoggerFactory.getLogger(EossAuthorizingRealm.class);
 
-    @Resource
-    BaseDao baseService;
     @Autowired
     AdminUserService userService;
     @Autowired

@@ -1,6 +1,5 @@
 package com.jelly.eoss.service.business;
 
-import com.jelly.eoss.dao.BaseDao;
 import com.jelly.eoss.db.entity.AdminUser;
 import com.jelly.eoss.db.mapper.business.iface.LoginExtMapper;
 import com.jelly.eoss.db.mapper.business.iface.MenuExtMapper;
@@ -10,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -18,8 +16,6 @@ import java.util.Set;
 
 @Service
 public class EossMenuService {
-	@Resource
-	private BaseDao baseService;
 	@Autowired
 	LoginExtMapper loginExtMapper;
 	@Autowired
@@ -131,13 +127,5 @@ public class EossMenuService {
 		String jsonStr = JsonUtil.toJson(list);
 //		Log.Debug(jsonStr);
 		return jsonStr;
-	}
-	
-	public BaseDao getBaseService() {
-		return baseService;
-	}
-
-	public void setBaseService(BaseDao baseService) {
-		this.baseService = baseService;
 	}
 }

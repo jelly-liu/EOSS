@@ -8,9 +8,9 @@ package com.jelly.eoss.service.basic.impl;
 import com.jelly.eoss.db.entity.AdminUser;
 import com.jelly.eoss.db.mapper.basic.iface.AdminUserMapper;
 import com.jelly.eoss.service.basic.AdminUserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service

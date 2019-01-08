@@ -4,10 +4,11 @@
 */
 package com.jelly.eoss.db.mapper.basic.iface;
 
-import java.util.List;
+import com.jelly.eoss.db.entity.AdminUserRole;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-import com.jelly.eoss.db.entity.AdminUserRole;
+
+import java.util.List;
 
 @Mapper
 @Repository

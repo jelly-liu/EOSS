@@ -1,18 +1,18 @@
 package com.jelly.eoss.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
 @Repository
 public class BaseDao {
-	@Resource
+	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	@Resource
+	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	public BaseDao(){

@@ -1,7 +1,6 @@
 package com.jelly.eoss.shiro;
 
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.PatternMatcher;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

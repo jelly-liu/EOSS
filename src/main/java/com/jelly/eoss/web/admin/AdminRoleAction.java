@@ -20,7 +20,6 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
@@ -40,7 +39,7 @@ public class AdminRoleAction extends BaseAction {
     private AdminUserRoleService userRoleService;
     @Autowired
     private RoleExtMapper roleExtMapper;
-    @Resource
+    @Autowired
     EossAuthorizingRealm eossAuthorizingRealm;
 
     @RequestMapping(value = "/queryAllAjax")

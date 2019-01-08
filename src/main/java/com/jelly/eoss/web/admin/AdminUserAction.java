@@ -5,10 +5,10 @@ import com.jelly.eoss.db.entity.AdminUserMenu;
 import com.jelly.eoss.db.entity.AdminUserRole;
 import com.jelly.eoss.db.mapper.business.iface.RoleExtMapper;
 import com.jelly.eoss.db.mapper.business.iface.UserExtMapper;
-import com.jelly.eoss.service.business.EossMenuService;
 import com.jelly.eoss.service.basic.AdminUserMenuService;
 import com.jelly.eoss.service.basic.AdminUserRoleService;
 import com.jelly.eoss.service.basic.AdminUserService;
+import com.jelly.eoss.service.business.EossMenuService;
 import com.jelly.eoss.shiro.EossAuthorizingRealm;
 import com.jelly.eoss.util.*;
 import com.jelly.eoss.web.BaseAction;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
@@ -30,7 +29,7 @@ import java.util.*;
 @Controller
 @RequestMapping(value = "/system/user")
 public class AdminUserAction extends BaseAction {
-    @Resource
+    @Autowired
     EossMenuService eossMenuService;
     @Autowired
     AdminUserService adminUserService;
@@ -44,9 +43,9 @@ public class AdminUserAction extends BaseAction {
     AdminUserRoleService userRoleService;
     @Autowired
     AdminUserMenuService userMenuService;
-    @Resource
+    @Autowired
     EossAuthorizingRealm eossAuthorizingRealm;
-    @Resource
+    @Autowired
     SecureRandomNumberGenerator secureRandomNumberGenerator;
 
     @RequestMapping(value = "/queryUserNameAjax")
