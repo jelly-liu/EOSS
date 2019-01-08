@@ -1,9 +1,9 @@
 package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.AdminPermission;
-import com.jelly.eoss.model.AdminRole;
-import com.jelly.eoss.model.AdminUser;
+import com.jelly.eoss.db.entity.AdminPermission;
+import com.jelly.eoss.db.entity.AdminRole;
+import com.jelly.eoss.db.entity.AdminUser;
 import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.shiro.EossAuthorizingRealm;
 import com.jelly.eoss.util.*;

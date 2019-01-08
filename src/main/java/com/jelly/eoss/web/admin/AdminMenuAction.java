@@ -1,7 +1,7 @@
 package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.AdminMenu;
+import com.jelly.eoss.db.entity.AdminMenu;
 import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.util.*;
 import com.jelly.eoss.web.BaseAction;

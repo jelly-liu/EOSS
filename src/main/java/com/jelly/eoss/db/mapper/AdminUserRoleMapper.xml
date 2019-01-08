@@ -3,27 +3,27 @@
 <!-- author:Collonn, Email:collonn@126.com, QQ:195358385 -->
 
 
-<mapper namespace="AdminUserMenu">
+<mapper namespace="AdminUserRole">
 	<!-- 生成Insert -->
-    <insert id="Insert" parameterType="com.jelly.eoss.model.AdminUserMenu">
-			insert into admin_user_menu (
+    <insert id="Insert" parameterType="com.jelly.eoss.db.entity.AdminUserRole">
+			insert into admin_user_role (
 				<trim suffixOverrides=",">
-                            <if test="menuId != null">
-							menu_id,
-                            </if>
-
                             <if test="userId != null">
 							user_id,
+                            </if>
+
+                            <if test="roleId != null">
+							role_id,
                             </if>
 
 				</trim>
 			) values (
 				<trim suffixOverrides=",">
-                            <if test="menuId != null">
-                                #{menuId},
-                            </if>
                             <if test="userId != null">
                                 #{userId},
+                            </if>
+                            <if test="roleId != null">
+                                #{roleId},
                             </if>
 				</trim>
 			)
@@ -37,17 +37,17 @@
 	
 	<!-- 根据表的主键生成Delete -->
 	<!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误删除 -->
-	<delete id="DeleteByPojo" parameterType="com.jelly.eoss.model.AdminUserMenu">
+	<delete id="DeleteByPojo" parameterType="com.jelly.eoss.db.entity.AdminUserRole">
 		<!-- 请注意，该表没有主键 -->
 		delete
-		from admin_user_menu
+		from admin_user_role
 		where
         <trim suffixOverrides="and">
-                <if test="menuId != null">
-					menu_id = #{menuId} and
-                </if>
                 <if test="userId != null">
 					user_id = #{userId} and
+                </if>
+                <if test="roleId != null">
+					role_id = #{roleId} and
                 </if>
 		</trim>
 	</delete>
@@ -55,18 +55,18 @@
 	<!-- 生成Select通用表头 -->
 	<sql id="SelectColumns">
 		<trim suffixOverrides=",">
-				menu_id as "menuId",
 				user_id as "userId",
+				role_id as "roleId",
 		</trim>
 	</sql>
 	
 	<!-- 生成Select通用查询条件 -->
 	<sql id="SelectWheres">
-                <if test="menuId != null">
-                    and menu_id = #{menuId}
-                </if>
                 <if test="userId != null">
                     and user_id = #{userId}
+                </if>
+                <if test="roleId != null">
+                    and role_id = #{roleId}
                 </if>
 	</sql>
 
@@ -82,20 +82,20 @@
     </sql>
 	
 	<!-- 生成Select -->
-	<select id="Select" parameterType="com.jelly.eoss.model.AdminUserMenu" resultType="com.jelly.eoss.model.AdminUserMenu">
+	<select id="Select" parameterType="com.jelly.eoss.db.entity.AdminUserRole" resultType="com.jelly.eoss.db.entity.AdminUserRole">
 		select
 		<include refid="SelectColumns"/>
-		from admin_user_menu
+		from admin_user_role
 		where 1 = 1
 		<include refid="SelectWheres"/>
         <include refid="SelectOrderBy"/>
 	</select>
 
     <!-- 生成Select -->
-    <select id="selectPage" parameterType="com.jelly.eoss.model.AdminUserMenu" resultType="com.jelly.eoss.model.AdminUserMenu">
+    <select id="selectPage" parameterType="com.jelly.eoss.db.entity.AdminUserRole" resultType="com.jelly.eoss.db.entity.AdminUserRole">
         select
         <include refid="SelectColumns"/>
-        from admin_user_menu
+        from admin_user_role
         where 1 = 1
         <include refid="SelectWheres"/>
         <include refid="SelectOrderBy"/>
@@ -103,9 +103,9 @@
     </select>
 
     <!-- 生成SelectCount -->
-    <select id="SelectCount" parameterType="com.jelly.eoss.model.AdminUserMenu" resultType="Long">
+    <select id="SelectCount" parameterType="com.jelly.eoss.db.entity.AdminUserRole" resultType="Long">
         select count(*) ct
-        from admin_user_menu
+        from admin_user_role
         <where>
             <include refid="SelectWheres"/>
         </where>

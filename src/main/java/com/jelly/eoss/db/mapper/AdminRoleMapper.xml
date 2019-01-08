@@ -3,17 +3,21 @@
 <!-- author:Collonn, Email:collonn@126.com, QQ:195358385 -->
 
 
-<mapper namespace="AdminFilterchainDefinition">
+<mapper namespace="AdminRole">
 	<!-- 生成Insert -->
-        	<insert id="Insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.jelly.eoss.model.AdminFilterchainDefinition">
-			insert into admin_filterchain_definition (
+        	<insert id="Insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.jelly.eoss.db.entity.AdminRole">
+			insert into admin_role (
 				<trim suffixOverrides=",">
                             <if test="id != null">
 							id,
                             </if>
 
-                            <if test="definition != null and definition != ''">
-							definition,
+                            <if test="name != null and name != ''">
+							name,
+                            </if>
+
+                            <if test="createDatetime != null and createDatetime != ''">
+							create_datetime,
                             </if>
 
 				</trim>
@@ -22,8 +26,11 @@
                             <if test="id != null">
                                 #{id},
                             </if>
-                            <if test="definition != null and definition != ''">
-                                #{definition},
+                            <if test="name != null and name != ''">
+                                #{name},
+                            </if>
+                            <if test="createDatetime != null and createDatetime != ''">
+                                #{createDatetime},
                             </if>
 				</trim>
 			)
@@ -31,14 +38,17 @@
 
 	<!-- 生成Update -->
     <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
-	<update id="Update" parameterType="com.jelly.eoss.model.AdminFilterchainDefinition">
-		update admin_filterchain_definition set 
+	<update id="Update" parameterType="com.jelly.eoss.db.entity.AdminRole">
+		update admin_role set 
 		<trim suffixOverrides=",">
                     <if test="id != null">
                     	id = #{id},
                     </if>
-                    <if test="definition != null and definition != ''">
-                    	definition = #{definition},
+                    <if test="name != null and name != ''">
+                    	name = #{name},
+                    </if>
+                    <if test="createDatetime != null and createDatetime != ''">
+                    	create_datetime = #{createDatetime},
                     </if>
 		</trim>
         where
@@ -50,11 +60,12 @@
 
     <!-- 生成UpdateWithNull -->
     <!-- 注意调用该SQL前必须先根据主键查询出该记录所有列数据，再设置某列为null -->
-    <update id="UpdateWithNull" parameterType="com.jelly.eoss.model.AdminFilterchainDefinition">
-        update admin_filterchain_definition set
+    <update id="UpdateWithNull" parameterType="com.jelly.eoss.db.entity.AdminRole">
+        update admin_role set
         <trim suffixOverrides=",">
 			id = #{id},
-			definition = #{definition},
+			name = #{name},
+			create_datetime = #{createDatetime},
         </trim>
         where
 		id = #{id}
@@ -65,23 +76,26 @@
 		<delete id="DeleteByPk" parameterType="java.io.Serializable">
 			
 			delete 
-			from admin_filterchain_definition 
+			from admin_role 
 			where 
 				id = #{id}
 				
 		</delete>
 	<!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误删除 -->
-	<delete id="DeleteByPojo" parameterType="com.jelly.eoss.model.AdminFilterchainDefinition">
+	<delete id="DeleteByPojo" parameterType="com.jelly.eoss.db.entity.AdminRole">
 		<!-- 请注意，该表没有主键 -->
 		delete
-		from admin_filterchain_definition
+		from admin_role
 		where
         <trim suffixOverrides="and">
                 <if test="id != null">
 					id = #{id} and
                 </if>
-                <if test="definition != null and definition != ''">
-					definition = #{definition} and
+                <if test="name != null and name != ''">
+					name = #{name} and
+                </if>
+                <if test="createDatetime != null and createDatetime != ''">
+					create_datetime = #{createDatetime} and
                 </if>
 		</trim>
 	</delete>
@@ -90,7 +104,8 @@
 	<sql id="SelectColumns">
 		<trim suffixOverrides=",">
 				id as "id",
-				definition as "definition",
+				name as "name",
+				create_datetime as "createDatetime",
 		</trim>
 	</sql>
 	
@@ -100,12 +115,22 @@
                     and id = #{id}
                 </if>
                 <choose>
-                    <when test="likeSqlColumnSet != null and 'definition' in likeSqlColumnSet">
-                        and definition like '%${definition}%'
+                    <when test="likeSqlColumnSet != null and 'name' in likeSqlColumnSet">
+                        and name like '%${name}%'
                     </when>
                     <otherwise>
-                        <if test="definition != null and definition != ''">
-                            and definition = #{definition}
+                        <if test="name != null and name != ''">
+                            and name = #{name}
+                        </if>
+                    </otherwise>
+                </choose>
+                <choose>
+                    <when test="likeSqlColumnSet != null and 'createDatetime' in likeSqlColumnSet">
+                        and create_datetime like '%${createDatetime}%'
+                    </when>
+                    <otherwise>
+                        <if test="createDatetime != null and createDatetime != ''">
+                            and create_datetime = #{createDatetime}
                         </if>
                     </otherwise>
                 </choose>
@@ -123,20 +148,20 @@
     </sql>
 	
 	<!-- 生成Select -->
-	<select id="Select" parameterType="com.jelly.eoss.model.AdminFilterchainDefinition" resultType="com.jelly.eoss.model.AdminFilterchainDefinition">
+	<select id="Select" parameterType="com.jelly.eoss.db.entity.AdminRole" resultType="com.jelly.eoss.db.entity.AdminRole">
 		select
 		<include refid="SelectColumns"/>
-		from admin_filterchain_definition
+		from admin_role
 		where 1 = 1
 		<include refid="SelectWheres"/>
         <include refid="SelectOrderBy"/>
 	</select>
 
     <!-- 生成Select -->
-    <select id="selectPage" parameterType="com.jelly.eoss.model.AdminFilterchainDefinition" resultType="com.jelly.eoss.model.AdminFilterchainDefinition">
+    <select id="selectPage" parameterType="com.jelly.eoss.db.entity.AdminRole" resultType="com.jelly.eoss.db.entity.AdminRole">
         select
         <include refid="SelectColumns"/>
-        from admin_filterchain_definition
+        from admin_role
         where 1 = 1
         <include refid="SelectWheres"/>
         <include refid="SelectOrderBy"/>
@@ -144,19 +169,19 @@
     </select>
 
     <!-- 生成SelectCount -->
-    <select id="SelectCount" parameterType="com.jelly.eoss.model.AdminFilterchainDefinition" resultType="Long">
+    <select id="SelectCount" parameterType="com.jelly.eoss.db.entity.AdminRole" resultType="Long">
         select count(*) ct
-        from admin_filterchain_definition
+        from admin_role
         <where>
             <include refid="SelectWheres"/>
         </where>
     </select>
 
     <!-- 根据表的主键生成SelectByPk，该表只有单列主键 -->
-	<select id="SelectByPk" parameterType="java.io.Serializable" resultType="com.jelly.eoss.model.AdminFilterchainDefinition">
+	<select id="SelectByPk" parameterType="java.io.Serializable" resultType="com.jelly.eoss.db.entity.AdminRole">
 		select
 		<include refid="SelectColumns"/>
-		from admin_filterchain_definition
+		from admin_role
 		where
 				id = #{id}
 			

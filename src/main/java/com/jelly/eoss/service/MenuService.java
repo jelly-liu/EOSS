@@ -1,7 +1,7 @@
 package com.jelly.eoss.service;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.AdminUser;
+import com.jelly.eoss.db.entity.AdminUser;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.util.JsonUtil;
 import org.apache.commons.lang3.StringUtils;

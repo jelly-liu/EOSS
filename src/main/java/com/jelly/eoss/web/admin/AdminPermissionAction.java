@@ -1,7 +1,7 @@
 package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.AdminPermission;
+import com.jelly.eoss.db.entity.AdminPermission;
 import com.jelly.eoss.util.ComUtil;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.util.Pager;

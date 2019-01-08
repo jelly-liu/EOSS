@@ -1,9 +1,8 @@
 package com.jelly.eoss.configuration;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.AdminFilterchainDefinition;
+import com.jelly.eoss.db.entity.AdminFilterchainDefinition;
 import com.jelly.eoss.shiro.*;
-import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;

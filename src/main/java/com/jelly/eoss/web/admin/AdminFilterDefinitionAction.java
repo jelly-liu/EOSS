@@ -1,7 +1,7 @@
 package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.AdminFilterchainDefinition;
+import com.jelly.eoss.db.entity.AdminFilterchainDefinition;
 import com.jelly.eoss.shiro.EossShiroFilterFactoryBean;
 import com.jelly.eoss.web.BaseAction;
 import org.apache.commons.lang3.StringUtils;

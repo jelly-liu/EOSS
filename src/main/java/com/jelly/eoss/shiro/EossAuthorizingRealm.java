@@ -1,7 +1,7 @@
 package com.jelly.eoss.shiro;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.AdminUser;
+import com.jelly.eoss.db.entity.AdminUser;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.CredentialsMatcher;

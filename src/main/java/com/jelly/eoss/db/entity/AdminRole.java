@@ -2,11 +2,7 @@
 /**
 * Author:Collonn, Email:collonn@126.com, QQ:195358385
 */
-package com.jelly.eoss.model;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import com.jelly.eoss.model.ConditionDomain;
+package com.jelly.eoss.db.entity;
 
 public class AdminRole extends ConditionDomain {
 	public static final String Insert = "AdminRole.Insert";

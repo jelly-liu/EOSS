@@ -1,15 +1,13 @@
 package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.model.AdminUser;
+import com.jelly.eoss.db.entity.AdminUser;
 import com.jelly.eoss.service.MenuService;
 import com.jelly.eoss.shiro.EossAuthorizingRealm;
 import com.jelly.eoss.util.*;
-import com.jelly.eoss.util.security.Digest;
 import com.jelly.eoss.web.BaseAction;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.stereotype.Controller;

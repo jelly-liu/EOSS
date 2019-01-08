@@ -3,13 +3,13 @@
 <!-- author:Collonn, Email:collonn@126.com, QQ:195358385 -->
 
 
-<mapper namespace="AdminUserRole">
+<mapper namespace="AdminRolePermission">
 	<!-- 生成Insert -->
-    <insert id="Insert" parameterType="com.jelly.eoss.model.AdminUserRole">
-			insert into admin_user_role (
+    <insert id="Insert" parameterType="com.jelly.eoss.db.entity.AdminRolePermission">
+			insert into admin_role_permission (
 				<trim suffixOverrides=",">
-                            <if test="userId != null">
-							user_id,
+                            <if test="permissionId != null">
+							permission_id,
                             </if>
 
                             <if test="roleId != null">
@@ -19,8 +19,8 @@
 				</trim>
 			) values (
 				<trim suffixOverrides=",">
-                            <if test="userId != null">
-                                #{userId},
+                            <if test="permissionId != null">
+                                #{permissionId},
                             </if>
                             <if test="roleId != null">
                                 #{roleId},
@@ -37,14 +37,14 @@
 	
 	<!-- 根据表的主键生成Delete -->
 	<!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误删除 -->
-	<delete id="DeleteByPojo" parameterType="com.jelly.eoss.model.AdminUserRole">
+	<delete id="DeleteByPojo" parameterType="com.jelly.eoss.db.entity.AdminRolePermission">
 		<!-- 请注意，该表没有主键 -->
 		delete
-		from admin_user_role
+		from admin_role_permission
 		where
         <trim suffixOverrides="and">
-                <if test="userId != null">
-					user_id = #{userId} and
+                <if test="permissionId != null">
+					permission_id = #{permissionId} and
                 </if>
                 <if test="roleId != null">
 					role_id = #{roleId} and
@@ -55,15 +55,15 @@
 	<!-- 生成Select通用表头 -->
 	<sql id="SelectColumns">
 		<trim suffixOverrides=",">
-				user_id as "userId",
+				permission_id as "permissionId",
 				role_id as "roleId",
 		</trim>
 	</sql>
 	
 	<!-- 生成Select通用查询条件 -->
 	<sql id="SelectWheres">
-                <if test="userId != null">
-                    and user_id = #{userId}
+                <if test="permissionId != null">
+                    and permission_id = #{permissionId}
                 </if>
                 <if test="roleId != null">
                     and role_id = #{roleId}
@@ -82,20 +82,20 @@
     </sql>
 	
 	<!-- 生成Select -->
-	<select id="Select" parameterType="com.jelly.eoss.model.AdminUserRole" resultType="com.jelly.eoss.model.AdminUserRole">
+	<select id="Select" parameterType="com.jelly.eoss.db.entity.AdminRolePermission" resultType="com.jelly.eoss.db.entity.AdminRolePermission">
 		select
 		<include refid="SelectColumns"/>
-		from admin_user_role
+		from admin_role_permission
 		where 1 = 1
 		<include refid="SelectWheres"/>
         <include refid="SelectOrderBy"/>
 	</select>
 
     <!-- 生成Select -->
-    <select id="selectPage" parameterType="com.jelly.eoss.model.AdminUserRole" resultType="com.jelly.eoss.model.AdminUserRole">
+    <select id="selectPage" parameterType="com.jelly.eoss.db.entity.AdminRolePermission" resultType="com.jelly.eoss.db.entity.AdminRolePermission">
         select
         <include refid="SelectColumns"/>
-        from admin_user_role
+        from admin_role_permission
         where 1 = 1
         <include refid="SelectWheres"/>
         <include refid="SelectOrderBy"/>
@@ -103,9 +103,9 @@
     </select>
 
     <!-- 生成SelectCount -->
-    <select id="SelectCount" parameterType="com.jelly.eoss.model.AdminUserRole" resultType="Long">
+    <select id="SelectCount" parameterType="com.jelly.eoss.db.entity.AdminRolePermission" resultType="Long">
         select count(*) ct
-        from admin_user_role
+        from admin_role_permission
         <where>
             <include refid="SelectWheres"/>
         </where>
