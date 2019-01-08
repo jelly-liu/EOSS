@@ -1,6 +1,6 @@
 package com.jelly.eoss.web.admin;
 
-import com.jelly.eoss.dao.BaseService;
+import com.jelly.eoss.dao.BaseDao;
 import com.jelly.eoss.web.BaseAction;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value = "/system/layout")
 public class LayoutAction extends BaseAction {
 	@Resource
-	private BaseService baseService;
+	private BaseDao baseService;
 
     @RequestMapping(value = "/main")
     public String main(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -42,11 +42,11 @@ public class LayoutAction extends BaseAction {
 	
 	//getter and setter
 
-	public BaseService getBaseDao() {
+	public BaseDao getBaseDao() {
 		return baseService;
 	}
 
-	public void setBaseDao(BaseService baseDao) {
+	public void setBaseDao(BaseDao baseDao) {
 		this.baseService = baseDao;
 	}
 }

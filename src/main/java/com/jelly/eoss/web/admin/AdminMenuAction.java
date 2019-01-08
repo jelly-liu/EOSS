@@ -1,13 +1,16 @@
 package com.jelly.eoss.web.admin;
 
-import com.jelly.eoss.dao.BaseService;
+import com.jelly.eoss.dao.BaseDao;
 import com.jelly.eoss.db.entity.AdminMenu;
-import com.jelly.eoss.service.MenuService;
+import com.jelly.eoss.db.mapper.ext.iface.MenuExtMapper;
+import com.jelly.eoss.service.EossMenuService;
+import com.jelly.eoss.service.basic.AdminMenuService;
 import com.jelly.eoss.util.*;
 import com.jelly.eoss.web.BaseAction;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +31,13 @@ public class AdminMenuAction extends BaseAction {
     private static final Logger log = LoggerFactory.getLogger(AdminMenuAction.class);
 
 	@Resource
-	private BaseService baseService;
+	private BaseDao baseService;
 	@Resource
-	private MenuService menuService;
+	private EossMenuService eossMenuService;
+	@Autowired
+	private AdminMenuService menuService;
+	@Autowired
+	private MenuExtMapper menuExtMapper;
 	
 	//针对登录用户查询专用
 	@RequestMapping(value = "/queryByUser")
@@ -40,9 +47,9 @@ public class AdminMenuAction extends BaseAction {
 			String idsOfLoginUserMenu = request.getSession().getAttribute(Const.LOGIN_MENU_TREE_IDS_KEY).toString();
 			
 			//所有一级菜单
-			Map<String, String> pm = this.getRequestMap(request);
+			Map<String, Object> pm = this.getRequestMap(request);
 			pm.put("inIds", idsOfLoginUserMenu);
-			String jsonZTree = this.menuService.queryMenuSub(pm);
+			String jsonZTree = this.eossMenuService.queryMenuSub(pm);
 			response.getWriter().write(jsonZTree);
 		}catch(Exception e){
 			response.getWriter().write("null");
@@ -56,10 +63,10 @@ public class AdminMenuAction extends BaseAction {
 		//该登录用户所拥有的所有菜单，key=menuId
 		String idsOfLoginUserMenu = request.getSession().getAttribute(Const.LOGIN_MENU_TREE_IDS_KEY).toString();
 		//该用户所捅有的菜单树
-		Map<String, String> pm = this.getRequestMap(request);
+		Map<String, Object> pm = this.getRequestMap(request);
 		pm.put("inIds", idsOfLoginUserMenu);
 		pm.put("openAll", "y");
-		String jsonZTree = this.menuService.queryMenuSub(pm);
+		String jsonZTree = eossMenuService.queryMenuSub(pm);
 		log.debug(jsonZTree);
 		
 		response.getWriter().write(jsonZTree);
@@ -69,8 +76,8 @@ public class AdminMenuAction extends BaseAction {
 	
 	@RequestMapping(value = "/querySub")
 	public ModelAndView querySub(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		Map<String, String> pm = this.getRequestMap(request);
-		String jsonZTree = this.menuService.queryMenuSub(pm);
+		Map<String, Object> pm = this.getRequestMap(request);
+		String jsonZTree = this.eossMenuService.queryMenuSub(pm);
         log.debug(jsonZTree);
 		request.setAttribute("jsonZTree", jsonZTree);
 		
@@ -79,8 +86,8 @@ public class AdminMenuAction extends BaseAction {
 	
 	@RequestMapping(value = "/querySubAjax")
 	public void querySubAjax(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		Map<String, String> pm = this.getRequestMap(request);
-		String jsonZTree = this.menuService.queryMenuSub(pm);
+		Map<String, Object> pm = this.getRequestMap(request);
+		String jsonZTree = this.eossMenuService.queryMenuSub(pm);
 		log.debug(jsonZTree);
 		response.getWriter().write(jsonZTree);
 	}
@@ -88,13 +95,15 @@ public class AdminMenuAction extends BaseAction {
 	@RequestMapping(value = "/toList")
 	public ModelAndView toList(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Integer page = ServletRequestUtils.getIntParameter(request, "page", 1);
-		
-		Map<String, String> param = this.getRequestMap(request);
+
+
+		Map<String, Object> param = this.getRequestMap(request);
 		param.put("leaf", "0");
-		RowBounds rb = new RowBounds((page -1) * Const.PAGE_SIZE, Const.PAGE_SIZE);
-		
-		Integer totalRow = this.baseService.mySelectOne("_EXT.Menu_QueryMenuPage_Count", param);
-		List<Map<String, Object>> dataList = this.baseService.getSqlSessionTemplate().selectList("_EXT.Menu_QueryMenuPage", param, rb);
+        Integer totalRow = menuExtMapper.queryMenuPageCount(param);
+
+        RowBounds rb = new RowBounds((page -1) * Const.PAGE_SIZE, Const.PAGE_SIZE);
+        param.put("rb", rb);
+		List<Map<String, Object>> dataList = menuExtMapper.queryMenuPage(param);
 		
 		Pager pager = new Pager(page.intValue(), Const.PAGE_SIZE, totalRow.intValue());
 		pager.setData(dataList);
@@ -116,7 +125,7 @@ public class AdminMenuAction extends BaseAction {
 		menu.setLeaf(0);
 		menu.setPath(menu.getPath() + "#" + id);
 		menu.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
-		this.baseService.myInsert(AdminMenu.Insert, menu);
+		menuService.insert(menu);
 
 		request.getRequestDispatcher("/system/menu/toList.ac").forward(request, response);
 		
@@ -125,7 +134,7 @@ public class AdminMenuAction extends BaseAction {
 	
 	@RequestMapping(value = "/delete")
 	public void txDelete(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		String id = ServletRequestUtils.getStringParameter(request, "id");
+		Integer id = ServletRequestUtils.getIntParameter(request, "id");
 		
 		//不能删除根菜单
 		if(id.equals("1")){
@@ -138,7 +147,7 @@ public class AdminMenuAction extends BaseAction {
 		String sql = "select count(*) total from admin_menu where pid = ?";
 		int total = this.baseService.getJdbcTemplate().queryForObject(sql, Integer.class, id);
 		if(total == 0){
-			this.baseService.getSqlSessionTemplate().delete(AdminMenu.DeleteByPk, id);
+			menuService.deleteByPk(id);
 			response.getWriter().write("y");
 		}else{
 			response.getWriter().write("请先删除或移动，该菜单的所有子菜单和权限");
@@ -147,10 +156,10 @@ public class AdminMenuAction extends BaseAction {
 	
 	@RequestMapping(value = "/toUpdate")
 	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		String id = request.getParameter("id");
-		AdminMenu mu = this.baseService.getSqlSessionTemplate().selectOne(AdminMenu.SelectByPk, id);
+		Integer id = ServletRequestUtils.getIntParameter(request, "id");
+		AdminMenu mu = menuService.selectByPk(id);
 		
-		List<Map<String, Object>> subMenuList = this.baseService.mySelectList("_EXT.Menu_QueryAllSubMenu", mu.getId());
+		List<Map<String, Object>> subMenuList = menuExtMapper.queryAllSubMenu(mu.getId());
 		//将所有id值拼接成1,2,3,4,5,6的形式
 		StringBuilder sb = new StringBuilder();
 		sb.append(id + ",");
@@ -162,12 +171,12 @@ public class AdminMenuAction extends BaseAction {
 		}
 		
 		//查询菜单
-		Map<String, String> pm = new HashMap<String, String>();
+		Map<String, Object> pm = new HashMap();
 		pm.put("notInIds", sb.toString());
 		pm.put("checkedIds", String.valueOf(mu.getPid()));
 		pm.put("openAll", "yes");
 		pm.put("onlyParent", "true");
-		String jsonStr = this.menuService.queryMenuSub(pm);
+		String jsonStr = this.eossMenuService.queryMenuSub(pm);
 //		Log.Debug(jsonStr);
 		
 		request.setAttribute("menu", mu);
@@ -184,7 +193,7 @@ public class AdminMenuAction extends BaseAction {
 		}
 		
 		menu.setLeaf(0);
-		this.baseService.getSqlSessionTemplate().update(AdminMenu.Update, menu);
+		menuService.update(menu);
 
         request.getRequestDispatcher("/system/menu/toList.ac").forward(request, response);
 
@@ -192,19 +201,19 @@ public class AdminMenuAction extends BaseAction {
 	}
 
 	//getter and setter
-	public MenuService getMenuService() {
-		return menuService;
+	public EossMenuService getEossMenuService() {
+		return eossMenuService;
 	}
 	
-	public void setMenuService(MenuService menuService) {
-		this.menuService = menuService;
+	public void setEossMenuService(EossMenuService eossMenuService) {
+		this.eossMenuService = eossMenuService;
 	}
 
-	public BaseService getBaseDao() {
+	public BaseDao getBaseDao() {
 		return baseService;
 	}
 
-	public void setBaseDao(BaseService baseDao) {
+	public void setBaseDao(BaseDao baseDao) {
 		this.baseService = baseDao;
 	}
 }

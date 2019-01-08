@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:Collonn, Email:collonn@126.com, QQ:195358385 -->
+
+
+<mapper namespace="com.jelly.eoss.db.mapper.basic.iface.AdminFilterchainDefinitionMapper">
+    <!-- 生成Insert -->
+        	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.jelly.eoss.db.entity.AdminFilterchainDefinition">
+    insert into admin_filterchain_definition (
+    <trim suffixOverrides=",">
+                            <if test="id != null">
+                                id,
+                            </if>
+
+                            <if test="definition != null and definition != ''">
+                                definition,
+                            </if>
+
+    </trim>
+    ) values (
+    <trim suffixOverrides=",">
+                            <if test="id != null">
+                                #{id},
+                            </if>
+                            <if test="definition != null and definition != ''">
+                                #{definition},
+                            </if>
+    </trim>
+    )
+</insert>
+
+    <!-- 生成Update -->
+    <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+	<update id="update" parameterType="com.jelly.eoss.db.entity.AdminFilterchainDefinition">
+        update admin_filterchain_definition set
+        <trim suffixOverrides=",">
+                    <if test="id != null">
+                        id = #{id},
+                    </if>
+                    <if test="definition != null and definition != ''">
+                        definition = #{definition},
+                    </if>
+        </trim>
+        where
+                <if test="id != null and id != ''">
+                    id = #{id}
+                </if>
+            
+    </update>
+
+    <!-- 生成UpdateWithNull -->
+    <!-- 注意调用该SQL前必须先根据主键查询出该记录所有列数据，再设置某列为null -->
+    <update id="updateWithNull" parameterType="com.jelly.eoss.db.entity.AdminFilterchainDefinition">
+        update admin_filterchain_definition set
+        <trim suffixOverrides=",">
+            id = #{id},
+            definition = #{definition},
+        </trim>
+        where
+            id = #{id}
+            
+    </update>
+
+    <!-- 根据表的主键生成Delete -->
+		<delete id="deleteByPk" parameterType="java.io.Serializable">
+			
+            delete
+            from admin_filterchain_definition
+            where
+                id = #{id}
+                
+        </delete>
+    <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误删除 -->
+    <delete id="deleteByPojo" parameterType="com.jelly.eoss.db.entity.AdminFilterchainDefinition">
+        <!-- 请注意，该表没有主键 -->
+        delete
+        from admin_filterchain_definition
+        where
+        <trim suffixOverrides="and">
+                <if test="id != null">
+                    id = #{id} and
+                </if>
+                <if test="definition != null and definition != ''">
+                    definition = #{definition} and
+                </if>
+        </trim>
+    </delete>
+
+    <!-- 生成Select通用表头 -->
+    <sql id="selectColumns">
+        <trim suffixOverrides=",">
+                id as "id",
+                definition as "definition",
+        </trim>
+    </sql>
+
+    <!-- 生成Select通用查询条件 -->
+    <sql id="selectWheres">
+                <if test="id != null">
+                    and id = #{id}
+                </if>
+                <if test="definition != null and definition != ''">
+                    <choose>
+                        <when test="likeSqlColumnSet != null and 'definition' in likeSqlColumnSet">
+                            and definition like '%${definition}%'
+                        </when>
+                        <otherwise>
+                            and definition = #{definition}
+                        </otherwise>
+                    </choose>
+                </if>
+    </sql>
+
+    <sql id="selectOrderBy">
+        <if test="sortConditionSet != null and sortConditionSet.size() > 0">
+            order by
+            <trim suffixOverrides=",">
+                <foreach collection="sortConditionSet" item="item">
+                ${item.colName} ${item.sort},
+                </foreach>
+            </trim>
+        </if>
+    </sql>
+
+    <!-- 生成Select -->
+    <select id="select" parameterType="com.jelly.eoss.db.entity.AdminFilterchainDefinition" resultType="com.jelly.eoss.db.entity.AdminFilterchainDefinition">
+        select
+        <include refid="selectColumns"/>
+        from admin_filterchain_definition
+        where 1 = 1
+        <include refid="selectWheres"/>
+        <include refid="selectOrderBy"/>
+    </select>
+
+    <!-- 生成Select -->
+    <select id="selectPage" parameterType="com.jelly.eoss.db.entity.AdminFilterchainDefinition" resultType="com.jelly.eoss.db.entity.AdminFilterchainDefinition">
+        select
+        <include refid="selectColumns"/>
+        from admin_filterchain_definition
+        where 1 = 1
+        <include refid="selectWheres"/>
+        <include refid="selectOrderBy"/>
+        limit #{offset},#{length}
+    </select>
+
+    <!-- 生成SelectCount -->
+    <select id="selectCount" parameterType="com.jelly.eoss.db.entity.AdminFilterchainDefinition" resultType="Integer">
+        select count(*) ct
+        from admin_filterchain_definition
+        <where>
+            <include refid="selectWheres"/>
+        </where>
+    </select>
+
+    <!-- 根据表的主键生成SelectByPk，该表只有单列主键 -->
+	<select id="selectByPk" parameterType="java.io.Serializable" resultType="com.jelly.eoss.db.entity.AdminFilterchainDefinition">
+        select
+        <include refid="selectColumns"/>
+        from admin_filterchain_definition
+        where
+            id = #{id}
+            
+    </select>
+</mapper>

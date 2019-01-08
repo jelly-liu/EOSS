@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:Collonn, Email:collonn@126.com, QQ:195358385 -->
+
+
+<mapper namespace="com.jelly.eoss.db.mapper.basic.iface.AdminRoleMapper">
+    <!-- 生成Insert -->
+        	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.jelly.eoss.db.entity.AdminRole">
+    insert into admin_role (
+    <trim suffixOverrides=",">
+                            <if test="id != null">
+                                id,
+                            </if>
+
+                            <if test="name != null and name != ''">
+                                name,
+                            </if>
+
+                            <if test="createDatetime != null and createDatetime != ''">
+                                create_datetime,
+                            </if>
+
+    </trim>
+    ) values (
+    <trim suffixOverrides=",">
+                            <if test="id != null">
+                                #{id},
+                            </if>
+                            <if test="name != null and name != ''">
+                                #{name},
+                            </if>
+                            <if test="createDatetime != null and createDatetime != ''">
+                                #{createDatetime},
+                            </if>
+    </trim>
+    )
+</insert>
+
+    <!-- 生成Update -->
+    <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+	<update id="update" parameterType="com.jelly.eoss.db.entity.AdminRole">
+        update admin_role set
+        <trim suffixOverrides=",">
+                    <if test="id != null">
+                        id = #{id},
+                    </if>
+                    <if test="name != null and name != ''">
+                        name = #{name},
+                    </if>
+                    <if test="createDatetime != null and createDatetime != ''">
+                        create_datetime = #{createDatetime},
+                    </if>
+        </trim>
+        where
+                <if test="id != null and id != ''">
+                    id = #{id}
+                </if>
+            
+    </update>
+
+    <!-- 生成UpdateWithNull -->
+    <!-- 注意调用该SQL前必须先根据主键查询出该记录所有列数据，再设置某列为null -->
+    <update id="updateWithNull" parameterType="com.jelly.eoss.db.entity.AdminRole">
+        update admin_role set
+        <trim suffixOverrides=",">
+            id = #{id},
+            name = #{name},
+            create_datetime = #{createDatetime},
+        </trim>
+        where
+            id = #{id}
+            
+    </update>
+
+    <!-- 根据表的主键生成Delete -->
+		<delete id="deleteByPk" parameterType="java.io.Serializable">
+			
+            delete
+            from admin_role
+            where
+                id = #{id}
+                
+        </delete>
+    <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误删除 -->
+    <delete id="deleteByPojo" parameterType="com.jelly.eoss.db.entity.AdminRole">
+        <!-- 请注意，该表没有主键 -->
+        delete
+        from admin_role
+        where
+        <trim suffixOverrides="and">
+                <if test="id != null">
+                    id = #{id} and
+                </if>
+                <if test="name != null and name != ''">
+                    name = #{name} and
+                </if>
+                <if test="createDatetime != null and createDatetime != ''">
+                    create_datetime = #{createDatetime} and
+                </if>
+        </trim>
+    </delete>
+
+    <!-- 生成Select通用表头 -->
+    <sql id="selectColumns">
+        <trim suffixOverrides=",">
+                id as "id",
+                name as "name",
+                create_datetime as "createDatetime",
+        </trim>
+    </sql>
+
+    <!-- 生成Select通用查询条件 -->
+    <sql id="selectWheres">
+                <if test="id != null">
+                    and id = #{id}
+                </if>
+                <if test="name != null and name != ''">
+                    <choose>
+                        <when test="likeSqlColumnSet != null and 'name' in likeSqlColumnSet">
+                            and name like '%${name}%'
+                        </when>
+                        <otherwise>
+                            and name = #{name}
+                        </otherwise>
+                    </choose>
+                </if>
+                <if test="createDatetime != null and createDatetime != ''">
+                    <choose>
+                        <when test="likeSqlColumnSet != null and 'createDatetime' in likeSqlColumnSet">
+                            and create_datetime like '%${createDatetime}%'
+                        </when>
+                        <otherwise>
+                            and create_datetime = #{createDatetime}
+                        </otherwise>
+                    </choose>
+                </if>
+    </sql>
+
+    <sql id="selectOrderBy">
+        <if test="sortConditionSet != null and sortConditionSet.size() > 0">
+            order by
+            <trim suffixOverrides=",">
+                <foreach collection="sortConditionSet" item="item">
+                ${item.colName} ${item.sort},
+                </foreach>
+            </trim>
+        </if>
+    </sql>
+
+    <!-- 生成Select -->
+    <select id="select" parameterType="com.jelly.eoss.db.entity.AdminRole" resultType="com.jelly.eoss.db.entity.AdminRole">
+        select
+        <include refid="selectColumns"/>
+        from admin_role
+        where 1 = 1
+        <include refid="selectWheres"/>
+        <include refid="selectOrderBy"/>
+    </select>
+
+    <!-- 生成Select -->
+    <select id="selectPage" parameterType="com.jelly.eoss.db.entity.AdminRole" resultType="com.jelly.eoss.db.entity.AdminRole">
+        select
+        <include refid="selectColumns"/>
+        from admin_role
+        where 1 = 1
+        <include refid="selectWheres"/>
+        <include refid="selectOrderBy"/>
+        limit #{offset},#{length}
+    </select>
+
+    <!-- 生成SelectCount -->
+    <select id="selectCount" parameterType="com.jelly.eoss.db.entity.AdminRole" resultType="Integer">
+        select count(*) ct
+        from admin_role
+        <where>
+            <include refid="selectWheres"/>
+        </where>
+    </select>
+
+    <!-- 根据表的主键生成SelectByPk，该表只有单列主键 -->
+	<select id="selectByPk" parameterType="java.io.Serializable" resultType="com.jelly.eoss.db.entity.AdminRole">
+        select
+        <include refid="selectColumns"/>
+        from admin_role
+        where
+            id = #{id}
+            
+    </select>
+</mapper>

@@ -1,10 +1,13 @@
 package com.jelly.eoss.web.admin;
 
-import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.db.entity.AdminPermission;
-import com.jelly.eoss.db.entity.AdminRole;
-import com.jelly.eoss.db.entity.AdminUser;
-import com.jelly.eoss.service.MenuService;
+import com.jelly.eoss.dao.BaseDao;
+import com.jelly.eoss.db.entity.*;
+import com.jelly.eoss.db.mapper.ext.iface.RoleExtMapper;
+import com.jelly.eoss.service.EossMenuService;
+import com.jelly.eoss.service.basic.AdminPermissionService;
+import com.jelly.eoss.service.basic.AdminRolePermissionService;
+import com.jelly.eoss.service.basic.AdminRoleService;
+import com.jelly.eoss.service.basic.AdminUserRoleService;
 import com.jelly.eoss.shiro.EossAuthorizingRealm;
 import com.jelly.eoss.util.*;
 import com.jelly.eoss.web.BaseAction;
@@ -13,6 +16,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,15 +33,25 @@ public class AdminRoleAction extends BaseAction {
 	private static final Logger log = LoggerFactory.getLogger(AdminRoleAction.class);
 
 	@Resource
-	private BaseService baseService;
+	private BaseDao baseService;
 	@Resource
-	private MenuService menuService;
+	private EossMenuService eossMenuService;
+	@Autowired
+	private AdminRoleService roleService;
+	@Autowired
+	private AdminPermissionService permissionService;
+	@Autowired
+	private AdminRolePermissionService rolePermissionService;
+	@Autowired
+	private AdminUserRoleService userRoleService;
+	@Autowired
+	private RoleExtMapper roleExtMapper;
 	@Resource
 	EossAuthorizingRealm eossAuthorizingRealm;
 
 	@RequestMapping(value = "/queryAllAjax")
 	public void queryAllAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List<Map<String, Object>> roleList = this.baseService.mySelectList("_EXT.Role_QueryRolePage");
+		List<Map<String, Object>> roleList = roleExtMapper.queryRolePage(null);
 		for(Map<String, Object> m : roleList){
 			m.put("pId", "-1");
 			m.put("isParent", "false");
@@ -52,11 +66,12 @@ public class AdminRoleAction extends BaseAction {
 	public ModelAndView toList(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Integer page = ServletRequestUtils.getIntParameter(request, "page", 1);
 		
-		Map<String, String> param = this.getRequestMap(request);
-		RowBounds rb = new RowBounds((page -1) * Const.PAGE_SIZE, Const.PAGE_SIZE);
-		
-		Integer totalRow = this.baseService.mySelectOne("_EXT.Role_QueryRolePage_Count", param);
-		List<Map<String, Object>> dataList = this.baseService.getSqlSessionTemplate().selectList("_EXT.Role_QueryRolePage", param, rb);
+		Map<String, Object> param = this.getRequestMap(request);
+		Integer totalRow = roleExtMapper.queryRolePageCount(param);
+
+        RowBounds rb = new RowBounds((page -1) * Const.PAGE_SIZE, Const.PAGE_SIZE);
+        param.put("rb", rb);
+		List<Map<String, Object>> dataList = roleExtMapper.queryRolePage(param);
 		
 		Pager pager = new Pager(page.intValue(), Const.PAGE_SIZE, totalRow.intValue());
 		pager.setData(dataList);
@@ -68,7 +83,7 @@ public class AdminRoleAction extends BaseAction {
 
 	@RequestMapping(value = "/toAdd")
 	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		List<AdminPermission> permissionList = this.baseService.mySelectList(AdminPermission.Select);
+		List<AdminPermission> permissionList = permissionService.select(null);
 
 		Map<String, List<AdminPermission>> permMap = new TreeMap<>();
 		for(AdminPermission perm : permissionList){
@@ -99,7 +114,7 @@ public class AdminRoleAction extends BaseAction {
 		//插入角色
 		role.setId(id);
 		role.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
-		baseService.myInsert(AdminRole.Insert, role);
+		roleService.insert(role);
 		
 		//插入角色对应的权限
 		this.batchInsertRolePermission(role.getId(), permissionIdsStr);
@@ -110,10 +125,10 @@ public class AdminRoleAction extends BaseAction {
 	
 	@RequestMapping(value = "/delete")
 	public void txDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String id = request.getParameter("id");
-		this.baseService.jdDelete("delete from admin_role where id = ?", id);
-		this.baseService.jdDelete("delete from admin_role_permission where role_id = ?", id);
-		this.baseService.jdDelete("delete from admin_user_role where role_id = ?", id);
+		Integer id = ServletRequestUtils.getIntParameter(request, "id");
+		roleService.deleteByPk(id);
+		rolePermissionService.deleteByPojo(new AdminRolePermission().setRoleId(id));
+		userRoleService.deleteByPojo(new AdminUserRole().setRoleId(id));
 
         //更新shiro AuthenticationInfo and AuthorizationInfo in local cache
         AdminUser u = SecurityUtils.getSubject().getPrincipals().oneByType(AdminUser.class);
@@ -124,10 +139,10 @@ public class AdminRoleAction extends BaseAction {
 	
 	@RequestMapping(value = "/toUpdate")
 	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		String id = request.getParameter("id");
+		Integer id = ServletRequestUtils.getIntParameter(request, "id");
 
-		AdminRole role = this.baseService.mySelectOne(AdminRole.SelectByPk, id);
-        List<Map<String, Object>> permissionList = this.baseService.mySelectList("_EXT.Role_QueryAllPermissionWithRole", role.getId());
+		AdminRole role = roleService.selectByPk(id);
+        List<Map<String, Object>> permissionList = roleExtMapper.queryAllPermissionWithRole(role.getId());
 
         Map<String, List<Map<String, Object>>> permMap = new TreeMap<>();
         for(Map<String, Object> perm : permissionList){
@@ -156,9 +171,9 @@ public class AdminRoleAction extends BaseAction {
 		String permissionIdsStr = request.getParameter("permissionIds");
 		
 		//更新角色
-		AdminRole r = this.baseService.mySelectOne(AdminRole.SelectByPk, role.getId());
+		AdminRole r = roleService.selectByPk(role.getId());
 		r.setName(role.getName());
-		this.baseService.myUpdate(AdminRole.Update, r);
+		roleService.update(r);
 		
 		//更新角色原有权限
 		this.batchInsertRolePermission(role.getId(), permissionIdsStr);
@@ -173,8 +188,7 @@ public class AdminRoleAction extends BaseAction {
 
 	//批量插入角色对应的权限，只选择用JdbcTemplate的批量更新方法，以保证高性能
 	private void batchInsertRolePermission(int roleId, String permissionIdsStr){
-		String sqlDelete = "delete from admin_role_permission where role_id = ?";
-		this.baseService.jdDelete(sqlDelete, roleId);
+		rolePermissionService.deleteByPojo(new AdminRolePermission().setRoleId(roleId));
 		
 		//没有选择权限，直接返回
 		if(permissionIdsStr == null || permissionIdsStr.trim().equals("")){
@@ -198,20 +212,20 @@ public class AdminRoleAction extends BaseAction {
 	}
 	
 	//getter and setter
-	public BaseService getBaseDao() {
+	public BaseDao getBaseDao() {
 		return baseService;
 	}
 
-	public void setBaseDao(BaseService baseDao) {
+	public void setBaseDao(BaseDao baseDao) {
 		this.baseService = baseDao;
 	}
 	
-	public MenuService getMenuService() {
-		return menuService;
+	public EossMenuService getEossMenuService() {
+		return eossMenuService;
 	}
 
-	public void setMenuService(MenuService menuService) {
-		this.menuService = menuService;
+	public void setEossMenuService(EossMenuService eossMenuService) {
+		this.eossMenuService = eossMenuService;
 	}
 
 }

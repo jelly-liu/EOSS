@@ -1,10 +1,13 @@
 package com.jelly.eoss.service;
 
-import com.jelly.eoss.dao.BaseService;
+import com.jelly.eoss.dao.BaseDao;
 import com.jelly.eoss.db.entity.AdminUser;
+import com.jelly.eoss.db.mapper.ext.iface.LoginExtMapper;
+import com.jelly.eoss.db.mapper.ext.iface.MenuExtMapper;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.util.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,9 +17,13 @@ import java.util.Map;
 import java.util.Set;
 
 @Service
-public class MenuService {
+public class EossMenuService {
 	@Resource
-	private BaseService baseService;
+	private BaseDao baseService;
+	@Autowired
+	LoginExtMapper loginExtMapper;
+	@Autowired
+	MenuExtMapper menuExtMapper;
 
     /*
      *数据样例：
@@ -25,12 +32,12 @@ public class MenuService {
      * 1#2#5#16
      * 将重复的id过滤掉
      */
-	public String queryMenuTreeIdsOfUser(AdminUser user){
+	public String txQueryMenuTreeIdsOfUser(AdminUser user){
 	    if(user == null){
 	        return "";
         }
 
-		List<Map<String, Object>> list = this.baseService.mySelectList("_EXT.Login_QueryTreePathByUserId", user.getId());
+		List<Map<String, Object>> list = loginExtMapper.queryTreePathByUserId(user.getId());
 		Set<String> treeIdSet = new HashSet<String>();
 		String[] ids = null;
 		for(Map<String, Object> m : list){
@@ -59,14 +66,14 @@ public class MenuService {
 	 * onlyLeafCanCheck：只有叶子节点才可选择
 	 * openAll：是否展开树
 	 */
-	public void decorateZnode(List<Map<String, Object>> zNodeList, Map<String, String> pm){
+	public void decorateZnode(List<Map<String, Object>> zNodeList, Map<String, Object> pm){
 		//处理要选中的checkbox或着radio的id
-		String checkedIdStr = pm.get("checkedIds");
+		Object checkedIdStr = pm.get("checkedIds");
 		String[] checkedIds = null;
 		Set<String> checkedIdSet = null;
-		if(checkedIdStr != null && !checkedIdStr.trim().equals("")){
+		if(checkedIdStr != null){
 			checkedIdSet = new HashSet<String>();
-			checkedIds = checkedIdStr.split(",");
+			checkedIds = checkedIdStr.toString().split(",");
 			for(String id : checkedIds){
 				checkedIdSet.add(id);
 			}
@@ -116,8 +123,8 @@ public class MenuService {
 	}
 	
 	//根据条件查询子菜单
-	public String queryMenuSub(Map<String, String> pm){
-		List<Map<String, Object>> list = this.baseService.mySelectList("_EXT.Menu_QueryMenuTree", pm);
+	public String queryMenuSub(Map<String, Object> pm){
+		List<Map<String, Object>> list = menuExtMapper.queryMenuTree(pm);
 		this.decorateZnode(list, pm);
 		
 //		jsonStr=[{"id":1,"name":"系统管理"},{"id":2,"name":"业务管理"}]
@@ -126,11 +133,11 @@ public class MenuService {
 		return jsonStr;
 	}
 	
-	public BaseService getBaseService() {
+	public BaseDao getBaseService() {
 		return baseService;
 	}
 
-	public void setBaseService(BaseService baseService) {
+	public void setBaseService(BaseDao baseService) {
 		this.baseService = baseService;
 	}
 }

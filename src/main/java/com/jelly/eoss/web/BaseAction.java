@@ -41,8 +41,8 @@ public class BaseAction {
     }
     
     //封装request域所有参数为Map，checkbox这样的值将会被拼接成一个"分号"分隔的字符串
-    protected Map<String, String> getRequestMap(HttpServletRequest request){
-    	Map<String, String> paramMap = new HashMap<String, String>();
+    protected Map<String, Object> getRequestMap(HttpServletRequest request){
+    	Map<String, Object> paramMap = new HashMap();
     	Enumeration<String> paramNamesEnumeration = request.getParameterNames();
     	String key = null;
     	String[] values = null;

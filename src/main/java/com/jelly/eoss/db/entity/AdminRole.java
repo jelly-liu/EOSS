@@ -4,15 +4,11 @@
 */
 package com.jelly.eoss.db.entity;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 public class AdminRole extends ConditionDomain {
-	public static final String Insert = "AdminRole.Insert";
-	public static final String Update = "AdminRole.Update";
-	public static final String UpdateWithNull = "AdminRole.UpdateWithNull";
-	public static final String DeleteByPk = "AdminRole.DeleteByPk";
-	public static final String DeleteByPojo = "AdminRole.DeleteByPojo";
-	public static final String Select = "AdminRole.Select";
-	public static final String SelectCount = "AdminRole.SelectCount";
-	public static final String SelectByPk = "AdminRole.SelectByPk";
+
 	
 	private Integer id;
 	

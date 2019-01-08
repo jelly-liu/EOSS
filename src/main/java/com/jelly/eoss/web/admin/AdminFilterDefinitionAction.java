@@ -1,7 +1,8 @@
 package com.jelly.eoss.web.admin;
 
-import com.jelly.eoss.dao.BaseService;
+import com.jelly.eoss.dao.BaseDao;
 import com.jelly.eoss.db.entity.AdminFilterchainDefinition;
+import com.jelly.eoss.service.basic.AdminFilterchainDefinitionService;
 import com.jelly.eoss.shiro.EossShiroFilterFactoryBean;
 import com.jelly.eoss.web.BaseAction;
 import org.apache.commons.lang3.StringUtils;
@@ -18,12 +19,14 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value = "/system/filterDefinition")
 public class AdminFilterDefinitionAction extends BaseAction {
 	@Autowired
-	private BaseService baseService;
+	private BaseDao baseService;
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
 	AbstractShiroFilter abstractShiroFilter;
     @Autowired
     EossShiroFilterFactoryBean eossShiroFilterFactoryBean;
+    @Autowired
+    AdminFilterchainDefinitionService filterchainDefinitionService;
 
 	@RequestMapping(value = "/toUpdate")
 	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -44,7 +47,7 @@ public class AdminFilterDefinitionAction extends BaseAction {
         //refresh filterChainDefinition
         if(filterDefinition.getDefinition() != null){
             eossShiroFilterFactoryBean.updateFilterChainDefinitions(filterDefinition.getDefinition(), abstractShiroFilter);
-            baseService.myUpdate(AdminFilterchainDefinition.Update, filterDefinition.setId(1));
+            filterchainDefinitionService.update(filterDefinition.setId(1));
         }
 
         request.getRequestDispatcher("/system/filterDefinition/toUpdate.ac").forward(request, response);
@@ -52,11 +55,11 @@ public class AdminFilterDefinitionAction extends BaseAction {
 	}
 	
 	//getter and setter
-	public BaseService getBaseDao() {
+	public BaseDao getBaseDao() {
 		return baseService;
 	}
 
-	public void setBaseDao(BaseService baseDao) {
+	public void setBaseDao(BaseDao baseDao) {
 		this.baseService = baseDao;
 	}
 }

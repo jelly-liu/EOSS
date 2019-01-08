@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:Collonn, Email:collonn@126.com, QQ:195358385 -->
+
+
+<mapper namespace="com.jelly.eoss.db.mapper.basic.iface.AdminUserMapper">
+    <!-- 生成Insert -->
+        	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.jelly.eoss.db.entity.AdminUser">
+    insert into admin_user (
+    <trim suffixOverrides=",">
+                            <if test="id != null">
+                                id,
+                            </if>
+
+                            <if test="username != null and username != ''">
+                                username,
+                            </if>
+
+                            <if test="password != null and password != ''">
+                                password,
+                            </if>
+
+                            <if test="salt != null and salt != ''">
+                                salt,
+                            </if>
+
+                            <if test="locked != null">
+                                locked,
+                            </if>
+
+                            <if test="disabled != null">
+                                disabled,
+                            </if>
+
+                            <if test="createDatetime != null and createDatetime != ''">
+                                create_datetime,
+                            </if>
+
+    </trim>
+    ) values (
+    <trim suffixOverrides=",">
+                            <if test="id != null">
+                                #{id},
+                            </if>
+                            <if test="username != null and username != ''">
+                                #{username},
+                            </if>
+                            <if test="password != null and password != ''">
+                                #{password},
+                            </if>
+                            <if test="salt != null and salt != ''">
+                                #{salt},
+                            </if>
+                            <if test="locked != null">
+                                #{locked},
+                            </if>
+                            <if test="disabled != null">
+                                #{disabled},
+                            </if>
+                            <if test="createDatetime != null and createDatetime != ''">
+                                #{createDatetime},
+                            </if>
+    </trim>
+    )
+</insert>
+
+    <!-- 生成Update -->
+    <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+	<update id="update" parameterType="com.jelly.eoss.db.entity.AdminUser">
+        update admin_user set
+        <trim suffixOverrides=",">
+                    <if test="id != null">
+                        id = #{id},
+                    </if>
+                    <if test="username != null and username != ''">
+                        username = #{username},
+                    </if>
+                    <if test="password != null and password != ''">
+                        password = #{password},
+                    </if>
+                    <if test="salt != null and salt != ''">
+                        salt = #{salt},
+                    </if>
+                    <if test="locked != null">
+                        locked = #{locked},
+                    </if>
+                    <if test="disabled != null">
+                        disabled = #{disabled},
+                    </if>
+                    <if test="createDatetime != null and createDatetime != ''">
+                        create_datetime = #{createDatetime},
+                    </if>
+        </trim>
+        where
+                <if test="id != null and id != ''">
+                    id = #{id}
+                </if>
+            
+    </update>
+
+    <!-- 生成UpdateWithNull -->
+    <!-- 注意调用该SQL前必须先根据主键查询出该记录所有列数据，再设置某列为null -->
+    <update id="updateWithNull" parameterType="com.jelly.eoss.db.entity.AdminUser">
+        update admin_user set
+        <trim suffixOverrides=",">
+            id = #{id},
+            username = #{username},
+            password = #{password},
+            salt = #{salt},
+            locked = #{locked},
+            disabled = #{disabled},
+            create_datetime = #{createDatetime},
+        </trim>
+        where
+            id = #{id}
+            
+    </update>
+
+    <!-- 根据表的主键生成Delete -->
+		<delete id="deleteByPk" parameterType="java.io.Serializable">
+			
+            delete
+            from admin_user
+            where
+                id = #{id}
+                
+        </delete>
+    <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误删除 -->
+    <delete id="deleteByPojo" parameterType="com.jelly.eoss.db.entity.AdminUser">
+        <!-- 请注意，该表没有主键 -->
+        delete
+        from admin_user
+        where
+        <trim suffixOverrides="and">
+                <if test="id != null">
+                    id = #{id} and
+                </if>
+                <if test="username != null and username != ''">
+                    username = #{username} and
+                </if>
+                <if test="password != null and password != ''">
+                    password = #{password} and
+                </if>
+                <if test="salt != null and salt != ''">
+                    salt = #{salt} and
+                </if>
+                <if test="locked != null">
+                    locked = #{locked} and
+                </if>
+                <if test="disabled != null">
+                    disabled = #{disabled} and
+                </if>
+                <if test="createDatetime != null and createDatetime != ''">
+                    create_datetime = #{createDatetime} and
+                </if>
+        </trim>
+    </delete>
+
+    <!-- 生成Select通用表头 -->
+    <sql id="selectColumns">
+        <trim suffixOverrides=",">
+                id as "id",
+                username as "username",
+                password as "password",
+                salt as "salt",
+                locked as "locked",
+                disabled as "disabled",
+                create_datetime as "createDatetime",
+        </trim>
+    </sql>
+
+    <!-- 生成Select通用查询条件 -->
+    <sql id="selectWheres">
+                <if test="id != null">
+                    and id = #{id}
+                </if>
+                <if test="username != null and username != ''">
+                    <choose>
+                        <when test="likeSqlColumnSet != null and 'username' in likeSqlColumnSet">
+                            and username like '%${username}%'
+                        </when>
+                        <otherwise>
+                            and username = #{username}
+                        </otherwise>
+                    </choose>
+                </if>
+                <if test="password != null and password != ''">
+                    <choose>
+                        <when test="likeSqlColumnSet != null and 'password' in likeSqlColumnSet">
+                            and password like '%${password}%'
+                        </when>
+                        <otherwise>
+                            and password = #{password}
+                        </otherwise>
+                    </choose>
+                </if>
+                <if test="salt != null and salt != ''">
+                    <choose>
+                        <when test="likeSqlColumnSet != null and 'salt' in likeSqlColumnSet">
+                            and salt like '%${salt}%'
+                        </when>
+                        <otherwise>
+                            and salt = #{salt}
+                        </otherwise>
+                    </choose>
+                </if>
+                <if test="locked != null">
+                    and locked = #{locked}
+                </if>
+                <if test="disabled != null">
+                    and disabled = #{disabled}
+                </if>
+                <if test="createDatetime != null and createDatetime != ''">
+                    <choose>
+                        <when test="likeSqlColumnSet != null and 'createDatetime' in likeSqlColumnSet">
+                            and create_datetime like '%${createDatetime}%'
+                        </when>
+                        <otherwise>
+                            and create_datetime = #{createDatetime}
+                        </otherwise>
+                    </choose>
+                </if>
+    </sql>
+
+    <sql id="selectOrderBy">
+        <if test="sortConditionSet != null and sortConditionSet.size() > 0">
+            order by
+            <trim suffixOverrides=",">
+                <foreach collection="sortConditionSet" item="item">
+                ${item.colName} ${item.sort},
+                </foreach>
+            </trim>
+        </if>
+    </sql>
+
+    <!-- 生成Select -->
+    <select id="select" parameterType="com.jelly.eoss.db.entity.AdminUser" resultType="com.jelly.eoss.db.entity.AdminUser">
+        select
+        <include refid="selectColumns"/>
+        from admin_user
+        where 1 = 1
+        <include refid="selectWheres"/>
+        <include refid="selectOrderBy"/>
+    </select>
+
+    <!-- 生成Select -->
+    <select id="selectPage" parameterType="com.jelly.eoss.db.entity.AdminUser" resultType="com.jelly.eoss.db.entity.AdminUser">
+        select
+        <include refid="selectColumns"/>
+        from admin_user
+        where 1 = 1
+        <include refid="selectWheres"/>
+        <include refid="selectOrderBy"/>
+        limit #{offset},#{length}
+    </select>
+
+    <!-- 生成SelectCount -->
+    <select id="selectCount" parameterType="com.jelly.eoss.db.entity.AdminUser" resultType="Integer">
+        select count(*) ct
+        from admin_user
+        <where>
+            <include refid="selectWheres"/>
+        </where>
+    </select>
+
+    <!-- 根据表的主键生成SelectByPk，该表只有单列主键 -->
+	<select id="selectByPk" parameterType="java.io.Serializable" resultType="com.jelly.eoss.db.entity.AdminUser">
+        select
+        <include refid="selectColumns"/>
+        from admin_user
+        where
+            id = #{id}
+            
+    </select>
+</mapper>

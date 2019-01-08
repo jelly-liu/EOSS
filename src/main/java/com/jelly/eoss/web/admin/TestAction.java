@@ -1,7 +1,7 @@
 package com.jelly.eoss.web.admin;
 
-import com.jelly.eoss.dao.BaseService;
-import com.jelly.eoss.service.MenuService;
+import com.jelly.eoss.dao.BaseDao;
+import com.jelly.eoss.service.EossMenuService;
 import com.jelly.eoss.web.BaseAction;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -20,9 +20,9 @@ public class TestAction extends BaseAction {
 	private static final Logger log = LoggerFactory.getLogger(TestAction.class);
 
 	@Resource
-	private BaseService baseDao;
+	private BaseDao baseDao;
 	@Resource
-	private MenuService menuService;
+	private EossMenuService eossMenuService;
 	
 	@RequestMapping(value = "updateSession")
 	public void queryRowBounds(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -34,19 +34,19 @@ public class TestAction extends BaseAction {
 	}
 	
 	//getter and setter
-	public MenuService getMenuService() {
-		return menuService;
+	public EossMenuService getEossMenuService() {
+		return eossMenuService;
 	}
 	
-	public void setMenuService(MenuService menuService) {
-		this.menuService = menuService;
+	public void setEossMenuService(EossMenuService eossMenuService) {
+		this.eossMenuService = eossMenuService;
 	}
 
-	public BaseService getBaseDao() {
+	public BaseDao getBaseDao() {
 		return baseDao;
 	}
 
-	public void setBaseDao(BaseService baseDao) {
+	public void setBaseDao(BaseDao baseDao) {
 		this.baseDao = baseDao;
 	}
 }

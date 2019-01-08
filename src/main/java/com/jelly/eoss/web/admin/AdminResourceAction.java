@@ -1,13 +1,16 @@
 package com.jelly.eoss.web.admin;
 
-import com.jelly.eoss.dao.BaseService;
+import com.jelly.eoss.dao.BaseDao;
 import com.jelly.eoss.db.entity.AdminMenu;
-import com.jelly.eoss.service.MenuService;
+import com.jelly.eoss.db.mapper.ext.iface.MenuExtMapper;
+import com.jelly.eoss.service.EossMenuService;
+import com.jelly.eoss.service.basic.AdminMenuService;
 import com.jelly.eoss.util.*;
 import com.jelly.eoss.web.BaseAction;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,20 +31,24 @@ public class AdminResourceAction extends BaseAction {
 	private static final Logger log = LoggerFactory.getLogger(AdminResourceAction.class);
 
 	@Resource
-	private BaseService baseService;
+	private BaseDao baseService;
 	@Resource
-	private MenuService menuService;
+	private EossMenuService eossMenuService;
+	@Autowired
+	private AdminMenuService adminMenuService;
+	@Autowired
+	private MenuExtMapper menuExtMapper;
 	
 	@RequestMapping(value = "/toList")
 	public ModelAndView toList(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Integer page = ServletRequestUtils.getIntParameter(request, "page", 1);
-		
-		Map<String, String> param = this.getRequestMap(request);
+		Map<String, Object> param = this.getRequestMap(request);
 		param.put("leaf", "1");
+		Integer totalRow = menuExtMapper.queryMenuPageCount(param);
+
 		RowBounds rb = new RowBounds((page -1) * Const.PAGE_SIZE, Const.PAGE_SIZE);
-		
-		Integer totalRow = this.baseService.mySelectOne("_EXT.Menu_QueryMenuPage_Count", param);
-		List<Map<String, Object>> dataList = this.baseService.getSqlSessionTemplate().selectList("_EXT.Menu_QueryMenuPage", param, rb);
+		param.put("rb", rb);
+		List<Map<String, Object>> dataList = menuExtMapper.queryMenuPage(param);
 		
 		Pager pager = new Pager(page.intValue(), Const.PAGE_SIZE, totalRow.intValue());
 		pager.setData(dataList);
@@ -64,31 +71,30 @@ public class AdminResourceAction extends BaseAction {
 		menu.setLeaf(1);
 		menu.setPath(menu.getPath() + "#" + id);
 		menu.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
-		this.baseService.myInsert(AdminMenu.Insert, menu);
+		adminMenuService.insert(menu);
 		log.debug(menu.getTarget());
 		return new ModelAndView("/system/resource/toList.ac");
 	}
 	
 	@RequestMapping(value = "/delete")
 	public void txDelete(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		String id = request.getParameter("id");
-//		Log.Debug("id:" + id);
-		this.baseService.myDelete(AdminMenu.DeleteByPk, id);
+        Integer id = ServletRequestUtils.getIntParameter(request, "id");
+		adminMenuService.deleteByPk(id);
 		response.getWriter().write("y");
 	}
 	
 	@RequestMapping(value = "/toUpdate")
 	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		String id = request.getParameter("id");
-		AdminMenu menu = this.baseService.mySelectOne(AdminMenu.SelectByPk, id);
+		Integer id = ServletRequestUtils.getIntParameter(request, "id");
+		AdminMenu menu = adminMenuService.selectByPk(id);
 		
 		//装饰zTreeNode
-		Map<String, String> pm = new HashMap<String, String>();
+		Map<String, Object> pm = new HashMap();
 		pm.put("onlyParent", "yes");
 		pm.put("openAll", "yes");
 		pm.put("checkedIds", String.valueOf(menu.getPid()));
 		pm.put("rootNocheck", "yes");
-		String zTreeNodeJson = this.menuService.queryMenuSub(pm);
+		String zTreeNodeJson = this.eossMenuService.queryMenuSub(pm);
 		
 		request.setAttribute("menu", menu);
 		request.setAttribute("zTreeNodeJson", zTreeNodeJson);
@@ -97,31 +103,31 @@ public class AdminResourceAction extends BaseAction {
 	
 	@RequestMapping(value = "/update")
 	public ModelAndView txUpdate(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws ServletException, IOException{
-		AdminMenu m = this.baseService.mySelectOne(AdminMenu.SelectByPk, menu.getId());
+		AdminMenu m = adminMenuService.selectByPk(menu.getId());
 		m.setName(menu.getName());
 		m.setTarget(menu.getTarget());
 		m.setLev(menu.getLev());
 		m.setPath(menu.getPath());
 		m.setUrl(menu.getUrl());
 		m.setPid(menu.getPid());
-		this.baseService.myUpdate(AdminMenu.Update, m);
+		adminMenuService.update(m);
 		return new ModelAndView("/system/resource/toList.ac");
 	}
 	
 	//getter and setter
-	public BaseService getBaseDao() {
+	public BaseDao getBaseDao() {
 		return baseService;
 	}
 
-	public void setBaseDao(BaseService baseDao) {
+	public void setBaseDao(BaseDao baseDao) {
 		this.baseService = baseDao;
 	}
 
-	public MenuService getMenuService() {
-		return menuService;
+	public EossMenuService getEossMenuService() {
+		return eossMenuService;
 	}
 
-	public void setMenuService(MenuService menuService) {
-		this.menuService = menuService;
+	public void setEossMenuService(EossMenuService eossMenuService) {
+		this.eossMenuService = eossMenuService;
 	}
 }

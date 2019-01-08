@@ -1,8 +1,11 @@
 package com.jelly.eoss.web.admin;
 
-import com.jelly.eoss.dao.BaseService;
+import com.jelly.eoss.dao.BaseDao;
 import com.jelly.eoss.db.entity.AdminUser;
-import com.jelly.eoss.service.MenuService;
+import com.jelly.eoss.db.mapper.ext.iface.RoleExtMapper;
+import com.jelly.eoss.db.mapper.ext.iface.UserExtMapper;
+import com.jelly.eoss.service.EossMenuService;
+import com.jelly.eoss.service.basic.AdminUserService;
 import com.jelly.eoss.shiro.EossAuthorizingRealm;
 import com.jelly.eoss.util.*;
 import com.jelly.eoss.web.BaseAction;
@@ -10,6 +13,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +28,15 @@ import java.util.*;
 @RequestMapping(value = "/system/user")
 public class AdminUserAction extends BaseAction {
     @Resource
-    private BaseService baseService;
+    private BaseDao baseService;
     @Resource
-    private MenuService menuService;
+    private EossMenuService eossMenuService;
+    @Autowired
+    AdminUserService adminUserService;
+    @Autowired
+    private RoleExtMapper roleExtMapper;
+    @Autowired
+    private UserExtMapper userExtMapper;
     @Resource
     EossAuthorizingRealm eossAuthorizingRealm;
     @Resource
@@ -52,11 +62,12 @@ public class AdminUserAction extends BaseAction {
     public ModelAndView toList(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Integer page = ServletRequestUtils.getIntParameter(request, "page", 1);
 
-        Map<String, String> param = this.getRequestMap(request);
-        RowBounds rb = new RowBounds((page - 1) * Const.PAGE_SIZE, Const.PAGE_SIZE);
+        Map<String, Object> param = this.getRequestMap(request);
+        Integer totalRow = userExtMapper.queryUserCount(param);
 
-        Integer totalRow = this.baseService.mySelectOne("_EXT.User_QueryUser_Count", param);
-        List<Map<String, Object>> dataList = this.baseService.getSqlSessionTemplate().selectList("_EXT.User_QueryUser_Page", param, rb);
+        RowBounds rb = new RowBounds((page - 1) * Const.PAGE_SIZE, Const.PAGE_SIZE);
+        param.put("rb", rb);
+        List<Map<String, Object>> dataList = userExtMapper.queryUserPage(param);
 
         Pager pager = new Pager(page.intValue(), Const.PAGE_SIZE, totalRow.intValue());
         pager.setData(dataList);
@@ -96,7 +107,7 @@ public class AdminUserAction extends BaseAction {
         user.setSalt(salt);
         user.setPassword(passwordMd5);
         user.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
-        this.baseService.myInsert(AdminUser.Insert, user);
+        adminUserService.insert(user);
 
         //插入角色
         this.batchInsertUserRole(user.getId(), roleIds);
@@ -108,10 +119,10 @@ public class AdminUserAction extends BaseAction {
 
     @RequestMapping(value = "/toUpdate")
     public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String id = request.getParameter("id");
+        Integer id = ServletRequestUtils.getIntParameter(request, "id");
 
         //查询自己
-        AdminUser user = this.baseService.mySelectOne(AdminUser.SelectByPk, id);
+        AdminUser user = adminUserService.selectByPk(id);
 
         //查询该用户已拥有的角色
         String sql = "select * from admin_user_role where user_id = ?";
@@ -122,7 +133,7 @@ public class AdminUserAction extends BaseAction {
         }
 
         //设置初始化选中的角色
-        List<Map<String, Object>> roleList = this.baseService.mySelectList("_EXT.Role_QueryRolePage");
+        List<Map<String, Object>> roleList = roleExtMapper.queryRolePage(null);
         for (Map<String, Object> m : roleList) {
             m.put("pId", "-1");
             m.put("isParent", "false");
@@ -145,12 +156,12 @@ public class AdminUserAction extends BaseAction {
         }
 
         //装饰zTreeNode
-        Map<String, String> pm = new HashMap<String, String>();
+        Map<String, Object> pm = new HashMap();
         pm.put("onlyLeafCanCheck", "yes");
         pm.put("openAll", "yes");
         pm.put("checkedIds", sb.toString());
         pm.put("withoutUrl", "y");
-        String zTreeNodeJsonResource = this.menuService.queryMenuSub(pm);
+        String zTreeNodeJsonResource = this.eossMenuService.queryMenuSub(pm);
 
         request.setAttribute("zTreeNodeJson", zTreeNodeJson);
         request.setAttribute("zTreeNodeJsonResource", zTreeNodeJsonResource);
@@ -165,11 +176,11 @@ public class AdminUserAction extends BaseAction {
         String passwordMd5 = new Md5Hash(user.getPassword(), salt, 1).toString();
 
         //更新用户信息
-        AdminUser adminUser = this.baseService.mySelectOne(AdminUser.SelectByPk, user.getId());
+        AdminUser adminUser = adminUserService.selectByPk(user.getId());
         adminUser.setUsername(user.getUsername());
         adminUser.setSalt(salt);
         adminUser.setPassword(passwordMd5);
-        this.baseService.myUpdate(AdminUser.Update, adminUser);
+        adminUserService.update(adminUser);
 
         //更新角色
         String roleIds = request.getParameter("roleIds");
@@ -181,7 +192,7 @@ public class AdminUserAction extends BaseAction {
         request.getRequestDispatcher("/system/user/toList.ac").forward(request, response);
 
         //更新用户所拥有的菜单缓存，一但用户更新了自己所拥有的菜单，再刷新左侧的菜单时，菜单可以及时的更新
-        String menuTreeIdsOfUser = this.menuService.queryMenuTreeIdsOfUser(adminUser);
+        String menuTreeIdsOfUser = this.eossMenuService.txQueryMenuTreeIdsOfUser(adminUser);
         request.getSession().setAttribute(Const.LOGIN_MENU_TREE_IDS_KEY, menuTreeIdsOfUser);
 
         //更新shiro AuthenticationInfo and AuthorizationInfo in local cache
@@ -244,10 +255,10 @@ public class AdminUserAction extends BaseAction {
 
     @RequestMapping(value = "/delete")
     public void txDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String id = request.getParameter("id");
+        Integer id = ServletRequestUtils.getIntParameter(request, "id");
 
         //删除自己
-        this.baseService.myDelete(AdminUser.DeleteByPk, id);
+        adminUserService.deleteByPk(id);
 
         //删除对应的角色
         this.baseService.jdDelete("delete from admin_user_role where user_id = ?", id);
@@ -259,11 +270,11 @@ public class AdminUserAction extends BaseAction {
     }
 
     //getter and setter
-    public BaseService getBaseDao() {
+    public BaseDao getBaseDao() {
         return baseService;
     }
 
-    public void setBaseDao(BaseService baseDao) {
+    public void setBaseDao(BaseDao baseDao) {
         this.baseService = baseDao;
     }
 

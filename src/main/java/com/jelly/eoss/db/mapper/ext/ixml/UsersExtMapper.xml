@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="_EXT">
+<mapper namespace="com.jelly.eoss.db.mapper.ext.iface.UserExtMapper">
 	<!-- 非工具生成的单表的SQL都以下划线开头 -->
 	
 	<sql id="User_QueryUser_Body">
@@ -15,11 +15,11 @@
 			and m.create_datetime &lt;= CONCAT('${createTimeEnd}', ' 23:59:59')
 		</if>
 	</sql>
-	<select id="User_QueryUser_Count" parameterType="HashMap" resultType="Integer">
+	<select id="queryUserCount" parameterType="HashMap" resultType="Integer">
 		select count(*)
 		<include refid="User_QueryUser_Body"/>
 	</select>
-	<select id="User_QueryUser_Page" parameterType="HashMap" resultType="LinkedHashMap">
+	<select id="queryUserPage" parameterType="HashMap" resultType="HashMap">
 		select
 		id as "id",
 		username as "username",
@@ -27,5 +27,6 @@
 		salt as "salt",
 		create_datetime as "createDatetime"
 		<include refid="User_QueryUser_Body"/>
+		limit #{rb.offset}, #{rb.limit}
 	</select>
 </mapper>

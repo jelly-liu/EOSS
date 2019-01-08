@@ -1,8 +1,8 @@
 package com.jelly.eoss.web.admin;
 
-import com.jelly.eoss.dao.BaseService;
+import com.jelly.eoss.dao.BaseDao;
 import com.jelly.eoss.db.entity.AdminUser;
-import com.jelly.eoss.service.MenuService;
+import com.jelly.eoss.service.EossMenuService;
 import com.jelly.eoss.servlet.ICodeServlet;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.web.BaseAction;
@@ -25,10 +25,10 @@ public class AdminLoginAction extends BaseAction {
     private static final Logger log = LoggerFactory.getLogger(AdminLoginAction.class);
 
 	@Resource
-	private BaseService baseService;
+	private BaseDao baseService;
 
 	@Resource
-	MenuService menuService;
+    EossMenuService eossMenuService;
 
     @RequestMapping(value = "/toLogin")
     public void toLoginIn(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -80,7 +80,7 @@ public class AdminLoginAction extends BaseAction {
             }
 
 			AdminUser user = (AdminUser)subject.getPrincipal();
-			String menuTreeIdsOfUser = this.menuService.queryMenuTreeIdsOfUser(user);
+			String menuTreeIdsOfUser = this.eossMenuService.txQueryMenuTreeIdsOfUser(user);
 
 			request.getSession().setAttribute(Const.LOGIN_SESSION_KEY, user);
 			request.getSession().setAttribute(Const.LOGIN_MENU_TREE_IDS_KEY, menuTreeIdsOfUser);
@@ -105,11 +105,11 @@ public class AdminLoginAction extends BaseAction {
 
 	//getter and setter
 
-	public BaseService getBaseDao() {
+	public BaseDao getBaseDao() {
 		return baseService;
 	}
 
-	public void setBaseDao(BaseService baseDao) {
+	public void setBaseDao(BaseDao baseDao) {
 		this.baseService = baseDao;
 	}
 }
