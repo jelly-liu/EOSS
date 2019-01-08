@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : utf-8
 
- Date: 01/07/2019 15:00:12 PM
+ Date: 01/08/2019 21:47:33 PM
 */
 
 SET NAMES utf8;
@@ -31,7 +31,7 @@ CREATE TABLE `admin_filterchain_definition` (
 --  Records of `admin_filterchain_definition`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_filterchain_definition` VALUES ('1', '[urls]\r\n/static/** = anon\r\n/to? = anon\r\n/? = anon\r\n/system/**/*add* = authc, rolesOr[系统管理员]\r\n/system/**/*update* = authc, rolesOr[系统管理员]\r\n/system/**/*delete* = authc, rolesOr[系统管理员]\r\n/** = authc');
+INSERT INTO `admin_filterchain_definition` VALUES ('1', '[urls]\r\n/static/** = anon\r\n/toLogin = anon\r\n/login = anon\r\n/system/**/*add* = authc, rolesOr[系统管理员]\r\n/system/**/*update* = authc, rolesOr[系统管理员]\r\n/system/**/*delete* = authc, rolesOr[系统管理员]\r\n/** = authc');
 COMMIT;
 
 -- ----------------------------
@@ -153,7 +153,8 @@ COMMIT;
 DROP TABLE IF EXISTS `admin_user_role`;
 CREATE TABLE `admin_user_role` (
   `USER_ID` int(11) NOT NULL,
-  `ROLE_ID` int(11) NOT NULL
+  `ROLE_ID` int(11) NOT NULL,
+  PRIMARY KEY (`USER_ID`,`ROLE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
