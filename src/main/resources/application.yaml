@@ -1,0 +1,8 @@
+server:
+  port: 8080
+
+ggcai:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/eoss?useUnicode=true&amp;characterEncoding=utf8
+    username: root
+    password: sa
