@@ -1,6 +1,6 @@
 # Need more help?
 [wiki help](https://github.com/jelly-liu/EOSS/wiki)  
-# EOSS SPRING BOOT WITH THYMELEAF
+# EOSS SPRING BOOT - Highly Recommand
 [eoss-spring-boot](https://github.com/jelly-liu/eoss-spring-boot)  
 --spring boot  
 --spring thymeleaf to displace jsp  
