@@ -1,5 +1,9 @@
 # Need more help?
 [wiki help](https://github.com/jelly-liu/EOSS/wiki)  
+[eoss-spring-boot](https://github.com/jelly-liu/eoss-spring-boot)  
+--spring boot  
+--spring thymeleaf to displace jsp  
+--shiro
 # EOSS With Apache Shiro
 RBAC(Role Based Access Control) Project Use Spring MyBatis MySQL  
 User, Role, Permission, Resource, Menu, FilterChainDefinition  
