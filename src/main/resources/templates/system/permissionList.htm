@@ -1,0 +1,52 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/include/head.htm::commonHeader"></head>
+  		<script src="/static/js/system/permissionList.js" th:attrappend="src='?time='+${T(java.lang.System).currentTimeMillis()}" type="text/javascript"></script>
+	</head>
+
+	<body>
+		<form id="submitForm" action="/system/permission/toList" class="eossForm" method="post">
+			<input type="hidden" id="page" name="page" th:value="${pager.page}"/>
+			<table class="eossFromTable">
+				<tr class="panel-header">
+					<td colspan="99">权限查询</td>
+				</tr>
+				<tr>
+					<td align="left">
+						ID：<input type="text" name="id" th:value="${id}"/>&nbsp;&nbsp;&nbsp;&nbsp;
+						权限名称：<input type="text" name="name" th:value="${name}"/>&nbsp;&nbsp;&nbsp;&nbsp;
+						<a id="submitBtn" href="###" class="easyui-linkbutton">查询</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+		
+		<!-- display data list -->
+		<table th:if="${pager != null && pager.data != null && pager.data.size() gt 0}" class="eossDataTable tableXCenter">
+			<thead>
+			<tr class="datagrid-header">
+                <th>序号</th>
+                <th>ID</th>
+                <th>权限名称(点击可编辑)</th>
+                <th>操作</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="it,st : ${pager.data}" th:class="${st.odd}? 'odd' : 'even'">
+                <td th:text="${pager.rowStart + st.index}"></td>
+                <td th:text="${it.id}"></td>
+                <td th:text="${it.name}" contenteditable="true"></td>
+                <td>
+                    <a href="###" type="delete" th:value="${it.id}">删除</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="###" type="update" th:value="${it.id}">更新</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="###" type="add" th:value="${it.id}">添加</a>
+                </td>
+			</tr>
+			</tbody>
+		</table>
+		<!-- pagination -->
+		<table th:replace="/include/pagerFooter.htm::content('submitForm', 'page', ${pager == null ? 1 : pager.totalPage})"></table>
+		
+	</body>
+</html>

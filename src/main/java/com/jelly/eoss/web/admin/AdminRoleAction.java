@@ -1,11 +1,11 @@
 package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.db.entity.*;
+import com.jelly.eoss.db.mapper.basic.iface.AdminPermissionMapper;
+import com.jelly.eoss.db.mapper.basic.iface.AdminRoleMapper;
+import com.jelly.eoss.db.mapper.basic.iface.AdminRolePermissionMapper;
+import com.jelly.eoss.db.mapper.basic.iface.AdminUserRoleMapper;
 import com.jelly.eoss.db.mapper.business.iface.RoleExtMapper;
-import com.jelly.eoss.service.basic.AdminPermissionService;
-import com.jelly.eoss.service.basic.AdminRolePermissionService;
-import com.jelly.eoss.service.basic.AdminRoleService;
-import com.jelly.eoss.service.basic.AdminUserRoleService;
 import com.jelly.eoss.shiro.EossAuthorizingRealm;
 import com.jelly.eoss.util.*;
 import com.jelly.eoss.web.BaseAction;
@@ -30,13 +30,13 @@ public class AdminRoleAction extends BaseAction {
     private static final Logger log = LoggerFactory.getLogger(AdminRoleAction.class);
 
     @Autowired
-    private AdminRoleService roleService;
+    private AdminRoleMapper roleMapper;
     @Autowired
-    private AdminPermissionService permissionService;
+    private AdminPermissionMapper permissionMapper;
     @Autowired
-    private AdminRolePermissionService rolePermissionService;
+    private AdminRolePermissionMapper rolePermissionMapper;
     @Autowired
-    private AdminUserRoleService userRoleService;
+    private AdminUserRoleMapper userRoleMapper;
     @Autowired
     private RoleExtMapper roleExtMapper;
     @Autowired
@@ -71,12 +71,12 @@ public class AdminRoleAction extends BaseAction {
 
         request.setAttribute("pager", pager);
         this.resetAllRequestParams(request);
-        return new ModelAndView("/system/roleList.jsp");
+        return new ModelAndView("/system/roleList.htm");
     }
 
     @RequestMapping(value = "/toAdd")
     public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        List<AdminPermission> permissionList = permissionService.select(null);
+        List<AdminPermission> permissionList = permissionMapper.select(null);
 
         Map<String, List<AdminPermission>> permMap = new TreeMap<>();
         for (AdminPermission perm : permissionList) {
@@ -92,36 +92,36 @@ public class AdminRoleAction extends BaseAction {
         }
 
         for (List<AdminPermission> list : permMap.values()) {
-            Collections.sort(list, (o1, o2) -> o1.getName().compareTo(o2.getName()));
+            Collections.sort(list, Comparator.comparing(AdminPermission::getName));
         }
 
         request.setAttribute("permissionLList", permMap.values());
-        return new ModelAndView("/system/roleAdd.jsp");
+        return new ModelAndView("/system/roleAdd.htm");
     }
 
     @RequestMapping(value = "/add")
     public ModelAndView txAdd(HttpServletRequest request, HttpServletResponse response, AdminRole role) throws Exception {
-        int id = ComUtil.QueryNextID("id", "admin_role");
+        int id = ComUtil.QueryNextID("id", AdminRole.TABLE_NAME);
         String permissionIdsStr = request.getParameter("permissionIds");
 
         //插入角色
         role.setId(id);
         role.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
-        roleService.insert(role);
+        roleMapper.insert(role);
 
         //插入角色对应的权限
         this.batchInsertRolePermission(role.getId(), permissionIdsStr);
 
-        request.getRequestDispatcher("/system/role/toList").forward(request, response);
-        return null;
+        ModelAndView modelAndView = new ModelAndView("redirect:/system/role/toList?id=" + role.getId());
+        return modelAndView;
     }
 
     @RequestMapping(value = "/delete")
     public void txDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Integer id = ServletRequestUtils.getIntParameter(request, "id");
-        roleService.deleteByPk(id);
-        rolePermissionService.deleteByPojo(new AdminRolePermission().setRoleId(id));
-        userRoleService.deleteByPojo(new AdminUserRole().setRoleId(id));
+        roleMapper.deleteByPk(id);
+        rolePermissionMapper.deleteByPojo(new AdminRolePermission().setRoleId(id));
+        userRoleMapper.deleteByPojo(new AdminUserRole().setRoleId(id));
 
         //更新shiro AuthenticationInfo and AuthorizationInfo in local cache
         AdminUser u = SecurityUtils.getSubject().getPrincipals().oneByType(AdminUser.class);
@@ -134,7 +134,7 @@ public class AdminRoleAction extends BaseAction {
     public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Integer id = ServletRequestUtils.getIntParameter(request, "id");
 
-        AdminRole role = roleService.selectByPk(id);
+        AdminRole role = roleMapper.selectByPk(id);
         List<Map<String, Object>> permissionList = roleExtMapper.queryAllPermissionWithRole(role.getId());
 
         Map<String, List<Map<String, Object>>> permMap = new TreeMap<>();
@@ -151,12 +151,12 @@ public class AdminRoleAction extends BaseAction {
         }
 
         for (List<Map<String, Object>> list : permMap.values()) {
-            Collections.sort(list, (o1, o2) -> o1.get("name").toString().compareTo(o2.get("name").toString()));
+            Collections.sort(list, Comparator.comparing(o -> o.get("name").toString()));
         }
 
         request.setAttribute("role", role);
         request.setAttribute("permissionLList", permMap.values());
-        return new ModelAndView("/system/roleUpdate.jsp");
+        return new ModelAndView("/system/roleUpdate.htm");
     }
 
     @RequestMapping(value = "/update")
@@ -164,9 +164,9 @@ public class AdminRoleAction extends BaseAction {
         String permissionIdsStr = request.getParameter("permissionIds");
 
         //更新角色
-        AdminRole r = roleService.selectByPk(role.getId());
+        AdminRole r = roleMapper.selectByPk(role.getId());
         r.setName(role.getName());
-        roleService.update(r);
+        roleMapper.update(r);
 
         //更新角色原有权限
         this.batchInsertRolePermission(role.getId(), permissionIdsStr);
@@ -176,12 +176,12 @@ public class AdminRoleAction extends BaseAction {
         AdminUser u = SecurityUtils.getSubject().getPrincipals().oneByType(AdminUser.class);
         eossAuthorizingRealm.refreshAuthInfo(SecurityUtils.getSubject().getPrincipals(), u);
 
-        return null;
+        return new ModelAndView("redirect:/system/role/toList?id=" + role.getId());
     }
 
     //批量插入角色对应的权限，只选择用JdbcTemplate的批量更新方法，以保证高性能
     private void batchInsertRolePermission(int roleId, String permissionIdsStr) {
-        rolePermissionService.deleteByPojo(new AdminRolePermission().setRoleId(roleId));
+        rolePermissionMapper.deleteByPojo(new AdminRolePermission().setRoleId(roleId));
 
         //没有选择权限，直接返回
         if (permissionIdsStr == null || permissionIdsStr.trim().equals("")) {
@@ -191,12 +191,9 @@ public class AdminRoleAction extends BaseAction {
         //插入权限
         String[] permissionIds = permissionIdsStr.split(",");
         if (permissionIds.length > 0) {
-            String sqlInsert = "insert into admin_role_permission (role_id, permission_id) values (?, ?)";
-            Object[] objs = null;
-            List<Object[]> batchParams = new ArrayList<Object[]>();
             for (String permIdStr : permissionIds) {
                 Integer permId = Integer.valueOf(permIdStr);
-                rolePermissionService.insert(new AdminRolePermission().setRoleId(roleId).setPermissionId(permId));
+                rolePermissionMapper.insert(new AdminRolePermission().setRoleId(roleId).setPermissionId(permId));
             }
         }
     }

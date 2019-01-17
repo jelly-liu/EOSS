@@ -1,0 +1,35 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:fragment="commonHeader">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <!-- Base -->
+        <link href="/static/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
+        <link href="/static/css/base.css" rel="stylesheet"/>
+        <script src="/static/jquery/jquery-1.8.3.js" type="text/javascript"></script>
+        
+        <!-- global javascripte variable -->
+        <script type="text/javascript">
+            var EossGlobal = {
+                basePath : '[[${application.BASE_PATH}]]',
+                projectName : '[[${application.PROJECT_NAME}]]',
+                projectVersion : '[[${application.PROJECT_VERSION}]]'
+            };
+            // alert(EossGlobal.projectName);
+        </script>
+        
+        <!-- jquery easyui -->
+        <link href="/static/jquery/easyui/themes/bootstrap/easyui.css" rel="stylesheet" type="text/css" />
+        <link href="/static/jquery/easyui/themes/icon.css" rel="stylesheet" type="text/css" />
+        <script src="/static/jquery/easyui/jquery.easyui.min.js" type="text/javascript"></script>
+        <script src="/static/jquery/easyui/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
+        
+        <!-- jquery ztree -->
+        <link href="/static/jquery/zTree/css/zTreeStyle.css" rel="stylesheet"/>
+        <link href="/static/jquery/zTree/css/zTreeStyle_eoss.css" rel="stylesheet"/>
+        <script src="/static/jquery/zTree/jquery.ztree.core-3.5.min.js" type="text/javascript"></script>
+        <script src="/static/jquery/zTree/jquery.ztree.excheck-3.5.min.js" type="text/javascript"></script>
+        
+        <!-- other util -->
+        <script src="/static/js/layout/utilFun.js" type="text/javascript"></script>
+    </head>
+</html>

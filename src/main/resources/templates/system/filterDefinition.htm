@@ -1,0 +1,33 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/include/head.htm::commonHeader"></head>
+		<%@ include file="/WEB-INF/pages/include/head.htm"%>
+  		<script src="/static/js/system/filterDefinition.js" th:attrappend="src='?time='+${T(java.lang.System).currentTimeMillis()}" type="text/javascript"></script>
+		<style type="text/css">
+			#definition{
+				font-size: 14px;
+			}
+		</style>
+	</head>
+
+	<body>
+	<form id="submitForm" action="/system/filterDefinition/update" class="eossForm" method="post">
+		<table class="eossFromTable">
+			<tr class="panel-header">
+				<td colspan="99">安全过滤规则</td>
+			</tr>
+			<tr>
+				<td align="right" width="100">定义：</td>
+				<td>
+					<textarea th:text="${filterDefinition.definition}" id="definition" name="definition" style="width: 100%; height: 350px; text-align: left"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<a id="submitBtn" href="###" class="easyui-linkbutton">提交</a>
+				</td>
+			</tr>
+		</table>
+	</form>
+	</body>
+</html>

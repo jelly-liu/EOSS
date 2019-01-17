@@ -1,9 +1,9 @@
 package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.db.entity.AdminMenu;
+import com.jelly.eoss.db.mapper.basic.iface.AdminMenuMapper;
 import com.jelly.eoss.db.mapper.business.iface.MenuExtMapper;
-import com.jelly.eoss.service.basic.AdminMenuService;
-import com.jelly.eoss.service.business.EossMenuService;
+import com.jelly.eoss.service.EossMenuService;
 import com.jelly.eoss.util.ComUtil;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.util.DateUtil;
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +35,7 @@ public class AdminMenuAction extends BaseAction {
 	@Autowired
 	private EossMenuService eossMenuService;
 	@Autowired
-	private AdminMenuService menuService;
+	private AdminMenuMapper menuMapper;
 	@Autowired
 	private MenuExtMapper menuExtMapper;
 
@@ -80,7 +81,7 @@ public class AdminMenuAction extends BaseAction {
         log.debug(jsonZTree);
 		request.setAttribute("jsonZTree", jsonZTree);
 		
-		return new ModelAndView("/layout/west.jsp");
+		return new ModelAndView("/layout/west.htm");
 	}
 	
 	@RequestMapping(value = "/querySubAjax")
@@ -109,26 +110,27 @@ public class AdminMenuAction extends BaseAction {
 		
 		request.setAttribute("pager", pager);
 		this.resetAllRequestParams(request);
-		return new ModelAndView("/system/menuList.jsp");
+		ModelAndView modelAndView = new ModelAndView("/system/menuList.htm");
+		return modelAndView;
 	}
 
 	@RequestMapping(value = "/toAdd")
 	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws ServletException, IOException{
-		return new ModelAndView("/system/menuAdd.jsp");
+		return new ModelAndView("/system/menuAdd.htm");
 	}
 	
 	@RequestMapping(value = "/add")
-	public ModelAndView txAdd(HttpServletRequest request, HttpServletResponse response, AdminMenu menu) throws ServletException, IOException{
-		int id = ComUtil.QueryNextID("id", "admin_menu");
+	public ModelAndView txAdd(HttpServletRequest request, HttpServletResponse response, AdminMenu menu, RedirectAttributes redirectAttributes) throws ServletException, IOException{
+		int id = ComUtil.QueryNextID("id", AdminMenu.TABLE_NAME);
 		menu.setId(id);
 		menu.setLeaf(0);
 		menu.setPath(menu.getPath() + "#" + id);
 		menu.setCreateDatetime(DateUtil.GetCurrentDateTime(true));
-		menuService.insert(menu);
+		menuMapper.insert(menu);
 
-		request.getRequestDispatcher("/system/menu/toList").forward(request, response);
-		
-		return null;
+        redirectAttributes.addAttribute("id", menu.getId());
+		ModelAndView view = new ModelAndView("redirect:/system/menu/toList");
+		return view;
 	}
 	
 	@RequestMapping(value = "/delete")
@@ -143,9 +145,9 @@ public class AdminMenuAction extends BaseAction {
 		
 //		Log.Debug("id:" + id);
 		//有子菜单，不能删除
-		int total = menuService.selectCount(new AdminMenu().setPid(id));
+		int total = menuMapper.selectCount(new AdminMenu().setPid(id));
 		if(total == 0){
-			menuService.deleteByPk(id);
+			menuMapper.deleteByPk(id);
 			response.getWriter().write("y");
 		}else{
 			response.getWriter().write("请先删除或移动，该菜单的所有子菜单和权限");
@@ -155,7 +157,7 @@ public class AdminMenuAction extends BaseAction {
 	@RequestMapping(value = "/toUpdate")
 	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		Integer id = ServletRequestUtils.getIntParameter(request, "id");
-		AdminMenu mu = menuService.selectByPk(id);
+		AdminMenu mu = menuMapper.selectByPk(id);
 		
 		List<Map<String, Object>> subMenuList = menuExtMapper.queryAllSubMenu(mu.getId());
 		//将所有id值拼接成1,2,3,4,5,6的形式
@@ -180,7 +182,7 @@ public class AdminMenuAction extends BaseAction {
 		request.setAttribute("menu", mu);
 		request.setAttribute("jsonZTree", jsonStr);
 		
-		return new ModelAndView("/system/menuUpdate.jsp");
+		return new ModelAndView("/system/menuUpdate.htm");
 	}
 	
 	@RequestMapping(value = "/update")
@@ -191,10 +193,9 @@ public class AdminMenuAction extends BaseAction {
 		}
 		
 		menu.setLeaf(0);
-		menuService.update(menu);
+		menuMapper.update(menu);
 
-        request.getRequestDispatcher("/system/menu/toList").forward(request, response);
-
-		return null;
+        ModelAndView modelAndView = new ModelAndView("redirect:/system/menu/toList?id=" + menu.getId());
+		return modelAndView;
 	}
 }

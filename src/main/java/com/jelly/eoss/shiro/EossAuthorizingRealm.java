@@ -1,9 +1,9 @@
 package com.jelly.eoss.shiro;
 
 import com.jelly.eoss.db.entity.AdminUser;
+import com.jelly.eoss.db.mapper.basic.iface.AdminUserMapper;
 import com.jelly.eoss.db.mapper.business.iface.PermissionExtMapper;
 import com.jelly.eoss.db.mapper.business.iface.RoleExtMapper;
-import com.jelly.eoss.service.basic.AdminUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
@@ -17,6 +17,7 @@ import org.apache.shiro.util.SimpleByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class EossAuthorizingRealm extends AuthorizingRealm {
     private static final Logger log = LoggerFactory.getLogger(EossAuthorizingRealm.class);
 
     @Autowired
-    AdminUserService userService;
+    AdminUserMapper userMapper;
     @Autowired
     RoleExtMapper roleExtMapper;
     @Autowired
@@ -80,7 +81,7 @@ public class EossAuthorizingRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
 
         //only do check out user is exit or not, do not need do password matching
-        AdminUser user = userService.selectOne(new AdminUser().setUsername(token.getUsername()));
+        AdminUser user = userMapper.selectOne(new AdminUser().setUsername(token.getUsername()));
         if(user == null){
             throw new UnknownAccountException("can not find user, name=" + token.getUsername());
         }

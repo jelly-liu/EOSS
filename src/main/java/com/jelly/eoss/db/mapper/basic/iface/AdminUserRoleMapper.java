@@ -4,11 +4,10 @@
 */
 package com.jelly.eoss.db.mapper.basic.iface;
 
-import com.jelly.eoss.db.entity.AdminUserRole;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import com.jelly.eoss.db.entity.AdminUserRole;
 
 @Mapper
 @Repository
@@ -18,8 +17,10 @@ public interface AdminUserRoleMapper {
 
     public List<AdminUserRole> select(AdminUserRole adminUserRole);
     public List<AdminUserRole> selectPage(AdminUserRole adminUserRole);
+    public List<AdminUserRole> selectAll();
     public Integer selectCount(AdminUserRole adminUserRole);
     public AdminUserRole selectByPk(Integer userId, Integer roleId);
+    public AdminUserRole selectOne(AdminUserRole adminUserRole);
     public void insert(AdminUserRole adminUserRole);
     public void update(AdminUserRole adminUserRole);
     public void updateWithNull(AdminUserRole adminUserRole);

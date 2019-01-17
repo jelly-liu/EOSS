@@ -1,0 +1,47 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="/include/head.htm::commonHeader"></head>
+        <title>登录页面</title>
+        <script src="/static/js/login.js" th:attrappend="src='?time='+${T(java.lang.System).currentTimeMillis()}" type="text/javascript"></script>
+        <style type="text/css">
+            body{
+                background: #99cdff url('/static/images/osx00.png') repeat;
+            }
+            .eossFromTable td{
+                border:0px;
+            }
+        </style>
+	</head>
+	<body>
+		<div id="loginFormDiv">
+		    <form id="loginForm" action="/static/login/loginIn" method="post">
+		    	<table id="loginTable" class="eossFromTable">
+					<tr>
+						<td align="right" width="120">用户名：</td>
+						<td>
+							<input type="text" id="name" name="name" value="admin"/>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">密码：</td>
+						<td>
+							<input type="text" id="pwd" name="pwd" value="111111"/>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">验证码：</td>
+						<td>
+							<input type="text" id="vCode" name="vCode"/>
+						</td>
+					</tr>
+					<tr>
+						<td align="right"></td>
+						<td>
+							<img id="icodeImg" class="icodeImg" src="/static/vCode.jpg" title="点击图片刷新验证码"/>
+						</td>
+					</tr>
+				</table>
+		    </form>
+		</div>
+	</body>
+</html>

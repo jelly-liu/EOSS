@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : utf-8
 
- Date: 01/08/2019 21:47:33 PM
+ Date: 01/16/2019 19:25:34 PM
 */
 
 SET NAMES utf8;
@@ -31,7 +31,7 @@ CREATE TABLE `admin_filterchain_definition` (
 --  Records of `admin_filterchain_definition`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_filterchain_definition` VALUES ('1', '[urls]\r\n/static/** = anon\r\n/toLogin = anon\r\n/login = anon\r\n/system/**/*add* = authc, rolesOr[系统管理员]\r\n/system/**/*update* = authc, rolesOr[系统管理员]\r\n/system/**/*delete* = authc, rolesOr[系统管理员]\r\n/** = authc');
+INSERT INTO `admin_filterchain_definition` VALUES ('1', '[urls]\n/static/** = anon\n/toLogin = anon\n/login = anon\n/system/**/*add* = authc, rolesOr[系统管理员]\n/system/**/*update* = authc, rolesOr[系统管理员]\n/system/**/*delete* = authc, rolesOr[系统管理员]\n/** = authc');
 COMMIT;
 
 -- ----------------------------
@@ -55,7 +55,7 @@ CREATE TABLE `admin_menu` (
 --  Records of `admin_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_menu` VALUES ('1', '-1', '菜单根目录', '0', '--', '0', null, null, '2012-12-15 18:08:07'), ('2', '1', '系统管理', '0', '1#2', '1', null, null, '2012-12-13 13:46:00'), ('3', '1', '业务管理', '0', '1#3', '1', null, null, '2012-12-13 13:53:10'), ('4', '2', '菜单管理', '0', '1#2#4', '2', null, null, '2012-12-13 16:00:02'), ('5', '2', '用户管理', '0', '1#2#5', '2', null, null, '2012-12-13 16:00:02'), ('6', '2', '角色管理', '0', '1#2#6', '2', null, null, '2012-12-13 16:00:02'), ('7', '4', '菜单添加', '1', '1#2#4#7', '3', '/system/menu/toAdd', 'centerFrame', '2012-12-13 16:00:02'), ('8', '2', '权限管理', '0', '1#2#8', '2', null, null, '2012-12-16 13:59:33'), ('9', '4', '菜单查询', '1', '1#2#4#9', '3', '/system/menu/toList', 'centerFrame', '2012-12-16 14:15:20'), ('10', '8', '权限添加', '1', '1#2#8#10', '3', '/system/permission/toAdd', 'centerFrame', '2012-12-20 14:58:29'), ('13', '8', '权限查询', '1', '1#2#8#13', '3', '/system/permission/toList', 'centerFrame', '2012-12-20 16:28:03'), ('14', '6', '角色添加', '1', '1#2#6#14', '3', '/system/role/toAdd', 'centerFrame', '2012-12-22 12:36:14'), ('15', '6', '角色查询', '1', '1#2#6#15', '3', '/system/role/toList', 'centerFrame', '2012-12-22 14:29:28'), ('16', '5', '用户添加', '1', '1#2#5#16', '3', '/system/user/toAdd', 'centerFrame', '2012-12-22 18:34:26'), ('17', '5', '用户查询', '1', '1#2#5#17', '3', '/system/user/toList', 'centerFrame', '2012-12-22 19:56:13'), ('18', '2', '资源管理', '0', '1#2#18', '2', null, null, '2016-10-21 11:43:59'), ('19', '18', '资源添加', '1', '1#2#18#19', '3', '/system/resource/toAdd', 'centerFrame', '2016-10-21 11:46:46'), ('20', '18', '资源查询', '1', '1#2#18#20', '3', '/system/resource/toList', 'centerFrame', '2016-10-21 11:47:05'), ('21', '2', '安全规则', '0', '1#2#21', '2', null, null, '2016-10-25 12:27:00'), ('22', '21', '规则更新', '1', '1#2#21#22', '3', '/system/filterDefinition/toUpdate', 'centerFrame', '2016-10-25 12:28:26');
+INSERT INTO `admin_menu` VALUES ('1', '-1', '菜单根目录', '0', '--', '0', null, null, '2012-12-15 18:08:07'), ('2', '1', '系统管理', '0', '1#2', '1', null, null, '2012-12-13 13:46:00'), ('3', '1', '业务管理', '0', '1#3', '1', null, null, '2012-12-13 13:53:10'), ('4', '2', '菜单管理', '0', '1#2#4', '2', null, null, '2012-12-13 16:00:02'), ('5', '2', '用户管理', '0', '1#2#5', '2', null, null, '2012-12-13 16:00:02'), ('6', '2', '角色管理', '0', '1#2#6', '2', null, null, '2012-12-13 16:00:02'), ('7', '4', '菜单添加', '1', '1#2#4#7', '3', '/system/menu/toAdd', 'centerFrame', '2012-12-13 16:00:02'), ('8', '2', '权限管理', '0', '1#2#8', '2', null, null, '2012-12-16 13:59:33'), ('9', '4', '菜单查询', '1', '1#2#4#9', '3', '/system/menu/toList', 'centerFrame', '2012-12-16 14:15:20'), ('10', '8', '权限添加', '1', '1#2#8#10', '3', '/system/permission/toAdd', 'centerFrame', '2012-12-20 14:58:29'), ('13', '8', '权限查询', '1', '1#2#8#13', '3', '/system/permission/toList', 'centerFrame', '2012-12-20 16:28:03'), ('14', '6', '角色添加', '1', '1#2#6#14', '3', '/system/role/toAdd', 'centerFrame', '2012-12-22 12:36:14'), ('15', '6', '角色查询', '1', '1#2#6#15', '3', '/system/role/toList', 'centerFrame', '2012-12-22 14:29:28'), ('16', '5', '用户添加', '1', '1#2#5#16', '3', '/system/user/toAdd', 'centerFrame', '2012-12-22 18:34:26'), ('17', '5', '用户查询', '1', '1#2#5#17', '3', '/system/user/toList', 'centerFrame', '2012-12-22 19:56:13'), ('18', '2', '资源管理', '0', '1#2#18', '2', null, null, '2016-10-21 11:43:59'), ('19', '18', '资源添加', '1', '1#2#18#19', '3', '/system/resource/toAdd', 'centerFrame', '2016-10-21 11:46:46'), ('20', '18', '资源查询', '1', '1#2#18#20', '3', '/system/resource/toList', 'centerFrame', '2016-10-21 11:47:05'), ('21', '2', '安全规则', '0', '1#2#21', '2', null, null, '2016-10-25 12:27:00'), ('22', '21', '规则更新', '1', '1#2#21#22', '3', '/system/filterDefinition/toUpdate', 'centerFrame', '2016-10-25 12:28:26'), ('23', '18', 't1231', '0', '1#2#18#23', '3', null, null, '2019-01-12 20:30:39');
 COMMIT;
 
 -- ----------------------------
@@ -72,7 +72,7 @@ CREATE TABLE `admin_permission` (
 --  Records of `admin_permission`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_permission` VALUES ('1', 'menu:add'), ('2', 'menu:list'), ('3', 'menu:delete'), ('5', 'menu:*'), ('6', 'user:*'), ('7', 'user:add'), ('8', 'user:delete'), ('9', 'user:list'), ('10', 'role:*'), ('11', 'role:add'), ('12', 'role:delete'), ('13', 'role:list'), ('14', 'perm:*'), ('15', 'perm:add'), ('16', 'perm:delete'), ('17', 'perm:list'), ('18', 'res:*'), ('19', 'res:add'), ('20', 'res:delete'), ('21', 'res:list'), ('22', 'filterDef:*'), ('23', 'filterDef:update');
+INSERT INTO `admin_permission` VALUES ('1', 'menu:add'), ('2', 'menu:list'), ('3', 'menu:delete'), ('5', 'menu:*'), ('6', 'user:*'), ('7', 'user:add'), ('8', 'user:delete'), ('9', 'user:list'), ('10', 'role:*'), ('11', 'role:add'), ('12', 'role:delete'), ('13', 'role:list'), ('14', 'perm:*'), ('15', 'perm:add'), ('16', 'perm:delete'), ('17', 'perm:list'), ('18', 'res:*'), ('19', 'res:add'), ('20', 'res:delete'), ('21', 'res:list'), ('22', 'filterDef:*');
 COMMIT;
 
 -- ----------------------------
@@ -90,7 +90,7 @@ CREATE TABLE `admin_role` (
 --  Records of `admin_role`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_role` VALUES ('1', '系统管理员', '2012-12-22 16:27:04'), ('2', '系统查看员', '2019-01-06 11:23:39');
+INSERT INTO `admin_role` VALUES ('1', '系统管理员', '2012-12-22 16:27:04'), ('2', '系统查看员', '2019-01-06 11:23:39'), ('3', 't1', '2019-01-12 22:08:12');
 COMMIT;
 
 -- ----------------------------
@@ -106,7 +106,7 @@ CREATE TABLE `admin_role_permission` (
 --  Records of `admin_role_permission`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_role_permission` VALUES ('22', '1'), ('5', '1'), ('14', '1'), ('18', '1'), ('10', '1'), ('6', '1'), ('2', '2'), ('17', '2'), ('21', '2'), ('13', '2'), ('9', '2');
+INSERT INTO `admin_role_permission` VALUES ('22', '1'), ('5', '1'), ('14', '1'), ('18', '1'), ('10', '1'), ('6', '1'), ('2', '2'), ('17', '2'), ('21', '2'), ('13', '2'), ('9', '2'), ('23', '3'), ('1', '3'), ('15', '3'), ('19', '3'), ('11', '3'), ('7', '3');
 COMMIT;
 
 -- ----------------------------

@@ -1,7 +1,7 @@
 package com.jelly.eoss.configuration;
 
 import com.jelly.eoss.db.entity.AdminFilterchainDefinition;
-import com.jelly.eoss.service.basic.AdminFilterchainDefinitionService;
+import com.jelly.eoss.db.mapper.basic.iface.AdminFilterchainDefinitionMapper;
 import com.jelly.eoss.shiro.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
@@ -28,7 +28,7 @@ import java.util.Map;
 public class ShiroConfiguration {
 
     @Autowired
-    private AdminFilterchainDefinitionService filterchainDefinitionService;
+    private AdminFilterchainDefinitionMapper filterchainDefinitionMapper;
 
     @Bean
     public SecureRandomNumberGenerator secureRandomNumberGenerator(){
@@ -75,18 +75,18 @@ public class ShiroConfiguration {
     }
 
     @Bean
-    public EossShiroFilterFactoryBean shiroFilter() throws Exception {
+    public EossShiroFilterFactoryBean shiroFilter() {
         EossShiroFilterFactoryBean shiroFilterFactoryBean = new EossShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager());
         shiroFilterFactoryBean.setLoginUrl("/toLogin");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/401.jsp");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/401.htm");
 
         Map<String, Filter> filters = new LinkedHashMap<>();
         filters.put("rolesOr", rolesOr());
         filters.put("permsOr", permsOr());
         shiroFilterFactoryBean.setFilters(filters);
 
-        AdminFilterchainDefinition filterchainDefinition = filterchainDefinitionService.selectByPk(1);
+        AdminFilterchainDefinition filterchainDefinition = filterchainDefinitionMapper.selectByPk(1);
         shiroFilterFactoryBean.setFilterChainDefinitions(filterchainDefinition.getDefinition());
 
         return shiroFilterFactoryBean;

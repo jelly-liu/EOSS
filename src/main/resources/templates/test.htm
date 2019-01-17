@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+</head>
+<body>
+<h2>用户列表</h2>
+<div>
+    <ul>
+        <li  th:each="user:${userList}">
+            <span th:text="${application.PROJECT_NAME}"></span>-
+            <span th:text="${user.username}"></span>-
+        </li>
+    </ul>
+</div>
+</body>
+</html>

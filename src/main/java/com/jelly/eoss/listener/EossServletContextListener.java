@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 import java.util.Properties;
 
+@WebListener
 public class EossServletContextListener implements ServletContextListener {
 	private static final Logger log = LoggerFactory.getLogger(EossServletContextListener.class);
 
@@ -25,7 +27,7 @@ public class EossServletContextListener implements ServletContextListener {
 			
 			//读取config.properties配置文件中的信息，并写入到CONSTANT类中
 			Properties config = new Properties();
-			config.load(servletContext.getResourceAsStream("/WEB-INF/classes/config.properties"));
+			config.load(EossServletContextListener.class.getClassLoader().getResourceAsStream("config.properties"));
 
 			servletContext.setAttribute("BASE_PATH", Const.BASE_PATH);
 			Const.PROJECT_NAME = config.getProperty("PROJECT_NAME").trim();

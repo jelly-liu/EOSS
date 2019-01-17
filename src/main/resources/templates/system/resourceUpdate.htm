@@ -1,0 +1,55 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/include/head.htm::commonHeader"></head>
+  		<script src="/static/js/system/resourceUpdate.js" th:attrappend="src='?time='+${T(java.lang.System).currentTimeMillis()}" type="text/javascript"></script>
+  		<style type="text/css">
+  			#zTreeNodeJson{
+  				display:none;
+  			}
+  		</style>
+	</head>
+
+	<body>
+		<form id="submitForm" action="/system/resource/update" class="eossForm" method="post">
+			<input type="hidden" id="menuId" name="id" th:value="${menu.id}"/>
+			<input type="hidden" id="menuLev" name="lev" th:value="${menu.lev}"/>
+			<input type="hidden" id="menuPath" name="path" th:value="${menu.path}"/>
+			<table class="eossFromTable">
+				<tr class="panel-header">
+					<td colspan="99">资源更新</td>
+				</tr>
+				<tr>
+					<td align="right" width="100">资源名称：</td>
+					<td>
+						<input type="text" id="menuName" name="name" th:value="${menu.name}"/>
+					</td>
+				</tr>
+				<tr>
+					<td align="right" width="100">资源目标：</td>
+					<td>
+						<input type="text" id="menuTarget" name="target" th:value="${menu.target}"/>&nbsp;&nbsp;例如：_blank, _self, northFrame, southFrame, westFrame, centerFrame
+					</td>
+				</tr>
+				<tr>
+					<td align="right" width="100">资源地址：</td>
+					<td>
+						<input type="text" class="inputMid" id="menuUrl" name="url" th:value="${menu.url}"/>
+					</td>
+				</tr>
+				<tr>
+					<td align="right" width="100">所属菜单：</td>
+					<td>
+						<div id="zTreeNodeJson" th:text="${zTreeNodeJson}"></div>
+						<input type="hidden" id="menuPid" name="pid"/>
+						<ul id="zTreeUL" class="ztree"></ul>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<a id="submitBtn" href="###" class="easyui-linkbutton">提交</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>

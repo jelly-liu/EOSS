@@ -4,7 +4,11 @@
 */
 package com.jelly.eoss.db.entity;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 public class AdminPermission extends ConditionDomain {
+    public static final String TABLE_NAME = "admin_permission";
 
 	
 	private Integer id;

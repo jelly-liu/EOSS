@@ -186,4 +186,19 @@
             id = #{id}
             
     </select>
+
+    <select id="selectOne" parameterType="com.jelly.eoss.db.entity.AdminRole" resultType="com.jelly.eoss.db.entity.AdminRole">
+        select
+        <include refid="selectColumns"/>
+        from admin_role
+        where 1 = 1
+        <include refid="selectWheres"/>
+        limit 1
+    </select>
+
+    <select id="selectAll" resultType="com.jelly.eoss.db.entity.AdminRole">
+        select
+        <include refid="selectColumns"/>
+        from admin_role
+    </select>
 </mapper>

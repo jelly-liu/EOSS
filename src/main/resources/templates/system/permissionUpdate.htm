@@ -1,0 +1,28 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/include/head.htm::commonHeader"></head>
+  		<script src="/static/js/system/permissionUpdate.js" th:attrappend="src='?time='+${T(java.lang.System).currentTimeMillis()}" type="text/javascript"></script>
+	</head>
+
+	<body>
+		<form id="submitForm" action="/system/permission/update" class="eossForm" method="post">
+			<input type="hidden" id="menuId" name="id" th:value="${permission.id}"/>
+			<table class="eossFromTable">
+				<tr class="panel-header">
+					<td colspan="99">权限更新</td>
+				</tr>
+				<tr>
+					<td align="right" width="100">权限名称：</td>
+					<td>
+						<input type="text" id="permissionName" name="name" th:value="${permission.name}"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<a id="submitBtn" href="###" class="easyui-linkbutton">提交</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>

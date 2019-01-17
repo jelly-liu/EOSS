@@ -67,7 +67,7 @@
 		m.url AS "url", 
 		m.create_datetime AS "createDatetime"
 		<include refid="Menu_QueryMenuPage_Body"/>
-		limit #{rb.offset}, #{rb.limit}
+		<if test="rb != null">limit #{rb.offset}, #{rb.limit}</if>
 	</select>
 	<select id="queryMenuPageCount" parameterType="HashMap" resultType="Integer">
 		select count(*)
