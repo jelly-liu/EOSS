@@ -27,6 +27,6 @@
 		salt as "salt",
 		create_datetime as "createDatetime"
 		<include refid="User_QueryUser_Body"/>
-		limit #{rb.offset}, #{rb.limit}
+		<if test="rb != null">limit #{rb.offset}, #{rb.limit}</if>
 	</select>
 </mapper>

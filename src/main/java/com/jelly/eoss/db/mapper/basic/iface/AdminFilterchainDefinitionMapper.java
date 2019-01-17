@@ -4,11 +4,10 @@
 */
 package com.jelly.eoss.db.mapper.basic.iface;
 
-import com.jelly.eoss.db.entity.AdminFilterchainDefinition;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import com.jelly.eoss.db.entity.AdminFilterchainDefinition;
 
 @Mapper
 @Repository
@@ -17,8 +16,10 @@ public interface AdminFilterchainDefinitionMapper {
 
     public List<AdminFilterchainDefinition> select(AdminFilterchainDefinition adminFilterchainDefinition);
     public List<AdminFilterchainDefinition> selectPage(AdminFilterchainDefinition adminFilterchainDefinition);
+    public List<AdminFilterchainDefinition> selectAll();
     public Integer selectCount(AdminFilterchainDefinition adminFilterchainDefinition);
     public AdminFilterchainDefinition selectByPk(Integer id);
+    public AdminFilterchainDefinition selectOne(AdminFilterchainDefinition adminFilterchainDefinition);
     public void insert(AdminFilterchainDefinition adminFilterchainDefinition);
     public void update(AdminFilterchainDefinition adminFilterchainDefinition);
     public void updateWithNull(AdminFilterchainDefinition adminFilterchainDefinition);

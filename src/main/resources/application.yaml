@@ -1,8 +1,19 @@
 server:
-  port: 8080
+  port: 9876
 
-ggcai:
+spring:
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/eoss?useUnicode=true&amp;characterEncoding=utf8
     username: root
     password: sa
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: ggc123
+    timeout: 2000MS
+
+  rabbitmq:
+    host: 9999
+    port: 5672
+    password: guest

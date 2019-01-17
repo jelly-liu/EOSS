@@ -3,6 +3,7 @@ package com.jelly.eoss.servlet;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.Random;
 
+@WebServlet(urlPatterns = "/static/vCode.jpg")
 public class ICodeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static final String ICODE_SESSION_KEY = "ICODE_2012-12-23";
@@ -60,8 +62,12 @@ public class ICodeServlet extends HttpServlet {
 		g2d.setColor(this.getRandomColor(random, 200, 55));
 		g2d.fillRect(0, 0, width, height);
 		
-		//画文字
+		//产生随机验证码文字
 		String randomString = this.getRandomString(random);
+		//设置Session
+		request.getSession().setAttribute(ICODE_SESSION_KEY, randomString);
+
+		//画文字
 		g2d.setFont(new Font("system", Font.BOLD, 24));
 		g2d.setColor(this.getRandomColor(random, 0, 150));
 		g2d.drawString(randomString, random.nextInt(40), (this.height)/2 + 10);
@@ -107,9 +113,6 @@ public class ICodeServlet extends HttpServlet {
 		ImageIO.write(buffImg, "jpeg", os);
 		
 		os.close();
-		
-		//设置Session
-		request.getSession().setAttribute(ICODE_SESSION_KEY, randomString);
 	}
 	
 	private String getRandomString(Random random){

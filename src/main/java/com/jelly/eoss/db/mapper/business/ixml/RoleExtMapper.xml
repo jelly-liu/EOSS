@@ -25,7 +25,7 @@
 		name as "name",
 		create_datetime as "createDatetime"
 		<include refid="Role_QueryRolePage_Body"/>
-		limit #{rb.offset}, #{rb.limit}
+		<if test="rb != null">limit #{rb.offset}, #{rb.limit}</if>
 	</select>
 
 	<select id="queryAllPermissionWithRole" parameterType="Integer" resultType="HashMap">

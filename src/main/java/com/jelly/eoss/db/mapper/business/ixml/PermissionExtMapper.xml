@@ -18,7 +18,7 @@
 		id as "id",
 		name as "name"
 		<include refid="Permission_QueryPermissionPage_Body"/>
-		limit #{rb.offset}, #{rb.limit}
+		<if test="rb != null">limit #{rb.offset}, #{rb.limit}</if>
 	</select>
 
 	<select id="queryByUserId" parameterType="Integer" resultType="String">

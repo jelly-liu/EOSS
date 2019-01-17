@@ -4,11 +4,10 @@
 */
 package com.jelly.eoss.db.mapper.basic.iface;
 
-import com.jelly.eoss.db.entity.AdminMenu;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import com.jelly.eoss.db.entity.AdminMenu;
 
 @Mapper
 @Repository
@@ -17,8 +16,10 @@ public interface AdminMenuMapper {
 
     public List<AdminMenu> select(AdminMenu adminMenu);
     public List<AdminMenu> selectPage(AdminMenu adminMenu);
+    public List<AdminMenu> selectAll();
     public Integer selectCount(AdminMenu adminMenu);
     public AdminMenu selectByPk(Integer id);
+    public AdminMenu selectOne(AdminMenu adminMenu);
     public void insert(AdminMenu adminMenu);
     public void update(AdminMenu adminMenu);
     public void updateWithNull(AdminMenu adminMenu);

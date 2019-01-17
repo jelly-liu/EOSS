@@ -1,8 +1,8 @@
 package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.db.entity.AdminPermission;
+import com.jelly.eoss.db.mapper.basic.iface.AdminPermissionMapper;
 import com.jelly.eoss.db.mapper.business.iface.PermissionExtMapper;
-import com.jelly.eoss.service.basic.AdminPermissionService;
 import com.jelly.eoss.util.ComUtil;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.util.Pager;
@@ -25,7 +25,7 @@ import java.util.Map;
 @RequestMapping(value = "/system/permission")
 public class AdminPermissionAction extends BaseAction {
 	@Autowired
-	private AdminPermissionService permissionService;
+	private AdminPermissionMapper permissionMapper;
 	@Autowired
 	private PermissionExtMapper permissionExtMapper;
 
@@ -45,35 +45,35 @@ public class AdminPermissionAction extends BaseAction {
 		
 		request.setAttribute("pager", pager);
 		this.resetAllRequestParams(request);
-		return new ModelAndView("/system/permissionList.jsp");
+		return new ModelAndView("/system/permissionList.htm");
 	}
 
 	@RequestMapping(value = "/toAdd")
 	public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response, AdminPermission permission) throws Exception{
-		return new ModelAndView("/system/permissionAdd.jsp");
+		return new ModelAndView("/system/permissionAdd.htm");
 	}
 	
 	@RequestMapping(value = "/add")
 	public ModelAndView txAdd(HttpServletRequest request, HttpServletResponse response, AdminPermission permission) throws Exception{
-		int id = ComUtil.QueryNextID("id", "admin_permission");
+		int id = ComUtil.QueryNextID("id", AdminPermission.TABLE_NAME);
 		permission.setId(id);
-		permissionService.insert(permission);
+		permissionMapper.insert(permission);
 		request.getRequestDispatcher("/system/permission/toList").forward(request, response);
 		return null;
 	}
 
     @RequestMapping(value = "/addAjax")
     public void txAddAjax(HttpServletRequest request, HttpServletResponse response, AdminPermission permission) throws Exception{
-        int id = ComUtil.QueryNextID("id", "admin_permission");
+        int id = ComUtil.QueryNextID("id", AdminPermission.TABLE_NAME);
         permission.setId(id);
-        permissionService.insert(permission);
+        permissionMapper.insert(permission);
         response.getWriter().write("y");
     }
 	
 	@RequestMapping(value = "/delete")
 	public void txDelete(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Integer id = ServletRequestUtils.getIntParameter(request, "id");
-		permissionService.deleteByPk(id);
+		permissionMapper.deleteByPk(id);
 		response.getWriter().write("y");
 	}
 	
@@ -81,15 +81,15 @@ public class AdminPermissionAction extends BaseAction {
 	public ModelAndView toUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		Integer id = ServletRequestUtils.getIntParameter(request, "id");
 
-		AdminPermission permission = permissionService.selectByPk(id);
+		AdminPermission permission = permissionMapper.selectByPk(id);
 
 		request.setAttribute("permission", permission);
-		return new ModelAndView("/system/permissionUpdate.jsp");
+		return new ModelAndView("/system/permissionUpdate.htm");
 	}
 	
 	@RequestMapping(value = "/update")
 	public ModelAndView txUpdate(HttpServletRequest request, HttpServletResponse response, AdminPermission permission) throws ServletException, IOException{
-		permissionService.update(permission);
+		permissionMapper.update(permission);
 
 		request.setAttribute("permission", permission);
         request.getRequestDispatcher("/system/permission/toList").forward(request, response);
@@ -98,7 +98,7 @@ public class AdminPermissionAction extends BaseAction {
 
 	@RequestMapping(value = "/updateAjax")
 	public void txUpdateAjax(HttpServletRequest request, HttpServletResponse response, AdminPermission permission) throws ServletException, IOException{
-		permissionService.update(permission);
+		permissionMapper.update(permission);
 		response.getWriter().write("y");
 	}
 }

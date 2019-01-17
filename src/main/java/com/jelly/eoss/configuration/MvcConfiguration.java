@@ -1,16 +1,13 @@
 package com.jelly.eoss.configuration;
 
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 /**
  * @Author ：jelly.liu
@@ -19,42 +16,22 @@ import java.util.List;
  */
 
 @Configuration
-public class MvcConfiguration {
+public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
-    public FastJsonHttpMessageConverter messageConverter(){
-        FastJsonHttpMessageConverter messageConverter = new FastJsonHttpMessageConverter();
-
-        List<MediaType> supportedMediaTypes = new ArrayList();
-        supportedMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
-        supportedMediaTypes.add(MediaType.APPLICATION_XML);
-        supportedMediaTypes.add(MediaType.TEXT_PLAIN);
-        supportedMediaTypes.add(MediaType.TEXT_HTML);
-        supportedMediaTypes.add(MediaType.TEXT_XML);
-        messageConverter.setSupportedMediaTypes(supportedMediaTypes);
-        /*
-        <property name="features">
-            <list>
-                <!-- 默认的意思就是不配置这个属性，配置了就不是默认了 -->
-                <!-- 是否输出值为null的字段 ，默认是false-->
-                <!--<value>WriteMapNullValue</value>-->
-                <!--<value>WriteNullNumberAsZero</value>-->
-                <!--<value>WriteNullListAsEmpty</value>-->
-                <!--<value>WriteNullStringAsEmpty</value>-->
-                <!--<value>WriteNullBooleanAsFalse</value>-->
-                <!--<value>WriteDateUseDateFormat</value>-->
-
-            </list>
-        </property>
-         */
-        return messageConverter;
+    @Bean
+    public ViewResolver viewResolver(){
+        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+        viewResolver.setCache(false);
+        viewResolver.setViewNames(new String[]{"*.htm", "*.htm", "*.xhtml"});
+        return viewResolver;
     }
 
     @Bean
-    public InternalResourceViewResolver viewResolver(){
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("/WEB-INF/pages");
-        viewResolver.setSuffix("");
-        return viewResolver;
+    public SpringResourceTemplateResolver TemplateResolver(){
+        SpringResourceTemplateResolver resourceTemplateResolver = new SpringResourceTemplateResolver();
+        resourceTemplateResolver.setPrefix("classpath:/templates");
+        resourceTemplateResolver.setCacheable(false);
+        return resourceTemplateResolver;
     }
 
     @Bean
@@ -66,13 +43,9 @@ public class MvcConfiguration {
         return multipartResolver;
     }
 
-    @Bean
-    public WebMvcConfigurer webMvcConfigurer(){
-        return new WebMvcConfigurer() {
-            @Override
-            public void addResourceHandlers(ResourceHandlerRegistry registry) {
-                registry.addResourceHandler("/static/**").addResourceLocations("/static/");
-            }
-        };
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        //将所有/static/** 访问都映射到classpath:/static/ 目录下
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
     }
 }

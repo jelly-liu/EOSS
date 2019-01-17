@@ -3,7 +3,9 @@ package com.jelly.eoss.configuration;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.Pointcut;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
+import org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.springframework.aop.support.RegexpMethodPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,17 +30,12 @@ public class TransactionConfiguration {
     DataSource dataSource;
 
     @Bean
-    public JdbcTemplate jdbcTemplate(){
-        return new JdbcTemplate(dataSource);
-    }
-
-    @Bean
-    public DataSourceTransactionManager txManager(){
+    public DataSourceTransactionManager transactionManager(){
         return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean
-    public TransactionInterceptor txAdvice(){
+    public TransactionInterceptor advice(){
         /*
         //this type of create TransactionInterceptor was also work
         Properties transactionAttributes = new Properties();
@@ -66,19 +63,29 @@ public class TransactionConfiguration {
         source.addTransactionalMethod("txNew*", REQUIRED_NEW);
         source.addTransactionalMethod("*", REQUIRED_READ_ONLY);
 
-        return new TransactionInterceptor(txManager(), source);
+        return new TransactionInterceptor(transactionManager(), source);
     }
 
-    @Bean
-    public Pointcut txPointcut(){
-        AspectJExpressionPointcut txPointcut = new AspectJExpressionPointcut();
-        txPointcut.setExpression("execution(* com.jelly.eoss.service..*.*(..)) or execution(* com.jelly.eoss.web.admin..*.*(..))");
-        return txPointcut;
-    }
+//    @Bean
+//    public Pointcut pointcut(){
+//        String expression = "";
+//        expression += "execution(* com.jelly.eoss.service..*.*(..)) ";
+//        expression += "or ";
+//        expression += "execution(* com.jelly.eoss.web.admin..*.*(..)) ";
+//
+//        AspectJExpressionPointcut txPointcut = new AspectJExpressionPointcut();
+//        txPointcut.setExpression(expression);
+//        return txPointcut;
+//    }
 
     @Bean
-    public Advisor txAdviceAdvisor(){
-        DefaultPointcutAdvisor txAdvisor = new DefaultPointcutAdvisor(txPointcut(), txAdvice());
-        return txAdvisor;
+    public Advisor advisor(){
+//        DefaultPointcutAdvisor txAdvisor = new DefaultPointcutAdvisor(pointcut(), transactionInterceptor());
+//        return txAdvisor;
+
+        AspectJExpressionPointcutAdvisor advisor = new AspectJExpressionPointcutAdvisor();
+        advisor.setAdvice(advice());
+        advisor.setExpression("execution(* com.jelly.eoss.service..*.*(..)) or execution(* com.jelly.eoss.web.admin..*.*(..))");
+        return advisor;
     }
 }

@@ -4,7 +4,11 @@
 */
 package com.jelly.eoss.db.entity;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 public class AdminUserMenu extends ConditionDomain {
+    public static final String TABLE_NAME = "admin_user_menu";
 
 	
 	private Integer menuId;

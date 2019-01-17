@@ -1,0 +1,43 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="/include/head.htm::commonHeader"></head>
+  		<script src="/static/js/system/menuUpdate.js" th:attrappend="src='?time='+${T(java.lang.System).currentTimeMillis()}" type="text/javascript"></script>
+  		<style type="text/css">
+	  		#zTreeJson{
+	  			display:none;
+	  		}
+	  	</style>
+	</head>
+
+	<body>
+		<div id="zTreeJson" th:text="${jsonZTree}"></div>
+		<form id="submitForm" action="/system/menu/update" class="eossForm" method="post">
+			<input type="hidden" id="menuId" name="id" th:value="${menu.id}"/>
+			<input type="hidden" id="menuLev" name="lev"/>
+			<input type="hidden" id="menuPath" name="path"/>
+			<table class="eossFromTable">
+				<tr class="panel-header">
+					<td colspan="99">菜单更新</td>
+				</tr>
+				<tr>
+					<td align="right" width="100">菜单名称：</td>
+					<td>
+						<input type="text" id="menuName" name="name" th:value="${menu.name}"/>
+					</td>
+				</tr>
+				<tr>
+					<td align="right">选择父菜单：</td>
+					<td>
+						<input type="hidden" id="menuPid" name="pid"/>
+						<ul id="zTreeUL" class="ztree"></ul>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<a id="submitBtn" href="###" class="easyui-linkbutton">提交</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>

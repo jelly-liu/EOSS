@@ -1,7 +1,7 @@
 package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.db.entity.AdminUser;
-import com.jelly.eoss.service.business.EossMenuService;
+import com.jelly.eoss.service.EossMenuService;
 import com.jelly.eoss.servlet.ICodeServlet;
 import com.jelly.eoss.util.Const;
 import com.jelly.eoss.web.BaseAction;
@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,8 +28,8 @@ public class AdminLoginAction extends BaseAction {
     EossMenuService eossMenuService;
 
     @RequestMapping(value = "/toLogin")
-    public void toLoginIn(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.getRequestDispatcher("/login.jsp").forward(request, response);
+    public ModelAndView toLoginIn(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return new ModelAndView("/login.htm");
     }
 	
 	@RequestMapping(value = "/login")

@@ -161,4 +161,19 @@
             id = #{id}
             
     </select>
+
+    <select id="selectOne" parameterType="com.jelly.eoss.db.entity.AdminPermission" resultType="com.jelly.eoss.db.entity.AdminPermission">
+        select
+        <include refid="selectColumns"/>
+        from admin_permission
+        where 1 = 1
+        <include refid="selectWheres"/>
+        limit 1
+    </select>
+
+    <select id="selectAll" resultType="com.jelly.eoss.db.entity.AdminPermission">
+        select
+        <include refid="selectColumns"/>
+        from admin_permission
+    </select>
 </mapper>

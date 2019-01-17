@@ -1,0 +1,70 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/include/head.htm::commonHeader"></head>
+  		<script src="/static/js/system/resourceList.js" th:attrappend="src='?time='+${T(java.lang.System).currentTimeMillis()}" type="text/javascript"></script>
+	</head>
+
+	<body>
+		<form id="submitForm" action="/system/resource/toList" class="eossForm" method="post">
+			<input type="hidden" id="page" name="page" th:value="${pager.page}"/>
+			<table class="eossFromTable">
+				<tr class="panel-header">
+					<td colspan="99">资源查询</td>
+				</tr>
+				<tr>
+					<td align="right">资源ID：</td>
+					<td><input type="text" name="id" th:value="${id}"/></td>
+					<td align="right">所属菜单：</td>
+					<td>
+						<input type="text" id="pnameText" name="pnameText" th:value="${pnameText}" style="width:200px"/>
+						<input type="hidden" id="dirId" name="dirId" th:value="${dirId}"/>
+						<div id="zTreeULWin">
+					        <ul id="zTreeUL" class="ztree"></ul>
+					    </div>
+					</td>
+				</tr>
+				<tr>
+					<td align="right">开始时间：</td>
+					<td><input type="text" class="bindDatePicker" name="createTimeStart" th:value="${createTimeStart}"/></td>
+					<td align="right">结束时间：</td>
+					<td><input type="text" class="bindDatePicker" name="createTimeEnd" th:value="${createTimeEnd}"/></td>
+				</tr>
+				<tr>
+					<td colspan="99" align="center">
+						<a id="submitBtn" href="###" class="easyui-linkbutton">查询</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+		
+		<!-- display data list -->
+		<table th:if="${pager != null && pager.data != null && pager.data.size() gt 0}" class="eossDataTable tableXCenter">
+			<thead>
+			<tr class="datagrid-header">
+				<th>序号</th>
+				<th>资源名称</th>
+				<th>父目录名称</th>
+				<th>资源URL</th>
+				<th>创建时间</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="it,st : ${pager.data}" th:class="${st.odd}? 'odd' : 'even'">
+				<td th:text="${pager.rowStart + st.index}"></td>
+				<td th:text="${it.name}"></td>
+				<td th:text="${it.pname}"></td>
+				<td th:text="${it.url}"></td>
+				<td th:text="${it.createDatetime}"></td>
+				<td>
+					<a href="###" type="delete" th:value="${it.id}">删除</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="###" type="update" th:value="${it.id}">更新</a>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		<!-- pagination -->
+		<table th:replace="/include/pagerFooter.htm::content('submitForm', 'page', ${pager == null ? 1 : pager.totalPage})"></table>
+	</body>
+</html>

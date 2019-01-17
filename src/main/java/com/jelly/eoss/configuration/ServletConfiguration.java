@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Configuration;
  * @Description：${description}
  */
 
-@Configuration
+//@Configuration
 public class ServletConfiguration {
     public ServletRegistrationBean icodeServlet(){
-        return new ServletRegistrationBean(new ICodeServlet(), "/static/vCode.jpg");
+        return new ServletRegistrationBean(new ICodeServlet(), "/vCode.jpg");
     }
 }
