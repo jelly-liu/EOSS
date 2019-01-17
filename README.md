@@ -18,9 +18,7 @@ view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 --eoss-shiro-spring-boot branch, recommend  
 ----integrated with spring boot 2.1.1, thymeleaf, shiro  
 
-## *************************************************** ##
 ## **** HIGHLY RECOMMAND CHECK OUT MASTER BRANCH ***
-## *************************************************** ##
 
 ------------ integrated framework ------------  
 --maven  
