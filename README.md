@@ -20,7 +20,7 @@ view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 
 ## *************************************************** ##
 ## **** HIGHLY RECOMMAND CHECK OUT MASTER BRANCH ***
-## **** master sync to eoss-shiro-spring-boot ***
+-------- master sync to eoss-shiro-spring-boot --------
 ## *************************************************** ##
 
 ------------ integrated framework ------------  
