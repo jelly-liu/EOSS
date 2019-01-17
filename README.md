@@ -1,38 +1,35 @@
 # Need more help?
 [wiki help](https://github.com/jelly-liu/EOSS/wiki)  
-# EOSS SPRING BOOT - Highly Recommand
-[eoss-spring-boot](https://github.com/jelly-liu/eoss-spring-boot)  
---spring boot  
---spring thymeleaf to displace jsp  
---shiro
+
 # EOSS With Apache Shiro
-RBAC(Role Based Access Control) Project Use Spring MyBatis MySQL  
-User, Role, Permission, Resource, Menu, FilterChainDefinition  
-EOSS-Pure simulate but without apache shiro, Or EOSS-Shiro completely integrate with Apache Shiro  
+Base On RBAC(Role Based Access Control)  
 If you want to known more about apache shiro  
 view here [Apache Shiro](http://shiro.apache.org/index.html "Apache Shiro")  
 view here [shiro-demo](https://github.com/jelly-liu/shiro-demo "shiro-demo")  
 view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 
-# **** Pure Or Shiro branch, both keep on updating ***
-This branch is pure, with restfull flaver, but simulate shiro
+# Which Branch Should I Check Out
+--master branch, recommend  
+----Master branch is sync with eoss-shiro-spring-boot branch  
+--eoss-pure branch, not recommend  
+----without shiro, but imitate shiro  
+--eoss-shiro branch, not recommend  
+----integrated with Apache Shiro  
+--eoss-shiro-spring-boot branch, recommend  
+----integrated with spring boot 2.1.1, thymeleaf, shiro  
 
-# About Master Branch
-Master branch is sync with EOSS-Shiro branch
+## *************************************************** ##
+## **** HIGHLY RECOMMAND CHECK OUT MASTER BRANCH ***
+## **** master sync to eoss-shiro-spring-boot ***
+## *************************************************** ##
 
-# About EOSS-Pure Branch
-This branch is pure, but simulate shiro
-
-# About EOSS-Shiro Branch
-This is the EOSS completed integrated with Apache Shiro  
 ------------ integrated framework ------------  
 --maven  
 --mysql(easy translate to oracle)  
 --mybatis  
 --spring  
 --shiro  
---redis  
---google guava  
+--redis, will support  
 ------------ basic RBAC feature support ------------  
 --support user[CRUD]  
 ----support user-role[CRUD]  
@@ -50,7 +47,7 @@ This is the EOSS completed integrated with Apache Shiro
 --support PermsOrAuthorizationFilter, work with EossAntPathMatcher  
 --support dynamic edit FilterChainDefinitions on line, do not need relogin or restart tomcat  
 --support refresh Authentication cache, when update user or role, do not need relogin or restart tomcat  
---support not, now only supper MemCache, in the future, will support Redis and Guava CacheManager  
+--support not, now only supper MemCache, in the future, will support Redis CacheManager  
 --support not, sessionManager and sessionDAO and cacheManager  
 
 # ScreenShot  
