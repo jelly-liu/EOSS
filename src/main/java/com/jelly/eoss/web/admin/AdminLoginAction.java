@@ -27,6 +27,11 @@ public class AdminLoginAction extends BaseAction {
 	@Autowired
     EossMenuService eossMenuService;
 
+	@RequestMapping(value = "/to401")
+	public ModelAndView to401(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return new ModelAndView("/401.htm");
+	}
+
     @RequestMapping(value = "/toLogin")
     public ModelAndView toLoginIn(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return new ModelAndView("/login.htm");

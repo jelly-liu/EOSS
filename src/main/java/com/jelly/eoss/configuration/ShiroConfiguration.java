@@ -79,7 +79,7 @@ public class ShiroConfiguration {
         EossShiroFilterFactoryBean shiroFilterFactoryBean = new EossShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager());
         shiroFilterFactoryBean.setLoginUrl("/toLogin");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/401.htm");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/to401");
 
         Map<String, Filter> filters = new LinkedHashMap<>();
         filters.put("rolesOr", rolesOr());

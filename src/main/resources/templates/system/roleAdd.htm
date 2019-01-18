@@ -1,6 +1,7 @@
 <!DOCTYPE>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/include/head.htm::commonHeader"></head>
+<head>
+	<th:block th:replace="/include/head.htm::commonHeader"></th:block>
 	<script src="/static/js/system/roleAdd.js" th:attrappend="src='?time='+${T(java.lang.System).currentTimeMillis()}" type="text/javascript"></script>
 </head>
 

@@ -1,17 +1,16 @@
-<%@ page pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
-<html>
-	<head>
-		<%@ include file="/WEB-INF/pages/include/head.htm"%>
-	</head>
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="/include/head.htm::commonHeader"></th:block>
+</head>
 
-	<body>
-		<table class="tableCenter">
-			<tr>
-				<td>
-					404！
-				</td>
-			</tr>
-		</table>
-	</body>
+<body>
+	<table class="tableCenter">
+		<tr>
+			<td>
+				404！
+			</td>
+		</tr>
+	</table>
+</body>
 </html>
