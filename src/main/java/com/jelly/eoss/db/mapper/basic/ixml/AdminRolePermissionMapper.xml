@@ -37,7 +37,7 @@
 
     <!-- 根据表的主键生成Delete -->
     <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误删除 -->
-    <delete id="deleteByPojo" parameterType="com.jelly.eoss.db.entity.AdminRolePermission">
+    <delete id="delete" parameterType="com.jelly.eoss.db.entity.AdminRolePermission">
         <!-- 请注意，该表没有主键 -->
         delete
         from admin_role_permission

@@ -1,8 +1,10 @@
 package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.db.entity.AdminUser;
+import com.jelly.eoss.db.entity.AdminUserRole;
 import com.jelly.eoss.db.mapper.basic.iface.AdminMenuMapper;
 import com.jelly.eoss.db.mapper.basic.iface.AdminUserMapper;
+import com.jelly.eoss.db.mapper.basic.iface.AdminUserRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,14 @@ public class TestTxAction {
     AdminMenuMapper menuMapper;
     @Autowired
     AdminUserMapper userMapper;
+    @Autowired
+    AdminUserRoleMapper userRoleMapper;
+
+    @RequestMapping("/test")
+    public void txTest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        int effectRows = userRoleMapper.insert(new AdminUserRole().setUserId(0).setRoleId(0));
+        response.getWriter().write("effectRows=" + effectRows);
+    }
 
     @RequestMapping("/thymeleaf")
     public ModelAndView greeting(HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -82,7 +82,7 @@
                 
         </delete>
     <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误删除 -->
-    <delete id="deleteByPojo" parameterType="com.jelly.eoss.db.entity.AdminRole">
+    <delete id="delete" parameterType="com.jelly.eoss.db.entity.AdminRole">
         <!-- 请注意，该表没有主键 -->
         delete
         from admin_role
