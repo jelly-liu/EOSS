@@ -22,12 +22,13 @@ view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 
 ------------ integrated framework ------------  
 --maven  
+--spring boot, latest version is 2.1.1  
+--spring thymeleaf instead of jsp  
 --mysql(easy translate to oracle)  
---mybatis  
---spring  
---shiro  
+--mybatis, mapper xml and mapper interface, latest version is 3.4.6   
+--shiro, latest version is 1.4.0  
 --redis, will support  
------------- basic RBAC feature support ------------  
+------------ basic RBAC features ------------  
 --support user[CRUD]  
 ----support user-role[CRUD]  
 ----support user-menu[CRUD]  
@@ -37,14 +38,14 @@ view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 --support permistion[CRUD]  
 --support resource[CRUD]  
 --support menu tree[CRUD]  
------------- shiro feature support ------------  
+------------ shiro features ------------  
 --sppport custom AntPathMatcher, not care about capital or lower case, EossAntPathMatcher  
 --support MD5 hashed with salt, HashedCredentialsMatcher  
 --support RolesOrAuthorizationFilter, work with EossAntPathMatcher  
 --support PermsOrAuthorizationFilter, work with EossAntPathMatcher  
---support dynamic edit FilterChainDefinitions on line, do not need relogin or restart tomcat  
---support refresh Authentication cache, when update user or role, do not need relogin or restart tomcat  
---support not, now only supper MemCache, in the future, will support Redis CacheManager  
+--support after change rules, auto refresh all assosiate perms, do not need relogin or restart server  
+--support refresh Authentication cache, when update user or role, do not need relogin or restart server  
+--support not, will support Redis CacheManager  
 --support not, sessionManager and sessionDAO and cacheManager  
 
 # ScreenShot  
