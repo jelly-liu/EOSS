@@ -14,15 +14,18 @@ import com.jelly.eoss.db.entity.AdminPermission;
 public interface AdminPermissionMapper {
 
 
-    public List<AdminPermission> select(AdminPermission adminPermission);
-    public List<AdminPermission> selectPage(AdminPermission adminPermission);
-    public List<AdminPermission> selectAll();
+
     public Integer selectCount(AdminPermission adminPermission);
-    public AdminPermission selectByPk(Integer id);
+    public List<AdminPermission> selectPage(AdminPermission adminPermission);
+
+    public List<AdminPermission> select(AdminPermission adminPermission);
     public AdminPermission selectOne(AdminPermission adminPermission);
-    public void insert(AdminPermission adminPermission);
-    public void update(AdminPermission adminPermission);
-    public void updateWithNull(AdminPermission adminPermission);
-    public void deleteByPk(Integer id);
-    public void deleteByPojo(AdminPermission adminPermission);
+    public List<AdminPermission> selectAll();
+    public AdminPermission selectByPk(Integer id);
+
+    public int insert(AdminPermission adminPermission);
+    public int update(AdminPermission adminPermission);
+    public int updateWithNull(AdminPermission adminPermission);
+    public int deleteByPk(Integer id);
+    public int delete(AdminPermission adminPermission);
 }

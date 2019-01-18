@@ -13,15 +13,18 @@ import com.jelly.eoss.db.entity.AdminRolePermission;
 @Repository
 public interface AdminRolePermissionMapper {
 
-    public List<AdminRolePermission> select(AdminRolePermission adminRolePermission);
-    public List<AdminRolePermission> selectPage(AdminRolePermission adminRolePermission);
-    public List<AdminRolePermission> selectAll();
+
     public Integer selectCount(AdminRolePermission adminRolePermission);
-    public AdminRolePermission selectByPk();
+    public List<AdminRolePermission> selectPage(AdminRolePermission adminRolePermission);
+
+    public List<AdminRolePermission> select(AdminRolePermission adminRolePermission);
     public AdminRolePermission selectOne(AdminRolePermission adminRolePermission);
-    public void insert(AdminRolePermission adminRolePermission);
-    public void update(AdminRolePermission adminRolePermission);
-    public void updateWithNull(AdminRolePermission adminRolePermission);
-    public void deleteByPk();
-    public void deleteByPojo(AdminRolePermission adminRolePermission);
+    public List<AdminRolePermission> selectAll();
+    public AdminRolePermission selectByPk();
+
+    public int insert(AdminRolePermission adminRolePermission);
+    public int update(AdminRolePermission adminRolePermission);
+    public int updateWithNull(AdminRolePermission adminRolePermission);
+    public int deleteByPk();
+    public int delete(AdminRolePermission adminRolePermission);
 }

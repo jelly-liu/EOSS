@@ -14,15 +14,18 @@ import com.jelly.eoss.db.entity.AdminRole;
 public interface AdminRoleMapper {
 
 
-    public List<AdminRole> select(AdminRole adminRole);
-    public List<AdminRole> selectPage(AdminRole adminRole);
-    public List<AdminRole> selectAll();
+
     public Integer selectCount(AdminRole adminRole);
-    public AdminRole selectByPk(Integer id);
+    public List<AdminRole> selectPage(AdminRole adminRole);
+
+    public List<AdminRole> select(AdminRole adminRole);
     public AdminRole selectOne(AdminRole adminRole);
-    public void insert(AdminRole adminRole);
-    public void update(AdminRole adminRole);
-    public void updateWithNull(AdminRole adminRole);
-    public void deleteByPk(Integer id);
-    public void deleteByPojo(AdminRole adminRole);
+    public List<AdminRole> selectAll();
+    public AdminRole selectByPk(Integer id);
+
+    public int insert(AdminRole adminRole);
+    public int update(AdminRole adminRole);
+    public int updateWithNull(AdminRole adminRole);
+    public int deleteByPk(Integer id);
+    public int delete(AdminRole adminRole);
 }

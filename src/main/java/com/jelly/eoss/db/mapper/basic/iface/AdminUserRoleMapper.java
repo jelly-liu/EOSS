@@ -15,15 +15,18 @@ public interface AdminUserRoleMapper {
 
 
 
-    public List<AdminUserRole> select(AdminUserRole adminUserRole);
-    public List<AdminUserRole> selectPage(AdminUserRole adminUserRole);
-    public List<AdminUserRole> selectAll();
+
     public Integer selectCount(AdminUserRole adminUserRole);
-    public AdminUserRole selectByPk(Integer userId, Integer roleId);
+    public List<AdminUserRole> selectPage(AdminUserRole adminUserRole);
+
+    public List<AdminUserRole> select(AdminUserRole adminUserRole);
     public AdminUserRole selectOne(AdminUserRole adminUserRole);
-    public void insert(AdminUserRole adminUserRole);
-    public void update(AdminUserRole adminUserRole);
-    public void updateWithNull(AdminUserRole adminUserRole);
-    public void deleteByPk(Integer userId, Integer roleId);
-    public void deleteByPojo(AdminUserRole adminUserRole);
+    public List<AdminUserRole> selectAll();
+    public AdminUserRole selectByPk(Integer userId, Integer roleId);
+
+    public int insert(AdminUserRole adminUserRole);
+    public int update(AdminUserRole adminUserRole);
+    public int updateWithNull(AdminUserRole adminUserRole);
+    public int deleteByPk(Integer userId, Integer roleId);
+    public int delete(AdminUserRole adminUserRole);
 }

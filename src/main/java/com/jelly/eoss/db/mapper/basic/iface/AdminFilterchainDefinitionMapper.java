@@ -14,15 +14,18 @@ import com.jelly.eoss.db.entity.AdminFilterchainDefinition;
 public interface AdminFilterchainDefinitionMapper {
 
 
-    public List<AdminFilterchainDefinition> select(AdminFilterchainDefinition adminFilterchainDefinition);
-    public List<AdminFilterchainDefinition> selectPage(AdminFilterchainDefinition adminFilterchainDefinition);
-    public List<AdminFilterchainDefinition> selectAll();
+
     public Integer selectCount(AdminFilterchainDefinition adminFilterchainDefinition);
-    public AdminFilterchainDefinition selectByPk(Integer id);
+    public List<AdminFilterchainDefinition> selectPage(AdminFilterchainDefinition adminFilterchainDefinition);
+
+    public List<AdminFilterchainDefinition> select(AdminFilterchainDefinition adminFilterchainDefinition);
     public AdminFilterchainDefinition selectOne(AdminFilterchainDefinition adminFilterchainDefinition);
-    public void insert(AdminFilterchainDefinition adminFilterchainDefinition);
-    public void update(AdminFilterchainDefinition adminFilterchainDefinition);
-    public void updateWithNull(AdminFilterchainDefinition adminFilterchainDefinition);
-    public void deleteByPk(Integer id);
-    public void deleteByPojo(AdminFilterchainDefinition adminFilterchainDefinition);
+    public List<AdminFilterchainDefinition> selectAll();
+    public AdminFilterchainDefinition selectByPk(Integer id);
+
+    public int insert(AdminFilterchainDefinition adminFilterchainDefinition);
+    public int update(AdminFilterchainDefinition adminFilterchainDefinition);
+    public int updateWithNull(AdminFilterchainDefinition adminFilterchainDefinition);
+    public int deleteByPk(Integer id);
+    public int delete(AdminFilterchainDefinition adminFilterchainDefinition);
 }

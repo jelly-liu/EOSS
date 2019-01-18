@@ -14,15 +14,18 @@ import com.jelly.eoss.db.entity.AdminMenu;
 public interface AdminMenuMapper {
 
 
-    public List<AdminMenu> select(AdminMenu adminMenu);
-    public List<AdminMenu> selectPage(AdminMenu adminMenu);
-    public List<AdminMenu> selectAll();
+
     public Integer selectCount(AdminMenu adminMenu);
-    public AdminMenu selectByPk(Integer id);
+    public List<AdminMenu> selectPage(AdminMenu adminMenu);
+
+    public List<AdminMenu> select(AdminMenu adminMenu);
     public AdminMenu selectOne(AdminMenu adminMenu);
-    public void insert(AdminMenu adminMenu);
-    public void update(AdminMenu adminMenu);
-    public void updateWithNull(AdminMenu adminMenu);
-    public void deleteByPk(Integer id);
-    public void deleteByPojo(AdminMenu adminMenu);
+    public List<AdminMenu> selectAll();
+    public AdminMenu selectByPk(Integer id);
+
+    public int insert(AdminMenu adminMenu);
+    public int update(AdminMenu adminMenu);
+    public int updateWithNull(AdminMenu adminMenu);
+    public int deleteByPk(Integer id);
+    public int delete(AdminMenu adminMenu);
 }

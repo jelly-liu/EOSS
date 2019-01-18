@@ -120,8 +120,8 @@ public class AdminRoleAction extends BaseAction {
     public void txDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Integer id = ServletRequestUtils.getIntParameter(request, "id");
         roleMapper.deleteByPk(id);
-        rolePermissionMapper.deleteByPojo(new AdminRolePermission().setRoleId(id));
-        userRoleMapper.deleteByPojo(new AdminUserRole().setRoleId(id));
+        rolePermissionMapper.delete(new AdminRolePermission().setRoleId(id));
+        userRoleMapper.delete(new AdminUserRole().setRoleId(id));
 
         //更新shiro AuthenticationInfo and AuthorizationInfo in local cache
         AdminUser u = SecurityUtils.getSubject().getPrincipals().oneByType(AdminUser.class);
@@ -181,7 +181,7 @@ public class AdminRoleAction extends BaseAction {
 
     //批量插入角色对应的权限，只选择用JdbcTemplate的批量更新方法，以保证高性能
     private void batchInsertRolePermission(int roleId, String permissionIdsStr) {
-        rolePermissionMapper.deleteByPojo(new AdminRolePermission().setRoleId(roleId));
+        rolePermissionMapper.delete(new AdminRolePermission().setRoleId(roleId));
 
         //没有选择权限，直接返回
         if (permissionIdsStr == null || permissionIdsStr.trim().equals("")) {

@@ -206,7 +206,7 @@ public class AdminUserAction extends BaseAction {
 
     //批量插入用户对应的角色，只选择用JdbcTemplate的批量更新方法，以保证高性能
     private void batchInsertUserRole(Integer userId, String roleIdsStr) {
-        userRoleMapper.deleteByPojo(new AdminUserRole().setUserId(userId));
+        userRoleMapper.delete(new AdminUserRole().setUserId(userId));
 
         //没有选择角色，直接返回
         if (roleIdsStr == null || roleIdsStr.trim().equals("")) {
@@ -225,7 +225,7 @@ public class AdminUserAction extends BaseAction {
 
     //批量插入用户对应的资源，只选择用JdbcTemplate的批量更新方法，以保证高性能
     private void batchInsertUserResource(int userId, String resourceIdsStr) {
-        userMenuMapper.deleteByPojo(new AdminUserMenu().setUserId(userId));
+        userMenuMapper.delete(new AdminUserMenu().setUserId(userId));
 
         //没有选择资源，直接返回
         if (resourceIdsStr == null || resourceIdsStr.trim().equals("")) {
@@ -250,10 +250,10 @@ public class AdminUserAction extends BaseAction {
         userMapper.deleteByPk(id);
 
         //删除对应的角色
-        userRoleMapper.deleteByPojo(new AdminUserRole().setUserId(id));
+        userRoleMapper.delete(new AdminUserRole().setUserId(id));
 
         //删除对应的资源
-        userMenuMapper.deleteByPojo(new AdminUserMenu().setUserId(id));
+        userMenuMapper.delete(new AdminUserMenu().setUserId(id));
 
         response.getWriter().write("y");
     }

@@ -14,15 +14,18 @@ import com.jelly.eoss.db.entity.AdminUser;
 public interface AdminUserMapper {
 
 
-    public List<AdminUser> select(AdminUser adminUser);
-    public List<AdminUser> selectPage(AdminUser adminUser);
-    public List<AdminUser> selectAll();
+
     public Integer selectCount(AdminUser adminUser);
-    public AdminUser selectByPk(Integer id);
+    public List<AdminUser> selectPage(AdminUser adminUser);
+
+    public List<AdminUser> select(AdminUser adminUser);
     public AdminUser selectOne(AdminUser adminUser);
-    public void insert(AdminUser adminUser);
-    public void update(AdminUser adminUser);
-    public void updateWithNull(AdminUser adminUser);
-    public void deleteByPk(Integer id);
-    public void deleteByPojo(AdminUser adminUser);
+    public List<AdminUser> selectAll();
+    public AdminUser selectByPk(Integer id);
+
+    public int insert(AdminUser adminUser);
+    public int update(AdminUser adminUser);
+    public int updateWithNull(AdminUser adminUser);
+    public int deleteByPk(Integer id);
+    public int delete(AdminUser adminUser);
 }
