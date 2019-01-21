@@ -1,6 +1,7 @@
 package com.jelly.eoss.listener;
 
 import com.jelly.eoss.util.Const;
+import com.jelly.eoss.util.PropertyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,19 +27,16 @@ public class EossServletContextListener implements ServletContextListener {
 			Const.REAL_BASE_PATH = servletContext.getRealPath("/").replaceAll("\\\\", "/");
 			
 			//读取config.properties配置文件中的信息，并写入到CONSTANT类中
-			Properties config = new Properties();
-			config.load(EossServletContextListener.class.getClassLoader().getResourceAsStream("config.properties"));
-
 			servletContext.setAttribute("BASE_PATH", Const.BASE_PATH);
-			Const.PROJECT_NAME = config.getProperty("PROJECT_NAME").trim();
+			Const.PROJECT_NAME = PropertyUtil.getProperty("PROJECT_NAME").trim();
 			servletContext.setAttribute("PROJECT_NAME", Const.PROJECT_NAME);
-			Const.PROJECT_VERSION = config.getProperty("PROJECT_VERSION").trim();
+			Const.PROJECT_VERSION = PropertyUtil.getProperty("PROJECT_VERSION").trim();
 			servletContext.setAttribute("PROJECT_VERSION", Const.PROJECT_VERSION);
-			Const.ENABLE_SECURITY_FILTER = Boolean.parseBoolean(config.getProperty("ENABLE_SECURITY_FILTER").trim());
+			Const.ENABLE_SECURITY_FILTER = Boolean.parseBoolean(PropertyUtil.getProperty("ENABLE_SECURITY_FILTER").trim());
 			servletContext.setAttribute("ENABLE_SECURITY_FILTER", Const.ENABLE_SECURITY_FILTER);
-			Const.COPY_RIGHT = config.getProperty("COPY_RIGHT").trim();
+			Const.COPY_RIGHT = PropertyUtil.getProperty("COPY_RIGHT").trim();
 			servletContext.setAttribute("COPY_RIGHT", Const.COPY_RIGHT);
-			Const.PAGE_SIZE = Integer.parseInt(config.getProperty("PAGE_SIZE").trim());
+			Const.PAGE_SIZE = Integer.parseInt(PropertyUtil.getProperty("PAGE_SIZE").trim());
 			servletContext.setAttribute("COPY_RIGHT", Const.COPY_RIGHT);
 		} catch (Exception e){
 			e.printStackTrace();
