@@ -4,7 +4,7 @@ import com.jelly.eoss.db.entity.AdminFilterchainDefinition;
 import com.jelly.eoss.db.mapper.basic.iface.AdminFilterchainDefinitionMapper;
 import com.jelly.eoss.shiro.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.cache.MemoryConstrainedCacheManager;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +48,9 @@ public class ShiroConfiguration {
     }
 
     @Bean
-    public MemoryConstrainedCacheManager cacheManager(){
-        return new MemoryConstrainedCacheManager();
+    public CacheManager cacheManager(){
+//        return new MemoryConstrainedCacheManager();
+        return new RedisShiroCacheManager();
     }
 
     @Bean
