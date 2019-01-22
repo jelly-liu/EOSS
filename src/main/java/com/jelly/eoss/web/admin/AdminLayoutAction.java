@@ -19,6 +19,11 @@ public class AdminLayoutAction extends BaseAction {
     public String northAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		return "/layout/northAjax.htm";
     }
+
+    @RequestMapping(value = "/north")
+    public String north(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "/layout/north.htm";
+    }
 	
 	@RequestMapping(value = "/center")
 	public String center(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -30,8 +35,18 @@ public class AdminLayoutAction extends BaseAction {
         return "/layout/southAjax.htm";
     }
 
+    @RequestMapping(value = "/south")
+    public String south(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "/layout/south.htm";
+    }
+
     @RequestMapping(value = "/westAjax")
     public String westAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "/layout/westAjax.htm";
+    }
+
+    @RequestMapping(value = "/west")
+    public String west(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "/layout/west.htm";
     }
 }
