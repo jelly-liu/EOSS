@@ -9,7 +9,7 @@ view here [shiro-demo](https://github.com/jelly-liu/shiro-demo "shiro-demo")
 view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 
 # Which Branch Should I Check Out
---master branch, ***recommend***  
+--**master branch, recommend this branch**  
 ----Master branch is sync with eoss-shiro-spring-boot branch  
 --eoss-pure branch, not recommend  
 ----without shiro, but imitate shiro  
@@ -17,9 +17,7 @@ view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 ----integrated with Apache Shiro  
 --eoss-shiro-spring-boot branch, not recommend  
 ----integrated with spring boot 2.1.1, thymeleaf, shiro  
-
-## **** HIGHLY RECOMMAND CHECK OUT MASTER BRANCH ***
-
+# more information
 ------------ integrated framework ------------  
 --maven  
 --spring boot, latest version is 2.1.1  
