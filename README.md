@@ -18,6 +18,9 @@ view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 --eoss-shiro-spring-boot branch, not recommend  
 ----integrated with spring boot 2.1.1, thymeleaf, shiro  
 # more information
+------------ login users ------------  
+--admin/111111, has all privilege, CRUD  
+--adminViewer/111111, only has view privilege  
 ------------ integrated framework ------------  
 --maven  
 --spring boot, latest version is 2.1.1  
