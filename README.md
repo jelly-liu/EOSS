@@ -9,13 +9,13 @@ view here [shiro-demo](https://github.com/jelly-liu/shiro-demo "shiro-demo")
 view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 
 # Which Branch Should I Check Out
---master branch, recommend  
+--master branch, ***recommend***  
 ----Master branch is sync with eoss-shiro-spring-boot branch  
 --eoss-pure branch, not recommend  
 ----without shiro, but imitate shiro  
 --eoss-shiro branch, not recommend  
 ----integrated with Apache Shiro  
---eoss-shiro-spring-boot branch, recommend  
+--eoss-shiro-spring-boot branch, not recommend  
 ----integrated with spring boot 2.1.1, thymeleaf, shiro  
 
 ## **** HIGHLY RECOMMAND CHECK OUT MASTER BRANCH ***
@@ -23,11 +23,11 @@ view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 ------------ integrated framework ------------  
 --maven  
 --spring boot, latest version is 2.1.1  
---spring thymeleaf instead of jsp  
+--use spring thymeleaf instead of jsp  
 --mysql(easy translate to oracle)  
 --mybatis, mapper xml and mapper interface, latest version is 3.4.6   
 --shiro, latest version is 1.4.0  
---redis, will support  
+--redis cache, support  
 ------------ basic RBAC features ------------  
 --support user[CRUD]  
 ----support user-role[CRUD]  
@@ -45,8 +45,8 @@ view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 --support PermsOrAuthorizationFilter, work with EossAntPathMatcher  
 --support after change rules, auto refresh all assosiate perms, do not need relogin or restart server  
 --support refresh Authentication cache, when update user or role, do not need relogin or restart server  
---support not, will support Redis CacheManager  
---support not, sessionManager and sessionDAO and cacheManager  
+--support Redis CacheManager  
+--support session redis, if you set your redis cache manager, session will auto use your cache   
 
 # ScreenShot  
 ![ScreenShot1](https://github.com/jelly-liu/EOSS/blob/master/ScreenShot1.png "ScreenShot1")  
