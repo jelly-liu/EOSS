@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : utf-8
 
- Date: 01/16/2019 19:25:34 PM
+ Date: 01/22/2019 18:21:38 PM
 */
 
 SET NAMES utf8;
@@ -90,7 +90,7 @@ CREATE TABLE `admin_role` (
 --  Records of `admin_role`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_role` VALUES ('1', '系统管理员', '2012-12-22 16:27:04'), ('2', '系统查看员', '2019-01-06 11:23:39'), ('3', 't1', '2019-01-12 22:08:12');
+INSERT INTO `admin_role` VALUES ('1', '系统管理员', '2012-12-22 16:27:04'), ('2', '系统查看员', '2019-01-06 11:23:39');
 COMMIT;
 
 -- ----------------------------
@@ -106,7 +106,7 @@ CREATE TABLE `admin_role_permission` (
 --  Records of `admin_role_permission`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_role_permission` VALUES ('22', '1'), ('5', '1'), ('14', '1'), ('18', '1'), ('10', '1'), ('6', '1'), ('2', '2'), ('17', '2'), ('21', '2'), ('13', '2'), ('9', '2'), ('23', '3'), ('1', '3'), ('15', '3'), ('19', '3'), ('11', '3'), ('7', '3');
+INSERT INTO `admin_role_permission` VALUES ('22', '1'), ('5', '1'), ('14', '1'), ('18', '1'), ('10', '1'), ('6', '1'), ('2', '2'), ('17', '2'), ('21', '2'), ('13', '2'), ('9', '2');
 COMMIT;
 
 -- ----------------------------
@@ -161,7 +161,7 @@ CREATE TABLE `admin_user_role` (
 --  Records of `admin_user_role`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_user_role` VALUES ('1', '1'), ('2', '2');
+INSERT INTO `admin_user_role` VALUES ('0', '0'), ('1', '1'), ('2', '2');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
