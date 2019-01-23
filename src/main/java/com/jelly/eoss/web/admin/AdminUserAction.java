@@ -16,6 +16,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -60,6 +61,30 @@ public class AdminUserAction extends BaseAction {
             e.printStackTrace();
             throw e;
         }
+    }
+
+    @RequestMapping(value = "/toPasswordUpdate")
+    public ModelAndView toPasswordChange(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Subject subject = SecurityUtils.getSubject();
+        AdminUser user = (AdminUser) subject.getSession().getAttribute("USER_INFO");
+        request.setAttribute("user", user);
+        return new ModelAndView("/system/passwordUpdate.htm");
+    }
+
+    @RequestMapping(value = "/passwordUpdate")
+    public ModelAndView txPasswordChange(HttpServletRequest request, HttpServletResponse response, AdminUser user) throws Exception {
+        //加密密码
+        String salt = secureRandomNumberGenerator.nextBytes(32).toString();
+        String passwordMd5 = new Md5Hash(user.getPassword(), salt, 1).toString();
+
+        AdminUser u = userMapper.selectByPk(user.getId());
+        u.setSalt(salt);
+        u.setPassword(passwordMd5);
+        userMapper.update(u);
+
+        ModelAndView view = new ModelAndView("/success.htm");
+        view.addObject("INFO", "密码已更新，请重新登录");
+        return view;
     }
 
     @RequestMapping(value = "/toList")
