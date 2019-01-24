@@ -14,6 +14,9 @@ import org.apache.shiro.util.AntPathMatcher;
 public class EossAntPathMatcher extends AntPathMatcher {
     @Override
     protected boolean doMatch(String pattern, String path, boolean fullMatch) {
+        if(StringUtils.contains(path, "toPasswordUpdate")){
+            int i = 0;
+        }
         boolean matched = super.doMatch(StringUtils.lowerCase(pattern), StringUtils.lowerCase(path), fullMatch);
         return matched;
     }

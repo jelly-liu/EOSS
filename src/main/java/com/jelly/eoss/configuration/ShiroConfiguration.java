@@ -83,8 +83,11 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setUnauthorizedUrl("/to401");
 
         Map<String, Filter> filters = new LinkedHashMap<>();
+        filters.put("anon", new EossAnonymousFilter());
+        filters.put("authc", new EossFormAuthenticationFilter());
         filters.put("rolesOr", rolesOr());
         filters.put("permsOr", permsOr());
+
         shiroFilterFactoryBean.setFilters(filters);
 
         AdminFilterchainDefinition filterchainDefinition = filterchainDefinitionMapper.selectByPk(1);
