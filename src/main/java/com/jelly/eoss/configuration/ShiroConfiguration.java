@@ -64,14 +64,12 @@ public class ShiroConfiguration {
     @Bean
     public RolesOrAuthorizationFilter rolesOr(){
         RolesOrAuthorizationFilter rolesOrAuthorizationFilter = new RolesOrAuthorizationFilter();
-        rolesOrAuthorizationFilter.setPathMather(new EossAntPathMatcher());
         return rolesOrAuthorizationFilter;
     }
 
     @Bean
     public PermsOrAuthorizationFilter permsOr(){
         PermsOrAuthorizationFilter permsOrAuthorizationFilter = new PermsOrAuthorizationFilter();
-        permsOrAuthorizationFilter.setPathMather(new EossAntPathMatcher());
         return permsOrAuthorizationFilter;
     }
 
@@ -83,8 +81,6 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setUnauthorizedUrl("/to401");
 
         Map<String, Filter> filters = new LinkedHashMap<>();
-        filters.put("anon", new EossAnonymousFilter());
-        filters.put("authc", new EossFormAuthenticationFilter());
         filters.put("rolesOr", rolesOr());
         filters.put("permsOr", permsOr());
 

@@ -38,8 +38,4 @@ public class PermsOrAuthorizationFilter extends AuthorizationFilter {
         log.info("perms authorization failed, path={}", httpServletRequest.getRequestURI());
         return false;
     }
-
-    public void setPathMather(EossAntPathMatcher pathMather){
-        this.pathMatcher = pathMather;
-    }
 }

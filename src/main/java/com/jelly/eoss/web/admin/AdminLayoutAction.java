@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AdminLayoutAction extends BaseAction {
     @RequestMapping(value = "/main")
     public String main(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
         return "/layout/main.htm";
     }
 
