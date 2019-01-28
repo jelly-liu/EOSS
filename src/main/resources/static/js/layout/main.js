@@ -19,7 +19,7 @@ $(function() {
 
 	$.messager.show({
 		title : '登陆提示',
-		msg : '用户:' + $('#userName').val() + '<br/>欢迎使用' + EossGlobal.projectName + EossGlobal.projectVersion + '权限管理系统',
+		msg : '用户:' + $('#username').val() + '<br/>欢迎使用' + EossGlobal.projectName + EossGlobal.projectVersion + '权限管理系统',
 		showType : 'slide',
 		timeout : 4000
 	});

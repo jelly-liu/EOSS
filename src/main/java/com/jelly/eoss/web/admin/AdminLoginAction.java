@@ -84,10 +84,8 @@ public class AdminLoginAction extends BaseAction {
 			AdminUser user = (AdminUser)subject.getPrincipal();
 			String menuTreeIdsOfUser = this.eossMenuService.txQueryMenuTreeIdsOfUser(user);
 
-			request.getSession().setAttribute(Const.LOGIN_SESSION_KEY, user);
-			request.getSession().setAttribute(Const.LOGIN_MENU_TREE_IDS_KEY, menuTreeIdsOfUser);
-
-			subject.getSession().setAttribute("USER_INFO", user);
+			subject.getSession().setAttribute(Const.LOGIN_SESSION_KEY, user);
+			subject.getSession().setAttribute(Const.LOGIN_MENU_TREE_IDS_KEY, menuTreeIdsOfUser);
 			
 			this.responseSimpleJson(response, true, "");
 		}catch(Exception e){
@@ -98,8 +96,6 @@ public class AdminLoginAction extends BaseAction {
 	
 	@RequestMapping(value = "/logout")
 	public void txLoginOut(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.getSession().removeAttribute(Const.LOGIN_SESSION_KEY);
-		request.getSession().removeAttribute(Const.LOGIN_MENU_TREE_IDS_KEY);
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
 		response.getWriter().write("y");

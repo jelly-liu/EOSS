@@ -66,7 +66,7 @@ public class AdminUserAction extends BaseAction {
     @RequestMapping(value = "/toPasswordUpdate")
     public ModelAndView toPasswordChange(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Subject subject = SecurityUtils.getSubject();
-        AdminUser user = (AdminUser) subject.getSession().getAttribute("USER_INFO");
+        AdminUser user = (AdminUser) subject.getSession().getAttribute(Const.LOGIN_SESSION_KEY);
         request.setAttribute("user", user);
         return new ModelAndView("/system/passwordUpdate.htm");
     }
