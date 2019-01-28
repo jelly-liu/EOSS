@@ -1,5 +1,6 @@
 package com.jelly.eoss.configuration;
 
+import com.jelly.eoss.util.PropertyUtil;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
@@ -12,14 +13,13 @@ import org.springframework.context.annotation.Configuration;
  *
  */
 
-@Deprecated
-//@Configuration
-//@AutoConfigureAfter(MyBatisConfiguration.class)//注意，由于MapperScannerConfigurer执行的比较早，所以必须有下面的注解
+@Configuration
+@AutoConfigureAfter(MyBatisConfiguration.class)//注意，由于MapperScannerConfigurer执行的比较早，所以必须有下面的注解
 public class MyBatisMapperScannerConfiguration {
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() throws Exception {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-        mapperScannerConfigurer.setBasePackage("com.jelly.eoss.db.mapper");
+        mapperScannerConfigurer.setBasePackage(PropertyUtil.getProperty("mybatis.mapper-scan"));
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
         return mapperScannerConfigurer;
     }

@@ -13,7 +13,6 @@ spring:
     password: ggc123
     timeout: 2000MS
 
-  rabbitmq:
-    host: 9999
-    port: 5672
-    password: guest
+mybatis:
+  mapper-locations: classpath*:/com/jelly/eoss/db/mapper/**/*Mapper.xml
+  mapper-scan: com.jelly.eoss.db.mapper

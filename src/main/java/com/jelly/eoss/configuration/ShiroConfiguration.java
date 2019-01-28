@@ -8,8 +8,10 @@ import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
@@ -29,6 +31,19 @@ public class ShiroConfiguration {
 
     @Autowired
     private AdminFilterchainDefinitionMapper filterchainDefinitionMapper;
+
+    // shiro web filter configuration
+    @Bean
+    public FilterRegistrationBean delegatingFilterProxy(){
+        DelegatingFilterProxy shiroFilter = new DelegatingFilterProxy();
+
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(shiroFilter);
+        registration.addUrlPatterns("/*");
+        registration.setName("shiroFilter");
+        registration.setOrder(1);
+        return registration;
+    }
 
     @Bean
     public SecureRandomNumberGenerator secureRandomNumberGenerator(){

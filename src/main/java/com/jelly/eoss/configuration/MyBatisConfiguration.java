@@ -1,6 +1,7 @@
 package com.jelly.eoss.configuration;
 
 import com.github.pagehelper.PageInterceptor;
+import com.jelly.eoss.util.PropertyUtil;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -22,7 +23,7 @@ import java.util.Properties;
  */
 
 @Configuration
-@MapperScan("com.jelly.eoss.db.mapper")
+//@MapperScan("com.jelly.eoss.db.mapper")
 public class MyBatisConfiguration {
 
     @Autowired
@@ -34,7 +35,7 @@ public class MyBatisConfiguration {
             SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
             sqlSessionFactory.setDataSource(dataSource);
             PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver = new PathMatchingResourcePatternResolver();
-            Resource[] resources = pathMatchingResourcePatternResolver.getResources("classpath*:/com/jelly/eoss/db/mapper/**/*Mapper.xml");
+            Resource[] resources = pathMatchingResourcePatternResolver.getResources(PropertyUtil.getProperty("mybatis.mapper-locations"));
             sqlSessionFactory.setMapperLocations(resources);
 
             Properties properties = new Properties();
