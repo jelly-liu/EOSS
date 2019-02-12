@@ -15,7 +15,7 @@
 			<tr>
 				<td align="left">
 					用户ID：<input type="text" name="id" th:value="${id}"/>&nbsp;&nbsp;&nbsp;&nbsp;
-					用户名称：<input type="text" name="name" t:value="${name}"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					用户名称：<input type="text" name="name" th:value="${name}"/>&nbsp;&nbsp;&nbsp;&nbsp;
 					开始时间：<input type="text" class="easyui-datebox" name="createTimeStart" th:value="${createTimeStart}"/>&nbsp;&nbsp;&nbsp;&nbsp;
 					结束时间：<input type="text" class="easyui-datebox" name="createTimeEnd" th:value="${createTimeEnd}"/>&nbsp;&nbsp;&nbsp;&nbsp;
 					<a id="submitBtn" href="###" class="easyui-linkbutton">查询</a>
@@ -24,9 +24,9 @@
 		</table>
 	</form>
 	
-	<!-- display data list -->
-	<table th:if="${pager != null && pager.data != null && pager.data.size() gt 0}" class="eossDataTable tableXCenter">
-		<thead>
+	<th:block th:if="${pager != null && pager.data != null && pager.data.size() gt 0}">
+		<table class="eossDataTable tableXCenter">
+			<thead>
 			<tr class="datagrid-header">
 				<th>ID</th>
 				<th>用户名称</th>
@@ -35,9 +35,9 @@
 				<th>创建时间</th>
 				<th>操作</th>
 			</tr>
-		</thead>
-		<tbody>
-		    <tr th:each="it,st : ${pager.data}" th:class="${st.odd}? 'odd' : 'even'">
+			</thead>
+			<tbody>
+			<tr th:each="it,st : ${pager.data}" th:class="${st.odd}? 'odd' : 'even'">
 				<td th:text="${pager.rowStart + st.index}"></td>
 				<td th:text="${it.username}"></td>
 				<td th:text="${it.password}"</td>
@@ -48,10 +48,10 @@
 					<a href="###" type="update" th:value="${it.id}">更新</a>
 				</td>
 			</tr>
-		</tbody>
-	</table>
-	<!-- pagination -->
-	<table th:replace="/include/pagerFooter.htm::content('submitForm', 'page', ${pager == null ? 1 : pager.totalPage})"></table>
- 
+			</tbody>
+		</table>
+		<!-- pagination -->
+		<table th:replace="/include/pagerFooter.htm::content('submitForm', 'page', ${pager == null ? 1 : pager.totalPage})"></table>
+	</th:block>
 </body>
 </html>

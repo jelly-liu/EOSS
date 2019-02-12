@@ -97,7 +97,7 @@ public class AdminResourceAction extends BaseAction {
 		
 		request.setAttribute("menu", menu);
 		request.setAttribute("zTreeNodeJson", zTreeNodeJson);
-		return new ModelAndView("redirect:/system/resourceUpdate?id=" + menu.getId());
+		return new ModelAndView("/system/resourceUpdate.htm");
 	}
 	
 	@RequestMapping(value = "/update")
