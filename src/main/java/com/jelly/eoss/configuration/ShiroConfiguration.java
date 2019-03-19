@@ -7,6 +7,7 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -69,8 +70,17 @@ public class ShiroConfiguration {
     }
 
     @Bean
+    public DefaultWebSessionManager webSessionManager(){
+        DefaultWebSessionManager webSessionManager = new DefaultWebSessionManager();
+        webSessionManager.setGlobalSessionTimeout(3600000);//1hour
+        webSessionManager.setCacheManager(cacheManager());
+        return webSessionManager;
+    }
+
+    @Bean
     public DefaultWebSecurityManager securityManager(){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        securityManager.setSessionManager(webSessionManager());
         securityManager.setCacheManager(cacheManager());
         securityManager.setRealm(realm());
         return securityManager;
