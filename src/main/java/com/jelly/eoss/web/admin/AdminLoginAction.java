@@ -1,6 +1,7 @@
 package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.db.entity.AdminUser;
+import com.jelly.eoss.db.mapper.basic.iface.AdminUserMapper;
 import com.jelly.eoss.service.EossMenuService;
 import com.jelly.eoss.servlet.ICodeServlet;
 import com.jelly.eoss.util.Const;
@@ -26,6 +27,8 @@ public class AdminLoginAction extends BaseAction {
 
 	@Autowired
     EossMenuService eossMenuService;
+	@Autowired
+	AdminUserMapper userMapper;
 
 	@RequestMapping(value = "/to401")
 	public ModelAndView to401(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -81,7 +84,8 @@ public class AdminLoginAction extends BaseAction {
                 return;
             }
 
-			AdminUser user = (AdminUser)subject.getPrincipal();
+            Integer userId = (Integer) subject.getPrincipal();
+			AdminUser user = userMapper.selectByPk(userId);
 			String menuTreeIdsOfUser = this.eossMenuService.txQueryMenuTreeIdsOfUser(user);
 
 			subject.getSession().setAttribute(Const.LOGIN_SESSION_KEY, user);

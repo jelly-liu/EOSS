@@ -40,7 +40,8 @@ public class EossAuthorizingRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        AdminUser user = (AdminUser)principalCollection.fromRealm(this.getName()).iterator().next();
+        Integer userId = (Integer) principalCollection.getPrimaryPrincipal();
+        AdminUser user = userMapper.selectByPk(userId);
         AuthorizationInfo authorizationInfo = this.doGetAuthorizationInfo(user.getId());
         return authorizationInfo;
     }
@@ -96,7 +97,7 @@ public class EossAuthorizingRealm extends AuthorizingRealm {
 
         //pick out stored password and salt to AuthenticationInfo
         AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                user,
+                user.getId(),
                 user.getPassword(),
                 new SimpleByteSource(user.getSalt()),
                 this.getName());
