@@ -6,7 +6,11 @@ import com.jelly.eoss.shiro.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler;
+import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.Cookie;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -70,17 +74,49 @@ public class ShiroConfiguration {
     }
 
     @Bean
-    public DefaultWebSessionManager webSessionManager(){
-        DefaultWebSessionManager webSessionManager = new DefaultWebSessionManager();
-        webSessionManager.setGlobalSessionTimeout(3600000);//1hour
-        webSessionManager.setCacheManager(cacheManager());
-        return webSessionManager;
+    public JavaUuidSessionIdGenerator sessionIdGenerator(){
+        return new JavaUuidSessionIdGenerator();
+    }
+
+    @Bean
+    public RedisSessionDAO sessionDAO(){
+        RedisSessionDAO sessionDAO = new RedisSessionDAO();
+        sessionDAO.setSessionIdGenerator(sessionIdGenerator());
+        sessionDAO.setCacheManager(cacheManager());
+        return sessionDAO;
+    }
+
+    @Bean
+    public ExecutorServiceSessionValidationScheduler sessionValidationScheduler(){
+        ExecutorServiceSessionValidationScheduler sessionValidationScheduler = new ExecutorServiceSessionValidationScheduler();
+        sessionValidationScheduler.setInterval(1000*5);//millis
+        return sessionValidationScheduler;
+    }
+
+    @Bean
+    public Cookie sessionIdCookie(){
+        Cookie sessionIdCookie = new SimpleCookie();
+        sessionIdCookie.setName("JSESSIONID_SHIRO");
+        return sessionIdCookie;
+    }
+
+    @Bean
+    public DefaultWebSessionManager sessionManager(){
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        sessionManager.setGlobalSessionTimeout(1000*1500);//millis, 3600000=1hour
+        sessionManager.setSessionDAO(sessionDAO());
+        sessionManager.setSessionValidationSchedulerEnabled(true);
+        sessionManager.setSessionValidationScheduler(sessionValidationScheduler());
+        sessionManager.setSessionIdCookieEnabled(true);
+        sessionManager.setSessionIdCookie(sessionIdCookie());
+        sessionManager.setDeleteInvalidSessions(true);
+        return sessionManager;
     }
 
     @Bean
     public DefaultWebSecurityManager securityManager(){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setSessionManager(webSessionManager());
+        securityManager.setSessionManager(sessionManager());
         securityManager.setCacheManager(cacheManager());
         securityManager.setRealm(realm());
         return securityManager;

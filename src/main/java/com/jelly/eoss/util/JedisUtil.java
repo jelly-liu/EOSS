@@ -63,6 +63,17 @@ public class JedisUtil {
         }
     }
 
+    public static <T> void set(byte[] k, byte[] v){
+        Jedis jedis = jedisPool.getResource();
+        try{
+            jedis.set(k, v);
+        }catch (Exception e){
+            log.error(e.getMessage(), e);
+        }finally {
+            jedis.close();
+        }
+    }
+
     public static <T> void setex(String key, int expireSeconds, T v){
         Jedis jedis = jedisPool.getResource();
         try{
@@ -112,6 +123,19 @@ public class JedisUtil {
         }
 
         return false;
+    }
+
+    public static byte[] get(byte[] key){
+        Jedis jedis = jedisPool.getResource();
+        try{
+            byte[] bytes = jedis.get(key);
+            return bytes;
+        }catch (Exception e){
+            log.error(e.getMessage(), e);
+        }finally {
+            jedis.close();
+        }
+        return null;
     }
 
     public static <T> T get(String key, Class cla){
