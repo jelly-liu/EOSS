@@ -40,7 +40,7 @@ view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 --support resource[CRUD]  
 --support menu tree[CRUD]  
 ------------ shiro features ------------  
---sppport custom AntPathMatcher, not care about capital or lower case, EossAntPathMatcher  
+--sppport custom AntPathMatcher, do not care about capital or lower case of the request path, EossAntPathMatcher  
 --support MD5 hashed with salt, HashedCredentialsMatcher  
 --support RolesOrAuthorizationFilter, work with EossAntPathMatcher  
 --support PermsOrAuthorizationFilter, work with EossAntPathMatcher  
