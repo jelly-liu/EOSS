@@ -42,11 +42,11 @@ public class EossAuthorizingRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         Integer userId = (Integer) principalCollection.getPrimaryPrincipal();
         AdminUser user = userMapper.selectByPk(userId);
-        AuthorizationInfo authorizationInfo = this.doGetAuthorizationInfo(user.getId());
+        AuthorizationInfo authorizationInfo = this.tryToGetAuthorizationInfo(user.getId());
         return authorizationInfo;
     }
 
-    private AuthorizationInfo doGetAuthorizationInfo(Integer userId){
+    private AuthorizationInfo tryToGetAuthorizationInfo(Integer userId){
         SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
 
         boolean hasAuthorization = false;
@@ -106,7 +106,7 @@ public class EossAuthorizingRealm extends AuthorizingRealm {
 
     //refresh authentication info in local cache
     private void refreshAuthorizationInfo(PrincipalCollection principals, AdminUser user){
-        AuthorizationInfo authorizationInfo = this.doGetAuthorizationInfo(user.getId());
+        AuthorizationInfo authorizationInfo = this.tryToGetAuthorizationInfo(user.getId());
 
         Cache<Object, AuthorizationInfo> authorizationCache = getAuthorizationCache();
         if (authorizationCache != null) {
