@@ -1,10 +1,7 @@
 package com.jelly.eoss.web.admin;
 
 import com.jelly.eoss.db.entity.*;
-import com.jelly.eoss.db.mapper.basic.iface.AdminPermissionMapper;
-import com.jelly.eoss.db.mapper.basic.iface.AdminRoleMapper;
-import com.jelly.eoss.db.mapper.basic.iface.AdminRolePermissionMapper;
-import com.jelly.eoss.db.mapper.basic.iface.AdminUserRoleMapper;
+import com.jelly.eoss.db.mapper.basic.iface.*;
 import com.jelly.eoss.db.mapper.business.iface.RoleExtMapper;
 import com.jelly.eoss.shiro.EossAuthorizingRealm;
 import com.jelly.eoss.util.*;
@@ -41,6 +38,8 @@ public class AdminRoleAction extends BaseAction {
     private RoleExtMapper roleExtMapper;
     @Autowired
     EossAuthorizingRealm eossAuthorizingRealm;
+    @Autowired
+    AdminUserMapper userMapper;
 
     @RequestMapping(value = "/queryAllAjax")
     public void queryAllAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -124,7 +123,8 @@ public class AdminRoleAction extends BaseAction {
         userRoleMapper.delete(new AdminUserRole().setRoleId(id));
 
         //更新shiro AuthenticationInfo and AuthorizationInfo in local cache
-        AdminUser u = SecurityUtils.getSubject().getPrincipals().oneByType(AdminUser.class);
+        Integer userId = (Integer) SecurityUtils.getSubject().getPrincipal();
+        AdminUser u = userMapper.selectByPk(userId);
         eossAuthorizingRealm.refreshAuthInfo(SecurityUtils.getSubject().getPrincipals(), u);
 
         response.getWriter().write("y");
@@ -173,7 +173,8 @@ public class AdminRoleAction extends BaseAction {
         request.getRequestDispatcher("/system/role/toList").forward(request, response);
 
         //更新shiro AuthenticationInfo and AuthorizationInfo in local cache
-        AdminUser u = SecurityUtils.getSubject().getPrincipals().oneByType(AdminUser.class);
+        Integer userId = (Integer) SecurityUtils.getSubject().getPrincipal();
+        AdminUser u = userMapper.selectByPk(userId);
         eossAuthorizingRealm.refreshAuthInfo(SecurityUtils.getSubject().getPrincipals(), u);
 
         return new ModelAndView("redirect:/system/role/toList?id=" + role.getId());

@@ -8,6 +8,7 @@ import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.SimpleCookie;
@@ -103,7 +104,7 @@ public class ShiroConfiguration {
     @Bean
     public DefaultWebSessionManager sessionManager(){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        sessionManager.setGlobalSessionTimeout(1000*1500);//millis, 3600000=1hour
+        sessionManager.setGlobalSessionTimeout(1000*3600);//millis, 3600000=1hour
         sessionManager.setSessionDAO(sessionDAO());
         sessionManager.setSessionValidationSchedulerEnabled(true);
         sessionManager.setSessionValidationScheduler(sessionValidationScheduler());

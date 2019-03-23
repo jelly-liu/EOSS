@@ -39,12 +39,7 @@ public class TestTxAction {
     }
 
     @RequestMapping("/thymeleaf")
-    public ModelAndView greeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ModelAndView view = new ModelAndView("test.htm");
-
-        List<AdminUser> userList = userMapper.select(null);
-        view.addObject("userList", userList);
-
-        return view;
+    public void greeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response.getWriter().write("thymeleaf");
     }
 }
