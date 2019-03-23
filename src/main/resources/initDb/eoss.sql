@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : utf-8
 
- Date: 01/24/2019 15:35:51 PM
+ Date: 03/23/2019 12:28:38 PM
 */
 
 SET NAMES utf8;
@@ -31,7 +31,7 @@ CREATE TABLE `admin_filterchain_definition` (
 --  Records of `admin_filterchain_definition`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_filterchain_definition` VALUES ('1', '######\r\n#from first rule to last\r\n#the url pattern definitions follow a \'first match wins\' paradigm\r\n#once any one matched, others will not be evaluated\r\n######\r\n[urls]\r\n/static/** = anon\r\n/toLogin =anon\r\n/login = anon\r\n/system/user/toPasswordUpdate = authc\r\n/system/user/passwordUpdate = authc\r\n/system/**/*add* = authc, rolesOr[系统管理员]\r\n/system/**/*update* = authc, rolesOr[系统管理员]\r\n/system/**/*delete* = authc, rolesOr[系统管理员]\r\n/** = authc');
+INSERT INTO `admin_filterchain_definition` VALUES ('1', '######\n#from first rule to last\n#the url pattern definitions follow a \'first match wins\' paradigm\n#once any one matched, others will not be evaluated\n######\n[urls]\n/static/** = anon\n/toLogin =anon\n/login = anon\n\n/system/**/*add* = authc, permsOr[菜单:添加,用户:添加,角色:添加,权限:添加,资源:添加]\n/system/**/*delete* = authc, permsOr[菜单:删除,用户:删除,角色:删除,权限:删除,资源:删除]\n/system/**/*update* = authc, permsOr[菜单:更新,用户:更新,角色:更新,权限:更新,资源:更新,安全规则:更新,密码:更新]\n/system/**/*list* = authc, permsOr[菜单:查看,用户:查看,角色:查看,权限:查看,资源:查看]\n\n/** = authc');
 COMMIT;
 
 -- ----------------------------
@@ -55,7 +55,7 @@ CREATE TABLE `admin_menu` (
 --  Records of `admin_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_menu` VALUES ('1', '-1', '菜单根目录', '0', '--', '0', null, null, '2012-12-15 18:08:07'), ('2', '1', '系统管理', '0', '1#2', '1', null, null, '2012-12-13 13:46:00'), ('3', '1', '业务管理', '0', '1#3', '1', null, null, '2012-12-13 13:53:10'), ('4', '2', '菜单管理', '0', '1#2#4', '2', null, null, '2012-12-13 16:00:02'), ('5', '2', '用户管理', '0', '1#2#5', '2', null, null, '2012-12-13 16:00:02'), ('6', '2', '角色管理', '0', '1#2#6', '2', null, null, '2012-12-13 16:00:02'), ('7', '4', '菜单添加', '1', '1#2#4#7', '3', '/system/menu/toAdd', 'centerFrame', '2012-12-13 16:00:02'), ('8', '2', '权限管理', '0', '1#2#8', '2', null, null, '2012-12-16 13:59:33'), ('9', '4', '菜单查询', '1', '1#2#4#9', '3', '/system/menu/toList', 'centerFrame', '2012-12-16 14:15:20'), ('10', '8', '权限添加', '1', '1#2#8#10', '3', '/system/permission/toAdd', 'centerFrame', '2012-12-20 14:58:29'), ('13', '8', '权限查询', '1', '1#2#8#13', '3', '/system/permission/toList', 'centerFrame', '2012-12-20 16:28:03'), ('14', '6', '角色添加', '1', '1#2#6#14', '3', '/system/role/toAdd', 'centerFrame', '2012-12-22 12:36:14'), ('15', '6', '角色查询', '1', '1#2#6#15', '3', '/system/role/toList', 'centerFrame', '2012-12-22 14:29:28'), ('16', '5', '用户添加', '1', '1#2#5#16', '3', '/system/user/toAdd', 'centerFrame', '2012-12-22 18:34:26'), ('17', '5', '用户查询', '1', '1#2#5#17', '3', '/system/user/toList', 'centerFrame', '2012-12-22 19:56:13'), ('18', '2', '资源管理', '0', '1#2#18', '2', null, null, '2016-10-21 11:43:59'), ('19', '18', '资源添加', '1', '1#2#18#19', '3', '/system/resource/toAdd', 'centerFrame', '2016-10-21 11:46:46'), ('20', '18', '资源查询', '1', '1#2#18#20', '3', '/system/resource/toList', 'centerFrame', '2016-10-21 11:47:05'), ('21', '2', '安全规则', '0', '1#2#21', '2', null, null, '2016-10-25 12:27:00'), ('22', '21', '规则更新', '1', '1#2#21#22', '3', '/system/filterDefinition/toUpdate', 'centerFrame', '2016-10-25 12:28:26'), ('23', '18', 't1231', '0', '1#2#18#23', '3', null, null, '2019-01-12 20:30:39'), ('24', '5', '修改密码', '1', '1#2#5#24', '3', '/system/user/toPasswordUpdate', 'centerFrame', '2019-01-23 19:59:19');
+INSERT INTO `admin_menu` VALUES ('1', '-1', '菜单根目录', '0', '--', '0', null, null, '2012-12-15 18:08:07'), ('2', '1', '系统管理', '0', '1#2', '1', null, null, '2012-12-13 13:46:00'), ('3', '1', '业务管理', '0', '1#3', '1', null, null, '2012-12-13 13:53:10'), ('4', '2', '菜单管理', '0', '1#2#4', '2', null, null, '2012-12-13 16:00:02'), ('5', '2', '用户管理', '0', '1#2#5', '2', null, null, '2012-12-13 16:00:02'), ('6', '2', '角色管理', '0', '1#2#6', '2', null, null, '2012-12-13 16:00:02'), ('7', '4', '菜单添加', '1', '1#2#4#7', '3', '/system/menu/toAdd', 'centerFrame', '2012-12-13 16:00:02'), ('8', '2', '权限管理', '0', '1#2#8', '2', null, null, '2012-12-16 13:59:33'), ('9', '4', '菜单查询', '1', '1#2#4#9', '3', '/system/menu/toList', 'centerFrame', '2012-12-16 14:15:20'), ('10', '8', '权限添加', '1', '1#2#8#10', '3', '/system/permission/toAdd', 'centerFrame', '2012-12-20 14:58:29'), ('13', '8', '权限查询', '1', '1#2#8#13', '3', '/system/permission/toList', 'centerFrame', '2012-12-20 16:28:03'), ('14', '6', '角色添加', '1', '1#2#6#14', '3', '/system/role/toAdd', 'centerFrame', '2012-12-22 12:36:14'), ('15', '6', '角色查询', '1', '1#2#6#15', '3', '/system/role/toList', 'centerFrame', '2012-12-22 14:29:28'), ('16', '5', '用户添加', '1', '1#2#5#16', '3', '/system/user/toAdd', 'centerFrame', '2012-12-22 18:34:26'), ('17', '5', '用户查询', '1', '1#2#5#17', '3', '/system/user/toList', 'centerFrame', '2012-12-22 19:56:13'), ('18', '2', '资源管理', '0', '1#2#18', '2', null, null, '2016-10-21 11:43:59'), ('19', '18', '资源添加', '1', '1#2#18#19', '3', '/system/resource/toAdd', 'centerFrame', '2016-10-21 11:46:46'), ('20', '18', '资源查询', '1', '1#2#18#20', '3', '/system/resource/toList', 'centerFrame', '2016-10-21 11:47:05'), ('21', '2', '安全规则', '0', '1#2#21', '2', null, null, '2016-10-25 12:27:00'), ('22', '21', '规则更新', '1', '1#2#21#22', '3', '/system/filterDefinition/toUpdate', 'centerFrame', '2016-10-25 12:28:26'), ('23', '18', 't1231', '0', '1#2#18#23', '3', null, null, '2019-01-12 20:30:39'), ('24', '5', '修改密码', '1', '1#2#5#24', '3', '/system/user/toPasswordUpdate', 'centerFrame', '2019-01-23 19:59:19'), ('25', '3', '权限测试', '0', '1#3#25', '2', null, null, '2019-03-23 11:49:56'), ('26', '25', 'thymeleaf', '1', '1#3#25#26', '3', '/thymeleaf', 'centerFrame', '2019-03-23 11:50:37');
 COMMIT;
 
 -- ----------------------------
@@ -72,7 +72,7 @@ CREATE TABLE `admin_permission` (
 --  Records of `admin_permission`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_permission` VALUES ('1', 'menu:add'), ('2', 'menu:list'), ('3', 'menu:delete'), ('5', 'menu:*'), ('6', 'user:*'), ('7', 'user:add'), ('8', 'user:delete'), ('9', 'user:list'), ('10', 'role:*'), ('11', 'role:add'), ('12', 'role:delete'), ('13', 'role:list'), ('14', 'perm:*'), ('15', 'perm:add'), ('16', 'perm:delete'), ('17', 'perm:list'), ('18', 'res:*'), ('19', 'res:add'), ('20', 'res:delete'), ('21', 'res:list'), ('22', 'filterDef:*');
+INSERT INTO `admin_permission` VALUES ('0', '*'), ('1', '菜单:添加'), ('2', '菜单:删除'), ('3', '菜单:更新'), ('4', '菜单:查看'), ('5', '菜单:*'), ('6', '用户:添加'), ('7', '用户:删除'), ('8', '用户:更新'), ('9', '用户:查看'), ('10', '用户:*'), ('11', '角色:添加'), ('12', '角色:删除'), ('13', '角色:更新'), ('14', '角色:查看'), ('15', '角色:*'), ('16', '权限:添加'), ('17', '权限:删除'), ('18', '权限:更新'), ('19', '权限:查看'), ('20', '权限:*'), ('21', '资源:添加'), ('22', '资源:删除'), ('23', '资源:更新'), ('24', '资源:查看'), ('25', '资源:*'), ('26', '安全规则:更新'), ('27', '安全规则:*'), ('28', '密码:更新');
 COMMIT;
 
 -- ----------------------------
@@ -106,7 +106,7 @@ CREATE TABLE `admin_role_permission` (
 --  Records of `admin_role_permission`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_role_permission` VALUES ('22', '1'), ('5', '1'), ('14', '1'), ('18', '1'), ('10', '1'), ('6', '1'), ('2', '2'), ('17', '2'), ('21', '2'), ('13', '2'), ('9', '2');
+INSERT INTO `admin_role_permission` VALUES ('0', '1'), ('28', '2'), ('19', '2'), ('9', '2'), ('4', '2'), ('14', '2'), ('24', '2');
 COMMIT;
 
 -- ----------------------------
@@ -128,7 +128,7 @@ CREATE TABLE `admin_user` (
 --  Records of `admin_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_user` VALUES ('1', 'admin', 'ec805009268b8b0a484f7fd1bef341a2', '7TVhgiLANVOtAxMAetmyAaMHZBBPVW8xLe7cmvQ6Dhk=', '0', '0', '2012-12-22 19:25:48'), ('2', 'adminViewer', '3c82328c31a4667c3e4ef15cbd45be0f', '1Qvv+ZHP7Y0atRcUSyFGwnQyWraqcji9ynbojAozMA8=', '0', '0', '2019-01-06 11:25:57');
+INSERT INTO `admin_user` VALUES ('1', 'admin', 'ec805009268b8b0a484f7fd1bef341a2', '7TVhgiLANVOtAxMAetmyAaMHZBBPVW8xLe7cmvQ6Dhk=', '0', '0', '2012-12-22 19:25:48'), ('2', 'adminList', 'a7256f3915f8469c70b845d27b8557f4', 'AVb0Qt3BtBD7fyhAAkyqo48UTghH8CVK3mpb9hSb3tw=', '0', '0', '2019-01-06 11:25:57');
 COMMIT;
 
 -- ----------------------------
@@ -144,7 +144,7 @@ CREATE TABLE `admin_user_menu` (
 --  Records of `admin_user_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_user_menu` VALUES ('7', '1'), ('9', '1'), ('16', '1'), ('17', '1'), ('24', '1'), ('14', '1'), ('15', '1'), ('10', '1'), ('13', '1'), ('19', '1'), ('20', '1'), ('22', '1'), ('7', '2'), ('9', '2'), ('16', '2'), ('17', '2'), ('24', '2'), ('14', '2'), ('15', '2'), ('10', '2'), ('13', '2'), ('19', '2'), ('20', '2'), ('22', '2');
+INSERT INTO `admin_user_menu` VALUES ('7', '1'), ('9', '1'), ('16', '1'), ('17', '1'), ('24', '1'), ('14', '1'), ('15', '1'), ('10', '1'), ('13', '1'), ('19', '1'), ('20', '1'), ('22', '1'), ('7', '2'), ('9', '2'), ('16', '2'), ('17', '2'), ('24', '2'), ('14', '2'), ('15', '2'), ('10', '2'), ('13', '2'), ('19', '2'), ('20', '2'), ('22', '2'), ('26', '2');
 COMMIT;
 
 -- ----------------------------
