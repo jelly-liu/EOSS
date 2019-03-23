@@ -2,13 +2,14 @@ package com.jelly.eoss.db.entity;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * do not try to add or delete any property in this class
  */
-public class ConditionDomain {
+public class ConditionDomain implements Serializable {
     /* for select by page*/
     private Integer offset;
     private Integer length;
