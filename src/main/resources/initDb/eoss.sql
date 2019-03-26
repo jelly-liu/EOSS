@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : utf-8
 
- Date: 03/23/2019 12:28:38 PM
+ Date: 03/26/2019 11:07:05 AM
 */
 
 SET NAMES utf8;
@@ -31,7 +31,7 @@ CREATE TABLE `admin_filterchain_definition` (
 --  Records of `admin_filterchain_definition`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_filterchain_definition` VALUES ('1', '######\n#from first rule to last\n#the url pattern definitions follow a \'first match wins\' paradigm\n#once any one matched, others will not be evaluated\n######\n[urls]\n/static/** = anon\n/toLogin =anon\n/login = anon\n\n/system/**/*add* = authc, permsOr[菜单:添加,用户:添加,角色:添加,权限:添加,资源:添加]\n/system/**/*delete* = authc, permsOr[菜单:删除,用户:删除,角色:删除,权限:删除,资源:删除]\n/system/**/*update* = authc, permsOr[菜单:更新,用户:更新,角色:更新,权限:更新,资源:更新,安全规则:更新,密码:更新]\n/system/**/*list* = authc, permsOr[菜单:查看,用户:查看,角色:查看,权限:查看,资源:查看]\n\n/** = authc');
+INSERT INTO `admin_filterchain_definition` VALUES ('1', '######\n#from first rule to last\n#the url pattern definitions follow a \'first match wins\' paradigm\n#once any one matched, others will not be evaluated\n######\n[urls]\n/static/** = anon\n/toLogin =anon\n/login = anon\n\n/system/user/*PasswordUpdate = authc\n\n/system/**/*add* = authc, permsOr[菜单:添加,用户:添加,角色:添加,权限:添加,资源:添加]\n/system/**/*delete* = authc, permsOr[菜单:删除,用户:删除,角色:删除,权限:删除,资源:删除]\n/system/**/*update* = authc, permsOr[菜单:更新,用户:更新,角色:更新,权限:更新,资源:更新,安全规则:更新]\n/system/**/*list* = authc, permsOr[菜单:查看,用户:查看,角色:查看,权限:查看,资源:查看]\n\n/** = authc');
 COMMIT;
 
 -- ----------------------------
@@ -106,7 +106,7 @@ CREATE TABLE `admin_role_permission` (
 --  Records of `admin_role_permission`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_role_permission` VALUES ('0', '1'), ('28', '2'), ('19', '2'), ('9', '2'), ('4', '2'), ('14', '2'), ('24', '2');
+INSERT INTO `admin_role_permission` VALUES ('0', '1'), ('19', '2'), ('9', '2'), ('4', '2'), ('14', '2'), ('24', '2');
 COMMIT;
 
 -- ----------------------------
@@ -128,7 +128,7 @@ CREATE TABLE `admin_user` (
 --  Records of `admin_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_user` VALUES ('1', 'admin', 'ec805009268b8b0a484f7fd1bef341a2', '7TVhgiLANVOtAxMAetmyAaMHZBBPVW8xLe7cmvQ6Dhk=', '0', '0', '2012-12-22 19:25:48'), ('2', 'adminList', 'a7256f3915f8469c70b845d27b8557f4', 'AVb0Qt3BtBD7fyhAAkyqo48UTghH8CVK3mpb9hSb3tw=', '0', '0', '2019-01-06 11:25:57');
+INSERT INTO `admin_user` VALUES ('1', 'admin', 'ec805009268b8b0a484f7fd1bef341a2', '7TVhgiLANVOtAxMAetmyAaMHZBBPVW8xLe7cmvQ6Dhk=', '0', '0', '2012-12-22 19:25:48'), ('2', 'adminList', '24297ba9da00bcb2327a5cb16bd775b4', '1553569248598', '0', '0', '2019-01-06 11:25:57');
 COMMIT;
 
 -- ----------------------------
