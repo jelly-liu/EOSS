@@ -29,7 +29,7 @@ public class EossShiroFilterFactoryBean extends ShiroFilterFactoryBean {
 
     @Override
     public void setFilterChainDefinitions(String definitions) {
-        definitions = format(definitions);
+//        definitions = format(definitions);
         super.setFilterChainDefinitions(definitions);
         this.filterChainDefinitions = definitions;
     }
