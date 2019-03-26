@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : utf-8
 
- Date: 03/26/2019 11:07:05 AM
+ Date: 03/26/2019 18:54:21 PM
 */
 
 SET NAMES utf8;
@@ -31,7 +31,7 @@ CREATE TABLE `admin_filterchain_definition` (
 --  Records of `admin_filterchain_definition`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_filterchain_definition` VALUES ('1', '######\n#from first rule to last\n#the url pattern definitions follow a \'first match wins\' paradigm\n#once any one matched, others will not be evaluated\n######\n[urls]\n/static/** = anon\n/toLogin =anon\n/login = anon\n\n/system/user/*PasswordUpdate = authc\n\n/system/**/*add* = authc, permsOr[菜单:添加,用户:添加,角色:添加,权限:添加,资源:添加]\n/system/**/*delete* = authc, permsOr[菜单:删除,用户:删除,角色:删除,权限:删除,资源:删除]\n/system/**/*update* = authc, permsOr[菜单:更新,用户:更新,角色:更新,权限:更新,资源:更新,安全规则:更新]\n/system/**/*list* = authc, permsOr[菜单:查看,用户:查看,角色:查看,权限:查看,资源:查看]\n\n/** = authc');
+INSERT INTO `admin_filterchain_definition` VALUES ('1', '######\n#from first rule to last\n#the url pattern definitions follow a \'first match wins\' paradigm\n#once any one matched, others will not be evaluated\n######\n[urls]\n/static/** = anon\n/toLogin =anon\n/login = anon\n\n#all users whor are logined, have permission to update self password\n/system/user/*PasswordUpdate = authc\n\n/system/menu/*add = permsOr[菜单:添加]\n/system/menu/*delete = permsOr[菜单:删除]\n/system/menu/*list = permsOr[菜单:查看]\n\n/system/resource/*add = permsOr[资源:添加]\n/system/resource/*delete = permsOr[资源:删除]\n/system/resource/*update = permsOr[资源:更新]\n/system/resource/*list = permsOr[资源:查看]\n\n/system/user/*add = permsOr[用户:添加]\n/system/user/*delete = permsOr[用户:删除]\n/system/user/*update = permsOr[用户:更新]\n/system/user/*list = permsOr[用户:查看]\n\n/system/role/*add = permsOr[角色:添加]\n/system/role/*delete = permsOr[角色:删除]\n/system/role/*update = permsOr[角色:更新]\n/system/role/*list = permsOr[角色:查看]\n\n/system/permission/*add = permsOr[权限:添加]\n/system/permission/*delete = permsOr[权限:删除]\n/system/permission/*update = permsOr[权限:更新]\n/system/permission/*list = permsOr[权限:查看]\n\n/system/filterDefinition/toUpdate = permsOr[安全规则:更新]\n\n#all other resource need logied permission\n/** = authc');
 COMMIT;
 
 -- ----------------------------
@@ -106,7 +106,7 @@ CREATE TABLE `admin_role_permission` (
 --  Records of `admin_role_permission`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_role_permission` VALUES ('0', '1'), ('19', '2'), ('9', '2'), ('4', '2'), ('14', '2'), ('24', '2');
+INSERT INTO `admin_role_permission` VALUES ('19', '2'), ('9', '2'), ('4', '2'), ('14', '2'), ('24', '2'), ('0', '1');
 COMMIT;
 
 -- ----------------------------
