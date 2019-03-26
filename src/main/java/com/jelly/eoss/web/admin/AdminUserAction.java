@@ -44,8 +44,6 @@ public class AdminUserAction extends BaseAction {
     AdminUserMenuMapper userMenuMapper;
     @Autowired
     EossAuthorizingRealm eossAuthorizingRealm;
-    @Autowired
-    SecureRandomNumberGenerator secureRandomNumberGenerator;
 
     @RequestMapping(value = "/queryUserNameAjax")
     public void queryUserNameAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -74,7 +72,7 @@ public class AdminUserAction extends BaseAction {
     @RequestMapping(value = "/passwordUpdate")
     public ModelAndView txPasswordChange(HttpServletRequest request, HttpServletResponse response, AdminUser user) throws Exception {
         //加密密码
-        String salt = secureRandomNumberGenerator.nextBytes(32).toString();
+        String salt = System.currentTimeMillis()+"";
         String passwordMd5 = new Md5Hash(user.getPassword(), salt, 1).toString();
 
         AdminUser u = userMapper.selectByPk(user.getId());
@@ -128,7 +126,7 @@ public class AdminUserAction extends BaseAction {
         int id = ComUtil.QueryNextID("id", AdminUser.TABLE_NAME);
 
         //加密密码
-        String salt = secureRandomNumberGenerator.nextBytes(32).toString();
+        String salt = System.currentTimeMillis()+"";
         String passwordMd5 = new Md5Hash(user.getPassword(), salt, 1).toString();
 
         //插入用户
@@ -200,7 +198,7 @@ public class AdminUserAction extends BaseAction {
     @RequestMapping(value = "/update")
     public ModelAndView txUpdate(HttpServletRequest request, HttpServletResponse response, AdminUser user) throws Exception {
         //加密密码
-        String salt = secureRandomNumberGenerator.nextBytes(32).toString();
+        String salt = System.currentTimeMillis()+"";
         String passwordMd5 = new Md5Hash(user.getPassword(), salt, 1).toString();
 
         //更新用户信息

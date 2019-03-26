@@ -5,10 +5,8 @@ import com.jelly.eoss.db.mapper.basic.iface.AdminFilterchainDefinitionMapper;
 import com.jelly.eoss.shiro.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
-import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.SimpleCookie;
@@ -51,12 +49,7 @@ public class ShiroConfiguration {
         return registration;
     }
 
-    @Bean
-    public SecureRandomNumberGenerator secureRandomNumberGenerator(){
-        return new SecureRandomNumberGenerator();
-    }
-
-    @Bean
+//    @Bean
     public HashedCredentialsMatcher credentialsMatcher(){
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher("MD5");
         hashedCredentialsMatcher.setHashIterations(1);
@@ -68,18 +61,18 @@ public class ShiroConfiguration {
         return new EossAuthorizingRealm(credentialsMatcher());
     }
 
-    @Bean
+//    @Bean
     public CacheManager cacheManager(){
 //        return new MemoryConstrainedCacheManager();
         return new RedisShiroCacheManager();
     }
 
-    @Bean
+//    @Bean
     public JavaUuidSessionIdGenerator sessionIdGenerator(){
         return new JavaUuidSessionIdGenerator();
     }
 
-    @Bean
+//    @Bean
     public RedisSessionDAO sessionDAO(){
         RedisSessionDAO sessionDAO = new RedisSessionDAO();
         sessionDAO.setSessionIdGenerator(sessionIdGenerator());
@@ -87,21 +80,21 @@ public class ShiroConfiguration {
         return sessionDAO;
     }
 
-    @Bean
+//    @Bean
     public ExecutorServiceSessionValidationScheduler sessionValidationScheduler(){
         ExecutorServiceSessionValidationScheduler sessionValidationScheduler = new ExecutorServiceSessionValidationScheduler();
         sessionValidationScheduler.setInterval(1000*5);//millis
         return sessionValidationScheduler;
     }
 
-    @Bean
+//    @Bean
     public Cookie sessionIdCookie(){
         Cookie sessionIdCookie = new SimpleCookie();
         sessionIdCookie.setName("JSESSIONID_SHIRO");
         return sessionIdCookie;
     }
 
-    @Bean
+//    @Bean
     public DefaultWebSessionManager sessionManager(){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setGlobalSessionTimeout(1000*3600);//millis, 3600000=1hour
@@ -114,7 +107,7 @@ public class ShiroConfiguration {
         return sessionManager;
     }
 
-    @Bean
+//    @Bean
     public DefaultWebSecurityManager securityManager(){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setSessionManager(sessionManager());
@@ -123,13 +116,13 @@ public class ShiroConfiguration {
         return securityManager;
     }
 
-    @Bean
+//    @Bean
     public RolesOrAuthorizationFilter rolesOr(){
         RolesOrAuthorizationFilter rolesOrAuthorizationFilter = new RolesOrAuthorizationFilter();
         return rolesOrAuthorizationFilter;
     }
 
-    @Bean
+//    @Bean
     public PermsOrAuthorizationFilter permsOr(){
         PermsOrAuthorizationFilter permsOrAuthorizationFilter = new PermsOrAuthorizationFilter();
         return permsOrAuthorizationFilter;
