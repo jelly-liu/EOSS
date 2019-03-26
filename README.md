@@ -47,7 +47,8 @@ view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
 --support after change rules, auto refresh all assosiate perms, do not need relogin or restart server  
 --support refresh Authentication cache, when update user or role, do not need relogin or restart server  
 --support Redis CacheManager  
---support session redis, if you set your redis cache manager, session will auto use your cache   
+--support session redis, if you set your redis cache manager, session will auto use your cache  
+--support the most explicit permission rules(shiro official recommend), each request url has an unique perm[xxx]
 
 # ScreenShot  
 ![ScreenShot1](https://github.com/jelly-liu/EOSS/blob/master/ScreenShot1.png "ScreenShot1")  
