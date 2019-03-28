@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * @Author ：jelly.liu
@@ -37,15 +39,18 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
                         "Authentication url [" + getLoginUrl() + "]");
             }
 
-            saveRequestAndRedirectToLogin(request, response);
+            redirectToLoginPageByTopJs(request, response);
             return false;
         }
     }
 
-    private void topRedirectByJs(ServletRequest request, ServletResponse response){
+    private void redirectToLoginPageByTopJs(ServletRequest request, ServletResponse response) throws IOException {
         saveRequest(request);
         String loginUrl = getLoginUrl();
 
-        //todo jelly
+        PrintWriter out = response.getWriter();
+        out.write("<script type=\"text/javascript\">");
+        out.write("top.window.location.href = '" + loginUrl + "';");
+        out.write("</script>");
     }
 }

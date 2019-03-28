@@ -97,7 +97,7 @@ public class ShiroConfiguration {
 //    @Bean
     public DefaultWebSessionManager sessionManager(){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        sessionManager.setGlobalSessionTimeout(1000*3600);//millis, 3600000=1hour
+        sessionManager.setGlobalSessionTimeout(1000*15);//millis, 3600000=1hour
         sessionManager.setSessionDAO(sessionDAO());
         sessionManager.setSessionValidationSchedulerEnabled(true);
         sessionManager.setSessionValidationScheduler(sessionValidationScheduler());
@@ -128,6 +128,12 @@ public class ShiroConfiguration {
         return permsOrAuthorizationFilter;
     }
 
+    //    @Bean
+    public MyFormAuthenticationFilter myauthc(){
+        MyFormAuthenticationFilter myFormAuthenticationFilter = new MyFormAuthenticationFilter();
+        return myFormAuthenticationFilter;
+    }
+
     @Bean
     public EossShiroFilterFactoryBean shiroFilter() {
         EossShiroFilterFactoryBean shiroFilterFactoryBean = new EossShiroFilterFactoryBean();
@@ -138,6 +144,7 @@ public class ShiroConfiguration {
         Map<String, Filter> filters = new LinkedHashMap<>();
         filters.put("rolesOr", rolesOr());
         filters.put("permsOr", permsOr());
+        filters.put("myauthc", myauthc());
 
         shiroFilterFactoryBean.setFilters(filters);
 
