@@ -83,7 +83,7 @@ public class ShiroConfiguration {
 //    @Bean
     public ExecutorServiceSessionValidationScheduler sessionValidationScheduler(){
         ExecutorServiceSessionValidationScheduler sessionValidationScheduler = new ExecutorServiceSessionValidationScheduler();
-        sessionValidationScheduler.setInterval(1000*5);//millis
+        sessionValidationScheduler.setInterval(1000*1800);//millis
         return sessionValidationScheduler;
     }
 
