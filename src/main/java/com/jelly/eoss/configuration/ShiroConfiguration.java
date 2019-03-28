@@ -83,7 +83,7 @@ public class ShiroConfiguration {
 //    @Bean
     public ExecutorServiceSessionValidationScheduler sessionValidationScheduler(){
         ExecutorServiceSessionValidationScheduler sessionValidationScheduler = new ExecutorServiceSessionValidationScheduler();
-        sessionValidationScheduler.setInterval(1000*1800);//millis
+        sessionValidationScheduler.setInterval(1000*5);//millis
         return sessionValidationScheduler;
     }
 
@@ -97,7 +97,7 @@ public class ShiroConfiguration {
 //    @Bean
     public DefaultWebSessionManager sessionManager(){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        sessionManager.setGlobalSessionTimeout(1000*15);//millis, 3600000=1hour
+        sessionManager.setGlobalSessionTimeout(1000*1800);//millis, 3600000=1hour
         sessionManager.setSessionDAO(sessionDAO());
         sessionManager.setSessionValidationSchedulerEnabled(true);
         sessionManager.setSessionValidationScheduler(sessionValidationScheduler());
