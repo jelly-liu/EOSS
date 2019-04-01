@@ -4,32 +4,8 @@ $(function(){
 	var $form = $('#submitForm');
 	var $submitBtn = $('#submitBtn');
 
-	/*************************************** init zTree ***************************************/
 	var $roleIds = $('#roleIds');
-	var $zTreeUL = $("#zTreeUL");
-	var zTreeSetting = {
-		data: {
-			simpleData: {
-				enable: true
-			}
-		},
-		view: {
-			dblClickExpand: false
-		},
-		check: {
-			enable: true,
-			chkStyle: "checkbox"
-		},
-		async: {
-			enable: true,
-			url: EossGlobal.basePath + "/system/role/queryAllAjax",
-			dataFilter: function(treeId, parentNode, responseData){
-				//filter the response data, but we do nothing at here, just return the whole data immediately
-				return responseData;
-			}
-		}
-	};
-	var zTreeObj = $.fn.zTree.init($zTreeUL, zTreeSetting, null);
+    var $groupIds = $('#groupIds');
 
 	/*************************************** init zTree ***************************************/
 	var $resourceIds = $('#resourcesIds');
@@ -72,25 +48,32 @@ $(function(){
 			return;
 		}
 
-		//--------------------- collect roles data ---------------------
-		var pa = [];
-		var checkedNodes = zTreeObj.getCheckedNodes(true);
-		// if(checkedNodes.length == 0){
-		// 	top.$.messager.confirm('提示', '您没有选择该用户的角色，您确实要这样操作吗？', function(r){
-	     //        if (r){
-	     //        	$roleIds.val('');
-		// 			$form.submit();
-	     //        }
-	     //    });
-		// 	return;
-		// }
-		
-		//收集已选中的checkbox值
-		for(var i = 0; i < checkedNodes.length; i++){
-			pa.push(checkedNodes[i].id);
-		}
-		$roleIds.val(pa.join(','));
+        //------ collect role data ------
+        var ra = [];
+        var $roles = $(':checkbox:checked.role');
+        $roles.each(function(){
+            $this = $(this);
+            ra.push($this.val());
+        })
+        if($roles.size() > 0){
+            $roleIds.val(ra.join(','));
+        }else{
+            $roleIds.val('');
+        }
 
+        //------ collect group data ------
+        var ga = [];
+        var $groups = $(':checkbox:checked.group');
+        $groups.each(function(){
+            $this = $(this);
+            ga.push($this.val());
+        })
+        if($groups.size() > 0){
+            $groupIds.val(ga.join(','));
+        }else{
+            $groupIds.val('');
+        }
+		
 		//--------------------- collect resources data ---------------------
 		var paResource = [];
 		var checkedNodesResource = zTreeObjResource.getCheckedNodes(true);

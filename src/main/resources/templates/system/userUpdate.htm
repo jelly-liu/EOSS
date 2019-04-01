@@ -32,9 +32,23 @@
 			<tr>
 				<td align="right">选择角色：</td>
 				<td>
-					<div id="zTreeNodeJson"  style="display:none;" th:text="${zTreeNodeJson}"></div>
-					<input type="hidden" id="roleIds" name="roleIds"/>
-					<ul id="zTreeUL" class="ztree"></ul>
+                    <input type="hidden" id="roleIds" name="roleIds"/>
+                    <th:block th:if="${roleList != null && roleList.size() gt 0}">
+                        <th:block th:each="it,st : ${roleList}">
+                            <input type="checkbox" name="roleInput" class="role" th:value="${it.id}" th:text="${it.name}" th:checked="${#sets.size(userRoleSet) > 0 && #sets.contains(userRoleSet, it.id)}" style="width: auto;"/><br/>
+                        </th:block>
+                    </th:block>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">选择用户组：</td>
+				<td>
+					<input type="hidden" id="groupIds" name="groupIds"/>
+					<th:block th:if="${groupList != null && groupList.size() gt 0}">
+						<th:block th:each="it,st : ${groupList}">
+							<input type="checkbox" name="roleInput" class="group" th:value="${it.id}" th:text="${it.name}" th:checked="${#sets.size(userGroupSet) > 0 && #sets.contains(userGroupSet, it.id)}" style="width: auto;"/><br/>
+						</th:block>
+					</th:block>
 				</td>
 			</tr>
 			<tr>

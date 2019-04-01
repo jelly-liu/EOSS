@@ -1,17 +1,14 @@
 package com.jelly.eoss.web.admin;
 
-import com.jelly.eoss.db.entity.AdminUser;
-import com.jelly.eoss.db.entity.AdminUserMenu;
-import com.jelly.eoss.db.entity.AdminUserRole;
-import com.jelly.eoss.db.mapper.basic.iface.AdminUserMapper;
-import com.jelly.eoss.db.mapper.basic.iface.AdminUserMenuMapper;
-import com.jelly.eoss.db.mapper.basic.iface.AdminUserRoleMapper;
+import com.jelly.eoss.db.entity.*;
+import com.jelly.eoss.db.mapper.basic.iface.*;
 import com.jelly.eoss.db.mapper.business.iface.RoleExtMapper;
 import com.jelly.eoss.db.mapper.business.iface.UserExtMapper;
 import com.jelly.eoss.service.EossMenuService;
 import com.jelly.eoss.shiro.EossAuthorizingRealm;
 import com.jelly.eoss.util.*;
 import com.jelly.eoss.web.BaseAction;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
@@ -41,7 +38,13 @@ public class AdminUserAction extends BaseAction {
     @Autowired
     AdminUserRoleMapper userRoleMapper;
     @Autowired
+    AdminRoleMapper roleMapper;
+    @Autowired
     AdminUserMenuMapper userMenuMapper;
+    @Autowired
+    AdminGroupMapper groupMapper;
+    @Autowired
+    AdminUserGroupMapper userGroupMapper;
     @Autowired
     EossAuthorizingRealm eossAuthorizingRealm;
 
@@ -106,12 +109,18 @@ public class AdminUserAction extends BaseAction {
 
     @RequestMapping(value = "/toAdd")
     public ModelAndView toAdd(HttpServletRequest request, HttpServletResponse response, AdminUser user) throws Exception {
+        List<AdminGroup> groupList = groupMapper.selectAll();
+        List<AdminRole> roleList = roleMapper.selectAll();
+
+        request.setAttribute("groupList", groupList);
+        request.setAttribute("roleList", roleList);
         return new ModelAndView("/system/userAdd.htm");
     }
 
     @RequestMapping(value = "/add")
     public ModelAndView txAdd(HttpServletRequest request, HttpServletResponse response, AdminUser user) throws Exception {
         String roleIds = request.getParameter("roleIds");
+        String groupIds = request.getParameter("groupIds");
         String resourcesIds = request.getParameter("resourcesIds");
         ModelAndView mv = new ModelAndView();
 
@@ -138,6 +147,8 @@ public class AdminUserAction extends BaseAction {
 
         //插入角色
         this.batchInsertUserRole(user.getId(), roleIds);
+        //插入组
+        this.batchInsertUserGroup(user.getId(), groupIds);
         //插入资源
         this.batchInsertUserResource(user.getId(), resourcesIds);
 
@@ -154,22 +165,19 @@ public class AdminUserAction extends BaseAction {
 
         //查询该用户已拥有的角色
         List<AdminUserRole> roleOldList = userRoleMapper.select(new AdminUserRole().setUserId(id));
-        Set<String> roleOldSet = new HashSet<String>();
+        Set<Integer> userRoleSet = new HashSet();
         for (AdminUserRole m : roleOldList) {
-            roleOldSet.add(m.getRoleId()+"");
+            userRoleSet.add(m.getRoleId());
         }
+        List<AdminRole> roleList = roleMapper.selectAll();
 
-        //设置初始化选中的角色
-        List<Map<String, Object>> roleList = roleExtMapper.queryRolePage(null);
-        for (Map<String, Object> m : roleList) {
-            m.put("pId", "-1");
-            m.put("isParent", "false");
-            m.put("iconSkin", "icon_eoss_role01");
-            if (roleOldSet.contains(m.get("id").toString())) {
-                m.put("checked", "true");
-            }
+        //查询已拥有的组
+        List<AdminUserGroup> userGroupList = userGroupMapper.select(new AdminUserGroup().setUserId(user.getId()));
+        Set<Integer> userGroupSet = new HashSet<>();
+        for(AdminUserGroup userGroup : userGroupList){
+            userGroupSet.add(userGroup.getGroupId());
         }
-        String zTreeNodeJson = JsonUtil.toJson(roleList);
+        List<AdminGroup> groupList = groupMapper.selectAll();
 
         //将该角色已有菜单资源用逗号连接成一个字符串，如1,2,3,4,5,6
         List<AdminUserMenu> resourceIdsOldList = userMenuMapper.select(new AdminUserMenu().setUserId(id));
@@ -189,7 +197,10 @@ public class AdminUserAction extends BaseAction {
         pm.put("withoutUrl", "y");
         String zTreeNodeJsonResource = this.eossMenuService.queryMenuSub(pm);
 
-        request.setAttribute("zTreeNodeJson", zTreeNodeJson);
+        request.setAttribute("userRoleSet", userRoleSet);
+        request.setAttribute("roleList", roleList);
+        request.setAttribute("userGroupSet", userGroupSet);
+        request.setAttribute("groupList", groupList);
         request.setAttribute("zTreeNodeJsonResource", zTreeNodeJsonResource);
         request.setAttribute("user", user);
         return new ModelAndView("/system/userUpdate.htm");
@@ -212,6 +223,10 @@ public class AdminUserAction extends BaseAction {
         String roleIds = request.getParameter("roleIds");
         this.batchInsertUserRole(adminUser.getId(), roleIds);
 
+        //更新组
+        String groupIds = request.getParameter("groupIds");
+        this.batchInsertUserGroup(adminUser.getId(), groupIds);
+
         //更新资源
         String resourceIds = request.getParameter("resourceIds");
         this.batchInsertUserResource(adminUser.getId(), resourceIds);
@@ -225,6 +240,25 @@ public class AdminUserAction extends BaseAction {
         eossAuthorizingRealm.refreshAuthInfo(SecurityUtils.getSubject().getPrincipals(), adminUser);
 
         return null;
+    }
+
+    //批量插入用户对应的角色，只选择用JdbcTemplate的批量更新方法，以保证高性能
+    private void batchInsertUserGroup(Integer userId, String groupIdsStr) {
+        userGroupMapper.delete(new AdminUserGroup().setUserId(userId));
+
+        //没有选择组，直接返回
+        if (groupIdsStr == null || groupIdsStr.trim().equals("")) {
+            return;
+        }
+
+        //插入用户拥有的组
+        String[] groupIds = groupIdsStr.split(",");
+        if (groupIds.length > 0) {
+            for (String groupIdStr : groupIds) {
+                Integer groupId = Integer.valueOf(groupIdStr);
+                userGroupMapper.insert(new AdminUserGroup().setUserId(userId).setGroupId(groupId));
+            }
+        }
     }
 
     //批量插入用户对应的角色，只选择用JdbcTemplate的批量更新方法，以保证高性能

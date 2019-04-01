@@ -4,26 +4,8 @@ $(function(){
 	var $form = $('#submitForm');
 	var $submitBtn = $('#submitBtn');
 
-	/*************************************** init role zTree ***************************************/
-	var $zTreeNodeJson = $('#zTreeNodeJson');
-	var $roleIds = $('#roleIds');
-	var $zTreeUL = $("#zTreeUL");
-	var zTreeSetting = {
-		data: {
-			simpleData: {
-				enable: true
-			}
-		},
-		view: {
-			dblClickExpand: false
-		},
-		check: {
-			enable: true,
-			chkStyle: "checkbox"
-		}
-	};
-	
-	var zTreeObj = $.fn.zTree.init($zTreeUL, zTreeSetting, $.parseJSON($zTreeNodeJson.text()));
+    $roleIds = $('#roleIds');
+    $groupIds = $('#groupIds');
 
 	/*************************************** init resource zTree ***************************************/
 	var $resourceIds = $('#resourceIds');
@@ -58,14 +40,31 @@ $(function(){
 			return;
 		}
 
-		//------ collect roles data ------
-		var pa = [];
-		var checkedNodes = zTreeObj.getCheckedNodes(true);
-		//收集已选中的checkbox值
-		for(var i = 0; i < checkedNodes.length; i++){
-			pa.push(checkedNodes[i].id);
-		}
-		$roleIds.val(pa.join(','));
+        //------ collect role data ------
+        var ra = [];
+        var $roles = $(':checkbox:checked.role');
+        $roles.each(function(){
+            $this = $(this);
+            ra.push($this.val());
+        })
+        if($roles.size() > 0){
+            $roleIds.val(ra.join(','));
+        }else{
+            $roleIds.val('');
+        }
+
+        //------ collect group data ------
+        var ga = [];
+        var $groups = $(':checkbox:checked.group');
+        $groups.each(function(){
+            $this = $(this);
+            ga.push($this.val());
+        })
+        if($groups.size() > 0){
+            $groupIds.val(ga.join(','));
+        }else{
+            $groupIds.val('');
+        }
 
 		//------ collect resources data ------
 		var paResource = [];

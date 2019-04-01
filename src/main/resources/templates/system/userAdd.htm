@@ -23,14 +23,28 @@
 					<input type="text" id="userPwd" name="password" value="111111"/>
 				</td>
 			</tr>
-			<tr>
-				<td align="right">选择角色：</td>
-				<td>
-					<input type="hidden" id="roleIds" name="roleIds"/>
-					<ul id="zTreeUL" class="ztree"></ul>
-				</td>
-			</tr>
-
+            <tr>
+                <td align="right">选择角色：</td>
+                <td>
+                    <input type="hidden" id="roleIds"/>
+                    <th:block th:if="${roleList != null && roleList.size() gt 0}">
+                        <th:block th:each="it,st : ${roleList}">
+                            <input type="checkbox" name="roleInput" class="role" th:value="${it.id}" th:text="${it.name}" style="width: auto;"/><br/>
+                        </th:block>
+                    </th:block>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">选择用户组：</td>
+                <td>
+                    <input type="hidden" id="groupIds"/>
+                    <th:block th:if="${groupList != null && groupList.size() gt 0}">
+                        <th:block th:each="it,st : ${groupList}">
+                            <input type="checkbox" name="roleInput" class="group" th:value="${it.id}" th:text="${it.name}" style="width: auto;"/><br/>
+                        </th:block>
+                    </th:block>
+                </td>
+            </tr>
 			<tr>
 				<td align="right">选择资源：</td>
 				<td>
