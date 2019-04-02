@@ -9,5 +9,12 @@
 		INNER JOIN admin_user_menu um ON u.ID = um.USER_ID
 		INNER JOIN admin_menu m ON m.id =um.MENU_ID
 		WHERE u.id = #{id}
+		UNION
+		SELECT m.path as "ids"
+		FROM admin_user u
+		INNER JOIN admin_user_group g on u.id = g.user_id
+		INNER JOIN admin_group_menu gm on g.group_id = gm.group_id
+		INNER JOIN admin_menu m on gm.menu_id = m.id
+		WHERE u.id = #{id}
 	</select>
 </mapper>
