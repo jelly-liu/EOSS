@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : utf-8
 
- Date: 04/01/2019 20:51:06 PM
+ Date: 04/02/2019 11:52:33 AM
 */
 
 SET NAMES utf8;
@@ -162,7 +162,7 @@ CREATE TABLE `admin_user` (
 --  Records of `admin_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_user` VALUES ('1', 'admin', '96467c3293bd3080ae1ee3efd1b15b7a', '1553772010150', '0', '0', '2012-12-22 19:25:48'), ('2', 'adminList', '24297ba9da00bcb2327a5cb16bd775b4', '1553569248598', '0', '0', '2019-01-06 11:25:57'), ('3', 'test1', '6cc02279e20b659f765706fb0f06b816', '1554123008991', '0', '0', '2019-04-01 20:19:24');
+INSERT INTO `admin_user` VALUES ('1', 'admin', '78b1638cc32339dd308f7d3e84f1e4ac', '1554176674585', '0', '0', '2012-12-22 19:25:48'), ('2', 'adminList', '2d3f395359d6d419b8d45334acf6c304', '1554176700085', '0', '0', '2019-01-06 11:25:57'), ('3', 'test1', 'f9857ed2442900c55915c74a387daf6e', '1554176753200', '0', '0', '2019-04-01 20:19:24');
 COMMIT;
 
 -- ----------------------------
@@ -179,7 +179,7 @@ CREATE TABLE `admin_user_group` (
 --  Records of `admin_user_group`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_user_group` VALUES ('3', '1');
+INSERT INTO `admin_user_group` VALUES ('1', '1'), ('2', '2'), ('3', '2');
 COMMIT;
 
 -- ----------------------------
@@ -195,7 +195,7 @@ CREATE TABLE `admin_user_menu` (
 --  Records of `admin_user_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_user_menu` VALUES ('7', '2'), ('9', '2'), ('16', '2'), ('17', '2'), ('24', '2'), ('14', '2'), ('15', '2'), ('10', '2'), ('13', '2'), ('19', '2'), ('20', '2'), ('22', '2'), ('26', '2'), ('7', '1'), ('9', '1'), ('16', '1'), ('17', '1'), ('24', '1'), ('14', '1'), ('15', '1'), ('10', '1'), ('13', '1'), ('19', '1'), ('20', '1'), ('22', '1'), ('28', '1'), ('29', '1');
+INSERT INTO `admin_user_menu` VALUES ('7', '2'), ('7', '3'), ('16', '3'), ('26', '3');
 COMMIT;
 
 -- ----------------------------
@@ -212,7 +212,7 @@ CREATE TABLE `admin_user_role` (
 --  Records of `admin_user_role`
 -- ----------------------------
 BEGIN;
-INSERT INTO `admin_user_role` VALUES ('1', '1'), ('2', '2'), ('3', '1');
+INSERT INTO `admin_user_role` VALUES ('1', '1'), ('2', '2'), ('3', '2');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
