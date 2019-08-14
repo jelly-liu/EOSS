@@ -92,6 +92,10 @@ public class ConditionDomain implements Serializable {
         private String colName;
         private Sort sort;
 
+        /**
+         * @param colName 驼峰式的 entity 属性名称
+         * @param sort 排序方式
+         */
         public SortCondition(String colName, Sort sort) {
             this.colName = convertToTableName(colName);
             this.sort = sort;

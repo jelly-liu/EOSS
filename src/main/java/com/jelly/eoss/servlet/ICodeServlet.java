@@ -21,6 +21,7 @@ public class ICodeServlet extends HttpServlet {
 	private int height;
 	private int length;
 	private String[] charts;
+	private String BASE_CHINESE = "\u7684\u4e00\u4e86\u662f\u6211\u4e0d\u5728";
 	
 	public ICodeServlet(){
 		this.initIcodeServlet();
