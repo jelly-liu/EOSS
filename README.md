@@ -1,3 +1,6 @@
+# HERE - HERE - HERE
+https://gitee.com/collonn_admin/eoss-ee
+
 # Need more help?
 [wiki help](https://github.com/jelly-liu/EOSS/wiki)  
 
