@@ -1,5 +1,5 @@
 # eoss-ee
-
+syn(同步参照): https://gitee.com/collonn_admin/eoss-ee
 
 #### 介绍
 一套完整的权限管理系统，代码简洁直观    
