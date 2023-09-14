@@ -1,0 +1,2694 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:Collonn, Email:collonn@126.com, QQ:195358385 -->
+
+<mapper namespace="com.open.eoss.db.mapper.basic.SysPermMapper">
+
+<!-- 生成 selectCount -->
+<select id="selectCount" parameterType="com.open.eoss.db.entity.SysPerm" resultType="java.lang.Long">
+    select count(*) ct
+    from sys_perm
+    <where>
+        <include refid="selectWheres"/>
+    </where>
+</select>
+
+<!-- 生成 selectPage -->
+<select id="selectPage" parameterType="com.open.eoss.db.entity.SysPerm" resultType="com.open.eoss.db.entity.SysPerm">
+    select
+    <include refid="selectColumns"/>
+    from sys_perm
+    where 1 = 1
+    <include refid="selectWheres"/>
+    <include refid="selectOrderBy"/>
+    limit #{offset},#{length}
+</select>
+
+<!-- 生成 select -->
+<select id="select" parameterType="com.open.eoss.db.entity.SysPerm" resultType="com.open.eoss.db.entity.SysPerm">
+    select
+    <include refid="selectColumns"/>
+    from sys_perm
+    where 1 = 1
+    <include refid="selectWheres"/>
+    <include refid="selectOrderBy"/>
+</select>
+
+<!-- 生成 selectOne -->
+<select id="selectOne" parameterType="com.open.eoss.db.entity.SysPerm" resultType="com.open.eoss.db.entity.SysPerm">
+    select
+    <include refid="selectColumns"/>
+    from sys_perm
+    where 1 = 1
+    <include refid="selectWheres"/>
+    limit 1
+</select>
+
+<!-- 生成 selectAll -->
+<select id="selectAll" resultType="com.open.eoss.db.entity.SysPerm">
+    select
+    <include refid="selectPkColumns"/>
+    from sys_perm
+</select>
+
+<!-- 根据表的主键生成 selectByPk -->
+<select id="selectByPk" parameterType="java.io.Serializable" resultType="com.open.eoss.db.entity.SysPerm">
+    select
+    <include refid="selectPkColumns"/>
+    from sys_perm
+    where
+        id = #{id}
+        
+</select>
+
+
+
+<!-- 生成 Insert -->
+<insert id="insert" useGeneratedKeys="true" keyProperty="id"
+parameterType="com.open.eoss.db.entity.SysPerm">
+insert into sys_perm (
+<trim suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+
+            <if test="pid != null">
+                pid,
+            </if>
+
+            <if test="name != null and name != ''">
+                name,
+            </if>
+
+            <if test="type != null and type != ''">
+                type,
+            </if>
+
+            <if test="url != null and url != ''">
+                url,
+            </if>
+
+            <if test="urlSubmit != null and urlSubmit != ''">
+                url_submit,
+            </if>
+
+            <if test="path != null and path != ''">
+                path,
+            </if>
+
+            <if test="leaf != null">
+                leaf,
+            </if>
+
+            <if test="levelNum != null">
+                level_num,
+            </if>
+
+            <if test="sortNum != null">
+                sort_num,
+            </if>
+
+            <if test="createTime != null">
+                create_time,
+            </if>
+
+            <if test="updateTime != null">
+                update_time,
+            </if>
+
+</trim>
+) values (
+<trim suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="pid != null">
+                #{pid},
+            </if>
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+            <if test="type != null and type != ''">
+                #{type},
+            </if>
+            <if test="url != null and url != ''">
+                #{url},
+            </if>
+            <if test="urlSubmit != null and urlSubmit != ''">
+                #{urlSubmit},
+            </if>
+            <if test="path != null and path != ''">
+                #{path},
+            </if>
+            <if test="leaf != null">
+                #{leaf},
+            </if>
+            <if test="levelNum != null">
+                #{levelNum},
+            </if>
+            <if test="sortNum != null">
+                #{sortNum},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+</trim>
+)
+</insert>
+
+
+<!-- 生成 insertOrIgnore -->
+<!-- 忽略 唯一索引 冲突，正常返回受影响记录条数为0，mysql有warning日志 -->
+<insert id="insertOrIgnore" useGeneratedKeys="true" keyProperty="id"
+    parameterType="com.open.eoss.db.entity.SysPerm">
+        insert ignore into sys_perm (
+        <trim suffixOverrides=",">
+                    <if test="id != null">
+                        id,
+                    </if>
+
+                    <if test="pid != null">
+                        pid,
+                    </if>
+
+                    <if test="name != null and name != ''">
+                        name,
+                    </if>
+
+                    <if test="type != null and type != ''">
+                        type,
+                    </if>
+
+                    <if test="url != null and url != ''">
+                        url,
+                    </if>
+
+                    <if test="urlSubmit != null and urlSubmit != ''">
+                        url_submit,
+                    </if>
+
+                    <if test="path != null and path != ''">
+                        path,
+                    </if>
+
+                    <if test="leaf != null">
+                        leaf,
+                    </if>
+
+                    <if test="levelNum != null">
+                        level_num,
+                    </if>
+
+                    <if test="sortNum != null">
+                        sort_num,
+                    </if>
+
+                    <if test="createTime != null">
+                        create_time,
+                    </if>
+
+                    <if test="updateTime != null">
+                        update_time,
+                    </if>
+
+        </trim>
+        ) values (
+        <trim suffixOverrides=",">
+                    <if test="id != null">
+                        #{id},
+                    </if>
+                    <if test="pid != null">
+                        #{pid},
+                    </if>
+                    <if test="name != null and name != ''">
+                        #{name},
+                    </if>
+                    <if test="type != null and type != ''">
+                        #{type},
+                    </if>
+                    <if test="url != null and url != ''">
+                        #{url},
+                    </if>
+                    <if test="urlSubmit != null and urlSubmit != ''">
+                        #{urlSubmit},
+                    </if>
+                    <if test="path != null and path != ''">
+                        #{path},
+                    </if>
+                    <if test="leaf != null">
+                        #{leaf},
+                    </if>
+                    <if test="levelNum != null">
+                        #{levelNum},
+                    </if>
+                    <if test="sortNum != null">
+                        #{sortNum},
+                    </if>
+                    <if test="createTime != null">
+                        #{createTime},
+                    </if>
+                    <if test="updateTime != null">
+                        #{updateTime},
+                    </if>
+        </trim>
+        )
+    </insert>
+
+    <!-- 生成 insertOrUpdate -->
+    <!-- 忽略 唯一索引 冲突，正常返回受影响记录条数为0，mysql有warning日志 -->
+    <insert id="insertOrUpdate" useGeneratedKeys="true"
+            keyProperty="id" parameterType="com.open.eoss.db.entity.SysPerm">
+                insert into sys_perm (
+                <trim suffixOverrides=",">
+                            <if test="id != null">
+                                id,
+                            </if>
+
+                            <if test="pid != null">
+                                pid,
+                            </if>
+
+                            <if test="name != null and name != ''">
+                                name,
+                            </if>
+
+                            <if test="type != null and type != ''">
+                                type,
+                            </if>
+
+                            <if test="url != null and url != ''">
+                                url,
+                            </if>
+
+                            <if test="urlSubmit != null and urlSubmit != ''">
+                                url_submit,
+                            </if>
+
+                            <if test="path != null and path != ''">
+                                path,
+                            </if>
+
+                            <if test="leaf != null">
+                                leaf,
+                            </if>
+
+                            <if test="levelNum != null">
+                                level_num,
+                            </if>
+
+                            <if test="sortNum != null">
+                                sort_num,
+                            </if>
+
+                            <if test="createTime != null">
+                                create_time,
+                            </if>
+
+                            <if test="updateTime != null">
+                                update_time,
+                            </if>
+
+                </trim>
+                ) values (
+                <trim suffixOverrides=",">
+                            <if test="id != null">
+                                #{id},
+                            </if>
+                            <if test="pid != null">
+                                #{pid},
+                            </if>
+                            <if test="name != null and name != ''">
+                                #{name},
+                            </if>
+                            <if test="type != null and type != ''">
+                                #{type},
+                            </if>
+                            <if test="url != null and url != ''">
+                                #{url},
+                            </if>
+                            <if test="urlSubmit != null and urlSubmit != ''">
+                                #{urlSubmit},
+                            </if>
+                            <if test="path != null and path != ''">
+                                #{path},
+                            </if>
+                            <if test="leaf != null">
+                                #{leaf},
+                            </if>
+                            <if test="levelNum != null">
+                                #{levelNum},
+                            </if>
+                            <if test="sortNum != null">
+                                #{sortNum},
+                            </if>
+                            <if test="createTime != null">
+                                #{createTime},
+                            </if>
+                            <if test="updateTime != null">
+                                #{updateTime},
+                            </if>
+                </trim>
+                ) on duplicate key update
+                <trim suffixOverrides=",">
+                            <if test="id != null">
+                                id=values(id),
+                            </if>
+                            <if test="pid != null">
+                                pid=values(pid),
+                            </if>
+                            <if test="name != null and name != ''">
+                                name=values(name),
+                            </if>
+                            <if test="type != null and type != ''">
+                                type=values(type),
+                            </if>
+                            <if test="url != null and url != ''">
+                                url=values(url),
+                            </if>
+                            <if test="urlSubmit != null and urlSubmit != ''">
+                                url_submit=values(url_submit),
+                            </if>
+                            <if test="path != null and path != ''">
+                                path=values(path),
+                            </if>
+                            <if test="leaf != null">
+                                leaf=values(leaf),
+                            </if>
+                            <if test="levelNum != null">
+                                level_num=values(level_num),
+                            </if>
+                            <if test="sortNum != null">
+                                sort_num=values(sort_num),
+                            </if>
+                            <if test="createTime != null">
+                                create_time=values(create_time),
+                            </if>
+                            <if test="updateTime != null">
+                                update_time=values(update_time),
+                            </if>
+                </trim>
+            </insert>
+
+
+            <!-- 生成 insertMulti -->
+            <insert id="insertMulti" parameterType="java.util.List">
+                insert into sys_perm
+                (
+                <trim suffixOverrides=",">
+                        id,
+                        pid,
+                        name,
+                        type,
+                        url,
+                        url_submit,
+                        path,
+                        leaf,
+                        level_num,
+                        sort_num,
+                        create_time,
+                        update_time,
+                </trim>
+                )
+                values
+                <foreach collection="list" item="item" index="index" separator=",">
+                    (
+                    <trim suffixOverrides=",">
+                            #{item.id},
+                            #{item.pid},
+                            #{item.name},
+                            #{item.type},
+                            #{item.url},
+                            #{item.urlSubmit},
+                            #{item.path},
+                            #{item.leaf},
+                            #{item.levelNum},
+                            #{item.sortNum},
+                            #{item.createTime},
+                            #{item.updateTime},
+                    </trim>
+                    )
+                </foreach>
+            </insert>
+
+            <!-- 生成 insertMultiOrIgnore -->
+            <!-- 忽略 唯一索引 冲突 的记录，其它记录正常入库，mysql会有warning日志 -->
+            <insert id="insertMultiOrIgnore" parameterType="java.util.List">
+                insert ignore into sys_perm
+                (
+                <trim suffixOverrides=",">
+                        id,
+                        pid,
+                        name,
+                        type,
+                        url,
+                        url_submit,
+                        path,
+                        leaf,
+                        level_num,
+                        sort_num,
+                        create_time,
+                        update_time,
+                </trim>
+                )
+                values
+                <foreach collection="list" item="item" index="index" separator=",">
+                    (
+                    <trim suffixOverrides=",">
+                            #{item.id},
+                            #{item.pid},
+                            #{item.name},
+                            #{item.type},
+                            #{item.url},
+                            #{item.urlSubmit},
+                            #{item.path},
+                            #{item.leaf},
+                            #{item.levelNum},
+                            #{item.sortNum},
+                            #{item.createTime},
+                            #{item.updateTime},
+                    </trim>
+                    )
+                </foreach>
+            </insert>
+
+
+            <!-- 生成 insertMultiOrUpdateWithNull -->
+            <!-- 忽略 唯一索引 冲突 的记录，其它记录正常入库，mysql会有warning日志 -->
+            <insert id="insertMultiOrUpdateWithNull" parameterType="java.util.List">
+                insert into sys_perm
+                (
+                <trim suffixOverrides=",">
+                        id,
+                        pid,
+                        name,
+                        type,
+                        url,
+                        url_submit,
+                        path,
+                        leaf,
+                        level_num,
+                        sort_num,
+                        create_time,
+                        update_time,
+                </trim>
+                )
+                values
+                <foreach collection="list" item="item" index="index" separator=",">
+                    (
+                    <trim suffixOverrides=",">
+                            #{item.id},
+                            #{item.pid},
+                            #{item.name},
+                            #{item.type},
+                            #{item.url},
+                            #{item.urlSubmit},
+                            #{item.path},
+                            #{item.leaf},
+                            #{item.levelNum},
+                            #{item.sortNum},
+                            #{item.createTime},
+                            #{item.updateTime},
+                    </trim>
+                    )
+                </foreach>
+                on duplicate key update
+                <trim suffixOverrides=",">
+                        id=values(id),
+                        pid=values(pid),
+                        name=values(name),
+                        type=values(type),
+                        url=values(url),
+                        url_submit=values(url_submit),
+                        path=values(path),
+                        leaf=values(leaf),
+                        level_num=values(level_num),
+                        sort_num=values(sort_num),
+                        create_time=values(create_time),
+                        update_time=values(update_time),
+                </trim>
+            </insert>
+
+
+            <!-- 生成 insertMultiOrUpdateWithNull -->
+            <!-- 忽略 唯一索引 冲突 的记录，其它记录正常入库，mysql会有warning日志 -->
+            <insert id="insertMultiOrUpdateWithNullExcludeUpdateProperty">
+                insert into sys_perm
+                (
+                <trim suffixOverrides=",">
+                        id,
+                        pid,
+                        name,
+                        type,
+                        url,
+                        url_submit,
+                        path,
+                        leaf,
+                        level_num,
+                        sort_num,
+                        create_time,
+                        update_time,
+                </trim>
+                )
+                values
+                <foreach collection="list" item="item" index="index" separator=",">
+                    (
+                    <trim suffixOverrides=",">
+                            #{item.id},
+                            #{item.pid},
+                            #{item.name},
+                            #{item.type},
+                            #{item.url},
+                            #{item.urlSubmit},
+                            #{item.path},
+                            #{item.leaf},
+                            #{item.levelNum},
+                            #{item.sortNum},
+                            #{item.createTime},
+                            #{item.updateTime},
+                    </trim>
+                    )
+                </foreach>
+                on duplicate key update
+                <trim suffixOverrides=",">
+                        <choose>
+                            <when test="excludeProperties == null or excludeProperties.size() == 0">
+                                id=values(id),
+                            </when>
+                            <otherwise>
+                                <if test="'id' not in excludeProperties">
+                                    id=values(id),
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="excludeProperties == null or excludeProperties.size() == 0">
+                                pid=values(pid),
+                            </when>
+                            <otherwise>
+                                <if test="'pid' not in excludeProperties">
+                                    pid=values(pid),
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="excludeProperties == null or excludeProperties.size() == 0">
+                                name=values(name),
+                            </when>
+                            <otherwise>
+                                <if test="'name' not in excludeProperties">
+                                    name=values(name),
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="excludeProperties == null or excludeProperties.size() == 0">
+                                type=values(type),
+                            </when>
+                            <otherwise>
+                                <if test="'type' not in excludeProperties">
+                                    type=values(type),
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="excludeProperties == null or excludeProperties.size() == 0">
+                                url=values(url),
+                            </when>
+                            <otherwise>
+                                <if test="'url' not in excludeProperties">
+                                    url=values(url),
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="excludeProperties == null or excludeProperties.size() == 0">
+                                url_submit=values(url_submit),
+                            </when>
+                            <otherwise>
+                                <if test="'urlSubmit' not in excludeProperties">
+                                    url_submit=values(url_submit),
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="excludeProperties == null or excludeProperties.size() == 0">
+                                path=values(path),
+                            </when>
+                            <otherwise>
+                                <if test="'path' not in excludeProperties">
+                                    path=values(path),
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="excludeProperties == null or excludeProperties.size() == 0">
+                                leaf=values(leaf),
+                            </when>
+                            <otherwise>
+                                <if test="'leaf' not in excludeProperties">
+                                    leaf=values(leaf),
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="excludeProperties == null or excludeProperties.size() == 0">
+                                level_num=values(level_num),
+                            </when>
+                            <otherwise>
+                                <if test="'levelNum' not in excludeProperties">
+                                    level_num=values(level_num),
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="excludeProperties == null or excludeProperties.size() == 0">
+                                sort_num=values(sort_num),
+                            </when>
+                            <otherwise>
+                                <if test="'sortNum' not in excludeProperties">
+                                    sort_num=values(sort_num),
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="excludeProperties == null or excludeProperties.size() == 0">
+                                create_time=values(create_time),
+                            </when>
+                            <otherwise>
+                                <if test="'createTime' not in excludeProperties">
+                                    create_time=values(create_time),
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="excludeProperties == null or excludeProperties.size() == 0">
+                                update_time=values(update_time),
+                            </when>
+                            <otherwise>
+                                <if test="'updateTime' not in excludeProperties">
+                                    update_time=values(update_time),
+                                </if>
+                            </otherwise>
+                        </choose>
+                </trim>
+            </insert>
+
+
+
+            <!-- 生成 multiInsert -->
+            <update id="multiInsert" parameterType="java.util.List">
+                <foreach collection="list" item="pojo" index="index" open="" close="" separator=";">
+                    insert into sys_perm (
+                    <trim suffixOverrides=",">
+                                <if test="pojo.id != null">
+                                    id,
+                                </if>
+                                <if test="pojo.pid != null">
+                                    pid,
+                                </if>
+                                <if test="pojo.name != null and pojo.name != ''">
+                                    name,
+                                </if>
+                                <if test="pojo.type != null and pojo.type != ''">
+                                    type,
+                                </if>
+                                <if test="pojo.url != null and pojo.url != ''">
+                                    url,
+                                </if>
+                                <if test="pojo.urlSubmit != null and pojo.urlSubmit != ''">
+                                    url_submit,
+                                </if>
+                                <if test="pojo.path != null and pojo.path != ''">
+                                    path,
+                                </if>
+                                <if test="pojo.leaf != null">
+                                    leaf,
+                                </if>
+                                <if test="pojo.levelNum != null">
+                                    level_num,
+                                </if>
+                                <if test="pojo.sortNum != null">
+                                    sort_num,
+                                </if>
+                                <if test="pojo.createTime != null">
+                                    create_time,
+                                </if>
+                                <if test="pojo.updateTime != null">
+                                    update_time,
+                                </if>
+                    </trim>
+                    )
+                    value
+                    (
+                    <trim suffixOverrides=",">
+                                <if test="pojo.id != null">
+                                    #{ pojo.id },
+                                </if>
+                                <if test="pojo.pid != null">
+                                    #{ pojo.pid },
+                                </if>
+                                <if test="pojo.name != null and pojo.name != ''">
+                                    #{ pojo.name },
+                                </if>
+                                <if test="pojo.type != null and pojo.type != ''">
+                                    #{ pojo.type },
+                                </if>
+                                <if test="pojo.url != null and pojo.url != ''">
+                                    #{ pojo.url },
+                                </if>
+                                <if test="pojo.urlSubmit != null and pojo.urlSubmit != ''">
+                                    #{ pojo.urlSubmit },
+                                </if>
+                                <if test="pojo.path != null and pojo.path != ''">
+                                    #{ pojo.path },
+                                </if>
+                                <if test="pojo.leaf != null">
+                                    #{ pojo.leaf },
+                                </if>
+                                <if test="pojo.levelNum != null">
+                                    #{ pojo.levelNum },
+                                </if>
+                                <if test="pojo.sortNum != null">
+                                    #{ pojo.sortNum },
+                                </if>
+                                <if test="pojo.createTime != null">
+                                    #{ pojo.createTime },
+                                </if>
+                                <if test="pojo.updateTime != null">
+                                    #{ pojo.updateTime },
+                                </if>
+                    </trim>
+                    )
+                </foreach>
+            </update>
+
+
+            <!-- 生成 multiInsertOrIgnore -->
+            <update id="multiInsertOrIgnore" parameterType="java.util.List">
+                <foreach collection="list" item="pojo" index="index" open="" close="" separator=";">
+                    insert ignore into sys_perm (
+                    <trim suffixOverrides=",">
+                                <if test="pojo.id != null">
+                                    id,
+                                </if>
+                                <if test="pojo.pid != null">
+                                    pid,
+                                </if>
+                                <if test="pojo.name != null and pojo.name != ''">
+                                    name,
+                                </if>
+                                <if test="pojo.type != null and pojo.type != ''">
+                                    type,
+                                </if>
+                                <if test="pojo.url != null and pojo.url != ''">
+                                    url,
+                                </if>
+                                <if test="pojo.urlSubmit != null and pojo.urlSubmit != ''">
+                                    url_submit,
+                                </if>
+                                <if test="pojo.path != null and pojo.path != ''">
+                                    path,
+                                </if>
+                                <if test="pojo.leaf != null">
+                                    leaf,
+                                </if>
+                                <if test="pojo.levelNum != null">
+                                    level_num,
+                                </if>
+                                <if test="pojo.sortNum != null">
+                                    sort_num,
+                                </if>
+                                <if test="pojo.createTime != null">
+                                    create_time,
+                                </if>
+                                <if test="pojo.updateTime != null">
+                                    update_time,
+                                </if>
+                    </trim>
+                    )
+                    value
+                    (
+                    <trim suffixOverrides=",">
+                                <if test="pojo.id != null">
+                                    #{ pojo.id },
+                                </if>
+                                <if test="pojo.pid != null">
+                                    #{ pojo.pid },
+                                </if>
+                                <if test="pojo.name != null and pojo.name != ''">
+                                    #{ pojo.name },
+                                </if>
+                                <if test="pojo.type != null and pojo.type != ''">
+                                    #{ pojo.type },
+                                </if>
+                                <if test="pojo.url != null and pojo.url != ''">
+                                    #{ pojo.url },
+                                </if>
+                                <if test="pojo.urlSubmit != null and pojo.urlSubmit != ''">
+                                    #{ pojo.urlSubmit },
+                                </if>
+                                <if test="pojo.path != null and pojo.path != ''">
+                                    #{ pojo.path },
+                                </if>
+                                <if test="pojo.leaf != null">
+                                    #{ pojo.leaf },
+                                </if>
+                                <if test="pojo.levelNum != null">
+                                    #{ pojo.levelNum },
+                                </if>
+                                <if test="pojo.sortNum != null">
+                                    #{ pojo.sortNum },
+                                </if>
+                                <if test="pojo.createTime != null">
+                                    #{ pojo.createTime },
+                                </if>
+                                <if test="pojo.updateTime != null">
+                                    #{ pojo.updateTime },
+                                </if>
+                    </trim>
+                    )
+                </foreach>
+            </update>
+
+
+            <!-- 生成 multiInsertOrUpdate -->
+            <update id="multiInsertOrUpdate" parameterType="java.util.List">
+                <foreach collection="list" item="pojo" index="index" open="" close="" separator=";">
+                    insert into sys_perm (
+                    <trim suffixOverrides=",">
+                                <if test="pojo.id != null">
+                                    id,
+                                </if>
+                                <if test="pojo.pid != null">
+                                    pid,
+                                </if>
+                                <if test="pojo.name != null and pojo.name != ''">
+                                    name,
+                                </if>
+                                <if test="pojo.type != null and pojo.type != ''">
+                                    type,
+                                </if>
+                                <if test="pojo.url != null and pojo.url != ''">
+                                    url,
+                                </if>
+                                <if test="pojo.urlSubmit != null and pojo.urlSubmit != ''">
+                                    url_submit,
+                                </if>
+                                <if test="pojo.path != null and pojo.path != ''">
+                                    path,
+                                </if>
+                                <if test="pojo.leaf != null">
+                                    leaf,
+                                </if>
+                                <if test="pojo.levelNum != null">
+                                    level_num,
+                                </if>
+                                <if test="pojo.sortNum != null">
+                                    sort_num,
+                                </if>
+                                <if test="pojo.createTime != null">
+                                    create_time,
+                                </if>
+                                <if test="pojo.updateTime != null">
+                                    update_time,
+                                </if>
+                    </trim>
+                    )
+                    value
+                    (
+                    <trim suffixOverrides=",">
+                                <if test="pojo.id != null">
+                                    #{ pojo.id },
+                                </if>
+                                <if test="pojo.pid != null">
+                                    #{ pojo.pid },
+                                </if>
+                                <if test="pojo.name != null and pojo.name != ''">
+                                    #{ pojo.name },
+                                </if>
+                                <if test="pojo.type != null and pojo.type != ''">
+                                    #{ pojo.type },
+                                </if>
+                                <if test="pojo.url != null and pojo.url != ''">
+                                    #{ pojo.url },
+                                </if>
+                                <if test="pojo.urlSubmit != null and pojo.urlSubmit != ''">
+                                    #{ pojo.urlSubmit },
+                                </if>
+                                <if test="pojo.path != null and pojo.path != ''">
+                                    #{ pojo.path },
+                                </if>
+                                <if test="pojo.leaf != null">
+                                    #{ pojo.leaf },
+                                </if>
+                                <if test="pojo.levelNum != null">
+                                    #{ pojo.levelNum },
+                                </if>
+                                <if test="pojo.sortNum != null">
+                                    #{ pojo.sortNum },
+                                </if>
+                                <if test="pojo.createTime != null">
+                                    #{ pojo.createTime },
+                                </if>
+                                <if test="pojo.updateTime != null">
+                                    #{ pojo.updateTime },
+                                </if>
+                    </trim>
+                    ) on duplicate key update
+                    <trim suffixOverrides=",">
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                        <if test="pojo.id != null">
+                                            id=values(id),
+                                        </if>
+                                </when>
+                                <otherwise>
+                                    <if test="'id' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                            <if test="pojo.id != null">
+                                                id=values(id),
+                                            </if>
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                        <if test="pojo.pid != null">
+                                            pid=values(pid),
+                                        </if>
+                                </when>
+                                <otherwise>
+                                    <if test="'pid' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                            <if test="pojo.pid != null">
+                                                pid=values(pid),
+                                            </if>
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                        <if test="pojo.name != null and pojo.name != ''">
+                                            name=values(name),
+                                        </if>
+                                </when>
+                                <otherwise>
+                                    <if test="'name' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                            <if test="pojo.name != null and pojo.name != ''">
+                                                name=values(name),
+                                            </if>
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                        <if test="pojo.type != null and pojo.type != ''">
+                                            type=values(type),
+                                        </if>
+                                </when>
+                                <otherwise>
+                                    <if test="'type' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                            <if test="pojo.type != null and pojo.type != ''">
+                                                type=values(type),
+                                            </if>
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                        <if test="pojo.url != null and pojo.url != ''">
+                                            url=values(url),
+                                        </if>
+                                </when>
+                                <otherwise>
+                                    <if test="'url' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                            <if test="pojo.url != null and pojo.url != ''">
+                                                url=values(url),
+                                            </if>
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                        <if test="pojo.urlSubmit != null and pojo.urlSubmit != ''">
+                                            url_submit=values(url_submit),
+                                        </if>
+                                </when>
+                                <otherwise>
+                                    <if test="'urlSubmit' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                            <if test="pojo.urlSubmit != null and pojo.urlSubmit != ''">
+                                                url_submit=values(url_submit),
+                                            </if>
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                        <if test="pojo.path != null and pojo.path != ''">
+                                            path=values(path),
+                                        </if>
+                                </when>
+                                <otherwise>
+                                    <if test="'path' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                            <if test="pojo.path != null and pojo.path != ''">
+                                                path=values(path),
+                                            </if>
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                        <if test="pojo.leaf != null">
+                                            leaf=values(leaf),
+                                        </if>
+                                </when>
+                                <otherwise>
+                                    <if test="'leaf' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                            <if test="pojo.leaf != null">
+                                                leaf=values(leaf),
+                                            </if>
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                        <if test="pojo.levelNum != null">
+                                            level_num=values(level_num),
+                                        </if>
+                                </when>
+                                <otherwise>
+                                    <if test="'levelNum' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                            <if test="pojo.levelNum != null">
+                                                level_num=values(level_num),
+                                            </if>
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                        <if test="pojo.sortNum != null">
+                                            sort_num=values(sort_num),
+                                        </if>
+                                </when>
+                                <otherwise>
+                                    <if test="'sortNum' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                            <if test="pojo.sortNum != null">
+                                                sort_num=values(sort_num),
+                                            </if>
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                        <if test="pojo.createTime != null">
+                                            create_time=values(create_time),
+                                        </if>
+                                </when>
+                                <otherwise>
+                                    <if test="'createTime' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                            <if test="pojo.createTime != null">
+                                                create_time=values(create_time),
+                                            </if>
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                        <if test="pojo.updateTime != null">
+                                            update_time=values(update_time),
+                                        </if>
+                                </when>
+                                <otherwise>
+                                    <if test="'updateTime' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                            <if test="pojo.updateTime != null">
+                                                update_time=values(update_time),
+                                            </if>
+                                    </if>
+                                </otherwise>
+                            </choose>
+                    </trim>
+                </foreach>
+            </update>
+
+
+            <!-- 生成 multiInsertOrUpdateWithNull -->
+            <update id="multiInsertOrUpdateWithNull" parameterType="java.util.List">
+                <foreach collection="list" item="pojo" index="index" open="" close="" separator=";">
+                    insert into sys_perm (
+                    <trim suffixOverrides=",">
+                            id,
+                            pid,
+                            name,
+                            type,
+                            url,
+                            url_submit,
+                            path,
+                            leaf,
+                            level_num,
+                            sort_num,
+                            create_time,
+                            update_time,
+                    </trim>
+                    )
+                    value
+                    (
+                    <trim suffixOverrides=",">
+                            #{ pojo.id },
+                            #{ pojo.pid },
+                            #{ pojo.name },
+                            #{ pojo.type },
+                            #{ pojo.url },
+                            #{ pojo.urlSubmit },
+                            #{ pojo.path },
+                            #{ pojo.leaf },
+                            #{ pojo.levelNum },
+                            #{ pojo.sortNum },
+                            #{ pojo.createTime },
+                            #{ pojo.updateTime },
+                    </trim>
+                    ) on duplicate key update
+                    <trim suffixOverrides=",">
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                    id=values(id),
+                                </when>
+                                <otherwise>
+                                    <if test="'id' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                        id=values(id),
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                    pid=values(pid),
+                                </when>
+                                <otherwise>
+                                    <if test="'pid' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                        pid=values(pid),
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                    name=values(name),
+                                </when>
+                                <otherwise>
+                                    <if test="'name' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                        name=values(name),
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                    type=values(type),
+                                </when>
+                                <otherwise>
+                                    <if test="'type' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                        type=values(type),
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                    url=values(url),
+                                </when>
+                                <otherwise>
+                                    <if test="'url' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                        url=values(url),
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                    url_submit=values(url_submit),
+                                </when>
+                                <otherwise>
+                                    <if test="'urlSubmit' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                        url_submit=values(url_submit),
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                    path=values(path),
+                                </when>
+                                <otherwise>
+                                    <if test="'path' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                        path=values(path),
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                    leaf=values(leaf),
+                                </when>
+                                <otherwise>
+                                    <if test="'leaf' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                        leaf=values(leaf),
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                    level_num=values(level_num),
+                                </when>
+                                <otherwise>
+                                    <if test="'levelNum' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                        level_num=values(level_num),
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                    sort_num=values(sort_num),
+                                </when>
+                                <otherwise>
+                                    <if test="'sortNum' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                        sort_num=values(sort_num),
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                    create_time=values(create_time),
+                                </when>
+                                <otherwise>
+                                    <if test="'createTime' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                        create_time=values(create_time),
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                    update_time=values(update_time),
+                                </when>
+                                <otherwise>
+                                    <if test="'updateTime' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                        update_time=values(update_time),
+                                    </if>
+                                </otherwise>
+                            </choose>
+                    </trim>
+                </foreach>
+            </update>
+
+
+
+            <!-- 生成 update -->
+            <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+                <update id="update" parameterType="com.open.eoss.db.entity.SysPerm">
+                    update sys_perm set
+                    <trim suffixOverrides=",">
+                                <if test="id != null">
+                                    id = #{id},
+                                </if>
+                                <if test="pid != null">
+                                    pid = #{pid},
+                                </if>
+                                <if test="name != null and name != ''">
+                                    name = #{name},
+                                </if>
+                                <if test="type != null and type != ''">
+                                    type = #{type},
+                                </if>
+                                <if test="url != null and url != ''">
+                                    url = #{url},
+                                </if>
+                                <if test="urlSubmit != null and urlSubmit != ''">
+                                    url_submit = #{urlSubmit},
+                                </if>
+                                <if test="path != null and path != ''">
+                                    path = #{path},
+                                </if>
+                                <if test="leaf != null">
+                                    leaf = #{leaf},
+                                </if>
+                                <if test="levelNum != null">
+                                    level_num = #{levelNum},
+                                </if>
+                                <if test="sortNum != null">
+                                    sort_num = #{sortNum},
+                                </if>
+                                <if test="createTime != null">
+                                    create_time = #{createTime},
+                                </if>
+                                <if test="updateTime != null">
+                                    update_time = #{updateTime},
+                                </if>
+                    </trim>
+                    where
+                        id = #{id}
+                        
+                </update>
+
+
+            <!-- 生成 updateWithNull -->
+            <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+            <update id="updateWithNull" parameterType="com.open.eoss.db.entity.SysPerm">
+                update sys_perm set
+                <trim prefixOverrides="," suffixOverrides="">
+                        ,id = #{id}
+                        ,pid = #{pid}
+                        ,name = #{name}
+                        ,type = #{type}
+                        ,url = #{url}
+                        ,url_submit = #{urlSubmit}
+                        ,path = #{path}
+                        ,leaf = #{leaf}
+                        ,level_num = #{levelNum}
+                        ,sort_num = #{sortNum}
+                        ,create_time = #{createTime}
+                        ,update_time = #{updateTime}
+                </trim>
+                where
+                    id = #{id}
+                    
+            </update>
+
+
+            <!-- 生成 updateWithInc -->
+            <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+            <!-- 根据 pk 更新更新一行的值，只适用于 col = col + number -->
+                <update id="updateWithInc" parameterType="com.open.eoss.db.entity.SysPerm">
+                    update sys_perm set
+                    <if test="incParams != null and incParams.size() > 0">
+                        <trim suffixOverrides=",">
+                            <foreach collection="incParams" item="item">
+                                ${item.colName} = ${item.colName} + (${item.value}),
+                            </foreach>
+                        </trim>
+                    </if>
+                    where
+                        id = #{id}
+                        
+                </update>
+
+            <!-- 生成 updateWithVersion -->
+            <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+                <update id="updateWithVersion" parameterType="com.open.eoss.db.entity.SysPerm">
+                    update sys_perm set
+                    <trim prefixOverrides="," suffixOverrides=",">
+                                    <if test="id != null">
+                                        id = #{id},
+                                    </if>
+                                    <if test="pid != null">
+                                        pid = #{pid},
+                                    </if>
+                                    <if test="name != null and name != ''">
+                                        name = #{name},
+                                    </if>
+                                    <if test="type != null and type != ''">
+                                        type = #{type},
+                                    </if>
+                                    <if test="url != null and url != ''">
+                                        url = #{url},
+                                    </if>
+                                    <if test="urlSubmit != null and urlSubmit != ''">
+                                        url_submit = #{urlSubmit},
+                                    </if>
+                                    <if test="path != null and path != ''">
+                                        path = #{path},
+                                    </if>
+                                    <if test="leaf != null">
+                                        leaf = #{leaf},
+                                    </if>
+                                    <if test="levelNum != null">
+                                        level_num = #{levelNum},
+                                    </if>
+                                    <if test="sortNum != null">
+                                        sort_num = #{sortNum},
+                                    </if>
+                                    <if test="createTime != null">
+                                        create_time = #{createTime},
+                                    </if>
+                                    <if test="updateTime != null">
+                                        update_time = #{updateTime},
+                                    </if>
+                    </trim>
+                    , version = version + 1
+                    where
+                        id = #{id}
+                        
+                </update>
+
+
+            <!-- 生成 updateWhere -->
+            <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+            <update id="updateWhere" parameterType="com.open.eoss.db.entity.SysPerm">
+                update sys_perm set
+                <trim prefixOverrides="," suffixOverrides=",">
+                        <if test="id != null">
+                            ,id = #{id}
+                        </if>
+                        <if test="pid != null">
+                            ,pid = #{pid}
+                        </if>
+                        <if test="name != null">
+                            ,name = #{name}
+                        </if>
+                        <if test="type != null">
+                            ,type = #{type}
+                        </if>
+                        <if test="url != null">
+                            ,url = #{url}
+                        </if>
+                        <if test="urlSubmit != null">
+                            ,url_submit = #{urlSubmit}
+                        </if>
+                        <if test="path != null">
+                            ,path = #{path}
+                        </if>
+                        <if test="leaf != null">
+                            ,leaf = #{leaf}
+                        </if>
+                        <if test="levelNum != null">
+                            ,level_num = #{levelNum}
+                        </if>
+                        <if test="sortNum != null">
+                            ,sort_num = #{sortNum}
+                        </if>
+                        <if test="createTime != null">
+                            ,create_time = #{createTime}
+                        </if>
+                        <if test="updateTime != null">
+                            ,update_time = #{updateTime}
+                        </if>
+                </trim>
+                where
+                <trim prefixOverrides="and" suffixOverrides=",">
+                        <choose>
+                            <when test="inParams != null and inParams.containsKey('id')">
+                                and id in
+                                <foreach collection="inParams.id" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                            </when>
+                            <otherwise>
+                                <if test="updateWhereParams != null and updateWhereParams.containsKey('id')">
+                                    and id = #{
+                                    updateWhereParams.id}
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="inParams != null and inParams.containsKey('pid')">
+                                and pid in
+                                <foreach collection="inParams.pid" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                            </when>
+                            <otherwise>
+                                <if test="updateWhereParams != null and updateWhereParams.containsKey('pid')">
+                                    and pid = #{
+                                    updateWhereParams.pid}
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="inParams != null and inParams.containsKey('name')">
+                                and name in
+                                <foreach collection="inParams.name" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                            </when>
+                            <otherwise>
+                                <if test="updateWhereParams != null and updateWhereParams.containsKey('name')">
+                                    and name = #{
+                                    updateWhereParams.name}
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="inParams != null and inParams.containsKey('type')">
+                                and type in
+                                <foreach collection="inParams.type" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                            </when>
+                            <otherwise>
+                                <if test="updateWhereParams != null and updateWhereParams.containsKey('type')">
+                                    and type = #{
+                                    updateWhereParams.type}
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="inParams != null and inParams.containsKey('url')">
+                                and url in
+                                <foreach collection="inParams.url" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                            </when>
+                            <otherwise>
+                                <if test="updateWhereParams != null and updateWhereParams.containsKey('url')">
+                                    and url = #{
+                                    updateWhereParams.url}
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="inParams != null and inParams.containsKey('urlSubmit')">
+                                and url_submit in
+                                <foreach collection="inParams.urlSubmit" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                            </when>
+                            <otherwise>
+                                <if test="updateWhereParams != null and updateWhereParams.containsKey('urlSubmit')">
+                                    and url_submit = #{
+                                    updateWhereParams.urlSubmit}
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="inParams != null and inParams.containsKey('path')">
+                                and path in
+                                <foreach collection="inParams.path" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                            </when>
+                            <otherwise>
+                                <if test="updateWhereParams != null and updateWhereParams.containsKey('path')">
+                                    and path = #{
+                                    updateWhereParams.path}
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="inParams != null and inParams.containsKey('leaf')">
+                                and leaf in
+                                <foreach collection="inParams.leaf" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                            </when>
+                            <otherwise>
+                                <if test="updateWhereParams != null and updateWhereParams.containsKey('leaf')">
+                                    and leaf = #{
+                                    updateWhereParams.leaf}
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="inParams != null and inParams.containsKey('levelNum')">
+                                and level_num in
+                                <foreach collection="inParams.levelNum" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                            </when>
+                            <otherwise>
+                                <if test="updateWhereParams != null and updateWhereParams.containsKey('levelNum')">
+                                    and level_num = #{
+                                    updateWhereParams.levelNum}
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="inParams != null and inParams.containsKey('sortNum')">
+                                and sort_num in
+                                <foreach collection="inParams.sortNum" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                            </when>
+                            <otherwise>
+                                <if test="updateWhereParams != null and updateWhereParams.containsKey('sortNum')">
+                                    and sort_num = #{
+                                    updateWhereParams.sortNum}
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="inParams != null and inParams.containsKey('createTime')">
+                                and create_time in
+                                <foreach collection="inParams.createTime" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                            </when>
+                            <otherwise>
+                                <if test="updateWhereParams != null and updateWhereParams.containsKey('createTime')">
+                                    and create_time = #{
+                                    updateWhereParams.createTime}
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="inParams != null and inParams.containsKey('updateTime')">
+                                and update_time in
+                                <foreach collection="inParams.updateTime" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                            </when>
+                            <otherwise>
+                                <if test="updateWhereParams != null and updateWhereParams.containsKey('updateTime')">
+                                    and update_time = #{
+                                    updateWhereParams.updateTime}
+                                </if>
+                            </otherwise>
+                        </choose>
+                </trim>
+            </update>
+
+
+            <!-- 生成 updateWhereWithNull -->
+            <!-- 注意调用该SQL前必须先根据主键查询出该记录所有列数据，再设置某列为null -->
+                <update id="updateWhereWithNull" parameterType="com.open.eoss.db.entity.SysPerm">
+                    update sys_perm set
+                    <trim suffixOverrides=",">
+                            id = #{id},
+                            pid = #{pid},
+                            name = #{name},
+                            type = #{type},
+                            url = #{url},
+                            url_submit = #{urlSubmit},
+                            path = #{path},
+                            leaf = #{leaf},
+                            level_num = #{levelNum},
+                            sort_num = #{sortNum},
+                            create_time = #{createTime},
+                            update_time = #{updateTime},
+                    </trim>
+                    where
+                        id = #{id}
+                        
+                </update>
+
+
+            <!-- 生成 multiUpdate -->
+            <update id="multiUpdate" parameterType="java.util.List">
+                <foreach collection="list" item="pojo" index="index" open="" close="" separator=";">
+                    update sys_perm set
+                    <trim suffixOverrides=",">
+                                <if test="pojo.id != null">
+                                    id = #{ pojo.id },
+                                </if>
+                                <if test="pojo.pid != null">
+                                    pid = #{ pojo.pid },
+                                </if>
+                                <if test="pojo.name != null and pojo.name != ''">
+                                    name = #{ pojo.name },
+                                </if>
+                                <if test="pojo.type != null and pojo.type != ''">
+                                    type = #{ pojo.type },
+                                </if>
+                                <if test="pojo.url != null and pojo.url != ''">
+                                    url = #{ pojo.url },
+                                </if>
+                                <if test="pojo.urlSubmit != null and pojo.urlSubmit != ''">
+                                    url_submit = #{ pojo.urlSubmit },
+                                </if>
+                                <if test="pojo.path != null and pojo.path != ''">
+                                    path = #{ pojo.path },
+                                </if>
+                                <if test="pojo.leaf != null">
+                                    leaf = #{ pojo.leaf },
+                                </if>
+                                <if test="pojo.levelNum != null">
+                                    level_num = #{ pojo.levelNum },
+                                </if>
+                                <if test="pojo.sortNum != null">
+                                    sort_num = #{ pojo.sortNum },
+                                </if>
+                                <if test="pojo.createTime != null">
+                                    create_time = #{ pojo.createTime },
+                                </if>
+                                <if test="pojo.updateTime != null">
+                                    update_time = #{ pojo.updateTime },
+                                </if>
+                    </trim>
+                    where
+                            <if test="pojo.id != null">
+                                id = #{ pojo.id }
+                            </if>
+                        
+                </foreach>
+            </update>
+
+
+            <!-- 生成 multiUpdateWhere -->
+            <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+            <update id="multiUpdateWhere" parameterType="com.open.eoss.db.entity.SysPerm">
+                <foreach collection="list" item="pojo" index="index" open="" close="" separator=";">
+                    update sys_perm set
+                    <trim prefixOverrides="," suffixOverrides=",">
+                            <if test="pojo.id != null">
+                                ,id = #{ pojo.id }
+                            </if>
+                            <if test="pojo.pid != null">
+                                ,pid = #{ pojo.pid }
+                            </if>
+                            <if test="pojo.name != null">
+                                ,name = #{ pojo.name }
+                            </if>
+                            <if test="pojo.type != null">
+                                ,type = #{ pojo.type }
+                            </if>
+                            <if test="pojo.url != null">
+                                ,url = #{ pojo.url }
+                            </if>
+                            <if test="pojo.urlSubmit != null">
+                                ,url_submit = #{ pojo.urlSubmit }
+                            </if>
+                            <if test="pojo.path != null">
+                                ,path = #{ pojo.path }
+                            </if>
+                            <if test="pojo.leaf != null">
+                                ,leaf = #{ pojo.leaf }
+                            </if>
+                            <if test="pojo.levelNum != null">
+                                ,level_num = #{ pojo.levelNum }
+                            </if>
+                            <if test="pojo.sortNum != null">
+                                ,sort_num = #{ pojo.sortNum }
+                            </if>
+                            <if test="pojo.createTime != null">
+                                ,create_time = #{ pojo.createTime }
+                            </if>
+                            <if test="pojo.updateTime != null">
+                                ,update_time = #{ pojo.updateTime }
+                            </if>
+                    </trim>
+                    where
+                    <trim prefixOverrides="and" suffixOverrides=",">
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('id')">
+                                    and id in
+                                    <foreach collection="pojo.inParams.id" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('id')">
+                                        and id = #{ pojo.updateWhereParams.id }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('pid')">
+                                    and pid in
+                                    <foreach collection="pojo.inParams.pid" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('pid')">
+                                        and pid = #{ pojo.updateWhereParams.pid }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('name')">
+                                    and name in
+                                    <foreach collection="pojo.inParams.name" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('name')">
+                                        and name = #{ pojo.updateWhereParams.name }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('type')">
+                                    and type in
+                                    <foreach collection="pojo.inParams.type" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('type')">
+                                        and type = #{ pojo.updateWhereParams.type }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('url')">
+                                    and url in
+                                    <foreach collection="pojo.inParams.url" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('url')">
+                                        and url = #{ pojo.updateWhereParams.url }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('urlSubmit')">
+                                    and url_submit in
+                                    <foreach collection="pojo.inParams.urlSubmit" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('urlSubmit')">
+                                        and url_submit = #{ pojo.updateWhereParams.urlSubmit }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('path')">
+                                    and path in
+                                    <foreach collection="pojo.inParams.path" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('path')">
+                                        and path = #{ pojo.updateWhereParams.path }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('leaf')">
+                                    and leaf in
+                                    <foreach collection="pojo.inParams.leaf" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('leaf')">
+                                        and leaf = #{ pojo.updateWhereParams.leaf }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('levelNum')">
+                                    and level_num in
+                                    <foreach collection="pojo.inParams.levelNum" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('levelNum')">
+                                        and level_num = #{ pojo.updateWhereParams.levelNum }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('sortNum')">
+                                    and sort_num in
+                                    <foreach collection="pojo.inParams.sortNum" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('sortNum')">
+                                        and sort_num = #{ pojo.updateWhereParams.sortNum }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('createTime')">
+                                    and create_time in
+                                    <foreach collection="pojo.inParams.createTime" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('createTime')">
+                                        and create_time = #{ pojo.updateWhereParams.createTime }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('updateTime')">
+                                    and update_time in
+                                    <foreach collection="pojo.inParams.updateTime" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('updateTime')">
+                                        and update_time = #{ pojo.updateWhereParams.updateTime }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                    </trim>
+                </foreach>
+            </update>
+
+
+
+            <!-- 生成 multiUpdateWhereWithNull -->
+            <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+            <update id="multiUpdateWhereWithNull" parameterType="com.open.eoss.db.entity.SysPerm">
+                <foreach collection="list" item="pojo" index="index" open="" close="" separator=";">
+                    update sys_perm set
+                    <trim prefixOverrides="," suffixOverrides=",">
+                            id = #{ pojo.id },
+                            pid = #{ pojo.pid },
+                            name = #{ pojo.name },
+                            type = #{ pojo.type },
+                            url = #{ pojo.url },
+                            url_submit = #{ pojo.urlSubmit },
+                            path = #{ pojo.path },
+                            leaf = #{ pojo.leaf },
+                            level_num = #{ pojo.levelNum },
+                            sort_num = #{ pojo.sortNum },
+                            create_time = #{ pojo.createTime },
+                            update_time = #{ pojo.updateTime },
+                    </trim>
+                    where
+                    <trim prefixOverrides="and" suffixOverrides=",">
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('id')">
+                                    and id in
+                                    <foreach collection="pojo.inParams.id" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('id')">
+                                        and id = #{ pojo.updateWhereParams.id }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('pid')">
+                                    and pid in
+                                    <foreach collection="pojo.inParams.pid" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('pid')">
+                                        and pid = #{ pojo.updateWhereParams.pid }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('name')">
+                                    and name in
+                                    <foreach collection="pojo.inParams.name" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('name')">
+                                        and name = #{ pojo.updateWhereParams.name }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('type')">
+                                    and type in
+                                    <foreach collection="pojo.inParams.type" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('type')">
+                                        and type = #{ pojo.updateWhereParams.type }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('url')">
+                                    and url in
+                                    <foreach collection="pojo.inParams.url" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('url')">
+                                        and url = #{ pojo.updateWhereParams.url }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('urlSubmit')">
+                                    and url_submit in
+                                    <foreach collection="pojo.inParams.urlSubmit" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('urlSubmit')">
+                                        and url_submit = #{ pojo.updateWhereParams.urlSubmit }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('path')">
+                                    and path in
+                                    <foreach collection="pojo.inParams.path" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('path')">
+                                        and path = #{ pojo.updateWhereParams.path }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('leaf')">
+                                    and leaf in
+                                    <foreach collection="pojo.inParams.leaf" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('leaf')">
+                                        and leaf = #{ pojo.updateWhereParams.leaf }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('levelNum')">
+                                    and level_num in
+                                    <foreach collection="pojo.inParams.levelNum" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('levelNum')">
+                                        and level_num = #{ pojo.updateWhereParams.levelNum }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('sortNum')">
+                                    and sort_num in
+                                    <foreach collection="pojo.inParams.sortNum" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('sortNum')">
+                                        and sort_num = #{ pojo.updateWhereParams.sortNum }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('createTime')">
+                                    and create_time in
+                                    <foreach collection="pojo.inParams.createTime" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('createTime')">
+                                        and create_time = #{ pojo.updateWhereParams.createTime }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('updateTime')">
+                                    and update_time in
+                                    <foreach collection="pojo.inParams.updateTime" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('updateTime')">
+                                        and update_time = #{ pojo.updateWhereParams.updateTime }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                    </trim>
+                </foreach>
+            </update>
+
+
+            <!-- 根据表的主键生成 deleteByPk -->
+                <delete id="deleteByPk" parameterType="java.io.Serializable">
+                    
+                    delete
+                    from sys_perm
+                    where
+                        id = #{id}
+                        
+                </delete>
+
+
+            <!-- 根据表的主键生成 delete -->
+            <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误删除 -->
+            <delete id="delete" parameterType="com.open.eoss.db.entity.SysPerm">
+                <!-- 请注意，该表没有主键 -->
+                delete
+                from sys_perm
+                where
+                <trim suffixOverrides="and" prefixOverrides="and">
+                        <choose>
+                            <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                            <when test="inParams != null and inParams.id != null and inParams.id.size() > 0">
+                                id in
+                                <foreach collection="inParams.id" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                                and
+                            </when>
+                            <otherwise>
+                                    <if test="id != null">
+                                        id = #{id} and
+                                    </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                            <when test="inParams != null and inParams.pid != null and inParams.pid.size() > 0">
+                                pid in
+                                <foreach collection="inParams.pid" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                                and
+                            </when>
+                            <otherwise>
+                                    <if test="pid != null">
+                                        pid = #{pid} and
+                                    </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                            <when test="inParams != null and inParams.name != null and inParams.name.size() > 0">
+                                name in
+                                <foreach collection="inParams.name" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                                and
+                            </when>
+                            <otherwise>
+                                    <if test="name != null and name != ''">
+                                        name = #{name} and
+                                    </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                            <when test="inParams != null and inParams.type != null and inParams.type.size() > 0">
+                                type in
+                                <foreach collection="inParams.type" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                                and
+                            </when>
+                            <otherwise>
+                                    <if test="type != null and type != ''">
+                                        type = #{type} and
+                                    </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                            <when test="inParams != null and inParams.url != null and inParams.url.size() > 0">
+                                url in
+                                <foreach collection="inParams.url" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                                and
+                            </when>
+                            <otherwise>
+                                    <if test="url != null and url != ''">
+                                        url = #{url} and
+                                    </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                            <when test="inParams != null and inParams.urlSubmit != null and inParams.urlSubmit.size() > 0">
+                                url_submit in
+                                <foreach collection="inParams.urlSubmit" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                                and
+                            </when>
+                            <otherwise>
+                                    <if test="urlSubmit != null and urlSubmit != ''">
+                                        url_submit = #{urlSubmit} and
+                                    </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                            <when test="inParams != null and inParams.path != null and inParams.path.size() > 0">
+                                path in
+                                <foreach collection="inParams.path" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                                and
+                            </when>
+                            <otherwise>
+                                    <if test="path != null and path != ''">
+                                        path = #{path} and
+                                    </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                            <when test="inParams != null and inParams.leaf != null and inParams.leaf.size() > 0">
+                                leaf in
+                                <foreach collection="inParams.leaf" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                                and
+                            </when>
+                            <otherwise>
+                                    <if test="leaf != null">
+                                        leaf = #{leaf} and
+                                    </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                            <when test="inParams != null and inParams.levelNum != null and inParams.levelNum.size() > 0">
+                                level_num in
+                                <foreach collection="inParams.levelNum" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                                and
+                            </when>
+                            <otherwise>
+                                    <if test="levelNum != null">
+                                        level_num = #{levelNum} and
+                                    </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                            <when test="inParams != null and inParams.sortNum != null and inParams.sortNum.size() > 0">
+                                sort_num in
+                                <foreach collection="inParams.sortNum" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                                and
+                            </when>
+                            <otherwise>
+                                    <if test="sortNum != null">
+                                        sort_num = #{sortNum} and
+                                    </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                            <when test="inParams != null and inParams.createTime != null and inParams.createTime.size() > 0">
+                                create_time in
+                                <foreach collection="inParams.createTime" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                                and
+                            </when>
+                            <otherwise>
+                                    <if test="createTime != null">
+                                        create_time = #{createTime} and
+                                    </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                            <when test="inParams != null and inParams.updateTime != null and inParams.updateTime.size() > 0">
+                                update_time in
+                                <foreach collection="inParams.updateTime" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                                and
+                            </when>
+                            <otherwise>
+                                    <if test="updateTime != null">
+                                        update_time = #{updateTime} and
+                                    </if>
+                            </otherwise>
+                        </choose>
+                </trim>
+            </delete>
+
+            <!-- 生成 deleteAll -->
+            <delete id="deleteAll">
+                TRUNCATE TABLE sys_perm
+            </delete>
+
+
+            <!-- 生成Select通用表头 -->
+            <sql id="selectPkColumns">
+                <trim suffixOverrides=",">
+                        id as "id",
+                        pid as "pid",
+                        name as "name",
+                        type as "type",
+                        url as "url",
+                        url_submit as "urlSubmit",
+                        path as "path",
+                        leaf as "leaf",
+                        level_num as "levelNum",
+                        sort_num as "sortNum",
+                        create_time as "createTime",
+                        update_time as "updateTime",
+                </trim>
+            </sql>
+
+            <!-- 生成Select通用表头 -->
+            <sql id="selectColumns">
+                <trim suffixOverrides=",">
+                    <choose>
+                        <when test="includeParams != null and includeParams.size() > 0">
+                                <if test="'id' in includeParams">
+                                    id as "id",
+                                </if>
+                                <if test="'pid' in includeParams">
+                                    pid as "pid",
+                                </if>
+                                <if test="'name' in includeParams">
+                                    name as "name",
+                                </if>
+                                <if test="'type' in includeParams">
+                                    type as "type",
+                                </if>
+                                <if test="'url' in includeParams">
+                                    url as "url",
+                                </if>
+                                <if test="'urlSubmit' in includeParams">
+                                    url_submit as "urlSubmit",
+                                </if>
+                                <if test="'path' in includeParams">
+                                    path as "path",
+                                </if>
+                                <if test="'leaf' in includeParams">
+                                    leaf as "leaf",
+                                </if>
+                                <if test="'levelNum' in includeParams">
+                                    level_num as "levelNum",
+                                </if>
+                                <if test="'sortNum' in includeParams">
+                                    sort_num as "sortNum",
+                                </if>
+                                <if test="'createTime' in includeParams">
+                                    create_time as "createTime",
+                                </if>
+                                <if test="'updateTime' in includeParams">
+                                    update_time as "updateTime",
+                                </if>
+                        </when>
+                        <when test="excludeParams != null and excludeParams.size() > 0">
+                                <if test="'id' not in excludeParams">
+                                    id as "id",
+                                </if>
+                                <if test="'pid' not in excludeParams">
+                                    pid as "pid",
+                                </if>
+                                <if test="'name' not in excludeParams">
+                                    name as "name",
+                                </if>
+                                <if test="'type' not in excludeParams">
+                                    type as "type",
+                                </if>
+                                <if test="'url' not in excludeParams">
+                                    url as "url",
+                                </if>
+                                <if test="'urlSubmit' not in excludeParams">
+                                    url_submit as "urlSubmit",
+                                </if>
+                                <if test="'path' not in excludeParams">
+                                    path as "path",
+                                </if>
+                                <if test="'leaf' not in excludeParams">
+                                    leaf as "leaf",
+                                </if>
+                                <if test="'levelNum' not in excludeParams">
+                                    level_num as "levelNum",
+                                </if>
+                                <if test="'sortNum' not in excludeParams">
+                                    sort_num as "sortNum",
+                                </if>
+                                <if test="'createTime' not in excludeParams">
+                                    create_time as "createTime",
+                                </if>
+                                <if test="'updateTime' not in excludeParams">
+                                    update_time as "updateTime",
+                                </if>
+                        </when>
+                        <otherwise>
+                                id as "id",
+                                pid as "pid",
+                                name as "name",
+                                type as "type",
+                                url as "url",
+                                url_submit as "urlSubmit",
+                                path as "path",
+                                leaf as "leaf",
+                                level_num as "levelNum",
+                                sort_num as "sortNum",
+                                create_time as "createTime",
+                                update_time as "updateTime",
+                        </otherwise>
+                    </choose>
+                </trim>
+            </sql>
+
+            <!-- 生成Select通用查询条件 -->
+            <sql id="selectWheres">
+                    <choose>
+                        <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                        <when test="inParams != null and inParams.id != null and inParams.id.size() > 0">
+                            and id in
+                            <foreach collection="inParams.id" item="item" index="index"
+                                     open="(" close=")" separator=",">
+                                #{item}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                                <if test="id != null">
+                                    and id = #{id}
+                                </if>
+                        </otherwise>
+                    </choose>
+                    <choose>
+                        <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                        <when test="inParams != null and inParams.pid != null and inParams.pid.size() > 0">
+                            and pid in
+                            <foreach collection="inParams.pid" item="item" index="index"
+                                     open="(" close=")" separator=",">
+                                #{item}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                                <if test="pid != null">
+                                    and pid = #{pid}
+                                </if>
+                        </otherwise>
+                    </choose>
+                    <choose>
+                        <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                        <when test="inParams != null and inParams.name != null and inParams.name.size() > 0">
+                            and name in
+                            <foreach collection="inParams.name" item="item" index="index"
+                                     open="(" close=")" separator=",">
+                                #{item}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                                <if test="name != null and name != ''">
+                                    <choose>
+                                        <when test="likeParams != null and 'name' in likeParams">
+                                            and name like '%${name}%'
+                                        </when>
+                                        <otherwise>
+                                            and name = #{name}
+                                        </otherwise>
+                                    </choose>
+                                </if>
+                        </otherwise>
+                    </choose>
+                    <choose>
+                        <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                        <when test="inParams != null and inParams.type != null and inParams.type.size() > 0">
+                            and type in
+                            <foreach collection="inParams.type" item="item" index="index"
+                                     open="(" close=")" separator=",">
+                                #{item}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                                <if test="type != null and type != ''">
+                                    <choose>
+                                        <when test="likeParams != null and 'type' in likeParams">
+                                            and type like '%${type}%'
+                                        </when>
+                                        <otherwise>
+                                            and type = #{type}
+                                        </otherwise>
+                                    </choose>
+                                </if>
+                        </otherwise>
+                    </choose>
+                    <choose>
+                        <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                        <when test="inParams != null and inParams.url != null and inParams.url.size() > 0">
+                            and url in
+                            <foreach collection="inParams.url" item="item" index="index"
+                                     open="(" close=")" separator=",">
+                                #{item}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                                <if test="url != null and url != ''">
+                                    <choose>
+                                        <when test="likeParams != null and 'url' in likeParams">
+                                            and url like '%${url}%'
+                                        </when>
+                                        <otherwise>
+                                            and url = #{url}
+                                        </otherwise>
+                                    </choose>
+                                </if>
+                        </otherwise>
+                    </choose>
+                    <choose>
+                        <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                        <when test="inParams != null and inParams.urlSubmit != null and inParams.urlSubmit.size() > 0">
+                            and url_submit in
+                            <foreach collection="inParams.urlSubmit" item="item" index="index"
+                                     open="(" close=")" separator=",">
+                                #{item}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                                <if test="urlSubmit != null and urlSubmit != ''">
+                                    <choose>
+                                        <when test="likeParams != null and 'urlSubmit' in likeParams">
+                                            and url_submit like '%${urlSubmit}%'
+                                        </when>
+                                        <otherwise>
+                                            and url_submit = #{urlSubmit}
+                                        </otherwise>
+                                    </choose>
+                                </if>
+                        </otherwise>
+                    </choose>
+                    <choose>
+                        <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                        <when test="inParams != null and inParams.path != null and inParams.path.size() > 0">
+                            and path in
+                            <foreach collection="inParams.path" item="item" index="index"
+                                     open="(" close=")" separator=",">
+                                #{item}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                                <if test="path != null and path != ''">
+                                    <choose>
+                                        <when test="likeParams != null and 'path' in likeParams">
+                                            and path like '%${path}%'
+                                        </when>
+                                        <otherwise>
+                                            and path = #{path}
+                                        </otherwise>
+                                    </choose>
+                                </if>
+                        </otherwise>
+                    </choose>
+                    <choose>
+                        <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                        <when test="inParams != null and inParams.leaf != null and inParams.leaf.size() > 0">
+                            and leaf in
+                            <foreach collection="inParams.leaf" item="item" index="index"
+                                     open="(" close=")" separator=",">
+                                #{item}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                                <if test="leaf != null">
+                                    and leaf = #{leaf}
+                                </if>
+                        </otherwise>
+                    </choose>
+                    <choose>
+                        <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                        <when test="inParams != null and inParams.levelNum != null and inParams.levelNum.size() > 0">
+                            and level_num in
+                            <foreach collection="inParams.levelNum" item="item" index="index"
+                                     open="(" close=")" separator=",">
+                                #{item}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                                <if test="levelNum != null">
+                                    and level_num = #{levelNum}
+                                </if>
+                        </otherwise>
+                    </choose>
+                    <choose>
+                        <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                        <when test="inParams != null and inParams.sortNum != null and inParams.sortNum.size() > 0">
+                            and sort_num in
+                            <foreach collection="inParams.sortNum" item="item" index="index"
+                                     open="(" close=")" separator=",">
+                                #{item}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                                <if test="sortNum != null">
+                                    and sort_num = #{sortNum}
+                                </if>
+                        </otherwise>
+                    </choose>
+                    <choose>
+                        <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                        <when test="inParams != null and inParams.createTime != null and inParams.createTime.size() > 0">
+                            and create_time in
+                            <foreach collection="inParams.createTime" item="item" index="index"
+                                     open="(" close=")" separator=",">
+                                #{item}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                                <if test="createTime != null">
+                                    and create_time = #{createTime}
+                                </if>
+                        </otherwise>
+                    </choose>
+                    <choose>
+                        <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                        <when test="inParams != null and inParams.updateTime != null and inParams.updateTime.size() > 0">
+                            and update_time in
+                            <foreach collection="inParams.updateTime" item="item" index="index"
+                                     open="(" close=")" separator=",">
+                                #{item}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                                <if test="updateTime != null">
+                                    and update_time = #{updateTime}
+                                </if>
+                        </otherwise>
+                    </choose>
+            </sql>
+
+
+            <sql id="selectOrderBy">
+                <if test="sortParams != null and sortParams.size() > 0">
+                    order by
+                    <trim suffixOverrides=",">
+                        <foreach collection="sortParams" item="item">
+                            ${item.colName} ${item.sort},
+                        </foreach>
+                    </trim>
+                </if>
+            </sql>
+</mapper>

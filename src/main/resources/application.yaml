@@ -1,18 +1,52 @@
 server:
   port: 9876
+  servlet:
+    session:
+      timeout: PT30M  #30分钟
 
 spring:
+  jmx:
+    enabled: false
+  mvc:
+    pathmatch:
+      #解决图片文件等URL里含有中文路径而无法正确显示图片和文件的问题
+      matching-strategy: ant_path_matcher
+
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/eoss?useUnicode=true&amp;characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/eoss_ee?useSSL=false&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&allowMultiQueries=true
     username: root
-    password: sa
+    password: F53uuSTr3Et57ue9
+    type: com.alibaba.druid.pool.DruidDataSource
 
   redis:
     host: 127.0.0.1
     port: 6379
-    password: ggc123
+    password: foobared
     timeout: 2000MS
 
+  # freemarker configuration start
+  freemarker:
+    suffix: .ftl
+    content-type: text/html
+    charset: UTF-8
+    cache: false
+    template-loader-path: classpath:/
+    settings:
+      classic_compatible: true
+
 mybatis:
-  mapper-locations: classpath*:/com/jelly/eoss/db/mapper/**/*Mapper.xml
-  mapper-scan: com.jelly.eoss.db.mapper
+  mapper-locations: classpath*:/com/jelly/*/db/mapper/**/*Mapper.xml
+
+logging:
+  level:
+    com.open.eoss.db.mapper: DEBUG
+    org.openqa.selenium.devtools.Connection: WARN
+
+# 以下是EOSS项目私有配置
+eoss:
+  project_name: EOSS-5.0
+  project_version: 4.0
+  # copy_right: Email:collonn@126.com<br/>QQ:195358385<br/>https://github.com/jelly-liu<br/>http://blogger.csdn.net/collonn
+  copy_right: jelly.liu
+  # 用户登陆后的session信息缓存方式，1-mem,2-redis
+  session_cache_type: 1

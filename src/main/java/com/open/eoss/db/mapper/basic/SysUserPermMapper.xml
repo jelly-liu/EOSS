@@ -1,0 +1,827 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:Collonn, Email:collonn@126.com, QQ:195358385 -->
+
+<mapper namespace="com.open.eoss.db.mapper.basic.SysUserPermMapper">
+
+<!-- 生成 selectCount -->
+<select id="selectCount" parameterType="com.open.eoss.db.entity.SysUserPerm" resultType="java.lang.Long">
+    select count(*) ct
+    from sys_user_perm
+    <where>
+        <include refid="selectWheres"/>
+    </where>
+</select>
+
+<!-- 生成 selectPage -->
+<select id="selectPage" parameterType="com.open.eoss.db.entity.SysUserPerm" resultType="com.open.eoss.db.entity.SysUserPerm">
+    select
+    <include refid="selectColumns"/>
+    from sys_user_perm
+    where 1 = 1
+    <include refid="selectWheres"/>
+    <include refid="selectOrderBy"/>
+    limit #{offset},#{length}
+</select>
+
+<!-- 生成 select -->
+<select id="select" parameterType="com.open.eoss.db.entity.SysUserPerm" resultType="com.open.eoss.db.entity.SysUserPerm">
+    select
+    <include refid="selectColumns"/>
+    from sys_user_perm
+    where 1 = 1
+    <include refid="selectWheres"/>
+    <include refid="selectOrderBy"/>
+</select>
+
+<!-- 生成 selectOne -->
+<select id="selectOne" parameterType="com.open.eoss.db.entity.SysUserPerm" resultType="com.open.eoss.db.entity.SysUserPerm">
+    select
+    <include refid="selectColumns"/>
+    from sys_user_perm
+    where 1 = 1
+    <include refid="selectWheres"/>
+    limit 1
+</select>
+
+<!-- 生成 selectAll -->
+<select id="selectAll" resultType="com.open.eoss.db.entity.SysUserPerm">
+    select
+    <include refid="selectPkColumns"/>
+    from sys_user_perm
+</select>
+
+<!-- 根据表的主键生成 selectByPk -->
+<select id="selectByPk" parameterType="java.io.Serializable" resultType="com.open.eoss.db.entity.SysUserPerm">
+    select
+    <include refid="selectPkColumns"/>
+    from sys_user_perm
+    where
+        user_id = #{userId}
+        and
+        perm_id = #{permId}
+        
+</select>
+
+
+
+<!-- 生成 Insert -->
+<!-- 该表有联合主键，不能用useGeneratedKeys和keyProperty返回主键 -->
+<insert id="insert" parameterType="com.open.eoss.db.entity.SysUserPerm">
+insert into sys_user_perm (
+<trim suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+
+            <if test="permId != null">
+                perm_id,
+            </if>
+
+</trim>
+) values (
+<trim suffixOverrides=",">
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="permId != null">
+                #{permId},
+            </if>
+</trim>
+)
+</insert>
+
+
+<!-- 生成 insertOrIgnore -->
+<!-- 忽略 唯一索引 冲突，正常返回受影响记录条数为0，mysql有warning日志 -->
+<!-- 该表有联合主键，不能用useGeneratedKeys和keyProperty返回主键 -->
+<insert id="insertOrIgnore" parameterType="com.open.eoss.db.entity.SysUserPerm">
+        insert ignore into sys_user_perm (
+        <trim suffixOverrides=",">
+                    <if test="userId != null">
+                        user_id,
+                    </if>
+
+                    <if test="permId != null">
+                        perm_id,
+                    </if>
+
+        </trim>
+        ) values (
+        <trim suffixOverrides=",">
+                    <if test="userId != null">
+                        #{userId},
+                    </if>
+                    <if test="permId != null">
+                        #{permId},
+                    </if>
+        </trim>
+        )
+    </insert>
+
+    <!-- 生成 insertOrUpdate -->
+    <!-- 忽略 唯一索引 冲突，正常返回受影响记录条数为0，mysql有warning日志 -->
+        <!-- 该表有联合主键，不能用useGeneratedKeys和keyProperty返回主键 -->
+        <insert id="insertOrUpdate" parameterType="com.open.eoss.db.entity.SysUserPerm">
+                insert into sys_user_perm (
+                <trim suffixOverrides=",">
+                            <if test="userId != null">
+                                user_id,
+                            </if>
+
+                            <if test="permId != null">
+                                perm_id,
+                            </if>
+
+                </trim>
+                ) values (
+                <trim suffixOverrides=",">
+                            <if test="userId != null">
+                                #{userId},
+                            </if>
+                            <if test="permId != null">
+                                #{permId},
+                            </if>
+                </trim>
+                ) on duplicate key update
+                <trim suffixOverrides=",">
+                            <if test="userId != null">
+                                user_id=values(user_id),
+                            </if>
+                            <if test="permId != null">
+                                perm_id=values(perm_id),
+                            </if>
+                </trim>
+            </insert>
+
+
+            <!-- 生成 insertMulti -->
+            <insert id="insertMulti" parameterType="java.util.List">
+                insert into sys_user_perm
+                (
+                <trim suffixOverrides=",">
+                        user_id,
+                        perm_id,
+                </trim>
+                )
+                values
+                <foreach collection="list" item="item" index="index" separator=",">
+                    (
+                    <trim suffixOverrides=",">
+                            #{item.userId},
+                            #{item.permId},
+                    </trim>
+                    )
+                </foreach>
+            </insert>
+
+            <!-- 生成 insertMultiOrIgnore -->
+            <!-- 忽略 唯一索引 冲突 的记录，其它记录正常入库，mysql会有warning日志 -->
+            <insert id="insertMultiOrIgnore" parameterType="java.util.List">
+                insert ignore into sys_user_perm
+                (
+                <trim suffixOverrides=",">
+                        user_id,
+                        perm_id,
+                </trim>
+                )
+                values
+                <foreach collection="list" item="item" index="index" separator=",">
+                    (
+                    <trim suffixOverrides=",">
+                            #{item.userId},
+                            #{item.permId},
+                    </trim>
+                    )
+                </foreach>
+            </insert>
+
+
+            <!-- 生成 insertMultiOrUpdateWithNull -->
+            <!-- 忽略 唯一索引 冲突 的记录，其它记录正常入库，mysql会有warning日志 -->
+            <insert id="insertMultiOrUpdateWithNull" parameterType="java.util.List">
+                insert into sys_user_perm
+                (
+                <trim suffixOverrides=",">
+                        user_id,
+                        perm_id,
+                </trim>
+                )
+                values
+                <foreach collection="list" item="item" index="index" separator=",">
+                    (
+                    <trim suffixOverrides=",">
+                            #{item.userId},
+                            #{item.permId},
+                    </trim>
+                    )
+                </foreach>
+                on duplicate key update
+                <trim suffixOverrides=",">
+                        user_id=values(user_id),
+                        perm_id=values(perm_id),
+                </trim>
+            </insert>
+
+
+            <!-- 生成 insertMultiOrUpdateWithNull -->
+            <!-- 忽略 唯一索引 冲突 的记录，其它记录正常入库，mysql会有warning日志 -->
+            <insert id="insertMultiOrUpdateWithNullExcludeUpdateProperty">
+                insert into sys_user_perm
+                (
+                <trim suffixOverrides=",">
+                        user_id,
+                        perm_id,
+                </trim>
+                )
+                values
+                <foreach collection="list" item="item" index="index" separator=",">
+                    (
+                    <trim suffixOverrides=",">
+                            #{item.userId},
+                            #{item.permId},
+                    </trim>
+                    )
+                </foreach>
+                on duplicate key update
+                <trim suffixOverrides=",">
+                        <choose>
+                            <when test="excludeProperties == null or excludeProperties.size() == 0">
+                                user_id=values(user_id),
+                            </when>
+                            <otherwise>
+                                <if test="'userId' not in excludeProperties">
+                                    user_id=values(user_id),
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="excludeProperties == null or excludeProperties.size() == 0">
+                                perm_id=values(perm_id),
+                            </when>
+                            <otherwise>
+                                <if test="'permId' not in excludeProperties">
+                                    perm_id=values(perm_id),
+                                </if>
+                            </otherwise>
+                        </choose>
+                </trim>
+            </insert>
+
+
+
+            <!-- 生成 multiInsert -->
+            <update id="multiInsert" parameterType="java.util.List">
+                <foreach collection="list" item="pojo" index="index" open="" close="" separator=";">
+                    insert into sys_user_perm (
+                    <trim suffixOverrides=",">
+                                <if test="pojo.userId != null">
+                                    user_id,
+                                </if>
+                                <if test="pojo.permId != null">
+                                    perm_id,
+                                </if>
+                    </trim>
+                    )
+                    value
+                    (
+                    <trim suffixOverrides=",">
+                                <if test="pojo.userId != null">
+                                    #{ pojo.userId },
+                                </if>
+                                <if test="pojo.permId != null">
+                                    #{ pojo.permId },
+                                </if>
+                    </trim>
+                    )
+                </foreach>
+            </update>
+
+
+            <!-- 生成 multiInsertOrIgnore -->
+            <update id="multiInsertOrIgnore" parameterType="java.util.List">
+                <foreach collection="list" item="pojo" index="index" open="" close="" separator=";">
+                    insert ignore into sys_user_perm (
+                    <trim suffixOverrides=",">
+                                <if test="pojo.userId != null">
+                                    user_id,
+                                </if>
+                                <if test="pojo.permId != null">
+                                    perm_id,
+                                </if>
+                    </trim>
+                    )
+                    value
+                    (
+                    <trim suffixOverrides=",">
+                                <if test="pojo.userId != null">
+                                    #{ pojo.userId },
+                                </if>
+                                <if test="pojo.permId != null">
+                                    #{ pojo.permId },
+                                </if>
+                    </trim>
+                    )
+                </foreach>
+            </update>
+
+
+            <!-- 生成 multiInsertOrUpdate -->
+            <update id="multiInsertOrUpdate" parameterType="java.util.List">
+                <foreach collection="list" item="pojo" index="index" open="" close="" separator=";">
+                    insert into sys_user_perm (
+                    <trim suffixOverrides=",">
+                                <if test="pojo.userId != null">
+                                    user_id,
+                                </if>
+                                <if test="pojo.permId != null">
+                                    perm_id,
+                                </if>
+                    </trim>
+                    )
+                    value
+                    (
+                    <trim suffixOverrides=",">
+                                <if test="pojo.userId != null">
+                                    #{ pojo.userId },
+                                </if>
+                                <if test="pojo.permId != null">
+                                    #{ pojo.permId },
+                                </if>
+                    </trim>
+                    ) on duplicate key update
+                    <trim suffixOverrides=",">
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                        <if test="pojo.userId != null">
+                                            user_id=values(user_id),
+                                        </if>
+                                </when>
+                                <otherwise>
+                                    <if test="'userId' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                            <if test="pojo.userId != null">
+                                                user_id=values(user_id),
+                                            </if>
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                        <if test="pojo.permId != null">
+                                            perm_id=values(perm_id),
+                                        </if>
+                                </when>
+                                <otherwise>
+                                    <if test="'permId' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                            <if test="pojo.permId != null">
+                                                perm_id=values(perm_id),
+                                            </if>
+                                    </if>
+                                </otherwise>
+                            </choose>
+                    </trim>
+                </foreach>
+            </update>
+
+
+            <!-- 生成 multiInsertOrUpdateWithNull -->
+            <update id="multiInsertOrUpdateWithNull" parameterType="java.util.List">
+                <foreach collection="list" item="pojo" index="index" open="" close="" separator=";">
+                    insert into sys_user_perm (
+                    <trim suffixOverrides=",">
+                            user_id,
+                            perm_id,
+                    </trim>
+                    )
+                    value
+                    (
+                    <trim suffixOverrides=",">
+                            #{ pojo.userId },
+                            #{ pojo.permId },
+                    </trim>
+                    ) on duplicate key update
+                    <trim suffixOverrides=",">
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                    user_id=values(user_id),
+                                </when>
+                                <otherwise>
+                                    <if test="'userId' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                        user_id=values(user_id),
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.multiInsertOrUpdateExcludeUpdateParams == null or pojo.multiInsertOrUpdateExcludeUpdateParams.size() == 0">
+                                    perm_id=values(perm_id),
+                                </when>
+                                <otherwise>
+                                    <if test="'permId' not in pojo.multiInsertOrUpdateExcludeUpdateParams">
+                                        perm_id=values(perm_id),
+                                    </if>
+                                </otherwise>
+                            </choose>
+                    </trim>
+                </foreach>
+            </update>
+
+
+
+            <!-- 生成 update -->
+            <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+                <update id="update" parameterType="com.open.eoss.db.entity.SysUserPerm">
+                    update sys_user_perm set
+                    <trim suffixOverrides=",">
+                                <if test="userId != null">
+                                    user_id = #{userId},
+                                </if>
+                                <if test="permId != null">
+                                    perm_id = #{permId},
+                                </if>
+                    </trim>
+                    where
+                        user_id = #{userId}
+                        and
+                        perm_id = #{permId}
+                        
+                </update>
+
+
+            <!-- 生成 updateWithNull -->
+            <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+            <update id="updateWithNull" parameterType="com.open.eoss.db.entity.SysUserPerm">
+                update sys_user_perm set
+                <trim prefixOverrides="," suffixOverrides="">
+                        ,user_id = #{userId}
+                        ,perm_id = #{permId}
+                </trim>
+                where
+                    user_id = #{userId}
+                    and
+                    perm_id = #{permId}
+                    
+            </update>
+
+
+            <!-- 生成 updateWithInc -->
+            <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+            <!-- 根据 pk 更新更新一行的值，只适用于 col = col + number -->
+                <update id="updateWithInc" parameterType="com.open.eoss.db.entity.SysUserPerm">
+                    update sys_user_perm set
+                    <if test="incParams != null and incParams.size() > 0">
+                        <trim suffixOverrides=",">
+                            <foreach collection="incParams" item="item">
+                                ${item.colName} = ${item.colName} + (${item.value}),
+                            </foreach>
+                        </trim>
+                    </if>
+                    where
+                        user_id = #{userId}
+                        and
+                        perm_id = #{permId}
+                        
+                </update>
+
+            <!-- 生成 updateWithVersion -->
+            <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+                <update id="updateWithVersion" parameterType="com.open.eoss.db.entity.SysUserPerm">
+                    update sys_user_perm set
+                    <trim prefixOverrides="," suffixOverrides=",">
+                                    <if test="userId != null">
+                                        user_id = #{userId},
+                                    </if>
+                                    <if test="permId != null">
+                                        perm_id = #{permId},
+                                    </if>
+                    </trim>
+                    , version = version + 1
+                    where
+                        user_id = #{userId}
+                        and
+                        perm_id = #{permId}
+                        
+                </update>
+
+
+            <!-- 生成 updateWhere -->
+            <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+            <update id="updateWhere" parameterType="com.open.eoss.db.entity.SysUserPerm">
+                update sys_user_perm set
+                <trim prefixOverrides="," suffixOverrides=",">
+                        <if test="userId != null">
+                            ,user_id = #{userId}
+                        </if>
+                        <if test="permId != null">
+                            ,perm_id = #{permId}
+                        </if>
+                </trim>
+                where
+                <trim prefixOverrides="and" suffixOverrides=",">
+                        <choose>
+                            <when test="inParams != null and inParams.containsKey('userId')">
+                                and user_id in
+                                <foreach collection="inParams.userId" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                            </when>
+                            <otherwise>
+                                <if test="updateWhereParams != null and updateWhereParams.containsKey('userId')">
+                                    and user_id = #{
+                                    updateWhereParams.userId}
+                                </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <when test="inParams != null and inParams.containsKey('permId')">
+                                and perm_id in
+                                <foreach collection="inParams.permId" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                            </when>
+                            <otherwise>
+                                <if test="updateWhereParams != null and updateWhereParams.containsKey('permId')">
+                                    and perm_id = #{
+                                    updateWhereParams.permId}
+                                </if>
+                            </otherwise>
+                        </choose>
+                </trim>
+            </update>
+
+
+            <!-- 生成 updateWhereWithNull -->
+            <!-- 注意调用该SQL前必须先根据主键查询出该记录所有列数据，再设置某列为null -->
+                <update id="updateWhereWithNull" parameterType="com.open.eoss.db.entity.SysUserPerm">
+                    update sys_user_perm set
+                    <trim suffixOverrides=",">
+                            user_id = #{userId},
+                            perm_id = #{permId},
+                    </trim>
+                    where
+                        user_id = #{userId}
+                        and
+                        perm_id = #{permId}
+                        
+                </update>
+
+
+            <!-- 生成 multiUpdate -->
+            <update id="multiUpdate" parameterType="java.util.List">
+                <foreach collection="list" item="pojo" index="index" open="" close="" separator=";">
+                    update sys_user_perm set
+                    <trim suffixOverrides=",">
+                                <if test="pojo.userId != null">
+                                    user_id = #{ pojo.userId },
+                                </if>
+                                <if test="pojo.permId != null">
+                                    perm_id = #{ pojo.permId },
+                                </if>
+                    </trim>
+                    where
+                            <if test="pojo.userId != null">
+                                user_id = #{ pojo.userId }
+                            </if>
+                        and
+                            <if test="pojo.permId != null">
+                                perm_id = #{ pojo.permId }
+                            </if>
+                        
+                </foreach>
+            </update>
+
+
+            <!-- 生成 multiUpdateWhere -->
+            <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+            <update id="multiUpdateWhere" parameterType="com.open.eoss.db.entity.SysUserPerm">
+                <foreach collection="list" item="pojo" index="index" open="" close="" separator=";">
+                    update sys_user_perm set
+                    <trim prefixOverrides="," suffixOverrides=",">
+                            <if test="pojo.userId != null">
+                                ,user_id = #{ pojo.userId }
+                            </if>
+                            <if test="pojo.permId != null">
+                                ,perm_id = #{ pojo.permId }
+                            </if>
+                    </trim>
+                    where
+                    <trim prefixOverrides="and" suffixOverrides=",">
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('userId')">
+                                    and user_id in
+                                    <foreach collection="pojo.inParams.userId" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('userId')">
+                                        and user_id = #{ pojo.updateWhereParams.userId }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('permId')">
+                                    and perm_id in
+                                    <foreach collection="pojo.inParams.permId" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('permId')">
+                                        and perm_id = #{ pojo.updateWhereParams.permId }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                    </trim>
+                </foreach>
+            </update>
+
+
+
+            <!-- 生成 multiUpdateWhereWithNull -->
+            <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误更新 -->
+            <update id="multiUpdateWhereWithNull" parameterType="com.open.eoss.db.entity.SysUserPerm">
+                <foreach collection="list" item="pojo" index="index" open="" close="" separator=";">
+                    update sys_user_perm set
+                    <trim prefixOverrides="," suffixOverrides=",">
+                            user_id = #{ pojo.userId },
+                            perm_id = #{ pojo.permId },
+                    </trim>
+                    where
+                    <trim prefixOverrides="and" suffixOverrides=",">
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('userId')">
+                                    and user_id in
+                                    <foreach collection="pojo.inParams.userId" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('userId')">
+                                        and user_id = #{ pojo.updateWhereParams.userId }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                            <choose>
+                                <when test="pojo.inParams != null and pojo.inParams.containsKey('permId')">
+                                    and perm_id in
+                                    <foreach collection="pojo.inParams.permId" item="item" index="index" open="(" close=")" separator=",">
+                                        #{item}
+                                    </foreach>
+                                </when>
+                                <otherwise>
+                                    <if test="pojo.updateWhereParams != null and pojo.updateWhereParams.containsKey('permId')">
+                                        and perm_id = #{ pojo.updateWhereParams.permId }
+                                    </if>
+                                </otherwise>
+                            </choose>
+                    </trim>
+                </foreach>
+            </update>
+
+
+            <!-- 根据表的主键生成 deleteByPk -->
+                <delete id="deleteByPk" parameterType="com.open.eoss.db.entity.SysUserPerm">
+                    <!-- 请注意，该表是联合主键 -->
+                    delete
+                    from sys_user_perm
+                    where
+                        user_id = #{userId}
+                        and
+                        perm_id = #{permId}
+                        
+                </delete>
+
+
+            <!-- 根据表的主键生成 delete -->
+            <!-- 注意调用该SQL前必须检查参数的正确性，否则可能会误删除 -->
+            <delete id="delete" parameterType="com.open.eoss.db.entity.SysUserPerm">
+                <!-- 请注意，该表没有主键 -->
+                delete
+                from sys_user_perm
+                where
+                <trim suffixOverrides="and" prefixOverrides="and">
+                        <choose>
+                            <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                            <when test="inParams != null and inParams.userId != null and inParams.userId.size() > 0">
+                                user_id in
+                                <foreach collection="inParams.userId" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                                and
+                            </when>
+                            <otherwise>
+                                    <if test="userId != null">
+                                        user_id = #{userId} and
+                                    </if>
+                            </otherwise>
+                        </choose>
+                        <choose>
+                            <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                            <when test="inParams != null and inParams.permId != null and inParams.permId.size() > 0">
+                                perm_id in
+                                <foreach collection="inParams.permId" item="item"
+                                         index="index" open="(" close=")" separator=",">
+                                    #{item}
+                                </foreach>
+                                and
+                            </when>
+                            <otherwise>
+                                    <if test="permId != null">
+                                        perm_id = #{permId} and
+                                    </if>
+                            </otherwise>
+                        </choose>
+                </trim>
+            </delete>
+
+            <!-- 生成 deleteAll -->
+            <delete id="deleteAll">
+                TRUNCATE TABLE sys_user_perm
+            </delete>
+
+
+            <!-- 生成Select通用表头 -->
+            <sql id="selectPkColumns">
+                <trim suffixOverrides=",">
+                        user_id as "userId",
+                        perm_id as "permId",
+                </trim>
+            </sql>
+
+            <!-- 生成Select通用表头 -->
+            <sql id="selectColumns">
+                <trim suffixOverrides=",">
+                    <choose>
+                        <when test="includeParams != null and includeParams.size() > 0">
+                                <if test="'userId' in includeParams">
+                                    user_id as "userId",
+                                </if>
+                                <if test="'permId' in includeParams">
+                                    perm_id as "permId",
+                                </if>
+                        </when>
+                        <when test="excludeParams != null and excludeParams.size() > 0">
+                                <if test="'userId' not in excludeParams">
+                                    user_id as "userId",
+                                </if>
+                                <if test="'permId' not in excludeParams">
+                                    perm_id as "permId",
+                                </if>
+                        </when>
+                        <otherwise>
+                                user_id as "userId",
+                                perm_id as "permId",
+                        </otherwise>
+                    </choose>
+                </trim>
+            </sql>
+
+            <!-- 生成Select通用查询条件 -->
+            <sql id="selectWheres">
+                    <choose>
+                        <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                        <when test="inParams != null and inParams.userId != null and inParams.userId.size() > 0">
+                            and user_id in
+                            <foreach collection="inParams.userId" item="item" index="index"
+                                     open="(" close=")" separator=",">
+                                #{item}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                                <if test="userId != null">
+                                    and user_id = #{userId}
+                                </if>
+                        </otherwise>
+                    </choose>
+                    <choose>
+                        <!-- 处理 where status in (1,2,3) 这样的语句 -->
+                        <when test="inParams != null and inParams.permId != null and inParams.permId.size() > 0">
+                            and perm_id in
+                            <foreach collection="inParams.permId" item="item" index="index"
+                                     open="(" close=")" separator=",">
+                                #{item}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                                <if test="permId != null">
+                                    and perm_id = #{permId}
+                                </if>
+                        </otherwise>
+                    </choose>
+            </sql>
+
+
+            <sql id="selectOrderBy">
+                <if test="sortParams != null and sortParams.size() > 0">
+                    order by
+                    <trim suffixOverrides=",">
+                        <foreach collection="sortParams" item="item">
+                            ${item.colName} ${item.sort},
+                        </foreach>
+                    </trim>
+                </if>
+            </sql>
+</mapper>

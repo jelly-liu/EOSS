@@ -67,6 +67,9 @@
 .icon-more{
 	background:url('icons/more.png') no-repeat center center;
 }
+.icon-logout{
+	background:url('icons/logout.png') no-repeat center center;
+}
 
 
 .icon-mini-add{

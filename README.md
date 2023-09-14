@@ -1,61 +1,27 @@
-# HERE - HERE - HERE
-https://gitee.com/collonn_admin/eoss-ee
-
-# Need more help?
-[wiki help](https://github.com/jelly-liu/EOSS/wiki)  
-
-# EOSS With Apache Shiro
-Base On RBAC(Role Based Access Control)  
-If you want to known more about apache shiro  
-view here [Apache Shiro](http://shiro.apache.org/index.html "Apache Shiro")  
-view here [shiro-demo](https://github.com/jelly-liu/shiro-demo "shiro-demo")  
-view here [EOSS-Shiro](https://github.com/jelly-liu/EOSS "EOSS-Shiro")
-
-# Which Branch Should I Check Out
---**master branch, recommend this branch**  
-----Master branch is sync with eoss-shiro-spring-boot branch  
---eoss-pure branch, not recommend  
-----without shiro, but imitate shiro  
---eoss-shiro branch, not recommend  
-----integrated with Apache Shiro  
---eoss-shiro-spring-boot branch, not recommend  
-----integrated with spring boot 2.1.1, thymeleaf, shiro  
-# more information
------------- login users ------------  
---admin/111111, has all privilege, CRUD  
---adminViewer/111111, only has view privilege  
------------- integrated framework ------------  
---maven  
---spring boot, latest version is 2.1.1  
---use spring thymeleaf instead of jsp  
---mysql(easy translate to oracle)  
---mybatis, mapper xml and mapper interface, latest version is 3.4.6   
---shiro, latest version is 1.4.0  
---redis cache, support  
------------- basic RBAC features ------------  
---support user[CRUD]  
-----support user-role[CRUD]  
-----support user-menu[CRUD]  
-----support user-resource[CRUD]  
---support role[CRUD]  
-----support role-permission[CRUD]  
---support permistion[CRUD]  
---support resource[CRUD]  
---support menu tree[CRUD]  
------------- shiro features ------------  
---sppport custom AntPathMatcher, do not care about capital or lower case of the request path, EossAntPathMatcher  
---support MD5 hashed with salt, HashedCredentialsMatcher  
---support RolesOrAuthorizationFilter, work with EossAntPathMatcher  
---support PermsOrAuthorizationFilter, work with EossAntPathMatcher  
---support after change rules, auto refresh all assosiate perms, do not need relogin or restart server  
---support refresh Authentication cache, when update user or role, do not need relogin or restart server  
---support Redis CacheManager  
---support session redis, if you set your redis cache manager, session will auto use your cache  
---support the most explicit permission rules(shiro official recommend), each request url has an unique perm[xxx] .   
---support group, a group can have some menus, a user can belong to one or more groups
+# eoss-ee
 
 
-# ScreenShot  
-![ScreenShot1](https://github.com/jelly-liu/EOSS/blob/master/ScreenShot1.png "ScreenShot1")  
-![ScreenShot2](https://github.com/jelly-liu/EOSS/blob/master/ScreenShot2.png "ScreenShot2")  
-![ScreenShot3](https://github.com/jelly-liu/EOSS/blob/master/ScreenShot3.png "ScreenShot3")  
+#### 介绍
+一套完整的权限管理系统，代码简洁直观    
+用户，    可以选择角色和权限  
+角色，    只能选择权限   
+权限，    权限类型：菜单/功能，支持 /**, /user/* 语法    
+
+
+#### 技术栈
+springboot, freemarker, mysql, mem/redis(可选), jquery easy ui  
+
+
+#### 安装教程，参照readme.doc文件  
+1，maven项目    
+2，初始化mysql，使用mysqlworkbench，导入/resources/initDb/eoss.sql文件    
+3，修改application.yml文件    
+
+
+#### 截图欣赏
+![image](https://gitee.com/collonn_admin/eoss-ee/raw/master/src/main/resources/readme/sh1.jpg)  
+![image](https://gitee.com/collonn_admin/eoss-ee/raw/master/src/main/resources/readme/sh2.jpg)  
+![image](https://gitee.com/collonn_admin/eoss-ee/raw/master/src/main/resources/readme/sh3.jpg)  
+![image](https://gitee.com/collonn_admin/eoss-ee/raw/master/src/main/resources/readme/sh4.jpg)  
+
+
