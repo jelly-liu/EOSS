@@ -19,9 +19,7 @@ springboot, freemarker, mysql, mem/redis(可选), jquery easy ui
 
 
 #### 截图欣赏
-![image](https://gitee.com/collonn_admin/eoss-ee/raw/master/src/main/resources/readme/sh1.jpg)  
-![image](https://gitee.com/collonn_admin/eoss-ee/raw/master/src/main/resources/readme/sh2.jpg)  
-![image](https://gitee.com/collonn_admin/eoss-ee/raw/master/src/main/resources/readme/sh3.jpg)  
-![image](https://gitee.com/collonn_admin/eoss-ee/raw/master/src/main/resources/readme/sh4.jpg)  
-
-
+![sh](https://raw.githubusercontent.com/jelly-liu/EOSS/master/src/main/resources/readme/sh1.jpg "sh")
+![sh](https://raw.githubusercontent.com/jelly-liu/EOSS/master/src/main/resources/readme/sh2.jpg "sh")
+![sh](https://raw.githubusercontent.com/jelly-liu/EOSS/master/src/main/resources/readme/sh3.jpg "sh")
+![sh](https://raw.githubusercontent.com/jelly-liu/EOSS/master/src/main/resources/readme/sh4.jpg "sh")
